@@ -9,10 +9,10 @@ class ParserHelper
         $str = str_split($str, 1);
         $str[] = " ";
         $str_len = count($str);
-        
+
         $splitrer = str_split($splitrer, 1);
         $splitrer_len = count($splitrer);
-        
+
         $parts = array();
         $inApex = false;
         $next = 0;
@@ -41,6 +41,7 @@ class ParserHelper
         } elseif ($inApex !== false) {
             throw new Exception("Apici non bilanciati nell'espressione '" . implode("", $str) . "'");
         }
+
         return $parts;
     }
 
@@ -50,6 +51,7 @@ class ParserHelper
         foreach ($array as $key => $val) {
             $a[] = "$key:$val";
         }
+
         return implode($glue, $a);
     }
 }

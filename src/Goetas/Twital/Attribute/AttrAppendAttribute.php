@@ -2,7 +2,6 @@
 namespace Goetas\Twital\Attribute;
 
 use Goetas\Twital\Attribute;
-use DOMAttr;
 
 class AttrAppendAttribute extends AttrAttribute
 {

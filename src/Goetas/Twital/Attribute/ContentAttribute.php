@@ -8,7 +8,7 @@ use DOMAttr;
 class ContentAttribute implements Attribute
 {
 
-    function visit(DOMAttr $att, Compiler $twital)
+    public function visit(DOMAttr $att, Compiler $twital)
     {
         $node = $att->ownerElement;
         $node->removeChilds();

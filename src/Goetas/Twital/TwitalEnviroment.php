@@ -21,7 +21,9 @@ class TwitalEnviroment extends \Twig_Environment
     {
         if (strpos($name, $this->twitalPathComponent) !== false) {
             $source = $this->twitalCompiler->compile($source);
+            die($source);
         }
+
         return $this->twig->compileSource($source, $name);
     }
 
@@ -62,7 +64,7 @@ class TwitalEnviroment extends \Twig_Environment
         $this->twig->setBaseTemplateClass($class);
     }
 
-    function enableDebug()
+    public function enableDebug()
     {
         $this->twig->enableDebug();
     }

@@ -18,9 +18,15 @@
 	],
 	"require" : {
 		"php" : ">=5.3.3",
-		"twig/twig" : ">=1.1,<2.0"
+		"twig/twig" : ">=1.1,<2.0",
+		"masterminds/html5":">=1.*"
 	},
 	"autoload" : {
 		"psr-0" : "src/"
-	}
+	},
+    "extra" : {
+        "branch-alias" : {
+            "dev-master" : "1.0-dev"
+        }
+    }   	
 }

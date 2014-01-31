@@ -9,7 +9,7 @@ use Goetas\Twital\DOMHelper;
 class OmitAttribute implements Attribute
 {
 
-    function visit(DOMAttr $att, Compiler $twital)
+    public function visit(DOMAttr $att, Compiler $twital)
     {
         $node = $att->ownerElement;
 

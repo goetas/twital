@@ -25,13 +25,13 @@ class DOMHelper
     public static function insertAfterSet(\DOMNode $node, array $newNodes)
     {
         $ref = $node;
-    	foreach($newNodes as $newNode){
-    	    if($newNode->parentNode){
-    	        $newNode->parentNode->removeChild($newNode);
-    	    }
-    	    $ref->parentNode->insertBefore($newNode, $ref->nextSibling);
-    	    $ref = $newNode;
-    	}
+        foreach ($newNodes as $newNode) {
+            if ($newNode->parentNode) {
+                $newNode->parentNode->removeChild($newNode);
+            }
+            $ref->parentNode->insertBefore($newNode, $ref->nextSibling);
+            $ref = $newNode;
+        }
     }
 
     public static function replaceWithSet(\DOMNode $node, array $newNodes)

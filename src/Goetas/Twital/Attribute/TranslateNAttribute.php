@@ -4,19 +4,17 @@ namespace Goetas\Twital\Attribute;
 use Goetas\Twital\Attribute;
 use Goetas\Twital\Compiler;
 use DOMAttr;
-use Goetas\Twital\DOMHelper;
 
 class TranslateNAttribute implements Attribute
 {
 
-    function visit(DOMAttr $att, Compiler $twital)
+    public function visit(DOMAttr $att, Compiler $twital)
     {
-
 
         $node = $att->ownerElement;
         $varNode = $node->getAttributeNodeNS(Compiler::NS, 'trans');
         $with = '{\'%count%\':'.html_entity_decode($att->value).'}';
-        if($varNode && $varNode->value){
+        if ($varNode && $varNode->value) {
             $with = "($with|merge(".html_entity_decode($varNode->value).')';
             $node->removeAttributeNode($varNode);
         }

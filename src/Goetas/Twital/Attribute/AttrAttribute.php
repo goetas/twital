@@ -14,7 +14,7 @@ class AttrAttribute implements Attribute
         return "__a" . abs(crc32(spl_object_hash($node))) % 200;
     }
 
-    function visit(DOMAttr $att, Compiler $twital)
+    public function visit(DOMAttr $att, Compiler $twital)
     {
         $node = $att->ownerElement;
         $expressions = ParserHelper::staticSplitExpression($att->value, ";");
@@ -81,10 +81,12 @@ class AttrAttribute implements Attribute
         if (count($parts) == 1) {
             $attr = self::findAttrParts($parts[0]);
             $attr['test'] = 'true';
+
             return $attr;
         } elseif (count($parts) == 2) {
             $attr = self::findAttrParts($parts[1]);
             $attr['test'] = $parts[0];
+
             return $attr;
         } else {
             throw new Exception(__CLASS__ . "::splitAttrExpression error in '$str'");
