@@ -2,13 +2,13 @@
 namespace Goetas\Twital\Attribute;
 
 use Goetas\Twital\Attribute as AttributeBase;
-use Goetas\Twital\TwitalLoader;
+use Goetas\Twital\Compiler;
 use DOMAttr;
 use Goetas\Twital\DOMHelper;
-
+use DOMException;
 class BaseAttribute implements AttributeBase
 {
-    function visit(DOMAttr $att, TwitalLoader $twital)
+    function visit(DOMAttr $att, Compiler $twital)
     {
         $node = $att->ownerElement;
 
@@ -16,7 +16,9 @@ class BaseAttribute implements AttributeBase
         $node->parentNode->insertBefore($pi, $node);
 
         $pi = $node->ownerDocument->createTextNode("{% end{$att->localName} %}");
-        DOMHelper::insertAfter($node->parentNode, $pi, $node);
+
+
+        $node->parentNode->insertBefore($pi, $node->nextSibling); // insert after
 
         $node->removeAttributeNode($att);
     }

@@ -7,11 +7,11 @@ use Goetas\Twital\DOMLoader\XHTMLDOMLoader;
 use Goetas\Twital\Extension;
 use Goetas\Twital\Attribute;
 use Goetas\Twital\Node;
+use Goetas\Twital\Compiler;
 
 class CoreExtension implements Extension
 {
 
-    const NS = "Twital";
 
     public function getDOMLoaders()
     {
@@ -23,25 +23,25 @@ class CoreExtension implements Extension
     public function getAttributes()
     {
         $attributes = array();
-        $attributes[self::NS]['__base__'] = new Attribute\BaseAttribute();
-        $attributes[self::NS]['set'] = new Attribute\SetAttribute();
-        $attributes[self::NS]['content'] = new Attribute\ContentAttribute();
-        $attributes[self::NS]['omit'] = new Attribute\OmitAttribute();
-        $attributes[self::NS]['capture'] = new Attribute\CaptureAttribute();
-        $attributes[self::NS]['attr'] = new Attribute\AttrAttribute();
-        $attributes[self::NS]['attr-append'] = new Attribute\AttrAppendAttribute();
-        $attributes[self::NS]['attr-translate'] = new Attribute\AttrTranslateAttribute();
+        $attributes[Compiler::NS]['__base__'] = new Attribute\BaseAttribute();
+        $attributes[Compiler::NS]['set'] = new Attribute\SetAttribute();
+        $attributes[Compiler::NS]['content'] = new Attribute\ContentAttribute();
+        $attributes[Compiler::NS]['omit'] = new Attribute\OmitAttribute();
+        $attributes[Compiler::NS]['capture'] = new Attribute\CaptureAttribute();
+        $attributes[Compiler::NS]['attr'] = new Attribute\AttrAttribute();
+        $attributes[Compiler::NS]['attr-append'] = new Attribute\AttrAppendAttribute();
+        $attributes[Compiler::NS]['attr-translate'] = new Attribute\AttrTranslateAttribute();
         return $attributes;
     }
 
     public function getNodes()
     {
         $nodes = array();
-        $nodes[self::NS]['extends'] = new Node\ExtendsNode();
-        $nodes[self::NS]['block'] = new Node\BlockNode();
-        $nodes[self::NS]['macro'] = new Node\MacroNode();
-        $nodes[self::NS]['import'] = new Node\ImportNode();
-        $nodes[self::NS]['include'] = new Node\IncludeNode();
+        $nodes[Compiler::NS]['extends'] = new Node\ExtendsNode();
+        $nodes[Compiler::NS]['block'] = new Node\BlockNode();
+        $nodes[Compiler::NS]['macro'] = new Node\MacroNode();
+        $nodes[Compiler::NS]['import'] = new Node\ImportNode();
+        $nodes[Compiler::NS]['include'] = new Node\IncludeNode();
         return $nodes;
     }
 
@@ -50,7 +50,7 @@ class CoreExtension implements Extension
         return array(
             function ($string)
             {
-                return preg_replace('#<(.*) xmlns:[a-zA-Z0-9]+=("|\')' . CoreExtension::NS . '("|\')(.*)>#m', "<\\1\\4>", $string);
+                return preg_replace('#<(.*) xmlns:[a-zA-Z0-9]+=("|\')' . Compiler::NS . '("|\')(.*)>#m', "<\\1\\4>", $string);
             },
             function ($string)
             {

@@ -9,6 +9,7 @@ use DOMProcessingInstruction;
 use goetas\xml;
 use Goetas\Twital\Extension\CoreExtension;
 use Goetas\Twital\Extension\HTML5Extension;
+use Goetas\Twital\Extension\I18nExtension;
 
 class Compiler
 {
@@ -60,10 +61,11 @@ class Compiler
 
         $this->extensions[] = new CoreExtension();
         $this->extensions[] = new HTML5Extension();
+        $this->extensions[] = new I18nExtension();
 
         foreach ($this->extensions as $extensions) {
-            $this->attributes = array_merge($this->attributes, $extensions->getAttributes());
-            $this->node = array_merge($this->node, $extensions->getNodes());
+            $this->attributes = array_merge_recursive($this->attributes, $extensions->getAttributes());
+            $this->node = array_merge_recursive($this->node, $extensions->getNodes());
             $this->preFlter = array_merge($this->preFlter, $extensions->getPreFilters());
             $this->postFilter = array_merge($this->postFilter, $extensions->getPostFilters());
             $this->domLoaders = array_merge($this->domLoaders, $extensions->getDomLoaders());
@@ -81,27 +83,27 @@ class Compiler
      * @param
      *            $xml
      */
-    public function compile($cnt)
+    public function compile($source)
     {
         foreach ($this->preFlter as $filter) {
-            $cnt = call_user_func($filter, $cnt);
+            $source = call_user_func($filter, $source);
         }
 
         $domLoader = $this->getDomLoader();
 
-        $xml = $domLoader->createDOM($cnt);
+        $xml = $domLoader->createDOM($source);
 
-        $metadata = $domLoader->collectMetadata($xml, $cnt);
+        $metadata = $domLoader->collectMetadata($xml, $source);
 
         $this->applyTemplatesToChilds($xml);
 
-        $cnt = $domLoader->dumpDOM($xml, $metadata);
+        $source = $domLoader->dumpDOM($xml, $metadata);
 
         foreach ($this->postFilter as $filter) {
-            $cnt = call_user_func($filter, $cnt);
+            $source = call_user_func($filter, $source);
         }
 
-        return $cnt;
+        return $source;
     }
 
     protected function getDomLoader()
@@ -131,20 +133,24 @@ class Compiler
     public function applyTemplatesToAttributes(\DOMNode $node)
     {
         $continueNode = true;
-        foreach (iterator_to_array($node->attributes) as $attr) {
-            if (isset($this->attributes[$attr->namespaceURI][$attr->localName])) {
-                $attPlugin = $this->attributes[$attr->namespaceURI][$attr->localName];
-            } elseif (isset($this->attributes[$attr->namespaceURI]['__base__'])) {
-                $attPlugin = $this->attributes[$attr->namespaceURI]['__base__'];
-            } else {
-                continue;
-            }
+        if($node->childNodes){
+            foreach (iterator_to_array($node->attributes) as $attr) {
+                if(!$attr->ownerElement){
+                    continue;
+                }elseif (isset($this->attributes[$attr->namespaceURI][$attr->localName])) {
+                    $attPlugin = $this->attributes[$attr->namespaceURI][$attr->localName];
+                } elseif (isset($this->attributes[$attr->namespaceURI]['__base__'])) {
+                    $attPlugin = $this->attributes[$attr->namespaceURI]['__base__'];
+                } else {
+                    continue;
+                }
 
-            $return = $attPlugin->visit($attr, $this);
-            if ($return !== null) {
-                $continueNode = $continueNode && ($return & Attribute::STOP_NODE);
-                if ($return & Attribute::STOP_ATTRIBUTE) {
-                    break;
+                $return = $attPlugin->visit($attr, $this);
+                if ($return !== null) {
+                    $continueNode = $continueNode && ($return & Attribute::STOP_NODE);
+                    if ($return & Attribute::STOP_ATTRIBUTE) {
+                        break;
+                    }
                 }
             }
         }
@@ -153,9 +159,11 @@ class Compiler
 
     public function applyTemplatesToChilds(\DOMNode $node)
     {
-        foreach (iterator_to_array($node->childNodes) as $child) {
-            if ($child instanceof \DOMElement) {
-                $this->applyTemplates($child);
+        if($node->childNodes){
+            foreach (iterator_to_array($node->childNodes) as $child) {
+                if ($child instanceof \DOMElement) {
+                    $this->applyTemplates($child);
+                }
             }
         }
     }

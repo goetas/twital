@@ -2,14 +2,14 @@
 namespace Goetas\Twital\Node;
 
 use Goetas\Twital\Node;
-use Goetas\Twital\TwitalLoader;
+use Goetas\Twital\Compiler;
 use goetas\xml;
 use Goetas\Twital\Exception;
 
 class IncludeNode implements Node
 {
 
-    function visit(xml\XMLDomElement $node, TwitalLoader $twital)
+    function visit(\DOMElement $node, Compiler $twital)
     {
         if (! $node->hasAttribute("name") && ! $node->hasAttribute("name-exp")) {
             throw new Exception("Name or name-exp atribute is required");

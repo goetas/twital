@@ -6,5 +6,5 @@ use goetas\xml;
 Interface Node
 {
 
-    function visit(xml\XMLDomElement $node, TwitalLoader $twital);
+    function visit(\DOMElement $node, Compiler $twital);
 }

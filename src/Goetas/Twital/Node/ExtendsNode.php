@@ -2,29 +2,33 @@
 namespace Goetas\Twital\Node;
 
 use Goetas\Twital\Node;
-use goetas\xml;
-use Goetas\Twital\TwitalLoader;
+use Exception;
+use Goetas\Twital\Compiler;
 use Goetas\Twital\DOMHelper;
 
 class ExtendsNode implements Node
 {
 
-    function visit(xml\XMLDomElement $node, TwitalLoader $twital)
+    function visit(\DOMElement $node, Compiler $twital)
     {
-        if (! $node->hasAttribute("name") && ! $node->hasAttribute("name-exp")) {
+        if (! $node->hasAttribute("name") && ! $node->hasAttributeNS(Compiler::NS,"name")) {
             throw new Exception("name or name-exp atribute is required");
         }
-        
-        $twital->applyTemplatesToChilds($node);
-        
-        $pi = $node->ownerDocument->createTextNode("{% extends " . ($node->hasAttribute("name-exp") ? $node->getAttribute("name-exp") : ("'" . $node->getAttribute("name") . "'")) . " %}");
-        DOMHelper::insertAfter($node->parentNode, $pi, $node);
-        $ref = $pi;
-        while ($child = $node->firstChild) {
-            $node->removeChild($child);
-            DOMHelper::insertAfter($node->parentNode, $child, $ref);
-            $ref = $child;
+
+        foreach (iterator_to_array($node->childNodes) as $child){
+            if(!($child instanceof \DOMElement)){
+                $child->parentNode->removeChild($child);
+            }
         }
-        $node->remove();
+
+        $twital->applyTemplatesToChilds($node);
+
+        $ext = $node->ownerDocument->createTextNode("{% extends " . ($node->hasAttributeNS(Compiler::NS, "name") ? $node->getAttributens(Compiler::NS, "name") : ("'" . $node->getAttribute("name") . "'")) . " %}");
+
+        $set = iterator_to_array($node->childNodes);
+        array_unshift($set, $ext);
+
+        DOMHelper::replaceWithSet($node, $set);
+
     }
 }

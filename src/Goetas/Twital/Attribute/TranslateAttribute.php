@@ -2,23 +2,27 @@
 namespace Goetas\Twital\Attribute;
 
 use Goetas\Twital\Attribute;
-use Goetas\Twital\TwitalLoader;
+use Goetas\Twital\Compiler;
 use DOMAttr;
 use Goetas\Twital\DOMHelper;
 
-class CaptureAttribute implements Attribute
+class TranslateAttribute implements Attribute
 {
 
-    function visit(DOMAttr $att, TwitalLoader $twital)
+    function visit(DOMAttr $att, Compiler $twital)
     {
         $node = $att->ownerElement;
 
-        $pi = $node->ownerDocument->createTextNode("{% set " . html_entity_decode($att->value) . " %}");
-        $node->parentNode->insertBefore($pi, $node);
+        $with = '';
+        if($att->value){
+            $with = "with ".html_entity_decode($att->value);
+        }
+        $start = $node->ownerDocument->createTextNode("{% trans $with %}");
+        $end = $node->ownerDocument->createTextNode("{% endtrans %}");
 
-        $pi = $node->ownerDocument->createTextNode("{% endset %}");
+        $node->insertBefore($start, $node->firstChild);
 
-        DOMHelper::insertAfter($node->parentNode, $pi, $node);
+        $node->appendChild($end);
 
         $node->removeAttributeNode($att);
     }

@@ -2,31 +2,38 @@
 namespace Goetas\Twital\Node;
 
 use Goetas\Twital\Node;
-use Goetas\Twital\TwitalLoader;
-use goetas\xml;
-use Goetas\Twital\DOMHelper;
+use Goetas\Twital\Compiler;
 
+use Goetas\Twital\DOMHelper;
+use Exception;
 class BlockNode implements Node
 {
-    function visit(xml\XMLDomElement $node, TwitalLoader $twital)
+    function visit(\DOMElement $node, Compiler $twital)
     {
         if (! $node->hasAttribute("name")) {
             throw new Exception("Name atribute is required");
         }
+        $xp = new \DOMXPath($node->ownerDocument);
+
+        $currPrima = $node->previousSibling;
+
+        $sandbox = $node->ownerDocument->createElementNS(Compiler::NS, "sandbox");
+        $node->parentNode->insertBefore($sandbox,$node);
+        $node->parentNode->removeChild($node);
+        $sandbox->appendChild($node);
+
+        $twital->applyTemplatesToAttributes($node);
         $twital->applyTemplatesToChilds($node);
 
-        $pi = $node->ownerDocument->createTextNode("{% block " . $node->getAttribute("name") . " %}");
-        $node->parentNode->insertBefore($pi, $node);
+        $start = $node->ownerDocument->createTextNode("\n{% block " . $node->getAttribute("name") . " %}");
+        $end = $node->ownerDocument->createTextNode("{% endblock %}\n");
 
-        $ref = $pi;
-        while ($child = $node->firstChild) {
-            $node->removeChild($child);
-            DOMHelper::insertAfter($node->parentNode, $child, $ref);
-            $ref = $child;
-        }
+        $sandbox->insertBefore($start, $sandbox->firstChild);
+        $sandbox->appendChild($end);
 
-        $pi = $node->ownerDocument->createTextNode("{% endblock %}");
-        DOMHelper::insertAfter($node->parentNode, $pi, $node);
-        $node->remove();
+
+
+        DOMHelper::replaceWithSet($sandbox, iterator_to_array($sandbox->childNodes));
+        DOMHelper::replaceWithSet($node, iterator_to_array($node->childNodes));
     }
 }

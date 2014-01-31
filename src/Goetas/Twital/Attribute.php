@@ -20,5 +20,5 @@ interface Attribute
      */
     const STOP_ATTRIBUTE = 2;
 
-    function visit(\DOMAttr $att, TwitalLoader $twital);
+    function visit(\DOMAttr $att, Compiler $twital);
 }

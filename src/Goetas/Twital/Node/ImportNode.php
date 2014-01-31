@@ -2,14 +2,14 @@
 namespace Goetas\Twital\Node;
 
 use Goetas\Twital\Node;
-use Goetas\Twital\TwitalLoader;
+use Goetas\Twital\Compiler;
 use goetas\xml;
 use Goetas\Twital\Exception;
 
 class ImportNode implements Node
 {
 
-    function visit(xml\XMLDomElement $node, TwitalLoader $twital)
+    function visit(\DOMElement $node, Compiler $twital)
     {
         if (! $node->hasAttribute("name")) {
             throw new Exception("Name atribute is required");

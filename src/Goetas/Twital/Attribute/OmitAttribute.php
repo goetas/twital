@@ -2,14 +2,14 @@
 namespace Goetas\Twital\Attribute;
 
 use Goetas\Twital\Attribute;
-use Goetas\Twital\TwitalLoader;
+use Goetas\Twital\Compiler;
 use DOMAttr;
 use Goetas\Twital\DOMHelper;
 
 class OmitAttribute implements Attribute
 {
 
-    function visit(DOMAttr $att, TwitalLoader $twital)
+    function visit(DOMAttr $att, Compiler $twital)
     {
         $node = $att->ownerElement;
 

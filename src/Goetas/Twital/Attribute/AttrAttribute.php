@@ -2,10 +2,10 @@
 namespace Goetas\Twital\Attribute;
 
 use Goetas\Twital\Attribute;
-use Goetas\Twital\TwitalLoader;
+use Goetas\Twital\Compiler;
 use DOMAttr;
 use Goetas\Twital\ParserHelper;
-
+use Exception;
 class AttrAttribute implements Attribute
 {
 
@@ -14,7 +14,7 @@ class AttrAttribute implements Attribute
         return "__a" . abs(crc32(spl_object_hash($node))) % 200;
     }
 
-    function visit(DOMAttr $att, TwitalLoader $twital)
+    function visit(DOMAttr $att, Compiler $twital)
     {
         $node = $att->ownerElement;
         $expressions = ParserHelper::staticSplitExpression($att->value, ";");

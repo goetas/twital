@@ -2,18 +2,35 @@
 namespace Goetas\Twital\Attribute;
 
 use Goetas\Twital\Attribute;
-use Goetas\Twital\TwitalLoader;
+use Goetas\Twital\Compiler;
 use DOMAttr;
 
 class SetAttribute implements Attribute
 {
 
-    function visit(DOMAttr $att, TwitalLoader $twital)
+    function visit(DOMAttr $att, Compiler $twital)
     {
         $node = $att->ownerElement;
 
-        $pi = $node->ownerDocument->createTextNode("{% {$att->localName} " . html_entity_decode($att->value) . " %}");
-        $node->parentNode->insertBefore($pi, $node);
+        $sets = array();
+        foreach(explode(";", $att->value) as $set){
+            if(trim($set)){
+                $sets[] = "{% set " . html_entity_decode($set) . " %}";
+            }
+        }
+
+        $pi = $node->ownerDocument->createTextNode(implode("", $sets));
+
+
+        if(0 && $node->namespaceURI==Compiler::NS){
+            if($node->firstChild){
+                $node->parentNode->insertBefore($pi, $node->firstChild);
+            }else{
+                $node->parentNode->appendChild($pi);
+            }
+        }else{
+            $node->parentNode->insertBefore($pi, $node);
+        }
 
         $node->removeAttributeNode($att);
     }

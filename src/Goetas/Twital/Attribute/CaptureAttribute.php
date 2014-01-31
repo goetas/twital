@@ -2,14 +2,14 @@
 namespace Goetas\Twital\Attribute;
 
 use Goetas\Twital\Attribute;
-use Goetas\Twital\TwitalLoader;
+use Goetas\Twital\Compiler;
 use DOMAttr;
 use Goetas\Twital\DOMHelper;
 
 class CaptureAttribute implements Attribute
 {
 
-    function visit(DOMAttr $att, TwitalLoader $twital)
+    function visit(DOMAttr $att, Compiler $twital)
     {
         $node = $att->ownerElement;
 
@@ -18,7 +18,8 @@ class CaptureAttribute implements Attribute
 
         $pi = $node->ownerDocument->createTextNode("{% endset %}");
 
-        DOMHelper::insertAfter($node->parentNode, $pi, $node);
+
+        $node->parentNode->insertBefore($pi, $node->nextSibling); // insert after
 
         $node->removeAttributeNode($att);
     }
