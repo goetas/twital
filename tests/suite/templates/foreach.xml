@@ -1,0 +1,11 @@
+<div xmlns:t="Twital">
+	
+	<div class="Asmir" t:attr-translate="class">
+		pan1
+	</div>
+	<!--
+	<div class="xxx" rel="rel" t:attr="class=bbbb; cond?rel = 'asmir'; cond?rel = a+b " t:attr-append="class='yyy'">pan1</div>
+	<div t:foreach="i in array">{{i}}</div>
+	<div t:capture="vname" t:foreach="xxx">pan1</div>
+	-->
+</div>

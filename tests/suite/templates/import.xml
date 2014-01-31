@@ -1,0 +1,5 @@
+<div xmlns:t="Twital">
+	<t:import name="input.html" as="forms"/>
+	<t:import name="input.html" aliases="input as xx, textarea"/>
+	<div t:if="ss">xx</div>
+</div>

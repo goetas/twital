@@ -1,0 +1,3 @@
+<div xmlns:t="Twital" t:extends="2-base.xml">
+	<div t:block="base">Test esteso due</div>
+</div>
