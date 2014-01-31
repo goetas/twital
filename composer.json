@@ -1,6 +1,6 @@
 {
 	"name" : "goetas/twital",
-	"description" : "XML Twig Templating engine",
+	"description" : "Twig templating engine",
 	"authors" : [{
 			"name" : "Asmir Mustafic",
 			"email" : "goetas@lignano.it"
@@ -9,14 +9,16 @@
 	"keywords" : [
 		"php",
 		"xml",
-		"templating"
+		"templating",
+		"twig"
 	],
 	"homepage" : "https://github.com/goetas/twital",
 	"license" : [
 		"MIT"
 	],
 	"require" : {
-		"php" : ">=5.3.3"
+		"php" : ">=5.3.3",
+		"twig/twig" : ">=1.1,<2.0"
 	},
 	"autoload" : {
 		"psr-0" : "src/"
