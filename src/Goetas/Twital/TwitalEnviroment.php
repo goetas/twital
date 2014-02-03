@@ -21,9 +21,7 @@ class TwitalEnviroment extends \Twig_Environment
     {
         if (strpos($name, $this->twitalPathComponent) !== false) {
             $source = $this->twitalCompiler->compile($source);
-            die($source);
         }
-
         return $this->twig->compileSource($source, $name);
     }
 

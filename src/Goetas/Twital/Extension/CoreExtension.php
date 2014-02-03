@@ -39,6 +39,7 @@ class CoreExtension implements Extension
         $nodes = array();
         $nodes[Compiler::NS]['extends'] = new Node\ExtendsNode();
         $nodes[Compiler::NS]['block'] = new Node\BlockNode();
+        $nodes[Compiler::NS]['block-call'] = new Node\BlockCallNode();
         $nodes[Compiler::NS]['macro'] = new Node\MacroNode();
         $nodes[Compiler::NS]['import'] = new Node\ImportNode();
         $nodes[Compiler::NS]['include'] = new Node\IncludeNode();

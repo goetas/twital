@@ -4,6 +4,7 @@ namespace Goetas\Twital\Attribute;
 use Goetas\Twital\Attribute;
 use Goetas\Twital\Compiler;
 use DOMAttr;
+use Goetas\Twital\ParserHelper;
 
 class SetAttribute implements Attribute
 {
@@ -13,7 +14,7 @@ class SetAttribute implements Attribute
         $node = $att->ownerElement;
 
         $sets = array();
-        foreach (explode(";", $att->value) as $set) {
+        foreach (ParserHelper::staticSplitExpression($att->value,",") as $set) {
             if (trim($set)) {
                 $sets[] = "{% set " . html_entity_decode($set) . " %}";
             }
@@ -21,15 +22,7 @@ class SetAttribute implements Attribute
 
         $pi = $node->ownerDocument->createTextNode(implode("", $sets));
 
-        if (0 && $node->namespaceURI==Compiler::NS) {
-            if ($node->firstChild) {
-                $node->parentNode->insertBefore($pi, $node->firstChild);
-            } else {
-                $node->parentNode->appendChild($pi);
-            }
-        } else {
-            $node->parentNode->insertBefore($pi, $node);
-        }
+        $node->parentNode->insertBefore($pi, $node);
 
         $node->removeAttributeNode($att);
     }
