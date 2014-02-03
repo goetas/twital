@@ -12,12 +12,14 @@ use Goetas\Twital\Compiler;
 class I18nExtension implements Extension
 {
 
-
-    public function getDOMLoaders()
+    public function getLoaders()
     {
         return array();
     }
-
+    public function getDumpers()
+    {
+        return array();
+    }
     public function getAttributes()
     {
         $attributes = array();

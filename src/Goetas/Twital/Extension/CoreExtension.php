@@ -8,15 +8,23 @@ use Goetas\Twital\Extension;
 use Goetas\Twital\Attribute;
 use Goetas\Twital\Node;
 use Goetas\Twital\Compiler;
+use Goetas\Twital\Loader\XMLLoader;
+use Goetas\Twital\Dumper\XMLDumper;
 
 class CoreExtension implements Extension
 {
 
 
-    public function getDOMLoaders()
+    public function getLoaders()
     {
         return array(
-            'xml' => new XMLDOMLoader()
+            'xml' => new XMLLoader()
+        );
+    }
+    public function getDumpers()
+    {
+        return array(
+            'xml' => new XMLDumper()
         );
     }
 

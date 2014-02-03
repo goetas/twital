@@ -13,13 +13,14 @@ class TwitalEnviroment extends \Twig_Environment
     public function __construct(\Twig_Environment $twig = null, Compiler $twitalCompiler = null, $twitalPathComponent = '.twital')
     {
         $this->twig = $twig;
-        $this->twitalCompiler = $twitalCompiler;
+        $this->twitalCompiler = $twitalCompiler?:new Compiler();
         $this->twitalPathComponent = $twitalPathComponent;
     }
 
     public function compileSource($source, $name = null)
     {
-        if (strpos($name, $this->twitalPathComponent) !== false) {
+        // a brutal way to decide if use Twital or not
+        if ((!$this->twitalPathComponent || strpos($name, $this->twitalPathComponent) !== false) && strpos($name, Compiler::NS) !== false) {
             $source = $this->twitalCompiler->compile($source);
         }
         return $this->twig->compileSource($source, $name);

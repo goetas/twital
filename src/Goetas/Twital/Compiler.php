@@ -41,6 +41,11 @@ class Compiler
      * @var array
      */
     protected $domLoaders = array();
+    /**
+     *
+     * @var array
+     */
+    protected $domDumpers = array();
 
     /**
      *
@@ -49,10 +54,12 @@ class Compiler
     protected $postFilter = array();
 
     protected $domLoader;
+    protected $domDumper;
 
-    public function __construct($domLoader = 'html5')
+    public function __construct($domLoader = 'html5', $domDumper = 'html5')
     {
-        $this->domLoader = 'html5';
+        $this->domLoader = $domLoader;
+        $this->domDumper = $domDumper;
 
         $this->addExtension(new CoreExtension());
         $this->addExtension(new I18nExtension());
@@ -72,21 +79,17 @@ class Compiler
                 $this->node = array_merge_recursive($this->node, $extensions->getNodes());
                 $this->preFlter = array_merge($this->preFlter, $extensions->getPreFilters());
                 $this->postFilter = array_merge($this->postFilter, $extensions->getPostFilters());
-                $this->domLoaders = array_merge($this->domLoaders, $extensions->getDomLoaders());
+                $this->domLoaders = array_merge($this->domLoaders, $extensions->getLoaders());
+                $this->domDumpers = array_merge($this->domDumpers, $extensions->getDumpers());
             }
             $this->extensionsinitialized = true;
         }
     }
-    protected function loadDOM($string)
-    {
-        return $this->domLoaders[$this->domLoader]->createDOM($string);
-    }
 
     /**
-     * Ritorna una stringa del DOM presente in $xml
      *
-     * @param
-     *            $xml
+     * @param $source
+     * @return string
      */
     public function compile($source)
     {
@@ -97,15 +100,15 @@ class Compiler
             $source = call_user_func($filter, $source);
         }
 
-        $domLoader = $this->getDomLoader();
+        $domLoader = $this->getLoader();
 
-        $xml = $domLoader->createDOM($source);
+        $xml = $domLoader->load($source);
 
         $metadata = $domLoader->collectMetadata($xml, $source);
 
         $this->applyTemplatesToChilds($xml);
 
-        $source = $domLoader->dumpDOM($xml, $metadata);
+        $source = $this->getDumper($this->domDumper)->dump($xml, $metadata);
 
         foreach ($this->postFilter as $filter) {
             $source = call_user_func($filter, $source);
@@ -113,11 +116,30 @@ class Compiler
 
         return $source;
     }
-
-    protected function getDomLoader()
+    /**
+     *
+     * @param string $loader
+     * @throws Exception
+     * @return Loader
+     */
+    protected function getLoader($loader)
     {
-        if (! isset($this->domLoaders[$this->domLoader])) {
-            throw new Exception("Can't find a domloader called {$this->domLoader}");
+        if (! isset($this->domLoaders[$loader])) {
+            throw new Exception("Can't find a loader called {$loader}");
+        }
+
+        return $this->domLoaders[$this->domLoader];
+    }
+    /**
+     *
+     * @param string $dumper
+     * @throws Exception
+     * @return Dumper
+     */
+    protected function getDumper($dumper)
+    {
+        if (! isset($this->domDumpers[$dumper])) {
+            throw new Exception("Can't find a dumper called {$dumper}");
         }
 
         return $this->domLoaders[$this->domLoader];

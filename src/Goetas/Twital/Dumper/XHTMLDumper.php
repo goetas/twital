@@ -1,14 +1,16 @@
 <?php
-namespace Goetas\Twital\DOMLoader;
+namespace Goetas\Twital\Dumper;
 
-class XHTMLDOMLoader extends XMLDOMLoader
+use Goetas\Twital\DOMLoader\XMLDumper;
+
+class XHTMLDumper extends XMLDumper
 {
 
-    public function dumpDom(\DOMDocument $metadata)
+    public function dump(\DOMDocument $metadata)
     {
-        $string = parent::dumpDOM($dom, $metadata);
+        $string = parent::dump($dom, $metadata);
         $string = $this->replaceShortTags($string);
-        
+
         return $string;
     }
 

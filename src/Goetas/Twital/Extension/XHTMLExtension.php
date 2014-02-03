@@ -3,15 +3,20 @@ namespace Goetas\Twital\Extension;
 
 use Goetas\Twital\Extension;
 use Goetas\Twital\DOMLoader\HTML5DOMLoader;
+use Goetas\Twital\Dumper\XHTMLDumper;
 
 class XHTMLExtension implements Extension
 {
 
-    public function getDOMLoaders()
+    public function getLoaders()
     {
-        return array(
-            'xhtml' => new XHTMLDOMLoader()
-        );
+        return array();
+    }
+    public function getDumpers()
+    {
+    	return array(
+    		'xhtml'=>new XHTMLDumper()
+    	);
     }
 
     public function getAttributes()

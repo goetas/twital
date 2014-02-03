@@ -1,17 +1,11 @@
 <?php
-namespace Goetas\Twital\DOMLoader;
+namespace Goetas\Twital\Dumper;
 
-use Goetas\Twital\DOMLoader;
 
-class XMLDOMLoader implements DOMLoader
+use Goetas\Twital\Dumper;
+
+class XMLDumper implements Dumper
 {
-
-    public function createDom($xml)
-    {
-        $dom = new \DOMDocument('1.0', 'UTF-8');
-        $dom->loadXML($xml);
-        return $dom;
-    }
 
     public function collectMetadata(\DOMDocument $dom, $original)
     {
@@ -23,16 +17,12 @@ class XMLDOMLoader implements DOMLoader
         return $metedata;
     }
 
-    public function dumpDom(\DOMDocument $dom, $metedata)
+    public function dump(\DOMDocument $dom, $metedata)
     {
         if ($metedata['xmldeclaration']) {
             return $dom->saveXML();
         } else {
             $cnt = array();
-
-            if ($metedata['doctype']) {
-                $cnt[] = $dom->saveXML($xml->doctype) . "\n";
-            }
 
             foreach ($dom->childNodes as $node) {
                 $cnt[] = $dom->saveXML($node);

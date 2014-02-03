@@ -1,25 +1,11 @@
 <?php
-namespace Goetas\Twital\DOMLoader;
+namespace Goetas\Twital\Dumper;
 
-use Goetas\Twital\DOMLoader;
 use HTML5;
-class HTML5DOMLoader implements DOMLoader
+use Goetas\Twital\Dumper;
+class HTML5Dumper implements Dumper
 {
 
-    public function createDom($html)
-    {
-
-        $f = HTML5::loadHTMLFragment($html);
-        $dom = new \DOMDocument('1.0', 'UTF-8');
-        $dom->appendChild($dom->importNode($f,1));
-
-        foreach(iterator_to_array($dom->childNodes) as $child){
-            if($child instanceof \DOMElement){
-                self::fixNss($child, array());
-            }
-        }
-        return $dom;
-    }
     protected static function fixNss(\DOMElement $element, $nss = array())
     {
         foreach($element->attributes as $attr){
@@ -61,7 +47,7 @@ class HTML5DOMLoader implements DOMLoader
         }
     }
 
-    public function dumpDom(\DOMDocument $dom, $metedata)
+    public function dump(\DOMDocument $dom, $metedata)
     {
         if(!$metedata['doctype']){
             return HTML5::saveHTML($dom->childNodes);

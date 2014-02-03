@@ -12,5 +12,7 @@ interface Extension
 
     public function getPreFilters();
 
-    public function getDOMLoaders();
+    public function getLoaders();
+
+    public function getDumpers();
 }
