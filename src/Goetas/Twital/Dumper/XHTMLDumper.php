@@ -1,8 +1,6 @@
 <?php
 namespace Goetas\Twital\Dumper;
 
-use Goetas\Twital\DOMLoader\XMLDumper;
-
 class XHTMLDumper extends XMLDumper
 {
 

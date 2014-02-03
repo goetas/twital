@@ -20,9 +20,10 @@ class TwitalEnviroment extends \Twig_Environment
     public function compileSource($source, $name = null)
     {
         // a brutal way to decide if use Twital or not
-        if ((!$this->twitalPathComponent || strpos($name, $this->twitalPathComponent) !== false) && strpos($name, Compiler::NS) !== false) {
+        if ((!$this->twitalPathComponent || strpos($name, $this->twitalPathComponent) !== false) && strpos($source, Compiler::NS) !== false) {
             $source = $this->twitalCompiler->compile($source);
         }
+
         return $this->twig->compileSource($source, $name);
     }
 

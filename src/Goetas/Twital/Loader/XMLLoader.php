@@ -1,7 +1,7 @@
 <?php
 namespace Goetas\Twital\Loader;
 
-use Goetas\Twital\DOMLoader;
+use Goetas\Twital\Loader;
 
 class XMLLoader implements Loader
 {

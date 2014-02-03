@@ -3,6 +3,7 @@ namespace Goetas\Twital\Loader;
 
 use Goetas\Twital\DOMLoader;
 use HTML5;
+use Goetas\Twital\Loader;
 
 class HTML5Loader implements Loader
 {

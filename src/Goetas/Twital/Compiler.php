@@ -84,6 +84,7 @@ class Compiler
             }
             $this->extensionsinitialized = true;
         }
+
     }
 
     /**
@@ -100,15 +101,16 @@ class Compiler
             $source = call_user_func($filter, $source);
         }
 
-        $domLoader = $this->getLoader();
+        $loader = $this->getLoader($this->domLoader);
+        $dumper = $this->getDumper($this->domDumper);
 
-        $xml = $domLoader->load($source);
+        $xml = $loader->load($source);
 
-        $metadata = $domLoader->collectMetadata($xml, $source);
+        $metadata = $dumper->collectMetadata($xml, $source);
 
         $this->applyTemplatesToChilds($xml);
 
-        $source = $this->getDumper($this->domDumper)->dump($xml, $metadata);
+        $source = $dumper->dump($xml, $metadata);
 
         foreach ($this->postFilter as $filter) {
             $source = call_user_func($filter, $source);
@@ -128,7 +130,7 @@ class Compiler
             throw new Exception("Can't find a loader called {$loader}");
         }
 
-        return $this->domLoaders[$this->domLoader];
+        return $this->domLoaders[$loader];
     }
     /**
      *
@@ -142,7 +144,7 @@ class Compiler
             throw new Exception("Can't find a dumper called {$dumper}");
         }
 
-        return $this->domLoaders[$this->domLoader];
+        return $this->domDumpers[$dumper];
     }
 
     public function applyTemplates(\DOMElement $node)
