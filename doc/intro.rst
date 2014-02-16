@@ -35,13 +35,13 @@ To express the same template using Twital plugin for Twig you can do:
         </ul>
     </div>
 
-As you can see, using Twital tempalte is more readable and you have not to worry about opening and closing block instructions, they are inherited from HTML structure.
+As you can see, using Twital template is more readable and you have not to worry about opening and closing block instructions, they are inherited from HTML structure.
 
-Of course Twital supports all other Twig functionalitiers as template inheritance, translations, looping, escaping etc.
+Of course Twital supports all other Twig functionalities as template inheritance, translations, looping, escaping etc.
 
 Here you can find a complete list of Twital attributes and elements.
 
-If some Twig functionality is not avaiabel for Twital you can freely mix these two syntaxes:
+If some Twig functionality is not available for Twital you can freely mix these two syntaxes:
 
 .. code-block:: jinja
 
