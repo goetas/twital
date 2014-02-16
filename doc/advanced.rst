@@ -1,12 +1,6 @@
 Extending Twig
 ==============
 
-.. caution::
-
-    This section describes how to extend Twig as of **Twig 1.12**. If you are
-    using an older version, read the :doc:`legacy<advanced_legacy>` chapter
-    instead.
-
 Twig can be extended in many ways; you can add extra tags, filters, tests,
 operators, global variables, and functions. You can even extend the parser
 itself with node visitors.
