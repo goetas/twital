@@ -1,30 +1,63 @@
-Introduction
+What is Twital?
 ============
 
-This is the documentation for Twig, the flexible, fast, and secure template
-engine for PHP.
+Twital is a little "plugin" for Twig that change its templating language syntax, adding some shortcuts ad making it syntax more suitable for HTML based (XML, HTML5) templates.
 
-If you have any exposure to other text-based template languages, such as
-Smarty, Django, or Jinja, you should feel right at home with Twig. It's both
-designer and developer friendly by sticking to PHP's principles and adding
-functionality useful for templating environments.
+To learn more about Twig you can read more on "Twig Official Site":(http://www.)
 
-The key-features are...
+To understand better what are Twital benefits consider this Twig Template that simpy shows a listo of users from an array.
 
-* *Fast*: Twig compiles templates down to plain optimized PHP code. The
-  overhead compared to regular PHP code was reduced to the very minimum.
+.. code-block:: jinja
 
-* *Secure*: Twig has a sandbox mode to evaluate untrusted template code. This
-  allows Twig to be used as a template language for applications where users
-  may modify the template design.
+	{% if users %}
+	<div>
+		<h1>Members</h1>
+        <ul>
+        	{% for user in users %}
+        	<li>
+            	{{ user.name }}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
 
-* *Flexible*: Twig is powered by a flexible lexer and parser. This allows the
-  developer to define its own custom tags and filters, and create its own DSL.
+To express the same template using Twital plugin for Twig you can do:
+`
+	<div t:if="users">
+		<h1>Members</h1>
+        <ul t:for="user in users">
+        	<li>
+            	{{ user.name }}
+            </li>
+        </ul>
+    </div>
+
+As you can see, using Twital tempalte is more readable and you have not to worry about opneing and closing block istructions, they are inherithed from HTML structure.
+
+Of course Twital supports all other Twig functionalitiers as template ihretitane, translations, looping, escaping etc.
+
+Here you can find a complete list of Twital attributes and elements.
+
+If some Twig functionality is not avaiabel for Twital you can freely mix these two lyntaxeds:
+
+.. code-block:: jinja
+
+	<div t:if="users">
+		<h1>{% trans %}Members{% %}</h1>
+        <ul t:for="user in users">
+        	<li>
+            	{{ user.name }}
+            </li>
+        </ul>
+    </div>
+
+In the previous template we are mixing Twital and Twig syntax to use the Twig``trans`` tag (of course ``trans`` is anyway avaiable using Twital syntax).
 
 Prerequisites
 -------------
 
-Twig needs at least **PHP 5.2.4** to run.
+Twital needs at least **Twig 1.10** to run.
 
 Installation
 ------------
@@ -33,13 +66,11 @@ The recommended way to install Twig is via Composer:
 
 .. code-block:: bash
 
-    composer require twig/twig:1.*
+    composer require goetas/twital:1.0.*
 
 .. note::
 
-    To learn more about the other installation methods, read the
-    :doc:`installation<installation>` chapter; it also explains how to install
-    the Twig C extension.
+    To learn more about composer please refer to its original site.
 
 Basic API Usage
 ---------------
@@ -50,30 +81,11 @@ This section gives you a brief introduction to the PHP API for Twig.
 
     require_once '/path/to/vendor/autoload.php';
 
-    $loader = new Twig_Loader_String();
-    $twig = new Twig_Environment($loader);
-
-    echo $twig->render('Hello {{ name }}!', array('name' => 'Fabien'));
-
-Twig uses a loader (``Twig_Loader_String``) to locate templates, and an
-environment (``Twig_Environment``) to store the configuration.
-
-The ``render()`` method loads the template passed as a first argument and
-renders it with the variables passed as a second argument.
-
-As templates are generally stored on the filesystem, Twig also comes with a
-filesystem loader::
-
     $loader = new Twig_Loader_Filesystem('/path/to/templates');
-    $twig = new Twig_Environment($loader, array(
-        'cache' => '/path/to/compilation_cache',
-    ));
+    $twig = new Twig_Environment($loader);
+    
+    $twital = new Twig_Environment($twig);
 
-    echo $twig->render('index.html', array('name' => 'Fabien'));
+    echo $twital->render('template.html', array('name' => 'Fabien'));
 
-.. tip::
-
-    If you are not using Composer, use the Twig built-in autoloader::
-
-        require_once '/path/to/lib/Twig/Autoloader.php';
-        Twig_Autoloader::register();
+Twital uses Twig to compile and reder templates, so Twital performace is esactly the same of any other Twig Template.
