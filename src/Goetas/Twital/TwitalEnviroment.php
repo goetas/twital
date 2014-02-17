@@ -23,7 +23,6 @@ class TwitalEnviroment extends \Twig_Environment
         if ((!$this->twitalPathComponent || strpos($name, $this->twitalPathComponent) !== false) && strpos($source, Compiler::NS) !== false) {
             $source = $this->twitalCompiler->compile($source);
         }
-
         return $this->twig->compileSource($source, $name);
     }
 
