@@ -72,7 +72,7 @@ If you need to **call a different block**, it is also simple:
     </t:extends>
 
 
-If you need that your *template name is dynamic* (it comes from a variable e.g.) you have to add the Twital namespace to
+If you need that your **template name is dynamic** (it comes from a variable e.g.) you have to add the Twital namespace to
 attribute name:
 
 .. code-block:: xml+jinja

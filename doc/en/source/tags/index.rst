@@ -5,6 +5,7 @@ Tags
     :maxdepth: 1
 
     autoescape
+    Chapter1 description <chapter1>
     block
     capture
     filter
