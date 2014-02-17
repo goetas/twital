@@ -86,4 +86,4 @@ attribute name:
 
 .. note::
 
-    To learn more about template inheritance you can read the Twig official documentation.
+    To learn more about template inheritance you can read the `Twig official documentation<http://twig.sensiolabs.org/doc/tags/autoescape.html>`

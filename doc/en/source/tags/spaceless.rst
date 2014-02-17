@@ -17,4 +17,4 @@ The Twital instruction for Twig ``spaceless`` tag is ``t:spaceless`` node or the
 
 .. note::
 
-    For more information about ``spaceless`` tag please refer to Twig official documentation.
+    For more information about ``spaceless`` tag please refer to `Twig official documentation<http://twig.sensiolabs.org/doc/tags/autoescape.html>`.

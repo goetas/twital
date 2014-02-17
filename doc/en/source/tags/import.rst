@@ -53,6 +53,6 @@ If you want to import your macros directly into your template (without referring
 
 .. note::
 
-    For more information about ``import`` tag please refer to Twig official documentation.
+    For more information about ``import`` tag please refer to `Twig official documentation<http://twig.sensiolabs.org/doc/tags/autoescape.html>`.
 
 .. seealso:: :doc:`macro<../tags/macro>`

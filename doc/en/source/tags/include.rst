@@ -40,7 +40,7 @@ You can mark an include with ``ignore-missing`` attribute in which case Twital w
 .. code-block:: xml+jinja
 
     <t:include from="header.html" with="{'foo': 'bar'} ignore-missing="true"/>
-    
+
 ``ignore-missing`` can't be an expression, it has to be evauluated only at compile time.
 
 
@@ -51,4 +51,5 @@ To use Twig expressions as template name you have to use a namespace prefix on '
     <t:include t:from="ajax ? 'ajax.html' : 'not_ajax.html' " />
     <t:include t:from="['one.html','two.html']" />
 
-For more information about ``include`` please refer to official Twig ducumentation.
+.. note::
+    For more information about ``include`` please refer to official Twig ducumentation.

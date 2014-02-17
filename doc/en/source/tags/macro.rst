@@ -16,4 +16,4 @@ To use a macro inside your Twital template, take a look to :doc:`import<../tags/
 
 .. note::
 
-    For more information about ``macro`` tag please refer to Twig official documentation.
+    For more information about ``macro`` tag please refer to `Twig official documentation<http://twig.sensiolabs.org/doc/tags/autoescape.html>`.

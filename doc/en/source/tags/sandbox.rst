@@ -19,4 +19,4 @@ template, when sandboxing is not enabled globally for the Twig environment:
 
 .. note::
 
-    For more information about ``sandbox`` tag please refer to Twig official documentation.
+    For more information about ``sandbox`` tag please refer to `Twig official documentation<http://twig.sensiolabs.org/doc/tags/autoescape.html>`.
