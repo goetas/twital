@@ -12,7 +12,7 @@ class IncludeNode implements Node
     function visit(\DOMElement $node, Compiler $twital)
     {
         if (! $node->hasAttribute("name") && ! $node->hasAttribute("name-exp")) {
-            throw new Exception("Name or name-exp atribute is required");
+            throw new Exception("Name or name-exp attribute is required");
         }
         
         $code = "{% include ";
