@@ -1,6 +1,7 @@
 What is Twital?
 ==============
 
+<<<<<<< HEAD
 Twital is a little "plugin" for Twig that change its templating language syntax, adding some shortcuts ad making it syntax more suitable for HTML based (XML, HTML5) templates.
 
 To learn more about Twig you can read more on "Twig Official Site":(http://www.)
@@ -101,3 +102,10 @@ $twital = new Twig_Environment($twig);
 echo $twital->render('template.html', array('name' => 'Fabien'));
 ```
 Twital uses Twig to compile and render templates, so Twital performance is exactly the same of any other Twig Template.
+=======
+Twig tal wrapper
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/goetas/twital/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
+>>>>>>> origin/master
