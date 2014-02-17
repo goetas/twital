@@ -9,7 +9,7 @@ To see how to use it, take a look to this example:
 Consider the following base template named ``layout.html.twital``:
 
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     <html>
         <head>
@@ -24,7 +24,7 @@ Consider the following base template named ``layout.html.twital``:
 To improove the greating message we can extend it using the ``t:textends`` node,
 so we can create a new template called ``hello.html.twital``.
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     <t:extends from="layout.html.twital">
         <t:block name="content">
@@ -39,7 +39,7 @@ Of course, if you need, you can also call the parent block inside a new one.
 
 It is simple:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     <t:extends from="layout.html.twital">
         <t:block name="content">
@@ -51,7 +51,7 @@ It is simple:
 
  You can call the block also using a Twital syntax:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     <t:extends from="layout.html.twital">
         <t:block name="content">
@@ -60,9 +60,9 @@ It is simple:
         </t:block>
     </t:extends>
 
-If you need to **call a different block, it si also simple:
+If you need to **call a different block**, it is also simple:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     <t:extends from="layout.html.twital">
         <t:block name="content">
@@ -72,10 +72,10 @@ If you need to **call a different block, it si also simple:
     </t:extends>
 
 
-If you need that your **template name is dynamic **(it comes from a variable e.g.) you have to add the Twital namespace to
+If you need that your *template name is dynamic* (it comes from a variable e.g.) you have to add the Twital namespace to
 attribute name:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     <t:extends from="layout.html.twital">
         <t:block name="content">

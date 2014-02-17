@@ -11,7 +11,7 @@ Here we are creating a simple page that says hello to someone.
 
 With `t:block` attribute we mark the body content as extensibile.
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     <html>
         <head>
@@ -28,7 +28,7 @@ With `t:block` attribute we mark the body content as extensibile.
 To improove the greating message we can extend it using the ``t:textends`` node,
 so we can create a new template called ``hello.html.twital``.
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     <t:extends from="layout.html.twital">
         <t:block name="content">
@@ -39,11 +39,21 @@ so we can create a new template called ``hello.html.twital``.
 As you can see we have overwritten the content of ``content`` block, with a new one.
 To do this whe have used a ``t:block`` node.
 
+You can also **extend a Twig Template**, so you can mix Twig and Twital Templates.
 
-Somtimes in useful to obtain the layout **template name from a variable**,
+.. code-block:: xml+jinja
+
+    <t:extends from="layout.twig">
+        <t:block name="content">
+            Hello {{name}}!
+        </t:block>
+    </t:extends>
+
+
+Sometimes is useful to obtain the layout **template name from a variable**,
 to do this you  have to add the Twital namespace to attribute name:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     <t:extends t:from="layoutVar">
         <t:block name="content">

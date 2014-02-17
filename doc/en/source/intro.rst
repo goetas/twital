@@ -7,7 +7,7 @@ To learn more about Twig you can read more on "Twig Official Site":(http://www.)
 
 To understand better what are Twital benefits consider this Twig Template that simply shows a list of users from an array.
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {% if users %}
     <div>
@@ -24,7 +24,7 @@ To understand better what are Twital benefits consider this Twig Template that s
 
 To express the same template using Twital plugin for Twig you can do:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     <div t:if="users">
         <h1>Members</h1>
@@ -43,7 +43,7 @@ Here you can find a complete list of Twital attributes and elements.
 
 If some Twig functionality is not available for Twital you can freely mix these two syntaxes:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     <div t:if="users">
         <h1>{% trans %}Members{% %}</h1>

@@ -1,21 +1,21 @@
 ``filter``
 ==========
 
-Filter sections allow you to apply regular Twig filters on a block of template
-data. Just wrap the code in the special ``filter`` section:
+The Twital instruction for Twig ``filter`` tag is ``t:filter`` attribute.
 
-.. code-block:: jinja
+To see how to use it, take a look to this example:
 
-    {% filter upper %}
+.. code-block:: xml+jinja
+
+    <div t:filter="upper">
         This text becomes uppercase
-    {% endfilter %}
+    </div>
 
-You can also chain filters:
+    <div t:filter="upper|escape">
+        This text becomes uppercase
+    </div>
 
-.. code-block:: jinja
 
-    {% filter lower|escape %}
-        <strong>SOME TEXT</strong>
-    {% endfilter %}
+.. note::
 
-    {# outputs "&lt;strong&gt;some text&lt;/strong&gt;" #}
+    To learn more about `filter` tab you can read the Twig official documentation.

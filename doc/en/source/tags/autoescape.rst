@@ -1,7 +1,7 @@
 ``autoescape``
 ==============
 
-The Twital instruction for Twig ``autoescape`` tag is ``t:autoescape`` atribute.
+The Twital instruction for Twig ``autoescape`` tag is ``t:autoescape`` attribute.
 
 To see how to use it, take a look to this example:
 

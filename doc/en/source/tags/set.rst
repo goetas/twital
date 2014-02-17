@@ -1,8 +1,12 @@
 ``set``
 =======
+
+The Twital instruction for Twig ``set`` tag is the ``t:set`` attribute.
+
+
 You can use ``set`` to assign variables. The syntax to use ``set`` attribute is:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     <p t:set=" name = 'tommy' ">Hello {{ name }}</p>
     <p t:set=" foo = {'foo': 'bar'} ">Hello {{ foo.bas }}</p>
@@ -10,5 +14,6 @@ You can use ``set`` to assign variables. The syntax to use ``set`` attribute is:
         Hello {{ name }} {{ surname }}
     </p>
 
+.. note::
 
-For more information about ``set`` please refer to Twig official ducumentation.
+    For more information about ``set`` please refer to Twig official ducumentation.
