@@ -6,14 +6,13 @@ Tags
 
     autoescape
     block
+    capture
     filter
-    do
     embed
     extends
-    flush
     for
-    from
     if
+    omit
     import
     include
     macro
@@ -21,4 +20,3 @@ Tags
     set
     spaceless
     use
-    verbatim

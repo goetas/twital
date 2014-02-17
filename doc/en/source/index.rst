@@ -114,6 +114,7 @@ Twital uses Twig to compile and render templates, so Twital performance is exact
   :doc:`API <api>`
   :doc:`Extending <advanced>`
   :doc:`Internals <internals>`
+  :doc:`tags <tags/index>`
 
 
 Indices and tables
