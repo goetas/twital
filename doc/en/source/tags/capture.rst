@@ -10,7 +10,7 @@ This attribute act as ``set`` tag and allows to 'capture' chunks of text:
     </div>
 
 
-All contents inside "pagination" div will be captured and saved iinside a variable named `foo`.
+All contents inside "pagination" div will be captured and saved inside a variable named `foo`.
 
 .. note::
 

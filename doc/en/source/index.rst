@@ -109,21 +109,8 @@ Twital uses Twig to compile and render templates, so Twital performance is exact
 .. toctree::
    :maxdepth: 2
 
-  :doc:`Intro <intro>`
-  :doc:`Templates <templates>`
+
+
   :doc:`API <api>`
-  :doc:`Extending <advanced>`
-  :doc:`Internals <internals>`
-  :doc:`tags <tags/index>`
-
-
-Indices and tables
-==================
-
-
-  :doc:`Intro <intro>`
-  :doc:`Templates <templates>`
-  :doc:`API <api>`
-  :doc:`Extending <advanced>`
-  :doc:`Internals <internals>`
-
+  :doc:`Extending <extending>`
+  :doc:`Tags reference <tags/index>`

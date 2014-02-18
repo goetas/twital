@@ -10,7 +10,7 @@ of that file into the current namespace:
         Body
     <t:include from="footer.html"/>
 
-A little bit different syntax to inclusde a template can be:
+A little bit different syntax to include a template can be:
 
 .. code-block:: xml+jinja
 
@@ -35,7 +35,8 @@ You can disable access to the current context by using the ``only`` attribute:
 
     <t:include from="header.html" with="{'foo': 'bar'} only="true"/>
 
-You can mark an include with ``ignore-missing`` attribute in which case Twital will ignore the statement if the template to be included does not exist.
+You can mark an include with ``ignore-missing`` attribute in which case Twital
+ will ignore the statement if the template to be included does not exist.
 
 .. code-block:: xml+jinja
 
