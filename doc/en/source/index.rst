@@ -42,7 +42,7 @@ they are inherited from HTML structure.
 
 Of course Twital supports all other Twig functionalities as template inheritance, translations, looping, escaping etc.
 
-`Here you can find a complete list of Twital attributes and elements.<tags/index>`_
+`Here you can find a complete list of Twital attributes and elements. <tags/index>`_
 
 If some Twig functionality is not available for Twital you can freely mix these two syntaxes:
 
@@ -117,6 +117,6 @@ Basic API Usage
 .. toctree::
    :maxdepth: 2
 
-   :doc:`API <api>`
-   :doc:`Extending <extending>`
-   :doc:`Tags reference <tags/index>`
+   api
+   extending
+   tags/index
