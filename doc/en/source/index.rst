@@ -5,7 +5,8 @@ Twital is a little "plugin" for Twig that change its templating language syntax,
 
 To learn more about Twig you can read more on "Twig Official Site":(http://www.)
 
-To understand better what are Twital benefits consider this Twig Template that simply shows a list of users from an array.
+To understand better what are Twital benefits consider this Twig Template
+that simply shows a list of users from an array.
 
 .. code-block:: xml+jinja
 
@@ -22,7 +23,7 @@ To understand better what are Twital benefits consider this Twig Template that s
     </div>
     {% endif %}
 
-To express the same template using Twital plugin for Twig you can do:
+To express the same template using **Twital** plugin for Twig you can do:
 
 .. code-block:: xml+jinja
 
@@ -35,18 +36,20 @@ To express the same template using Twital plugin for Twig you can do:
         </ul>
     </div>
 
-As you can see, using Twital template is more readable and you have not to worry about opening and closing block instructions, they are inherited from HTML structure.
+As you can see, using Twital template is more readable
+and you have not to worry about opening and closing block instructions,
+they are inherited from HTML structure.
 
 Of course Twital supports all other Twig functionalities as template inheritance, translations, looping, escaping etc.
 
-Here you can find a complete list of Twital attributes and elements.
+`Here you can find a complete list of Twital attributes and elements.<tags/index>`_
 
 If some Twig functionality is not available for Twital you can freely mix these two syntaxes:
 
 .. code-block:: xml+jinja
 
     <div t:if="users">
-        <h1>{% trans %}Members{% %}</h1>
+        <h1>{% trans %}Members{% endtrans %}</h1>
         <ul t:for="user in users">
             <li>
                 {{ user.name }}
@@ -54,7 +57,8 @@ If some Twig functionality is not available for Twital you can freely mix these 
         </ul>
     </div>
 
-In the previous template we are mixing Twital and Twig syntax to use the Twig``trans`` tag (of course ``trans`` is anyway avaiable using Twital syntax).
+In the previous template we have mixed Twital and Twig syntax to use the
+Twig``trans`` tag. (Of course ``trans`` is anyway available as Twital attribute ``trans`.<tags/trans>`_).
 
 Prerequisites
 *************
@@ -77,10 +81,11 @@ Adding dependency to your ``composer.json`` file
 .. code-block:: js
 
     {
-        "require":{
+        "require": {
             ..
             "goetas/twital":"1.0.*",
             ..
+        }
     }
 
 .. note::
@@ -105,6 +110,9 @@ This section gives you a brief introduction to the PHP API for Twig.
 
 Twital uses Twig to compile and render templates, so Twital performance is exactly the same of any other Twig Template.
 
+
+Basic API Usage
+***************
 
 .. toctree::
    :maxdepth: 2
