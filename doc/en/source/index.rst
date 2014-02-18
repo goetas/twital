@@ -117,8 +117,6 @@ Basic API Usage
 .. toctree::
    :maxdepth: 2
 
-
-
-  :doc:`API <api>`
-  :doc:`Extending <extending>`
-  :doc:`Tags reference <tags/index>`
+   :doc:`API <api>`
+   :doc:`Extending <extending>`
+   :doc:`Tags reference <tags/index>`
