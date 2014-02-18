@@ -18,4 +18,4 @@ To see how to use it, take a look to this example:
 
 .. note::
 
-    To learn more about `filter` tab you can read the `Twig official documentation<http://twig.sensiolabs.org/doc/tags/autoescape.html>`.
+    To learn more about `filter` tab you can read the `Twig official documentation<http://twig.sensiolabs.org/doc/tags/autoescape.html>`_.
