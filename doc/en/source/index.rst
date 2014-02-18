@@ -58,7 +58,7 @@ If some Twig functionality is not available for Twital you can freely mix these 
     </div>
 
 In the previous template we have mixed Twital and Twig syntax to use the
-Twig``trans`` tag. (Of course ``trans`` is anyway available as Twital attribute ``trans`.<tags/trans>`_).
+Twig ``trans`` tag. (Of course ``trans`` is anyway available as Twital attribute ``trans`.<tags/trans>`_).
 
 Prerequisites
 *************

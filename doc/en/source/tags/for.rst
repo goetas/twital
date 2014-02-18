@@ -18,4 +18,4 @@ provided in a variable called ``users``:
 
 .. note::
 
-    For more information about ``if`` tag please refer to `Twig official documentation<http://twig.sensiolabs.org/doc/tags/autoescape.html>`_.
+    For more information about ``if`` tag please refer to `Twig official documentation <http://twig.sensiolabs.org/doc/tags/autoescape.html>`_.

@@ -81,4 +81,4 @@ you have to add the Twital namespace to the attribute name:
 
 .. note::
 
-    To learn more about template inheritance you can read the `Twig official documentation<http://twig.sensiolabs.org/doc/tags/autoescape.html>`_
+    To learn more about template inheritance you can read the `Twig official documentation <http://twig.sensiolabs.org/doc/tags/autoescape.html>`_
