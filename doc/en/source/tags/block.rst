@@ -3,10 +3,7 @@
 
 
 The Twital instruction for Twig ``block`` tag is ``t:block`` node.
-To see how to use it, take a look to this example:
-
-
-Consider the following base template named ``layout.html.twital``:
+To see how to use it, consider the following base template named ``layout.html.twital``:
 
 
 .. code-block:: xml+jinja
@@ -21,7 +18,7 @@ Consider the following base template named ``layout.html.twital``:
     </html>
 
 
-To improove the greating message we can extend it using the ``t:textends`` node,
+To improve the greeting message we can extend it using the ``t:textends`` node,
 so we can create a new template called ``hello.html.twital``.
 
 .. code-block:: xml+jinja
@@ -33,11 +30,9 @@ so we can create a new template called ``hello.html.twital``.
     </t:extends>
 
 As you can see we have overwritten the content of ``content`` block, with a new one.
-To do this whe have used a ``t:block`` node.
+To do this we have used a ``t:block`` node.
 
-Of course, if you need, you can also call the parent block inside a new one.
-
-It is simple:
+Of course, if you need, you can also **call the parent block** from inside, it is simple:
 
 .. code-block:: xml+jinja
 
@@ -49,7 +44,7 @@ It is simple:
     </t:extends>
 
 
- You can call the block also using a Twital syntax:
+ You can **call the parent block** also using a Twital syntax:
 
 .. code-block:: xml+jinja
 
@@ -72,8 +67,8 @@ If you need to **call a different block**, it is also simple:
     </t:extends>
 
 
-If you need that your **template name is dynamic** (it comes from a variable e.g.) you have to add the Twital namespace to
-attribute name:
+If you need that your **template name is dynamic** (it comes from a variable e.g.)
+you have to add the Twital namespace to the attribute name:
 
 .. code-block:: xml+jinja
 

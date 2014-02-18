@@ -7,6 +7,7 @@ Macros, as described by Twig, are comparable with functions in regular programmi
 To declare a macro inside Twital, the syntax is:
 
 .. code-block:: xml+jinja
+
     <t:macro name="input" args="value, type, size">
         <input type="{{ type|default('text') }}" name="{{ name }}" value="{{ value|e }}" size="{{ size|default(20) }}" />
     </t:macro>

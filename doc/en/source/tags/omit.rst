@@ -11,7 +11,6 @@ its content will still be evaluated.
     </a>
 
 
-
 This attribute is useful when you want to create element optionally,
 e.g. hide a link if certain condition is met.
 

@@ -13,6 +13,7 @@ into a variable or request specific macros from it.
 Imagine we have a helper module that renders forms (called ``forms.html``):
 
 .. code-block:: xml+jinja
+
     <t:macro name="input" args="name, value, type">
         <input type="{{ type|default('text') }}" name="{{ name }}" value="{{ value|e }}" />
     </t:macro>

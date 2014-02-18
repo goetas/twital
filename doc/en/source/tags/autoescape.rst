@@ -31,7 +31,7 @@ template to be escaped or not by using the ``autoescape`` tag:
 
 When automatic escaping is enabled everything is escaped by default except for
 values explicitly marked as safe. Those can be marked in the template by using
-the :doc:`raw<../filters/raw>` filter:
+the Twig ``raw`` filter:
 
 .. code-block:: xml+jinja
 
