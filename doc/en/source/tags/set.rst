@@ -16,4 +16,5 @@ You can use ``set`` to assign variables. The syntax to use ``set`` attribute is:
 
 .. note::
 
-    For more information about ``set`` please refer to Twig official ducumentation.
+    For more information about ``set`` tag please refer to
+    `Twig official documentation <http://twig.sensiolabs.org/doc/tags/set.html>`_.

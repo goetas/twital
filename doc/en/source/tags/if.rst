@@ -25,4 +25,5 @@ The Twital instruction for Twig ``if`` tag is ``t:if`` attribute.
 
 .. note::
 
-    For more information about ``if`` tag please refer to `Twig official documentation <http://twig.sensiolabs.org/doc/tags/autoescape.html>`_.
+    For more information about ``if`` tag please refer to
+     `Twig official documentation <http://twig.sensiolabs.org/doc/tags/if.html>`_.

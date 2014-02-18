@@ -14,4 +14,4 @@ All contents inside "pagination" div will be captured and saved inside a variabl
 
 .. note::
 
-    For more information about ``set`` tag please refer to `Twig official documentation <http://twig.sensiolabs.org/doc/tags/autoescape.html>`_.
+    For more information about ``set`` tag please refer to `Twig official documentation <http://twig.sensiolabs.org/doc/tags/set.html>`_.

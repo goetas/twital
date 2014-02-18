@@ -53,4 +53,6 @@ To use Twig expressions as template name you have to use a namespace prefix on '
     <t:include t:from="['one.html','two.html']" />
 
 .. note::
-    For more information about ``include`` please refer to official Twig ducumentation.
+
+    For more information about ``include`` tag please refer to
+    `Twig official documentation <http://twig.sensiolabs.org/doc/tags/include.html>`_.

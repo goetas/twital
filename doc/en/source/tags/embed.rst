@@ -44,7 +44,7 @@ You can mark an include with ``ignore-missing`` attribute in which case Twital
         ...
     </t:embed>
 
-``ignore-missing`` can't be an expression, it has to be evauluated only at compile time.
+``ignore-missing`` can't be an expression, it has to be evaluated only at compile time.
 
 
 To use Twig expressions as template name you have to use a namespace prefix on 'form' attribute:
@@ -59,6 +59,7 @@ To use Twig expressions as template name you have to use a namespace prefix on '
     </t:embed>
 
 .. note::
-    For more information about ``embed`` please refer to Official Twig documentation.
+
+    For more information about ``embed`` tag please refer to `Twig official documentation <http://twig.sensiolabs.org/doc/tags/embed.html>`_.
 
 .. seealso:: :doc:`include<../tags/include>`
