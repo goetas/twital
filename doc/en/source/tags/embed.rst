@@ -1,8 +1,7 @@
 ``embed``
 =========
 
-.. versionadded:: 1.8
-    The ``embed`` tag was added in Twig 1.8.
+
 
 The ``embed`` tag combines the behaviour of :doc:`include<include>` and
 :doc:`extends<extends>`.
@@ -12,7 +11,7 @@ included template, like when extending a template.
 
 Think of an embedded template as a "micro layout skeleton".
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {% embed "teasers_skeleton.twig" %}
         {# These blocks are defined in "teasers_skeleton.twig" #}
@@ -76,7 +75,7 @@ two boxes side by side:
     ┌─── page layout ─────────────────────┐
     │                                     │
     │           ┌── block "content" ──┐   │
-    │           │                     │   │    
+    │           │                     │   │
     │           │ ┌ block ┐ ┌ block ┐ │   │
     │           │ │"left" │ │"right"│ │   │
     │           │ │       │ │       │ │   │
@@ -93,7 +92,7 @@ Without the ``embed`` tag, you have two ways to design your templates:
    "bar" pages and another one with side-by-side boxes for the "boom" and
    "baz" pages.
 
- * Embed the markup for the top/bottom and left/right boxes into each page 
+ * Embed the markup for the top/bottom and left/right boxes into each page
    template directly.
 
 These two solutions do not scale well because they each have a major drawback:
@@ -116,7 +115,7 @@ as necessary:
 
 Page template ``foo.twig``:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {% extends "layout_skeleton.twig" %}
 
@@ -153,7 +152,7 @@ out the HTML markup for the boxes.
 
 The ``embed`` tag takes the exact same arguments as the ``include`` tag:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {% embed "base" with {'foo': 'bar'} %}
         ...

@@ -12,7 +12,7 @@ class ExtendsNode implements Node
     function visit(\DOMElement $node, Compiler $twital)
     {
         if (! $node->hasAttribute("name") && ! $node->hasAttributeNS(Compiler::NS,"name")) {
-            throw new Exception("name or name-exp atribute is required");
+            throw new Exception("name or name-exp attribute is required");
         }
 
         foreach (iterator_to_array($node->childNodes) as $child){

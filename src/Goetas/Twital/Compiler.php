@@ -2,7 +2,6 @@
 namespace Goetas\Twital;
 
 use DOMNode;
-use goetas\xml;
 use Goetas\Twital\Extension\CoreExtension;
 use Goetas\Twital\Extension\HTML5Extension;
 use Goetas\Twital\Extension\I18nExtension;

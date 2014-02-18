@@ -34,7 +34,7 @@ generate).
 
 You can use a ``lipsum`` *tag*:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {% lipsum 40 %}
 
@@ -45,7 +45,7 @@ three main reasons:
 * The tag outputs something;
 * The tag is not flexible as you cannot use it in an expression:
 
-  .. code-block:: jinja
+  .. code-block:: xml+jinja
 
       {{ 'some text' ~ {% lipsum 40 %} ~ 'some more text' }}
 
@@ -54,7 +54,7 @@ the most complex extension point of Twig.
 
 Now, let's use a ``lipsum`` *filter*:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {{ 40|lipsum }}
 
@@ -65,14 +65,14 @@ transform).
 
 Next, let's use a ``lipsum`` *function*:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {{ lipsum(40) }}
 
 Here we go. For this specific example, the creation of a function is the
 extension point to use. And you can use it anywhere an expression is accepted:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {{ 'some text' ~ lipsum(40) ~ 'some more text' }}
 
@@ -81,7 +81,7 @@ extension point to use. And you can use it anywhere an expression is accepted:
 Last but not the least, you can also use a *global* object with a method able
 to generate lorem ipsum text:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {{ text.lipsum(40) }}
 
@@ -113,7 +113,7 @@ available in all templates and macros::
 
 You can then use the ``text`` variable anywhere in a template:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {{ text.lipsum(40) }}
 
@@ -144,7 +144,7 @@ Then, add the filter to your Twig environment::
 
 And here is how to use it in a template:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {{ 'Twig'|rot13 }}
 
@@ -156,7 +156,7 @@ to the filter (within parentheses ``()``) as extra arguments.
 
 For instance, the following code:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {{ 'TWIG'|lower }}
     {{ now|date('d/m/Y') }}
@@ -317,7 +317,7 @@ The above example shows how you can create tests that use a node class. The
 node class has access to one sub-node called 'node'. This sub-node contains the
 value that is being tested. When the ``odd`` filter is used in code such as:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {% if my_value is odd %}
 
@@ -335,7 +335,7 @@ feature as you need to understand how Twig's internals work.
 Let's create a simple ``set`` tag that allows the definition of simple
 variables from within a template. The tag can be used like follows:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {% set name = "value" %}
 

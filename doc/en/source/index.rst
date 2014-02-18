@@ -1,18 +1,3 @@
-.. Twital documentation master file, created by
-   sphinx-quickstart on Mon Feb 17 09:15:52 2014.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
-
-.. toctree::
-   :maxdepth: 2
-   intro
-   templates
-   api
-   internals
-   
-
-
 What is Twital?
 ###############
 
@@ -22,7 +7,7 @@ To learn more about Twig you can read more on "Twig Official Site":(http://www.)
 
 To understand better what are Twital benefits consider this Twig Template that simply shows a list of users from an array.
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {% if users %}
     <div>
@@ -39,7 +24,7 @@ To understand better what are Twital benefits consider this Twig Template that s
 
 To express the same template using Twital plugin for Twig you can do:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     <div t:if="users">
         <h1>Members</h1>
@@ -58,7 +43,7 @@ Here you can find a complete list of Twital attributes and elements.
 
 If some Twig functionality is not available for Twital you can freely mix these two syntaxes:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     <div t:if="users">
         <h1>{% trans %}Members{% %}</h1>
@@ -119,3 +104,26 @@ This section gives you a brief introduction to the PHP API for Twig.
     echo $twital->render('template.html', array('name' => 'Fabien'));
 
 Twital uses Twig to compile and render templates, so Twital performance is exactly the same of any other Twig Template.
+
+
+.. toctree::
+   :maxdepth: 2
+
+  :doc:`Intro <intro>`
+  :doc:`Templates <templates>`
+  :doc:`API <api>`
+  :doc:`Extending <advanced>`
+  :doc:`Internals <internals>`
+  :doc:`tags <tags/index>`
+
+
+Indices and tables
+==================
+
+
+  :doc:`Intro <intro>`
+  :doc:`Templates <templates>`
+  :doc:`API <api>`
+  :doc:`Extending <advanced>`
+  :doc:`Internals <internals>`
+

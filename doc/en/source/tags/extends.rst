@@ -1,264 +1,70 @@
 ``extends``
 ===========
 
-The ``extends`` tag can be used to extend a template from another one.
+
+The Twital instruction for Twig ``extends`` tag is ``t:extends`` node.
+To see how to use it, take a look to this example:
+
+
+Consider the following base template named ``layout.html.twital``.
+Here we are creating a simple page that says hello to someone.
+
+With `t:block` attribute we mark the body content as extensibile.
+
+.. code-block:: xml+jinja
+
+    <html>
+        <head>
+            <title>Hello world!</title>
+        </head>
+        <body>
+            <div t:block="content">
+            Hello!
+            </div>
+        </div>
+    </html>
+
+
+To improove the greating message we can extend it using the ``t:textends`` node,
+so we can create a new template called ``hello.html.twital``.
+
+.. code-block:: xml+jinja
+
+    <t:extends from="layout.html.twital">
+        <t:block name="content">
+            Hello {{name}}!
+        </t:block>
+    </t:extends>
+
+As you can see we have overwritten the content of ``content`` block, with a new one.
+To do this whe have used a ``t:block`` node.
+
+You can also **extend a Twig Template**, so you can mix Twig and Twital Templates.
+
+.. code-block:: xml+jinja
+
+    <t:extends from="layout.twig">
+        <t:block name="content">
+            Hello {{name}}!
+        </t:block>
+    </t:extends>
+
+
+Sometimes is useful to obtain the layout **template name from a variable**,
+to do this you  have to add the Twital namespace to attribute name:
+
+.. code-block:: xml+jinja
+
+    <t:extends t:from="layoutVar">
+        <t:block name="content">
+            <t:block-call t:name="variableBlock"/>
+            Hello {{name}}!
+        </t:block>
+    </t:extends>
+
+Now ``hello.html.twital`` can inherit dynamically from different templates.
+Now the tempalte name can be any valid Twig expression.
 
 .. note::
 
-    Like PHP, Twig does not support multiple inheritance. So you can only have
-    one extends tag called per rendering. However, Twig supports horizontal
-    :doc:`reuse<use>`.
-
-Let's define a base template, ``base.html``, which defines a simple HTML
-skeleton document:
-
-.. code-block:: html+jinja
-
-    <!DOCTYPE html>
-    <html>
-        <head t:block="head">
-            <link rel="stylesheet" href="style.css" />
-            <title t:block="title">{% block title %}{% endblock %} - My Webpage</title>
-        </head>
-        <body>
-            <div id="content">{% block content %}{% endblock %}</div>
-            <div id="footer" t:block="footer">
-                &copy; Copyright 2011 by <a href="http://domain.invalid/">you</a>.
-            </div>
-        </body>
-    </html>
-
-In this example, the :doc:`block<block>` tags define four blocks that child
-templates can fill in.
-
-All the ``block`` tag does is to tell the template engine that a child
-template may override those portions of the template.
-
-Child Template
---------------
-
-A child template might look like this:
-
-.. code-block:: jinja
-<t:extends name="base.html">
-    <t:block name="title">Index</t:block>
-    <t:block name="head">
-        {{ parent() }}
-        <style type="text/css">
-            .important { color: #336699; }
-        </style>
-    </t:block>
-    <t:block name="content">
-        <h1>Index</h1>
-        <p class="important">
-            Welcome on my awesome homepage.
-        </p>
-    </t:block>
-</t:extends>    
-
-The ``extends`` tag is the key here. It tells the template engine that this
-template "extends" another template. When the template system evaluates this
-template, first it locates the parent. The extends tag should be the first tag
-in the template.
-
-Note that since the child template doesn't define the ``footer`` block, the
-value from the parent template is used instead.
-
-You can't define multiple ``block`` tags with the same name in the same
-template. This limitation exists because a block tag works in "both"
-directions. That is, a block tag doesn't just provide a hole to fill - it also
-defines the content that fills the hole in the *parent*. If there were two
-similarly-named ``block`` tags in a template, that template's parent wouldn't
-know which one of the blocks' content to use.
-
-If you want to print a block multiple times you can however use the
-``block`` function:
-
-.. code-block:: jinja
-
-    <title t:block="title"></title>
-    <h1>{{ block('title') }}</h1>
-    <t:block="body">
-    </t:block>
-
-Parent Blocks
--------------
-
-It's possible to render the contents of the parent block by using the
-:doc:`parent<../functions/parent>` function. This gives back the results of
-the parent block:
-
-.. code-block:: jinja
-
-    {% block sidebar %}
-        <h3>Table Of Contents</h3>
-        ...
-        {{ parent() }}
-    {% endblock %}
-
-Named Block End-Tags
---------------------
-
-Twig allows you to put the name of the block after the end tag for better
-readability:
-
-.. code-block:: jinja
-
-    {% block sidebar %}
-        {% block inner_sidebar %}
-            ...
-        {% endblock inner_sidebar %}
-    {% endblock sidebar %}
-
-Of course, the name after the ``endblock`` word must match the block name.
-
-Block Nesting and Scope
------------------------
-
-Blocks can be nested for more complex layouts. Per default, blocks have access
-to variables from outer scopes:
-
-.. code-block:: jinja
-
-    {% for item in seq %}
-        <li>{% block loop_item %}{{ item }}{% endblock %}</li>
-    {% endfor %}
-
-Block Shortcuts
----------------
-
-For blocks with few content, it's possible to use a shortcut syntax. The
-following constructs do the same:
-
-.. code-block:: jinja
-
-    {% block title %}
-        {{ page_title|title }}
-    {% endblock %}
-
-.. code-block:: jinja
-
-    {% block title page_title|title %}
-
-Dynamic Inheritance
--------------------
-
-Twig supports dynamic inheritance by using a variable as the base template:
-
-.. code-block:: jinja
-
-    {% extends some_var %}
-
-If the variable evaluates to a ``Twig_Template`` object, Twig will use it as
-the parent template::
-
-    // {% extends layout %}
-
-    $layout = $twig->loadTemplate('some_layout_template.twig');
-
-    $twig->display('template.twig', array('layout' => $layout));
-
-.. versionadded:: 1.2
-    The possibility to pass an array of templates has been added in Twig 1.2.
-
-You can also provide a list of templates that are checked for existence. The
-first template that exists will be used as a parent:
-
-.. code-block:: jinja
-
-    {% extends ['layout.html', 'base_layout.html'] %}
-
-Conditional Inheritance
------------------------
-
-As the template name for the parent can be any valid Twig expression, it's
-possible to make the inheritance mechanism conditional:
-
-.. code-block:: jinja
-
-    {% extends standalone ? "minimum.html" : "base.html" %}
-
-In this example, the template will extend the "minimum.html" layout template
-if the ``standalone`` variable evaluates to ``true``, and "base.html"
-otherwise.
-
-How blocks work?
-----------------
-
-A block provides a way to change how a certain part of a template is rendered
-but it does not interfere in any way with the logic around it.
-
-Let's take the following example to illustrate how a block work and more
-importantly, how it does not work:
-
-.. code-block:: jinja
-
-    {# base.twig #}
-
-    {% for post in posts %}
-        {% block post %}
-            <h1>{{ post.title }}</h1>
-            <p>{{ post.body }}</p>
-        {% endblock %}
-    {% endfor %}
-
-If you render this template, the result would be exactly the same with or
-without the ``block`` tag. The ``block`` inside the ``for`` loop is just a way
-to make it overridable by a child template:
-
-.. code-block:: jinja
-
-    {# child.twig #}
-
-    {% extends "base.twig" %}
-
-    {% block post %}
-        <article>
-            <header>{{ post.title }}</header>
-            <section>{{ post.text }}</section>
-        </article>
-    {% endblock %}
-
-Now, when rendering the child template, the loop is going to use the block
-defined in the child template instead of the one defined in the base one; the
-executed template is then equivalent to the following one:
-
-.. code-block:: jinja
-
-    {% for post in posts %}
-        <article>
-            <header>{{ post.title }}</header>
-            <section>{{ post.text }}</section>
-        </article>
-    {% endfor %}
-
-Let's take another example: a block included within an ``if`` statement:
-
-.. code-block:: jinja
-
-    {% if posts is empty %}
-        {% block head %}
-            {{ parent() }}
-
-            <meta name="robots" content="noindex, follow">
-        {% endblock head %}
-    {% endif %}
-
-Contrary to what you might think, this template does not define a block
-conditionally; it just makes overridable by a child template the output of
-what will be rendered when the condition is ``true``.
-
-If you want the output to be displayed conditionally, use the following
-instead:
-
-.. code-block:: jinja
-
-    {% block head %}
-        {{ parent() }}
-
-        {% if posts is empty %}
-            <meta name="robots" content="noindex, follow">
-        {% endif %}
-    {% endblock head %}
-
-.. seealso:: :doc:`block<../functions/block>`, :doc:`block<../tags/block>`, :doc:`parent<../functions/parent>`, :doc:`use<../tags/use>`
+    To learn more about template inheritance you can read the `Twig official documentation<http://twig.sensiolabs.org/doc/tags/autoescape.html>`.

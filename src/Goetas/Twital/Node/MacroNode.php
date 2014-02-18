@@ -12,7 +12,7 @@ class MacroNode implements Node
     function visit(\DOMElement $node, Compiler $twital)
     {
         if (! $node->hasAttribute("name")) {
-            throw new Exception("Name atribute is required");
+            throw new Exception("Name attribute is required");
         }
 
         $twital->applyTemplatesToChilds($node);

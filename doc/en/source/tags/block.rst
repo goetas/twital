@@ -1,11 +1,89 @@
 ``block``
 =========
 
-Blocks are used for inheritance and act as placeholders and replacements at
-the same time. They are documented in detail in the documentation for the
-:doc:`extends<../tags/extends>` tag.
 
-Block names should consist of alphanumeric characters, and underscores. Dashes
-are not permitted.
+The Twital instruction for Twig ``block`` tag is ``t:block`` node.
+To see how to use it, take a look to this example:
 
-.. seealso:: :doc:`block<../functions/block>`, :doc:`parent<../functions/parent>`, :doc:`use<../tags/use>`, :doc:`extends<../tags/extends>`
+
+Consider the following base template named ``layout.html.twital``:
+
+
+.. code-block:: xml+jinja
+
+    <html>
+        <head>
+            <title>Hello world!</title>
+        </head>
+        <body t:block="content">
+            Hello!
+        </div>
+    </html>
+
+
+To improove the greating message we can extend it using the ``t:textends`` node,
+so we can create a new template called ``hello.html.twital``.
+
+.. code-block:: xml+jinja
+
+    <t:extends from="layout.html.twital">
+        <t:block name="content">
+            Hello {{name}}!
+        </t:block>
+    </t:extends>
+
+As you can see we have overwritten the content of ``content`` block, with a new one.
+To do this whe have used a ``t:block`` node.
+
+Of course, if you need, you can also call the parent block inside a new one.
+
+It is simple:
+
+.. code-block:: xml+jinja
+
+    <t:extends from="layout.html.twital">
+        <t:block name="content">
+            {{parent()}}
+            Hello {{name}}!
+        </t:block>
+    </t:extends>
+
+
+ You can call the block also using a Twital syntax:
+
+.. code-block:: xml+jinja
+
+    <t:extends from="layout.html.twital">
+        <t:block name="content">
+            <t:block-call name="parent"/>
+            Hello {{name}}!
+        </t:block>
+    </t:extends>
+
+If you need to **call a different block**, it is also simple:
+
+.. code-block:: xml+jinja
+
+    <t:extends from="layout.html.twital">
+        <t:block name="content">
+            <t:block-call name="alternativeBlock"/>
+            Hello {{name}}!
+        </t:block>
+    </t:extends>
+
+
+If you need that your **template name is dynamic** (it comes from a variable e.g.) you have to add the Twital namespace to
+attribute name:
+
+.. code-block:: xml+jinja
+
+    <t:extends from="layout.html.twital">
+        <t:block name="content">
+            <t:block-call t:name="variableBlock"/>
+            Hello {{name}}!
+        </t:block>
+    </t:extends>
+
+.. note::
+
+    To learn more about template inheritance you can read the `Twig official documentation<http://twig.sensiolabs.org/doc/tags/autoescape.html>`

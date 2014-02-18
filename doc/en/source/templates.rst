@@ -71,7 +71,7 @@ You can use a dot (``.``) to access attribute of a variable (methods or
 properties of a PHP object, or items of a PHP array), or the so-called
 "subscript" syntax (``[]``):
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {{ foo.bar }}
     {{ foo['bar'] }}
@@ -80,7 +80,7 @@ When the attribute contains special characters (like ``-`` that would be
 interpreted as the minus operator), use the ``attribute`` function instead to
 access the variable attribute:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {# equivalent to the non-working foo.data-foo #}
     {{ attribute(foo, 'data-foo') }}
@@ -133,7 +133,7 @@ Setting Variables
 You can assign values to variables inside code blocks. Assignments use the
 :doc:`set<tags/set>` tag:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {% set foo = 'foo' %}
     {% set foo = [1, 2] %}
@@ -150,21 +150,21 @@ applied to the next.
 The following example removes all HTML tags from the ``name`` and title-cases
 it:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {{ name|striptags|title }}
 
 Filters that accept arguments have parentheses around the arguments. This
 example will join a list by commas:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {{ list|join(', ') }}
 
 To apply a filter on a section of code, wrap it with the
 :doc:`filter<tags/filter>` tag:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {% filter upper %}
         This text becomes uppercase
@@ -182,7 +182,7 @@ name followed by parentheses (``()``) and may have arguments.
 For instance, the ``range`` function returns a list containing an arithmetic
 progression of integers:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {% for i in range(0, 3) %}
         {{ i }},
@@ -197,7 +197,7 @@ Named Arguments
 .. versionadded:: 1.12
     Support for named arguments was added in Twig 1.12.
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {% for i in range(low=1, high=10, step=2) %}
         {{ i }},
@@ -206,7 +206,7 @@ Named Arguments
 Using named arguments makes your templates more explicit about the meaning of
 the values you pass as arguments:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {{ data|convert_encoding('UTF-8', 'iso-2022-jp') }}
 
@@ -217,7 +217,7 @@ the values you pass as arguments:
 Named arguments also allow you to skip some arguments for which you don't want
 to change the default value:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {# the first argument is the date format, which defaults to the global date format if null is passed #}
     {{ "now"|date(null, "Europe/Paris") }}
@@ -228,7 +228,7 @@ to change the default value:
 You can also use both positional and named arguments in one call, in which
 case positional arguments must always come before named arguments:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {{ "now"|date('d/m/Y H:i', timezone="Europe/Paris") }}
 
@@ -248,7 +248,7 @@ blocks.
 For example, to display a list of users provided in a variable called
 ``users``, use the :doc:`for<tags/for>` tag:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     <h1>Members</h1>
     <ul>
@@ -259,7 +259,7 @@ For example, to display a list of users provided in a variable called
 
 The :doc:`if<tags/if>` tag can be used to test an expression:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {% if users|length > 0 %}
         <ul>
@@ -278,7 +278,7 @@ To comment-out part of a line in a template, use the comment syntax ``{# ...
 #}``. This is useful for debugging or to add information for other template
 designers or yourself:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {# note: disabled template because we no longer use this
         {% for user in users %}
@@ -292,7 +292,7 @@ Including other Templates
 The :doc:`include<tags/include>` tag is useful to include a template and
 return the rendered content of that template into the current one:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {% include 'sidebar.html' %}
 
@@ -301,7 +301,7 @@ Per default included templates are passed the current context.
 The context that is passed to the included template includes variables defined
 in the template:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {% for box in boxes %}
         {% include "render_box.html" %}
@@ -313,7 +313,7 @@ The filename of the template depends on the template loader. For instance, the
 ``Twig_Loader_Filesystem`` allows you to access other templates by giving the
 filename. You can access templates in subdirectories with a slash:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {% include "sections/articles/sidebar.html" %}
 
@@ -360,7 +360,7 @@ template.
 
 A child template might look like this:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {% extends "base.html" %}
 
@@ -390,7 +390,7 @@ It's possible to render the contents of the parent block by using the
 :doc:`parent<functions/parent>` function. This gives back the results of the
 parent block:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {% block sidebar %}
         <h3>Table Of Contents</h3>
@@ -434,7 +434,7 @@ variables if needed. What to escape? Any variable you don't trust.
 Escaping works by piping the variable through the
 :doc:`escape<filters/escape>` or ``e`` filter:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {{ user.username|e }}
 
@@ -442,7 +442,7 @@ By default, the ``escape`` filter uses the ``html`` strategy, but depending on
 the escaping context, you might want to explicitly use any other available
 strategies:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {{ user.username|e('js') }}
     {{ user.username|e('css') }}
@@ -456,7 +456,7 @@ Whether automatic escaping is enabled or not, you can mark a section of a
 template to be escaped or not by using the :doc:`autoescape<tags/autoescape>`
 tag:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {% autoescape %}
         Everything will be automatically escaped in this block (using the HTML strategy)
@@ -466,7 +466,7 @@ By default, auto-escaping uses the ``html`` escaping strategy. If you output
 variables in other contexts, you need to explicitly escape them with the
 appropriate escaping strategy:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {% autoescape 'js' %}
         Everything will be automatically escaped in this block (using the JS strategy)
@@ -483,7 +483,7 @@ variable you have to use a trick.
 The easiest way is to output the variable delimiter (``{{``) by using a variable
 expression:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {{ '{{' }}
 
@@ -502,7 +502,7 @@ are useful to reuse often used HTML fragments to not repeat yourself.
 A macro is defined via the :doc:`macro<tags/macro>` tag. Here is a small example
 (subsequently called ``forms.html``) of a macro that renders a form element:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {% macro input(name, value, type, size) %}
         <input type="{{ type|default('text') }}" name="{{ name }}" value="{{ value|e }}" size="{{ size|default(20) }}" />
@@ -511,7 +511,7 @@ A macro is defined via the :doc:`macro<tags/macro>` tag. Here is a small example
 Macros can be defined in any template, and need to be "imported" via the
 :doc:`import<tags/import>` tag before being used:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {% import "forms.html" as forms %}
 
@@ -520,7 +520,7 @@ Macros can be defined in any template, and need to be "imported" via the
 Alternatively, you can import individual macro names from a template into the
 current namespace via the :doc:`from<tags/from>` tag and optionally alias them:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {% from 'forms.html' import input as input_field %}
 
@@ -534,7 +534,7 @@ current namespace via the :doc:`from<tags/from>` tag and optionally alias them:
 A default value can also be defined for macro arguments when not provided in a
 macro call:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {% macro input(name, value = "", type = "text", size = 20) %}
         <input type="{{ type }}" name="{{ name }}" value="{{ value|e }}" size="{{ size }}" />
@@ -556,7 +556,7 @@ even if you're not working with PHP you should feel comfortable with it.
     ``starts with``, ``ends with``, ``..``, ``+``, ``-``, ``~``, ``*``, ``/``,
     ``//``, ``%``, ``is``, ``**``, ``|``, ``[]``, and ``.``:
 
-    .. code-block:: jinja
+    .. code-block:: xml+jinja
 
         {% set greeting = 'Hello' %}
         {% set name = 'Fabien' %}
@@ -592,7 +592,7 @@ exist:
 * ``{"foo": "bar"}``: Hashes are defined by a list of keys and values
   separated by a comma (``,``) and wrapped with curly braces (``{}``):
 
-  .. code-block:: jinja
+  .. code-block:: xml+jinja
 
     {# keys as string #}
     { 'foo': 'foo', 'bar': 'bar' }
@@ -614,7 +614,7 @@ exist:
 
 Arrays and hashes can be nested:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {% set foo = [1, {"foo": "bar"}] %}
 
@@ -676,7 +676,7 @@ The following comparison operators are supported in any expression: ``==``,
 You can also check if a string ``starts with`` or ``ends with`` another
 string:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {% if 'Fabien' starts with 'F' %}
     {% endif %}
@@ -689,7 +689,7 @@ string:
     For complex string comparisons, the ``matches`` operator allows you to use
     `regular expressions`_:
 
-    .. code-block:: jinja
+    .. code-block:: xml+jinja
 
         {% if phone matches '{^[\d\.]+$}' %}
         {% endif %}
@@ -701,7 +701,7 @@ The ``in`` operator performs containment test.
 
 It returns ``true`` if the left operand is contained in the right:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {# returns true #}
 
@@ -716,7 +716,7 @@ It returns ``true`` if the left operand is contained in the right:
 
 To perform a negative test, use the ``not in`` operator:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {% if 1 not in [1, 2, 3] %}
 
@@ -729,7 +729,7 @@ Test Operator
 The ``is`` operator performs tests. Tests can be used to test a variable against
 a common expression. The right operand is name of the test:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {# find out if a variable is odd #}
 
@@ -737,13 +737,13 @@ a common expression. The right operand is name of the test:
 
 Tests can accept arguments too:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {% if loop.index is divisibleby(3) %}
 
 Tests can be negated by using the ``is not`` operator:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {% if loop.index is not divisibleby(3) %}
 
@@ -776,7 +776,7 @@ categories:
 
 * ``?:``: The ternary operator:
 
-  .. code-block:: jinja
+  .. code-block:: xml+jinja
 
       {{ foo ? 'yes' : 'no' }}
 
@@ -794,7 +794,7 @@ String interpolation (`#{expression}`) allows any valid expression to appear
 within a *double-quoted string*. The result of evaluating that expression is
 inserted into the string:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {{ "foo #{bar} baz" }}
     {{ "foo #{1 + 2} baz" }}
@@ -811,7 +811,7 @@ Whitespace is not further modified by the template engine, so each whitespace
 
 Use the ``spaceless`` tag to remove whitespace *between HTML tags*:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {% spaceless %}
         <div>
@@ -825,7 +825,7 @@ In addition to the spaceless tag you can also control whitespace on a per tag
 level. By using the whitespace control modifier on your tags, you can trim
 leading and or trailing whitespace:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {% set value = 'no spaces' %}
     {#- No leading/trailing whitespace -#}
@@ -840,7 +840,7 @@ use it to remove whitespace around tags.  Trimming space will consume all whites
 for that side of the tag.  It is possible to use whitespace trimming on one side
 of a tag:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     {% set value = 'no spaces' %}
     <li>    {{- value }}    </li>

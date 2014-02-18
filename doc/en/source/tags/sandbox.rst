@@ -1,30 +1,22 @@
 ``sandbox``
 ===========
 
+The Twital instruction for Twig ``import`` tag is ``t:sandbox`` node or the ``t:sandbox`` attribute.
+
 The ``sandbox`` tag can be used to enable the sandboxing mode for an included
 template, when sandboxing is not enabled globally for the Twig environment:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
-    {% sandbox %}
+    <t:sandbox>
         {% include 'user.html' %}
-    {% endsandbox %}
+    </t:sandbox>
 
-.. warning::
+    <div t:sandbox="">
+        {% include 'user.html' %}
+    </div>
 
-    The ``sandbox`` tag is only available when the sandbox extension is
-    enabled (see the :doc:`Twig for Developers<../api>` chapter).
 
 .. note::
 
-    The ``sandbox`` tag can only be used to sandbox an include tag and it
-    cannot be used to sandbox a section of a template. The following example
-    won't work:
-
-    .. code-block:: jinja
-
-        {% sandbox %}
-            {% for i in 1..2 %}
-                {{ i }}
-            {% endfor %}
-        {% endsandbox %}
+    For more information about ``sandbox`` tag please refer to `Twig official documentation<http://twig.sensiolabs.org/doc/tags/autoescape.html>`.

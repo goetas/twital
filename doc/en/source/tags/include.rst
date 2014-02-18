@@ -4,7 +4,7 @@
 The ``include`` statement includes a template and return the rendered content
 of that file into the current namespace:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     <t:include from="header.html"/>
         Body
@@ -12,7 +12,7 @@ of that file into the current namespace:
 
 A little bit different syntax to inclusde a template can be:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     <div class="content" t:include="news.html">
         <h1>Fake news content</h1>
@@ -24,31 +24,32 @@ In this case, the content of div will be replaced with the content of template '
 
 You can add additional variables by passing them after the ``with`` attribute:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     <t:include from="header.html" with="{'foo': 'bar'}"/>
 
 
 You can disable access to the current context by using the ``only`` attribute:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     <t:include from="header.html" with="{'foo': 'bar'} only="true"/>
 
 You can mark an include with ``ignore-missing`` attribute in which case Twital will ignore the statement if the template to be included does not exist.
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     <t:include from="header.html" with="{'foo': 'bar'} ignore-missing="true"/>
-    
+
 ``ignore-missing`` can't be an expression, it has to be evauluated only at compile time.
 
 
 To use Twig expressions as template name you have to use a namespace prefix on 'form' attribute:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     <t:include t:from="ajax ? 'ajax.html' : 'not_ajax.html' " />
     <t:include t:from="['one.html','two.html']" />
 
-For more information about ``include`` please refer to official Twig ducumentation.
+.. note::
+    For more information about ``include`` please refer to official Twig ducumentation.

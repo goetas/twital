@@ -1,6 +1,9 @@
 ``import``
 ==========
 
+The Twital instruction for Twig ``import`` tag is ``t:import`` node.
+
+
 Since Twig supports putting often used code into :doc:`macros<../tags/macro>`. These
 macros can go into different templates and get imported from there.
 
@@ -9,7 +12,7 @@ into a variable or request specific macros from it.
 
 Imagine we have a helper module that renders forms (called ``forms.html``):
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
     <t:macro name="input" args="name, value, type">
         <input type="{{ type|default('text') }}" name="{{ name }}" value="{{ value|e }}" />
     </t:macro>
@@ -19,7 +22,7 @@ Imagine we have a helper module that renders forms (called ``forms.html``):
 
 To use your macro, you can do something like this:
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     <t:import from="forms.html" alias="forms"/>
     <dl>
@@ -30,9 +33,9 @@ To use your macro, you can do something like this:
         {{ forms.textarea('comment') }}
     </dl>
 
-If you want to import your macros directly into yout template (without refering to it with a variable):
+If you want to import your macros directly into your template (without referring to it with a variable):
 
-.. code-block:: jinja
+.. code-block:: xml+jinja
 
     <t:import from="forms.html" as="input as input_field, textarea"/>
     <dl>
@@ -47,5 +50,9 @@ If you want to import your macros directly into yout template (without refering 
 
     To import macros from the current file, use the special ``_self`` variable
     for the source.
+
+.. note::
+
+    For more information about ``import`` tag please refer to `Twig official documentation<http://twig.sensiolabs.org/doc/tags/autoescape.html>`.
 
 .. seealso:: :doc:`macro<../tags/macro>`

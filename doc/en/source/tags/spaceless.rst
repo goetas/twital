@@ -1,37 +1,20 @@
 ``spaceless``
 =============
 
-Use the ``spaceless`` tag to remove whitespace *between HTML tags*, not
-whitespace within HTML tags or whitespace in plain text:
+The Twital instruction for Twig ``spaceless`` tag is ``t:spaceless`` node or the ``t:spaceless`` attribute.
 
-.. code-block:: jinja
 
-    {% spaceless %}
-        <div>
-            <strong>foo</strong>
-        </div>
-    {% endspaceless %}
+.. code-block:: xml+jinja
 
-    {# output will be <div><strong>foo</strong></div> #}
+    <t:spaceless>
+        {% include 'user.html' %}
+    </t:spaceless>
 
-This tag is not meant to "optimize" the size of the generated HTML content but
-merely to avoid extra whitespace between HTML tags to avoid browser rendering
-quirks under some circumstances.
+    <div t:spaceless="">
+        {% include 'user.html' %}
+    </div>
 
-.. tip::
 
-    If you want to optimize the size of the generated HTML content, gzip
-    compress the output instead.
+.. note::
 
-.. tip::
-
-    If you want to create a tag that actually removes all extra whitespace in
-    an HTML string, be warned that this is not as easy as it seems to be
-    (think of ``textarea`` or ``pre`` tags for instance). Using a third-party
-    library like Tidy is probably a better idea.
-
-.. tip::
-
-    For more information on whitespace control, read the
-    :doc:`dedicated<../templates>` section of the documentation and learn how
-    you can also use the whitespace control modifier on your tags.
+    For more information about ``spaceless`` tag please refer to `Twig official documentation<http://twig.sensiolabs.org/doc/tags/autoescape.html>`.
