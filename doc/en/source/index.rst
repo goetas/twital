@@ -41,8 +41,9 @@ they are inherited from HTML structure.
 Of course Twital supports all other Twig functionalities as template inheritance, translations, looping, escaping etc.
 `Here you can find a complete list of Twital attributes and elements. <tags/index>`_
 
-If some Twig functionality is not available for Twital you can freely mix these the two syntaxes:
-
+If some Twig functionality is not available for Twital you can freely mix these the two syntaxes.
+In the above example we have mixed Twital and Twig syntax to use the Twig ``trans`` tag.
+(Of course ``trans`` is available as Twital attribute ``trans`.<tags/trans>``_, this was just an example).
 .. code-block:: xml+jinja
 
     <h1>{% trans %}Members{% endtrans %}</h1>
@@ -52,13 +53,11 @@ If some Twig functionality is not available for Twital you can freely mix these 
         </li>
     </ul>
 
-Here we have mixed Twital and Twig syntax to use the Twig ``trans`` tag.
-(Of course ``trans`` is available as Twital attribute ``trans`.<tags/trans>`_, this was just an example).
 
 Prerequisites
 *************
 
-Twital needs at least **Twig 1.10** to run and.
+Twital needs at least **Twig 1.10** to run.
 
 Installation
 ************
@@ -71,16 +70,14 @@ Using  ``composer require`` command
 
     composer require goetas/twital:1.0.*
 
-Adding dependency to your ``composer.json`` file
+Or adding its dependency to your ``composer.json`` file
 
 .. code-block:: js
 
-    {
-        "require": {
-            ..
-            "goetas/twital":"1.0.*",
-            ..
-        }
+    "require": {
+        ..
+        "goetas/twital":"1.0.*",
+        ..
     }
 
 .. note::
