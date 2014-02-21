@@ -1,69 +1,64 @@
 What is Twital?
 ###############
 
-Twital is a little "plugin" for Twig that change its templating language syntax, adding some shortcuts ad making it syntax more suitable for HTML based (XML, HTML5) templates.
+Twital is a little "plugin" for Twig that change its templating language syntax,
+adding some shortcuts ad making it syntax more suitable for HTML based (XML, HTML5) templates.
 
-To learn more about Twig you can read more on "Twig Official Site":(http://www.)
+You can learn more about Twig reading its official documentation on http://twig.sensiolabs.org/
 
-To understand better what are Twital benefits consider this Twig Template
+To understand better what are Twital benefits consider this Twig template
 that simply shows a list of users from an array.
 
 .. code-block:: xml+jinja
 
     {% if users %}
-    <div>
-        <h1>Members</h1>
         <ul>
             {% for user in users %}
-            <li>
-                {{ user.name }}
-            </li>
+                <li>
+                    {{ user.name }}
+                </li>
             {% endfor %}
         </ul>
-    </div>
     {% endif %}
 
 To express the same template using **Twital** plugin for Twig you can do:
 
 .. code-block:: xml+jinja
 
-    <div t:if="users">
-        <h1>Members</h1>
-        <ul t:for="user in users">
-            <li>
-                {{ user.name }}
-            </li>
-        </ul>
-    </div>
+    <ul t:if="users">
+        <li t:for="user in users">
+            {{ user.name }}
+        </li>
+    </ul>
 
-As you can see, using Twital template is more readable
+As you can see, using Twital template is more readable, less verbose
 and you have not to worry about opening and closing block instructions,
 they are inherited from HTML structure.
 
-Of course Twital supports all other Twig functionalities as template inheritance, translations, looping, escaping etc.
 
+
+
+Of course Twital supports all other Twig functionalities as template inheritance, translations, looping, escaping etc.
 `Here you can find a complete list of Twital attributes and elements. <tags/index>`_
 
-If some Twig functionality is not available for Twital you can freely mix these two syntaxes:
+If some Twig functionality is not available for Twital you can freely mix these the two syntaxes:
 
 .. code-block:: xml+jinja
 
-    <div t:if="users">
-        <h1>{% trans %}Members{% endtrans %}</h1>
-        <ul t:for="user in users">
-            <li>
-                {{ user.name }}
-            </li>
-        </ul>
-    </div>
+    <h1>{% trans %}Members{% endtrans %}</h1>
+    <ul t:if="users">
+        <li t:for="user in users">
+            {{ user.name }}
+        </li>
+    </ul>
 
-In the previous template we have mixed Twital and Twig syntax to use the
-Twig ``trans`` tag. (Of course ``trans`` is anyway available as Twital attribute ``trans`.<tags/trans>`_).
+Here we have mixed Twital and Twig syntax to use the Twig ``trans`` tag.
+(Of course ``trans`` is available as Twital attribute ``trans`.<tags/trans>`_, this was just an example).
 
 Prerequisites
 *************
 
-Twital needs at least **Twig 1.10** to run.
+Twital needs at least **Twig 1.10** to run and.
 
 Installation
 ************
@@ -90,7 +85,7 @@ Adding dependency to your ``composer.json`` file
 
 .. note::
 
-    To learn more about composer please refer to its original site.
+    To learn more about composer please refer to its original site (https://getcomposer.org/).
 
 Basic API Usage
 ***************
@@ -119,4 +114,4 @@ Basic API Usage
 
    api
    extending
-   tags/index
+   tags/index Tags reference
