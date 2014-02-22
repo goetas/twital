@@ -16,7 +16,7 @@ The default extension for Twital templates is ``.twital``
 (by default are allowed also ``.twital.xml``, ``.twital.html``, ``.twital.*``
 or more generally any filename that ends with ``.twital`` or contains ``.twital.``).
 
-A Twital template basically is a Twig template that take advantage of the Natural HTML/XML tree structure
+A Twital template basically is a Twig template that take advantage of the natural HTML/XML tree structure
 (avoiding redundant control flow instructions).
 
 All expressions are completely Twig compatible, just control flow structures (Twig calls them `tags`) are
@@ -146,6 +146,49 @@ The :doc:`if<tags/if>` attribute can be used to test an expression:
     </ul>
 
 Go to the :doc:`tags<tags/index>` page to learn more about the built-in attrubutes and nodes.
+
+
+Attributes
+----------
+
+To create HML/XML attributes you have not to mess uop with control structires inside HTML tags,
+with Twital things are really easy:
+
+.. code-block:: xml+jinja
+
+    <div t:attr=" condition ? class='header'">
+        My Company
+    </div>
+
+
+Here we add conditionaly an attribute based on the value of `condition` expression.
+You can use any twig expression as condition and attribute value. The attribute name must be a litteral.
+
+
+.. code-block:: xml+jinja
+
+    <div t:attr="
+        users | length ? class='header'|upper ,
+        item in array ? class=item">
+        Here wins the last class that condition will be evaluated to true.
+    </div>
+
+You can also append some content to existing attributes.
+
+.. code-block:: xml+jinja
+    <div class="row"
+        t:attr-append=" i mod 2 ? class=' even'">
+         class will be "row even" if 'i' is odd.
+    </div>
+
+When not needed you can omit he condition instruction.
+
+
+.. code-block:: xml+jinja
+    <div t:attr="class='row'" t:attr-append=" class=' even'">
+         Class will be "row even"
+    </div>
+
 
 Comments
 --------
@@ -296,62 +339,32 @@ All expressions and literals that can be used with Twig, can be also used with T
 Operators
 ~~~~~~~~~~~~~~~~~~~~
 
-All operators avaiable for Twig can also be used with Twital.
+All operators available for Twig can also be used with Twital.
 
 Whitespace Control
 ------------------
 
-.. versionadded:: 1.1
-    Tag level whitespace control was added in Twig 1.1.
-
-The first newline after a template tag is removed automatically (like in PHP.)
-Whitespace is not further modified by the template engine, so each whitespace
-(spaces, tabs, newlines etc.) is returned unchanged.
-
-Use the ``spaceless`` tag to remove whitespace *between HTML tags*:
+Twital will try to respect almost all whitespaces that you type.
+To remove whitespaces between HTML tags you can use the ``t:spaceless`` attribute:
 
 .. code-block:: xml+jinja
 
-    {% spaceless %}
-        <div>
-            <strong>foo bar</strong>
-        </div>
-    {% endspaceless %}
+
+    <div t:spaceless="">
+        <strong>foo bar</strong>
+    </div>
 
     {# output will be <div><strong>foo bar</strong></div> #}
 
-In addition to the spaceless tag you can also control whitespace on a per tag
-level. By using the whitespace control modifier on your tags, you can trim
-leading and or trailing whitespace:
+More generaly, Twital have the same behaviour of Twig in whitespaces handling.
 
-.. code-block:: xml+jinja
+.. note::
+    To learn more about whitespace handling in Twig you can read the official documentation.
+    http://twig.sensiolabs.org/doc/tags/spaceless.html
 
-    {% set value = 'no spaces' %}
-    {#- No leading/trailing whitespace -#}
-    {%- if true -%}
-        {{- value -}}
-    {%- endif -%}
-
-    {# output 'no spaces' #}
-
-The above sample shows the default whitespace control modifier, and how you can
-use it to remove whitespace around tags.  Trimming space will consume all whitespace
-for that side of the tag.  It is possible to use whitespace trimming on one side
-of a tag:
-
-.. code-block:: xml+jinja
-
-    {% set value = 'no spaces' %}
-    <li>    {{- value }}    </li>
-
-    {# outputs '<li>no spaces    </li>' #}
 
 Extensions
 ----------
 
-Twig can be easily extended.
-
-If you are looking for new tags, filters, or functions, have a look at the Twig official
-`extension repository`_.
-
-If you want to create your own, read the :ref:`Creating an Extension<extending>` chapter.
+Twital can be easily extended. To learn how to create your own extension you can read
+ the :ref:`Creating an Extension<extending>` chapter.
