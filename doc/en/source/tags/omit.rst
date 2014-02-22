@@ -10,8 +10,10 @@ its content will still be evaluated.
         {{ username }}
     </a>
 
+    <t:omit>
+        {{ username }}
+    </t:omit>
+
 
 This attribute is useful when you want to create element optionally,
 e.g. hide a link if certain condition is met.
-
-If you want element that is never output, you can use ``omit`` tag

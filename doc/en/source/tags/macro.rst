@@ -3,7 +3,6 @@
 
 The Twital instruction for Twig ``macro`` tag is ``t:macro`` node.
 
-Macros, as described by Twig, are comparable with functions in regular programming languages.
 To declare a macro inside Twital, the syntax is:
 
 .. code-block:: xml+jinja

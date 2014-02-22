@@ -3,10 +3,11 @@
 
 The Twital instruction for Twig ``autoescape`` tag is ``t:autoescape`` attribute.
 
-To see how to use it, take a look to this example:
 
 Whether automatic escaping is enabled or not, you can mark a section of a
-template to be escaped or not by using the ``autoescape`` tag:
+template to be escaped or not by using the ``autoescape`` tag.
+
+To see how to use it, take a look to this example:
 
 .. code-block:: xml+jinja
 

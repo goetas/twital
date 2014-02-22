@@ -1,11 +1,16 @@
 ``embed``
 =========
 
+The Twital instruction for Twig ``embed`` tag is ``t:embed`` node.
 
+The embed tag combines the behaviour of include and extends.
+It allows you to include another template's contents, just like include does.
+But it also allows you to override any block defined inside the included template,
+like when extending a template.
 
+To learn about usefulness of `embed` you can read the official documentation.
 
-The Twital instruction for Twig ``extends`` tag is ``t:extends`` node.
-To see how to use it, take a look to this example:
+Now let's see how to use it, take a look to this example:
 
 .. code-block:: xml+jinja
 

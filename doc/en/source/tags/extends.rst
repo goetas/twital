@@ -57,7 +57,6 @@ to do this you  have to add the Twital namespace to attribute name:
 
     <t:extends t:from="layoutVar">
         <t:block name="content">
-            <t:block-call t:name="variableBlock"/>
             Hello {{name}}!
         </t:block>
     </t:extends>

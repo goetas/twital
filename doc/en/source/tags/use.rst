@@ -3,6 +3,9 @@
 
 The Twital instruction for Twig ``use`` tag is ``t:use`` node.
 
+This is a fature that allow horizontal reuse of templates.
+To learn more about it you can read the official documentation.
+
 Let's see how it works:
 
 .. code-block:: xml+jinja

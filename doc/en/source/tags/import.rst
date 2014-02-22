@@ -17,6 +17,7 @@ Imagine we have a helper module that renders forms (called ``forms.html``):
     <t:macro name="input" args="name, value, type">
         <input type="{{ type|default('text') }}" name="{{ name }}" value="{{ value|e }}" />
     </t:macro>
+    
     <t:macro name="textarea" args="name, value">
         <textarea name="{{ name }}">{{ value|e }}</textarea>
     </t:macro>

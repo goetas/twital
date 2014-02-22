@@ -72,15 +72,20 @@ Here is just a short example:
 
 Setting Variables
 ~~~~~~~~~~~~~~~~~
-
-You can assign values to variables inside code blocks. Assignments use the
-:doc:`set<tags/set>` tag:
+The `t:set` attribute acts same as Twig `set` tag.
+Lets take a look:
 
 .. code-block:: xml+jinja
+    <div t:set="name = 'Tom'">
+        Hello {{ tom }}
+    </div>
 
-    {% set foo = 'foo' %}
-    {% set foo = [1, 2] %}
-    {% set foo = {'foo': 'bar'} %}
+    <t:omit t:set="numbers = [1,2], items = {'item':'one'}"/>
+    {# no tags will be outputed since t:omit tag will be ommited #}
+
+.. note::
+
+    To leaarn more about ``set`` you can read here
 
 Filters
 -------
@@ -176,6 +181,7 @@ You can use any twig expression as condition and attribute value. The attribute 
 You can also append some content to existing attributes.
 
 .. code-block:: xml+jinja
+
     <div class="row"
         t:attr-append=" i mod 2 ? class=' even'">
          class will be "row even" if 'i' is odd.
@@ -185,6 +191,7 @@ When not needed you can omit he condition instruction.
 
 
 .. code-block:: xml+jinja
+
     <div t:attr="class='row'" t:attr-append=" class=' even'">
          Class will be "row even"
     </div>
@@ -215,7 +222,6 @@ Template Inheritance
 --------------------
 
 Template Inheritance is almost identical to Twig.
-
 Twital adds just some features useful to define new blocks.
 Let's look an example.
 
@@ -349,7 +355,6 @@ To remove whitespaces between HTML tags you can use the ``t:spaceless`` attribut
 
 .. code-block:: xml+jinja
 
-
     <div t:spaceless="">
         <strong>foo bar</strong>
     </div>
@@ -359,6 +364,7 @@ To remove whitespaces between HTML tags you can use the ``t:spaceless`` attribut
 More generaly, Twital have the same behaviour of Twig in whitespaces handling.
 
 .. note::
+
     To learn more about whitespace handling in Twig you can read the official documentation.
     http://twig.sensiolabs.org/doc/tags/spaceless.html
 
@@ -366,5 +372,5 @@ More generaly, Twital have the same behaviour of Twig in whitespaces handling.
 Extensions
 ----------
 
-Twital can be easily extended. To learn how to create your own extension you can read
- the :ref:`Creating an Extension<extending>` chapter.
+Twital can be easily extended. To learn how to create your own extension you can
+read the :ref:`Creating an Extension<extending>` chapter.
