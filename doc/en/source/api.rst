@@ -283,6 +283,7 @@ you have to adapt it (eg HTML).
 
 
 .. code-block::
+
     class MyExtension extends AbstractExtension
     {
         public function getPostFilters()
@@ -338,8 +339,11 @@ Finaly you have to create your extension that ships your loader.
         }
     }
 
-As you can see, the `getNodes` method have to return a hash.
+As you can see, the `getLoaders` method have to return a hash.
 The key is used to select the right loader.
+
+.. note::
+    Twital already comes with `xml`, `xhtml`, `html`, `html5` loaders
 
 Creating a DOM `Dumper`
 ----------------------
@@ -388,19 +392,23 @@ To dump directly into XML, your dumper might look like this;
 ** `$metadata` contains the metadatas collected by  `collectMetadata` method
 * ``$xml``: Gets the raw template content
 
-Finaly you have to create your extension that ships your loader.
+Finaly you have to create your extension that ships your dumper.
 
 
 .. code-block::
+
     class MyExtension extends AbstractExtension
     {
-        public function getLoaders()
+        public function getDumpers()
         {
             return array(
-                'xml'=>new XMLLoader()
+                'xml'=>new XMLDumper()
             );
         }
     }
 
 As you can see, the `getNodes` method have to return a hash.
-The key is used to select the right loader.
+The key is used to select the right dumper.
+
+.. note::
+    Twital already comes with `xml`, `xhtml`, `html`, `html5` dumpers
