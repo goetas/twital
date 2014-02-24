@@ -296,7 +296,7 @@ you have to adapt it (eg HTML).
         }
     }
 
-Also this is a really simple extension that repalces, just befor evaluation/saving phase, all occurences of "foo" with "bar" from the input template.
+Also this is a really simple extension that repalces, just befor evaluation/saving phase, all occurrences of "foo" with "bar" from the input template.
 
 .. note::
     To see some examples of possible post-filters please look at the source
@@ -355,32 +355,21 @@ To create a "dumper" you have to implement  the `Dumper` interface.
 
 To dump directly into XML, your dumper might look like this;
 
-.. code-block:: php
+.. code-block:: html+php
 
     class XMLDumper implements Dumper
     {
         public function collectMetadata(\DOMDocument $dom, $original)
         {
             $metedata = array();
-
             $metedata['xmldeclaration'] = strpos(rtrim($original), '<?xml ') === 0;
             $metedata['doctype'] = ! ! $dom->doctype;
-
             return $metedata;
         }
 
         public function dump(\DOMDocument $dom, $metedata)
         {
-            if ($metedata['xmldeclaration']) {
-                return $dom->saveXML();
-            } else {
-                $cnt = array();
-
-                foreach ($dom->childNodes as $node) {
-                    $cnt[] = $dom->saveXML($node);
-                }
-                return implode("", $cnt);
-            }
+            return $dom->saveXML();
         }
     }
 * ``collectMetadata()`` method can collect some data from orignak document (before DOM loading)
