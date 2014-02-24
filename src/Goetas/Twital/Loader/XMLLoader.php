@@ -5,7 +5,6 @@ use Goetas\Twital\Loader;
 
 class XMLLoader implements Loader
 {
-
     public function load($xml)
     {
         $dom = new \DOMDocument('1.0', 'UTF-8');
