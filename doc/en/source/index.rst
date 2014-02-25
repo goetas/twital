@@ -4,7 +4,7 @@ What is Twital?
 Twital is a little "plugin" for `Twig`_ that change its language syntax,
 adding some shortcuts ad making it more suitable for HTML based (XML, HTML5, XHTML, SGML) templates.
 
-You can learn more about `Twig reading its official documentation <http://www.python.org/>`_.
+You can learn more about `Twig reading its official documentation <http://twig.sensiolabs.org/documentation>`_.
 
 To understand better what are Twital benefits, consider this Twig template
 that simply shows a list of users from an array.
@@ -31,15 +31,15 @@ To express the same template using **Twital** you can do:
         </li>
     </ul>
 
-As you can see, using Twital template is more readable, less verbose
-and you have not to worry about opening and closing block instructions,
+As you can see, using Twital template is **more readable**, **less verbose**
+and you have **not to worry about opening and closing block instructions**,
 they are inherited from HTML structure.
 
 
 Of course Twital supports all other Twig's nice functionalities as template inheritance, translations,
 looping, escaping etc. :doc:`Here you can find a complete list of Twital attributes and elements.<tags/index>`
 
-If some Twig functionality is not available for Twital you can freely mix these the two syntaxes.
+If some Twig functionality is not available for Twital you can **freely mix Twig and Twital** syntaxes.
 In the above example we have mixed Twital and Twig syntax to use the Twig ``autoescape`` tag.
 
 .. code-block:: xml+jinja
@@ -51,7 +51,7 @@ In the above example we have mixed Twital and Twig syntax to use the Twig ``auto
         </li>
     </ul>
 
-Of course ``autoescape`` is available as Twital attribute :doc:`autoescape<tags/autoescape>`, this was just an example.
+Of course ``autoescape`` is available as Twital attribute :doc:`t:autoescape<tags/autoescape>`, this was just an example.
 
 Prerequisites
 *************
@@ -88,7 +88,7 @@ Basic Usage
 
 This section gives you a brief introduction to Twital.
 
-On the "design" side you have to create a file your template (named for example `demo.twital.html`):
+On the "design" side you have to create a file your template (named for example ``demo.twital.html``):
 
 .. code-block:: xml+jinja
 
@@ -117,17 +117,17 @@ Thats all!
 
 .. note::
 
-    Since Twital uses Twig to compile and render templates, Twital performance is exactly the same of any other Twig Template.
+    Since Twital uses Twig to compile and render templates,
+    Twital performance is exactly the same of any other Twig template.
 
 Contents
 ********
 
 .. toctree::
-   :maxdepth: 1
+    :maxdepth: 1
 
-    tags/index Tags reference
+    tags/index
     api
     extending
-    tags/index Tags reference
 
-.. Twig: http://twig.sensiolabs.org/
+.. _Twig: http://twig.sensiolabs.org/

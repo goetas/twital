@@ -1,5 +1,5 @@
-Tags
-====
+Tags reference
+==============
 
 .. toctree::
     :maxdepth: 2

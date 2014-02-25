@@ -8,22 +8,16 @@ Synopsis
 --------
 
 A template is simply a text file. It can generate any HTML/XML format.
-See here how to use specific output formats. ``DOMDumpers``
-
 
 To make it work, your templates must match the configured file extension.
 The default extension for Twital templates is ``.twital``
-(by default are allowed also ``.twital.xml``, ``.twital.html``, ``.twital.*``
-or more generally any filename that ends with ``.twital`` or contains ``.twital.``).
+(more generally the default is any filename that ends with ``.twital`` or contains ``.twital.`` in its name).
 
 A Twital template basically is a Twig template that take advantage of the natural HTML/XML tree structure
-(avoiding redundant control flow instructions).
+(avoiding redundant control flow instructions).All expressions are completely Twig compatible,
+just control flow structures (Twig calls them *tags*) are replaced by Twital *tags* or *attributes*.
 
-All expressions are completely Twig compatible, just control flow structures (Twig calls them `tags`) are
-replaced by Twital tags or attributes.
-
-Below is a minimal template that illustrates a few basics. We will cover the
-details later on:
+Here is a minimal template that illustrates a few basics:
 
 .. code-block:: html+jinja
 
@@ -44,20 +38,21 @@ details later on:
         </body>
     </html>
 
+.. see-other::
+    See :doc:`here<api>` how to use specific output formats as XML or XHTML and HTML5.
+
 IDEs Integration
 ----------------
 
-Any IDE that supports HTML/XML editing supports already Twital templates.
-Any IDE that supports Twig syntax highlighting and auto-completion shuld be configured to supports Twital.
+Any IDE that supports Twig syntax highlighting and auto-completion shuld be configured to support Twital.
 
-Here you can find a list of `IDEs that supports Twig/Twital <http://twig.sensiolabs.org/doc/templates.html#ides-integration>`_
+Here you can find a list of
+`IDEs that supports Twig/Twital <http://twig.sensiolabs.org/doc/templates.html#ides-integration>`_
 
 Variables
 ---------
 
 To print the content of variables you can use exactly the same Twig syntax, using Twig functions, filters ecc.
-
-Here is just a short example:
 
 .. code-block:: xml+jinja
 
@@ -67,13 +62,11 @@ Here is just a short example:
 
 .. note::
 
-    To learn more about twig variables you can read the official documentation
-    http://twig.sensiolabs.org/doc/templates.html#variables
+    To learn more about Twig variables you can read the `Twig official documentation<http://twig.sensiolabs.org/doc/templates.html#variables>`_
 
 Setting Variables
 ~~~~~~~~~~~~~~~~~
-The `t:set` attribute acts same as Twig `set` tag.
-Lets take a look:
+The `t:set` attribute acts same as Twig `set` tag and alows yiu to set a variable form a template.
 
 .. code-block:: xml+jinja
     <div t:set="name = 'Tom'">
@@ -85,7 +78,7 @@ Lets take a look:
 
 .. note::
 
-    To leaarn more about ``set`` you can read here
+    To learn more about Twig ``set``  you can read the `Twig official documentation<http://twig.sensiolabs.org/doc/tags/set.html>`_
 
 Filters
 -------
@@ -105,6 +98,11 @@ You can also use the Twital attribute ``t:filter`` to filter the content of an e
     <div t:filter="upper">
         This text becomes uppercase
     </div>
+
+.. note::
+
+    To learn more about Twig filters  you can read the `Twig official documentation<http://twig.sensiolabs.org/doc/templates.html#filters>`_
+
 
 Functions
 ---------
