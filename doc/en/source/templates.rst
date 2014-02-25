@@ -62,7 +62,7 @@ To print the content of variables you can use exactly the same Twig syntax, usin
 
 .. note::
 
-    To learn more about Twig variables you can read the `Twig official documentation<http://twig.sensiolabs.org/doc/templates.html#variables>`_
+    To learn more about Twig variables you can read the `Twig official documentation <http://twig.sensiolabs.org/doc/templates.html#variables>`_
 
 Setting Variables
 ~~~~~~~~~~~~~~~~~
@@ -78,7 +78,7 @@ The `t:set` attribute acts same as Twig `set` tag and alows yiu to set a variabl
 
 .. note::
 
-    To learn more about Twig ``set``  you can read the `Twig official documentation<http://twig.sensiolabs.org/doc/tags/set.html>`_
+    To learn more about Twig ``set``  you can read the `Twig official documentation <http://twig.sensiolabs.org/doc/tags/set.html>`_
 
 Filters
 -------
@@ -101,13 +101,13 @@ You can also use the Twital attribute ``t:filter`` to filter the content of an e
 
 .. note::
 
-    To learn more about Twig filters  you can read the `Twig official documentation<http://twig.sensiolabs.org/doc/templates.html#filters>`_
+    To learn more about Twig filters  you can read the `Twig official documentation <http://twig.sensiolabs.org/doc/templates.html#filters>`_
 
 
 Functions
 ---------
 
-You can use all Twig functions directly into Twital.
+You can use all Twig functions directly from Twital.
 
 For instance, the ``range`` function returns a list containing an arithmetic
 progression of integers:
@@ -120,7 +120,8 @@ progression of integers:
 
 .. note::
 
-    To learn more about Twig functions you can read the official documentation.
+    To learn more about Twig filters  you can read the `Twig official documentation <http://twig.sensiolabs.org/doc/templates.html#functions>`_
+
 
 Control Structure
 -----------------
@@ -150,11 +151,14 @@ The :doc:`if<tags/if>` attribute can be used to test an expression:
 
 Go to the :doc:`tags<tags/index>` page to learn more about the built-in attrubutes and nodes.
 
+.. note::
+
+    To learn more about Twig control structures you can read the `Twig official documentation<http://twig.sensiolabs.org/doc/templates.html#control-structure>`_
 
 Attributes
 ----------
 
-To create HML/XML attributes you have not to mess uop with control structires inside HTML tags,
+To create HML/XML attributes you have not to mess up with control structures inside HTML tags,
 with Twital things are really easy:
 
 .. code-block:: xml+jinja
@@ -164,8 +168,8 @@ with Twital things are really easy:
     </div>
 
 
-Here we add conditionaly an attribute based on the value of `condition` expression.
-You can use any twig expression as condition and attribute value. The attribute name must be a litteral.
+Here we add conditionally an attribute based on the value of `condition` expression.
+You can use any twig expression as condition and attribute value. The attribute name must be a literal.
 
 
 .. code-block:: xml+jinja
@@ -214,7 +218,9 @@ return the rendered content of that template into the current one:
 Inclusion works exactly as Twig.
 
 .. note::
-    You can read the official documentation
+
+    To learn more about Twig inclusion techniques  you can read the `Twig official documentation <http://twig.sensiolabs.org/doc/templates.html#including-other-templates>`_
+
 
 Template Inheritance
 --------------------
@@ -300,8 +306,7 @@ parent block:
 
 .. note::
 
-    To learn more about template inheritance you can look ``t:block`` and
-    you can also read the offical documentation
+    To learn more about Twig inheritance you can read the `Twig official documentation http://twig.sensiolabs.org/doc/templates.html#template-inheritance>`_
 
 Macros
 ------
