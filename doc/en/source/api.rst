@@ -1,7 +1,7 @@
 Twital for Developers
 ===================
 
-This chapter describes the API to Twital and not the template language.
+This chapter describes the PHP API to Twital and not the template language.
 It will be most useful as reference to those implementing the template interface to the application
 and not those who are creating Twig templates.
 
@@ -25,42 +25,35 @@ Twital object.
     $twital = new Twital($twig);
 
 
-By default Twital comes with HTML5 tokenizer enabled. If you want to change it
-to XHTML you can do it:
+By default Twital comes with HTML5 tokenizer enabled.
+To change it you can do:
 
 .. code-block:: php
 
     $twital = new Twital($twig, 'xhtml');
 
 
-Other options avaiable are ``xml``, ``html5`` and ``xhtml``.
+Other options available are ``xml``, ``html5`` and ``xhtml``.
 
 
-This will create a template environment with the default settings and a
-
-To load a template just have to call the ``loadTemplate()`` method which then
-returns a ``Twig_Template`` instance::
+By default Twital will compile only templates that contains ``.twital`` in their file name.
+If you want to change it:
 
 .. code-block:: php
 
-    $template = $twital->loadTemplate('index.html.twital');
+    $twital = new Twital($twig, array());
+    $twital->addFileNamePattern('\.xml$'); // filename regex
+    $twital->addFileNamePattern(function($name){
+        return strpos($name, 'foo')!==false;
+    }); // callback
+
 
 To render the template with some variables, call the ``render()`` method::
 
 
 .. code-block:: php
 
-    echo $template->render(array('the' => 'variables', 'go' => 'here'));
-
-.. note::
-
-    The ``display()`` method is a shortcut to output the template directly.
-
-You can also load and render the template in one fell swoop::
-
-.. code-block:: php
-
-    echo $twital->render('index.html.twital', array('the' => 'variables', 'go' => 'here'));
+    echo $twital->render('index.twital.html', array('the' => 'variables', 'go' => 'here'));
 
 
 How does Twig work?
@@ -89,14 +82,10 @@ The rendering of a  template can be summarized into this steps:
 * **Evaluate** the template  (done by Twig): It basically means calling the ``display()``
   method of the compiled template and passing it the context.
 
-Twig can be extended in many ways; you can add extra tags, filters, tests,
-operators, global variables, and functions. You can even extend the parser
-itself with node visitors.
 
 
 Extending Twig
 --------------
-
 
 As Twig, Twital is very extensible and you can hook into it.
 The best way to extend Twital is create your own "extension" and provide
@@ -106,44 +95,50 @@ your functionalities.
 Creating an Extension
 ~~~~~~~~~~~~~~~~~~~~~
 
-To create an extension you have to implement `Extension` interface or to extend the `AbstractExtension` class.
+To create an extension you have to implement ``Goetas\Twital\Extension`` interface or extend the `Goetas\Twital\Extension\AbstractExtension` class.
 
-This is the `Extension` interface:
+This is the ``Goetas\Twital\Extension`` interface:
 
 .. code-block:: php
 
-    include ../../../src/Goetas/Twital/Extension.php
+.. include:: ../../../src/Goetas/Twital/Extension.php
 
 
-When createt our extension we have to add it to Twital  by using the ``addExtension()`` method on your
-main Twital object::
+To enable our extension, we have to add it to Twital's instance by using the ``addExtension()`` method:
 
-    $twig = new Twig_Environment($loader);
-    $twital = new TwitalEnviroment($twig);
+.. code-block:: php
+
+    $twital = new Twital($twig);
     $twital->addExtension(new MyNewCustomExtension());
 
 
 .. tip::
 
     The bundled extensions are great examples of how extensions work.
+
 .. note::
 
     In some special cases you may need to create a Twig extension instead of Twital one.
+    To learn how to create a Twig extension you can read the  `Twig official documentation <http://twig.sensiolabs.org/doc/advanced.html>`_
 
 Creating a `Node` parser
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-To add your node parser, first you have to implement the `Node` class.
+Node parser is aimed to handle custom XML/HTML tags.
 
 
-Suppose that we would to create an extension to handle an attribute that echoes "Hello world".
+
+Suppose that we would to create an extension to handle a tag ``<my:hello>`` that echoes "Hello world".
 
 .. code-block:: xml
     <div class="red" xmlns:my="http://www.example.com/namespace">
         <my:hello name="John"/>
     </div>
 
-The 'Node` class can be something like this:
+
+To create your node parser that handles this "new" tag, you have to implement the `'Goetas\Twital\Node`` interface.
+
+The ``HelloNode`` class can be something like this:
 
 .. code-block::
     class HelloNode implements Node
@@ -158,18 +153,17 @@ The 'Node` class can be something like this:
         }
     }
 
+Let's take a look to ``visit`` method:
 
-* ``$node``: Gets the the DOM node for our tag.
-
+* ``$node``: Gets the the DOM node relative to our ``my:hello`` tag.
 * ``$twital``: Gets the Twital compiler.
+* No return value for `visit` method will be required.
 
-No return value for `visit` method will be required.
-
+``visit`` method have to transform the Twital template representation into Twig template syntax.
 `$compiler->applyTemplatesToChilds` or `$compiler->applyTemplates` or `$compiler->applyTemplatesToAttributes`
 can be very useful when need to process also the content of node.
 
-Finaly you have to create your extension that ships your node parser.
-
+Finally you have to create your extension that ships your node parser.
 
 .. code-block::
     class MyExtension extends AbstractExtension
@@ -184,36 +178,38 @@ Finaly you have to create your extension that ships your node parser.
         }
     }
 
-As you can see, the `getNodes` method have to return a two-level hash.
+As you can see, the ``getNodes`` method have to return a two-level hash.
 * The first level is the node namespace
 * The second level is the node name
 
 Of course, an extension can ship nodes that works with multiple namespaces.
 
+
 Creating a `Attribute` parser
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To add your attribute parser, first you have to implement the `Attribute` class.
+Attribute parser is aimed to handle custom XML/HTML attributes.
 
-
-Suppose that we would to create an extension to handle an attribute that simply appends some text inisde a node,
- remving its original content.
+Suppose that we would to create an extension to handle an attribute that simply appends some text inside a node,
+removing its original content.
 
 .. code-block:: xml
     <div class="red" xmlns:my="http://www.example.com/namespace">
-       <p my:replace="rawHtmlVar">
-        This text will be replaced with the content of "rawHtmlVar" variable.
+        <p my:replace="rawHtmlVar">
+            This text will be replaced with the content of "rawHtmlVar" variable.
         </p>
     </div>
 
-The 'Node` class can be something like this:
+To add your attribute parser, first you have to implement the ``Goetas\Twital\Attribute`` interface.
+
+
+The ``HelloAttribute`` class can be something like this:
 
 .. code-block::
-    class HelloNode implements Attribute
+    class HelloAttribute implements Attribute
     {
         function visit(\DOMAttr $attr, Compiler $twital)
         {
-
             $printNode = $twital->createPrintNode($attr->ownerNode->ownerDocument, $attr." | raw");
 
             $attr->ownerNode->appendChild($printNode);
@@ -223,16 +219,17 @@ The 'Node` class can be something like this:
         }
     }
 
-
+Let's take a look to ``visit`` method:
 * ``$attr``: Gets the the `DOMAttr` node for our attribute.
-
 * ``$twital``: Gets the Twital compiler.
 
-The `visit` method can also return one of the following constants:
-* `Attribute::STOP_NODE` : instructs the compiler to skip to next node (next sibiling)
-* `Attribute::STOP_ATTRIBUTE` : instructs  the compiler to stop processing attributes of current node
+The ``visit`` method have to transform the custom attribute into valid Twig code.
 
-Finaly you have to create your extension that ships your node parser.
+The ``visit`` method can also return one of the following constants:
+* ``Attribute::STOP_NODE``: instructs the compiler to skip to next node (go to next sibling)
+* ``Attribute::STOP_ATTRIBUTE``: instructs the compiler to stop processing attributes of current node (continues with child and sibling nodes)
+
+Finally you have to create your extension that ships your attribute parser.
 
 .. code-block::
     class MyExtension extends AbstractExtension
@@ -247,17 +244,21 @@ Finaly you have to create your extension that ships your node parser.
         }
     }
 
-As you can see, the `getNodes` method have to return a two-level hash.
+As you can see, the ``getAttributes`` method have to return a two-level hash.
 * The first level is the node namespace
 * The second level is the node name
+
 Crating a `preFilter`
 ~~~~~~~~~~~~~~~~~~~~
 
-Since Twital works internaly with DOMDocument, any template must be transformed into it.
+Since Twital works internally with `DOMDocument <http://php.net/domdocument>`_,
+any template must be transformed into it.
 
-Sometimes, the input tempalte is not completley XML (`DOMDocument` compatible), so you have do adapt it.
+Sometimes, the input template is not completely XML (`DOMDocument`) compatible, so you have do adapt it
+using a `preFilter`.
 
 .. code-block::
+
     class MyExtension extends AbstractExtension
     {
         public function getPreFilters()
@@ -270,17 +271,18 @@ Sometimes, the input tempalte is not completley XML (`DOMDocument` compatible), 
         }
     }
 
-This realy simple extension repalces, just befor compilation phase, all occurences of "foo" with "bar" from the input template.
+This really simple extension replaces,  all occurrences of "foo" with "bar" contained into the input template.
+This phase is done just before compilation process starts.
 
 .. note::
-    To see some examples of possible pre-filters please look at the source
+    To see some examples of possible pre-filters please look at the source code
 
 Crating a `postFilter`
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Since Twital works internaly with `DOMDocument` that outputs out only XML, if you need to output a template in a different format
+Since Twital works internally with `DOMDocument <http://php.net/domdocument>`_,
+any template must be transformed into it. If you need to output a template in a different format
 you have to adapt it (eg HTML).
-
 
 .. code-block::
 
@@ -296,19 +298,21 @@ you have to adapt it (eg HTML).
         }
     }
 
-Also this is a really simple extension that repalces, just befor evaluation/saving phase, all occurrences of "foo" with "bar" from the input template.
+Also this is a really simple extension that replaced, all occurrences of "foo" with "bar".
+This phase is done when all compilation phases are done.
 
 .. note::
-    To see some examples of possible post-filters please look at the source
+    To see some examples of possible post-filters please look at the source code
 
 Creating a DOM `Loader`
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Since Twital works internaly with DOMDocument, any template must be transformed into it.
+Since Twital works internally with `DOMDocument <http://php.net/domdocument>`_,
+any template must be transformed into it.
 
-To create a "loader" you have to implement  the `Loader` interface.
+To create your own loader you have to implement the ``Goetas\Twital\Loader`` interface.
 
-If a source code is XML your loader can be something like this;
+If your source code is in XML,  your loader can be something like this;
 
 .. code-block:: php
 
@@ -323,9 +327,10 @@ If a source code is XML your loader can be something like this;
     }
 
 * ``$xml``: Gets the raw template content
+* ``load`` have to return a ``DOMDocument`` object.
+
 
 Finaly you have to create your extension that ships your loader.
-
 
 .. code-block:: php
 
@@ -339,7 +344,7 @@ Finaly you have to create your extension that ships your loader.
         }
     }
 
-As you can see, the `getLoaders` method have to return a hash.
+As you can see, the ``getLoaders`` method have to return a hash.
 The key is used to select the right loader.
 
 .. note::
@@ -347,11 +352,13 @@ The key is used to select the right loader.
 
 Creating a DOM `Dumper`
 ~~~~~~~~~~~~~~~~~~~~~~
+Since Twital works internally with `DOMDocument <http://php.net/domdocument>`_,
+any template must be transformed into it, and later re-transformed into a raw string.
 
-Since Twital works internaly with DOMDocument,
-any template must be transformed into raw stream after compilation phase.
 
-To create a "dumper" you have to implement  the `Dumper` interface.
+If want to output your templates in XML, you have to
+create a "dumper" that  implements  the ``Goetas\Twital\Dumper`` interface.
+
 
 To dump directly into XML, your dumper might look like this;
 
@@ -372,6 +379,8 @@ To dump directly into XML, your dumper might look like this;
             return $dom->saveXML();
         }
     }
+
+Let's thake a look to the class implementation:
 - ``collectMetadata()`` method can collect some data from orignak document (before DOM loading)
  - `$dom` contains the *Dom* just after DOM loading
  - `$original` contains the original template content
@@ -380,8 +389,8 @@ To dump directly into XML, your dumper might look like this;
  - `$metadata` contains the metadatas collected by  `collectMetadata` method
 - ``$xml``: Gets the raw template content
 
-Finaly you have to create your extension that ships your dumper.
 
+Finaly you have to create your extension that ships your dumper.
 
 .. code-block::
 
@@ -395,8 +404,8 @@ Finaly you have to create your extension that ships your dumper.
         }
     }
 
-As you can see, the `getNodes` method have to return a hash.
-The key is used to select the right dumper.
+As you can see, the ``getDumpers`` method have to return a hash.
+The key is used to select the right dumper during the output phase.
 
 .. note::
     Twital already comes with `xml`, `xhtml`, `html`, `html5` dumpers
