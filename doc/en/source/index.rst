@@ -84,25 +84,44 @@ Or adding its dependency to your ``composer.json`` file
 
     To learn more about composer please refer to its original site (https://getcomposer.org/).
 
-Basic API Usage
-***************
+Basic Usage
+***********
 
-This section gives you a brief introduction to the PHP API for Twig.
+This section gives you a brief introduction to Twital.
+
+On the "design" side you have to create a file your template (named for example `demo.twital.html`):
+
+.. code-block:: xml+jinja
+
+    <div t:if="name">
+        Hello {{ name }}
+    </div>
+
+On the PHP side you have to create a PHP script and load a Twital instance:
 
 .. code-block:: php
 
-    require_once '/path/to/vendor/autoload.php';
+    require_once '/path/to/composer/vendor/autoload.php';
+    use Goetas\Twital\Twital;
 
     $loader = new Twig_Loader_Filesystem('/path/to/templates');
     $twig = new Twig_Environment($loader);
 
-    $twital = new Twig_Environment($twig);
+    $twital = new Twital($twig);
 
-    echo $twital->render('template.html', array('name' => 'Fabien'));
-
-Twital uses Twig to compile and render templates, so Twital performance is exactly the same of any other Twig Template.
+    echo $twital->render('template.twital.html', array('name' => 'John'));
 
 
+
+Thats all!
+
+
+.. note::
+
+    Since Twital uses Twig to compile and render templates, Twital performance is exactly the same of any other Twig Template.
+
+Contents
+********
 
 .. toctree::
    :maxdepth: 2

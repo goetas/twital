@@ -372,14 +372,13 @@ To dump directly into XML, your dumper might look like this;
             return $dom->saveXML();
         }
     }
-* ``collectMetadata()`` method can collect some data from orignak document (before DOM loading)
- * `$dom` contains the *Dom* just after DOM loading
- * `$original` contains the original template content
-
-* ``dump()`` method dump a *DOM* into a string
- * `$dom` contains the `DOMDocument`
- * `$metadata` contains the metadatas collected by  `collectMetadata` method
-* ``$xml``: Gets the raw template content
+- ``collectMetadata()`` method can collect some data from orignak document (before DOM loading)
+ - `$dom` contains the *Dom* just after DOM loading
+ - `$original` contains the original template content
+- ``dump()`` method dump a *DOM* into a string
+ - `$dom` contains the `DOMDocument`
+ - `$metadata` contains the metadatas collected by  `collectMetadata` method
+- ``$xml``: Gets the raw template content
 
 Finaly you have to create your extension that ships your dumper.
 
