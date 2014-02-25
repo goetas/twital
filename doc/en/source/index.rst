@@ -130,4 +130,13 @@ Contents
     templates
     api
 
+Contributing
+************
+
+This is a open source project, contributors are welcome.
+If your are interested, you can contribute to documentation, source code, test suit or anythig else!
+
+To start contributing right now, go to https://github.com/goetas/twital and  fork it!
+
+
 .. _Twig: http://twig.sensiolabs.org/
