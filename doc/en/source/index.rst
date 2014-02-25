@@ -1,12 +1,12 @@
 What is Twital?
 ###############
 
-Twital is a little "plugin" for Twig that change its templating language syntax,
-adding some shortcuts ad making it syntax more suitable for HTML based (XML, HTML5) templates.
+Twital is a little "plugin" for `Twig`_ that change its language syntax,
+adding some shortcuts ad making it more suitable for HTML based (XML, HTML5, XHTML, SGML) templates.
 
-You can learn more about Twig reading its official documentation on http://twig.sensiolabs.org/
+You can learn more about `Twig reading its official documentation <http://www.python.org/>`_.
 
-To understand better what are Twital benefits consider this Twig template
+To understand better what are Twital benefits, consider this Twig template
 that simply shows a list of users from an array.
 
 .. code-block:: xml+jinja
@@ -21,7 +21,7 @@ that simply shows a list of users from an array.
         </ul>
     {% endif %}
 
-To express the same template using **Twital** plugin for Twig you can do:
+To express the same template using **Twital** you can do:
 
 .. code-block:: xml+jinja
 
@@ -36,23 +36,22 @@ and you have not to worry about opening and closing block instructions,
 they are inherited from HTML structure.
 
 
-
-
-Of course Twital supports all other Twig functionalities as template inheritance, translations, looping, escaping etc.
-`Here you can find a complete list of Twital attributes and elements. <tags/index>`_
+Of course Twital supports all other Twig's nice functionalities as template inheritance, translations,
+looping, escaping etc. :doc:`Here you can find a complete list of Twital attributes and elements.<tags/index>`
 
 If some Twig functionality is not available for Twital you can freely mix these the two syntaxes.
-In the above example we have mixed Twital and Twig syntax to use the Twig ``trans`` tag.
-(Of course ``trans`` is available as Twital attribute ``trans`.<tags/trans>``_, this was just an example).
+In the above example we have mixed Twital and Twig syntax to use the Twig ``autoescape`` tag.
+
 .. code-block:: xml+jinja
 
-    <h1>{% trans %}Members{% endtrans %}</h1>
+    <h1>{% autoescape %}Members{% endautoescape %}</h1>
     <ul t:if="users">
         <li t:for="user in users">
             {{ user.name }}
         </li>
     </ul>
 
+Of course ``autoescape`` is available as Twital attribute :doc:`autoescape<tags/autoescape>`, this was just an example.
 
 Prerequisites
 *************
@@ -124,9 +123,11 @@ Contents
 ********
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
     tags/index Tags reference
     api
     extending
     tags/index Tags reference
+
+.. Twig: http://twig.sensiolabs.org/
