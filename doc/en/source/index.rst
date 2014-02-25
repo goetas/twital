@@ -103,12 +103,11 @@ This section gives you a brief introduction to the PHP API for Twig.
 Twital uses Twig to compile and render templates, so Twital performance is exactly the same of any other Twig Template.
 
 
-Basic API Usage
-***************
 
 .. toctree::
    :maxdepth: 2
 
-   api
-   extending
-   tags/index Tags reference
+    tags/index Tags reference
+    api
+    extending
+    tags/index Tags reference

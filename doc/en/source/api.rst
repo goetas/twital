@@ -5,8 +5,8 @@ This chapter describes the API to Twital and not the template language.
 It will be most useful as reference to those implementing the template interface to the application
 and not those who are creating Twig templates.
 
-Basics
-------
+Basics Usage
+------------
 
 Twital wraps a Twig instance and uses Twig to compile and run templates.
 
@@ -15,6 +15,7 @@ Twital object.
 
 .. code-block:: php
 
+    use Goetas\Twital\Twital;
 
     $loader = new Twig_Loader_Filesystem('/path/to/templates');
     $twig = new Twig_Environment($loader, array(
@@ -62,15 +63,6 @@ You can also load and render the template in one fell swoop::
     echo $twital->render('index.html.twital', array('the' => 'variables', 'go' => 'here'));
 
 
-
-Extending Twig
-==============
-
-
-As Twig, Twital is very extensible and you can hook into it.
-The best way to extend Twital is create your own "extension" and provide
-your functionalities.
-
 How does Twig work?
 -------------------
 
@@ -102,9 +94,17 @@ operators, global variables, and functions. You can even extend the parser
 itself with node visitors.
 
 
+Extending Twig
+--------------
+
+
+As Twig, Twital is very extensible and you can hook into it.
+The best way to extend Twital is create your own "extension" and provide
+your functionalities.
+
 
 Creating an Extension
----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 To create an extension you have to implement `Extension` interface or to extend the `AbstractExtension` class.
 
@@ -131,7 +131,7 @@ main Twital object::
     In some special cases you may need to create a Twig extension instead of Twital one.
 
 Creating a `Node` parser
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 To add your node parser, first you have to implement the `Node` class.
 
@@ -191,7 +191,7 @@ As you can see, the `getNodes` method have to return a two-level hash.
 Of course, an extension can ship nodes that works with multiple namespaces.
 
 Creating a `Attribute` parser
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To add your attribute parser, first you have to implement the `Attribute` class.
 
@@ -251,7 +251,7 @@ As you can see, the `getNodes` method have to return a two-level hash.
 * The first level is the node namespace
 * The second level is the node name
 Crating a `preFilter`
----------------------
+~~~~~~~~~~~~~~~~~~~~
 
 Since Twital works internaly with DOMDocument, any template must be transformed into it.
 
@@ -276,7 +276,7 @@ This realy simple extension repalces, just befor compilation phase, all occurenc
     To see some examples of possible pre-filters please look at the source
 
 Crating a `postFilter`
----------------------
+~~~~~~~~~~~~~~~~~~~~~~
 
 Since Twital works internaly with `DOMDocument` that outputs out only XML, if you need to output a template in a different format
 you have to adapt it (eg HTML).
@@ -302,7 +302,7 @@ Also this is a really simple extension that repalces, just befor evaluation/savi
     To see some examples of possible post-filters please look at the source
 
 Creating a DOM `Loader`
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Since Twital works internaly with DOMDocument, any template must be transformed into it.
 
@@ -346,7 +346,7 @@ The key is used to select the right loader.
     Twital already comes with `xml`, `xhtml`, `html`, `html5` loaders
 
 Creating a DOM `Dumper`
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~
 
 Since Twital works internaly with DOMDocument,
 any template must be transformed into raw stream after compilation phase.
@@ -373,12 +373,12 @@ To dump directly into XML, your dumper might look like this;
         }
     }
 * ``collectMetadata()`` method can collect some data from orignak document (before DOM loading)
-** `$dom` contains the *Dom* just after DOM loading
-** `$original` contains the original template content
+ * `$dom` contains the *Dom* just after DOM loading
+ * `$original` contains the original template content
 
 * ``dump()`` method dump a *DOM* into a string
-** `$dom` contains the `DOMDocument`
-** `$metadata` contains the metadatas collected by  `collectMetadata` method
+ * `$dom` contains the `DOMDocument`
+ * `$metadata` contains the metadatas collected by  `collectMetadata` method
 * ``$xml``: Gets the raw template content
 
 Finaly you have to create your extension that ships your dumper.
