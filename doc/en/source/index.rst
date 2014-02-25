@@ -88,7 +88,7 @@ Basic Usage
 
 This section gives you a brief introduction to Twital.
 
-On the "design" side you have to create a file your template (named for example ``demo.twital.html``):
+On the "design" side you have to create a file that contains your template (named for example ``demo.twital.html``):
 
 .. code-block:: xml+jinja
 
