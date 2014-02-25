@@ -99,6 +99,7 @@ On the "design" side you have to create a file your template (named for example 
 On the PHP side you have to create a PHP script and load a Twital instance:
 
 .. code-block:: php
+    :prepend: <?php
 
     require_once '/path/to/composer/vendor/autoload.php';
     use Goetas\Twital\Twital;

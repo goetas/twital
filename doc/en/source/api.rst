@@ -14,6 +14,7 @@ The first step is configure a valid Twig instance, then we can configure the
 Twital object.
 
 .. code-block:: php
+    :prepend: <?php
 
     use Goetas\Twital\Twital;
 
@@ -29,6 +30,7 @@ By default Twital comes with HTML5 tokenizer enabled.
 To change it you can do:
 
 .. code-block:: php
+    :prepend: <?php
 
     $twital = new Twital($twig, 'xhtml');
 
@@ -40,6 +42,7 @@ By default Twital will compile only templates that contains ``.twital`` in their
 If you want to change it:
 
 .. code-block:: php
+    :prepend: <?php
 
     $twital = new Twital($twig, array());
     $twital->addFileNamePattern('\.xml$'); // filename regex
@@ -52,6 +55,7 @@ To render the template with some variables, call the ``render()`` method::
 
 
 .. code-block:: php
+    :prepend: <?php
 
     echo $twital->render('index.twital.html', array('the' => 'variables', 'go' => 'here'));
 
@@ -103,7 +107,7 @@ This is the ``Goetas\Twital\Extension`` interface:
    :language: php
 
 
-To enable our extension, we have to add it to Twital's instance by using the ``addExtension()`` method:
+To enable an extension, we have to add it to Twital's instance by using the ``addExtension()`` method:
 
 .. code-block:: php
 
