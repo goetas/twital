@@ -1,4 +1,4 @@
-Twig for Developers
+Twital for Developers
 ===================
 
 This chapter describes the API to Twital and not the template language.

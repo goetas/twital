@@ -1,4 +1,4 @@
-Twig for Template Designers
+Twital for Template Designers
 ===========================
 
 This document gives to you an overview on Twital principles, how to write a template and
@@ -153,7 +153,7 @@ Go to the :doc:`tags<tags/index>` page to learn more about the built-in attrubut
 
 .. note::
 
-    To learn more about Twig control structures you can read the `Twig official documentation<http://twig.sensiolabs.org/doc/templates.html#control-structure>`_
+    To learn more about Twig control structures you can read the `Twig official documentation <http://twig.sensiolabs.org/doc/templates.html#control-structure>`_
 
 Attributes
 ----------
@@ -225,11 +225,11 @@ Inclusion works exactly as Twig.
 Template Inheritance
 --------------------
 
-Template Inheritance is almost identical to Twig.
+Twital's template inheritance is almost identical to Twig.
 Twital adds just some features useful to define new blocks.
-Let's look an example.
 
-We define a base template, ``base.html``, which defines a simple HTML
+
+Here we define a base template, ``base.html``, which defines a simple HTML
 skeleton document that you might use for a simple two-column page:
 
 .. code-block:: html+jinja
@@ -287,7 +287,7 @@ Note that since the child template doesn't define the ``footer`` block, the
 value from the parent template is used instead.
 
 To render the contents of the parent block by using the
-:doc:`parent<functions/parent>` Twig function. This gives back the results of the
+`parent <http://twig.sensiolabs.org/doc/functions/parent.html>`_ Twig function. This gives back the results of the
 parent block:
 
 .. code-block:: xml+jinja
@@ -306,7 +306,7 @@ parent block:
 
 .. note::
 
-    To learn more about Twig inheritance you can read the `Twig official documentation http://twig.sensiolabs.org/doc/templates.html#template-inheritance>`_
+    To learn more about Twig inheritance you can read the `Twig official documentation <http://twig.sensiolabs.org/doc/templates.html#template-inheritance>`_
 
 Macros
 ------
@@ -333,22 +333,18 @@ Macros can be defined in any template, and need to be "imported" via the
     <p>{{ forms.input('username') }}</p>
 
 
-.. note::
-    To learn more about macros you can read the official documentation.
-
-Expressions and Literals
------------
-
-All expressions and literals that can be used with Twig, can be also used with Twital.
 
 .. note::
-    Just pay attention to HTML/XML escaping rules. Eg: &lt; or > inside tags.
 
+    To learn more about Twig macros you can read the `Twig official documentation <http://twig.sensiolabs.org/doc/templates.html#macros>`_
 
-Operators
-~~~~~~~~~~~~~~~~~~~~
+Expressions,Literals and Operators
+------------------------------------
 
-All operators available for Twig can also be used with Twital.
+All expressions, literals and operators that can be used with Twig, can be also used with Twital.
+
+.. note::
+    Just pay attention to HTML/XML escaping rules. Eg: &lt; or > inside attributes.
 
 Whitespace Control
 ------------------
@@ -368,12 +364,11 @@ More generaly, Twital have the same behaviour of Twig in whitespaces handling.
 
 .. note::
 
-    To learn more about whitespace handling in Twig you can read the official documentation.
-    http://twig.sensiolabs.org/doc/tags/spaceless.html
+    To learn more about Twig macros you can read the `Twig official documentation <http://twig.sensiolabs.org/doc/templates.html#whitespace-control>`_
 
 
 Extensions
 ----------
 
 Twital can be easily extended. To learn how to create your own extension you can
-read the :ref:`Creating an Extension<extending>` chapter.
+read the :ref:`Creating an Extension<api>` chapter.

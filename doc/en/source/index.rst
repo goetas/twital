@@ -127,7 +127,7 @@ Contents
     :maxdepth: 1
 
     tags/index
+    templates
     api
-    extending
 
 .. _Twig: http://twig.sensiolabs.org/
