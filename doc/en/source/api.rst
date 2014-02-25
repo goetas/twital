@@ -99,9 +99,8 @@ To create an extension you have to implement ``Goetas\Twital\Extension`` interfa
 
 This is the ``Goetas\Twital\Extension`` interface:
 
-.. code-block:: php
-
-.. include:: ../../../src/Goetas/Twital/Extension.php
+.. literalinclude:: ../../../src/Goetas/Twital/Extension.php
+   :language: php
 
 
 To enable our extension, we have to add it to Twital's instance by using the ``addExtension()`` method:
