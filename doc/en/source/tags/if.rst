@@ -9,7 +9,19 @@ The Twital instruction for Twig ``if`` tag is ``t:if`` attribute.
         Our website is in maintenance mode. Please, come back later.
     </p>
 
+``elseif`` and ``else`` are not supported, but you can always combine Twital with Twig.
 
+.. code-block:: xml+jinja
+
+    <p t:if="online_users > 0">
+
+    </p>
+    <p t:else-if="online_users > 0">
+
+    </p>
+    <p t:else="">
+
+    </p>
 
 ``elseif`` and ``else`` are not supported, but you can always combine Twital with Twig.
 
