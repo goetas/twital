@@ -344,7 +344,7 @@ Expressions,Literals and Operators
 All expressions, literals and operators that can be used with Twig, can be also used with Twital.
 
 .. note::
-    Just pay attention to HTML/XML escaping rules. Eg: &lt; or > inside attributes.
+    Pay attention to HTML/XML escaping rules (eg: &lt; or > inside attributes).
 
 Whitespace Control
 ------------------
@@ -371,4 +371,4 @@ Extensions
 ----------
 
 Twital can be easily extended. To learn how to create your own extension you can
-read the :ref:`Creating an Extension<api>` chapter.
+read the :ref:`Creating an Extension` chapter.
