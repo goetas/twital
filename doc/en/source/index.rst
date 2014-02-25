@@ -99,6 +99,7 @@ On the "design" side you have to create a file your template (named for example 
 On the PHP side you have to create a PHP script and load a Twital instance:
 
 .. code-block:: php
+    <?php
 
     require_once '/path/to/composer/vendor/autoload.php';
     use Goetas\Twital\Twital;
@@ -134,7 +135,7 @@ Contributing
 ************
 
 This is a open source project, contributors are welcome.
-If your are interested, you can contribute to documentation, source code, test suit or anythig else!
+If your are interested, you can contribute to documentation, source code, test suite or anything else!
 
 To start contributing right now, go to https://github.com/goetas/twital and  fork it!
 
