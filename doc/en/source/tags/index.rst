@@ -2,22 +2,23 @@ Tags
 ====
 
 .. toctree::
-    :maxdepth: 1
+    :maxdepth: 2
 
-    autoescape
-    Chapter1 description <chapter1>
+    if
+    for
+    set
     block
+    extends
+    embed
+    include
+    import
+    macro
+    use
+    sandbox
+    autoescape
     capture
     filter
-    embed
-    extends
-    for
-    if
-    omit
-    import
-    include
-    macro
-    sandbox
-    set
     spaceless
-    use
+    omit
+    attr
+    attr-append
