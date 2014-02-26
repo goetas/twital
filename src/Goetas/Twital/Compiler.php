@@ -55,10 +55,13 @@ class Compiler
     protected $domLoader;
     protected $domDumper;
 
-    public function __construct($domLoader = 'html5', $domDumper = 'html5')
+    protected $twital;
+
+    public function __construct(TwitalEnviroment $twital, $domLoader = 'html5', $domDumper = 'html5')
     {
         $this->domLoader = $domLoader;
         $this->domDumper = $domDumper;
+        $this->twital = $twital;
 
         $this->addExtension(new CoreExtension());
         $this->addExtension(new I18nExtension());
@@ -107,6 +110,9 @@ class Compiler
 
         $metadata = $dumper->collectMetadata($xml, $source);
 
+
+        $context = new CompilationContext($xml, $this->twital->getLexer(), $this);
+
         $this->applyTemplatesToChilds($xml);
 
         $source = $dumper->dump($xml, $metadata);
@@ -151,7 +157,7 @@ class Compiler
         if (isset($this->node[$node->namespaceURI][$node->localName])) {
             $this->node[$node->namespaceURI][$node->localName]->visit($node, $this);
         } elseif (isset($this->node[$node->namespaceURI]['__base__'])) {
-            $this->node[$node->namespaceURI]['__base__']->visit($node, $this);
+            $this->node[$node->namespaceURI]['__base__']->visit($node, $this->context);
         } else {
             if ($node->namespaceURI === self::NS) {
                 throw new Exception("Nodo sconosciuto {$node->namespaceURI}#{$node->localName}");
@@ -177,7 +183,7 @@ class Compiler
                     continue;
                 }
 
-                $return = $attPlugin->visit($attr, $this);
+                $return = $attPlugin->visit($attr, $this->context);
                 if ($return !== null) {
                     $continueNode = $continueNode && ($return & Attribute::STOP_NODE);
                     if ($return & Attribute::STOP_ATTRIBUTE) {

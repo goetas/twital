@@ -2,7 +2,7 @@
 namespace Goetas\Twital\Attribute;
 
 use Goetas\Twital\Attribute;
-use Goetas\Twital\Compiler;
+use Goetas\Twital\CompilationContext;
 use DOMAttr;
 use Goetas\Twital\ParserHelper;
 
@@ -14,7 +14,7 @@ class AttrTranslateAttribute implements Attribute
         return "__a" . abs(crc32(spl_object_hash($node))) % 200;
     }
 
-    public function visit(DOMAttr $att, Compiler $twital)
+    public function visit(DOMAttr $att, CompilationContext $context)
     {
         $node = $att->ownerElement;
         $expressions = ParserHelper::staticSplitExpression($att->value, ";");
@@ -37,10 +37,10 @@ class AttrTranslateAttribute implements Attribute
             $node->removeAttributeNode($attNode);
         }
 
-        $code = "{% set $varName = $varName|default({})|merge({" . ParserHelper::implodeKeyed(",", $parts) . "} %})";
+        $code = "set $varName = $varName|default({})|merge({" . ParserHelper::implodeKeyed(",", $parts) . "})";
         $node->setAttribute("__attr__", $varName);
 
-        $pi = $node->ownerDocument->createTextNode($code);
+        $pi = $context->createControlNode($code);
 
         $node->parentNode->insertBefore($pi, $node);
 

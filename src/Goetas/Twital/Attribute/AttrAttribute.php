@@ -2,10 +2,11 @@
 namespace Goetas\Twital\Attribute;
 
 use Goetas\Twital\Attribute;
-use Goetas\Twital\Compiler;
+use Goetas\Twital\CompilationContext;
 use DOMAttr;
 use Goetas\Twital\ParserHelper;
 use Exception;
+
 class AttrAttribute implements Attribute
 {
 
@@ -14,10 +15,10 @@ class AttrAttribute implements Attribute
         return "__a" . abs(crc32(spl_object_hash($node))) % 200;
     }
 
-    public function visit(DOMAttr $att, Compiler $twital)
+    public function visit(DOMAttr $att, CompilationContext $context)
     {
         $node = $att->ownerElement;
-        $expressions = ParserHelper::staticSplitExpression($att->value, ";");
+        $expressions = ParserHelper::staticSplitExpression($att->value, ",");
         $varName = self::getVarname($node);
 
         $parts = array();
@@ -27,7 +28,7 @@ class AttrAttribute implements Attribute
                 $attNode = $node->getAttributeNode($attrExpr['name']);
 
                 if (preg_match('/{{.+}}/', $attNode->value)) {
-                    throw new Exception("Non puoi usarare t:attr su un attributo gia definito come variabile");
+                    throw new Exception("Non puoi usare t:attr su un attributo gia definito come variabile");
                 } else {
                     $parts[$attrExpr['name']] = "['" . addcslashes($attNode->value, "'") . "']";
                 }
@@ -35,7 +36,8 @@ class AttrAttribute implements Attribute
             }
         }
 
-        $code = "{% set $varName = $varName|default({})|merge({" . ParserHelper::implodeKeyed(",", $parts) . "}) %}\n";
+        $code = "set $varName = $varName|default({})|merge({" . ParserHelper::implodeKeyed(",", $parts) .
+             "})\n";
 
         foreach ($expressions as $attrExpr) {
 
@@ -43,15 +45,18 @@ class AttrAttribute implements Attribute
             $codeAttr = '';
             if (count($nameParts) == 2) {
                 if ($node->lookupNamespaceURI($nameParts[0]) === null) {
-                    throw new Exception("Preffisso '$nameParts[0]' non ha nessun namespace associato in '{" . $node->namespaceURI . "}" . $node->nodeName . "'");
+                    throw new Exception(
+                        "Preffisso '$nameParts[0]' non ha nessun namespace associato in '{" .
+                             $node->namespaceURI . "}" . $node->nodeName . "'");
                 } else {
-                    $codeAttr = self::setExpression($varName, "xmlns:{$nameParts[0]}", "['" . addcslashes($node->lookupNamespaceURI($nameParts[0]), "'") . "']");
+                    $codeAttr = self::setExpression($varName, "xmlns:{$nameParts[0]}",
+                        "['" . addcslashes($node->lookupNamespaceURI($nameParts[0]), "'") . "']");
                 }
             }
 
             $attCode = $codeAttr . $this->getSetExpression($varName, $attrExpr['name'], $attrExpr['expr']);
             if (isset($attrExpr['test']) && ($attrExpr['test'] == "true" || $attrExpr['test'] == "1")) {
-                $code .= "{% if {$attrExpr['test']} %}" . $attCode . "{% endif %}\n";
+                $code .= "if {$attrExpr['test']}" . $attCode . "endif\n";
             } else {
                 $code .= $attCode;
             }
@@ -59,7 +64,7 @@ class AttrAttribute implements Attribute
 
         $node->setAttribute("__attr__", $varName);
 
-        $pi = $node->ownerDocument->createTextNode($code);
+        $pi = $context->createControlNode($code);
 
         $node->parentNode->insertBefore($pi, $node);
         $node->removeAttributeNode($att);
@@ -72,7 +77,7 @@ class AttrAttribute implements Attribute
 
     protected static function setExpression($varName, $attName, $expr)
     {
-        return "{% set {$varName}.{$attName} = [{$expr}]; %}";
+        return "set {$varName}.{$attName} = [{$expr}];";
     }
 
     public static function splitAttrExpression($str)

@@ -2,14 +2,14 @@
 namespace Goetas\Twital\Node;
 
 use Goetas\Twital\Node;
-use Goetas\Twital\Compiler;
+use Goetas\Twital\CompilationContext;
 use goetas\xml;
 use Goetas\Twital\Exception;
 
 class ImportNode implements Node
 {
 
-    function visit(\DOMElement $node, Compiler $twital)
+    function visit(\DOMElement $node, CompilationContext $context)
     {
         if (! $node->hasAttribute("name")) {
             throw new Exception("Name attribute is required");
@@ -19,9 +19,9 @@ class ImportNode implements Node
         }
         
         if ($node->hasAttribute("as")) {
-            $pi = $node->ownerDocument->createTextNode("{% import " . ($node->getAttribute("name-exp") ? $node->getAttribute("name-exp") : ("'" . $node->getAttribute("name") . "'")) . " as " . $node->getAttribute("as") . " %}");
+            $pi = $context->createControlNode("import " . ($node->getAttribute("name-exp") ? $node->getAttribute("name-exp") : ("'" . $node->getAttribute("name") . "'")) . " as " . $node->getAttribute("as") );
         } else {
-            $pi = $node->ownerDocument->createTextNode("{% from " . ($node->hasAttribute("name-exp") ? $node->getAttribute("name-exp") : ("'" . $node->getAttribute("name") . "'")) . " import as " . $node->getAttribute("aliases") . " %}");
+            $pi = $context->createControlNode("from " . ($node->hasAttribute("name-exp") ? $node->getAttribute("name-exp") : ("'" . $node->getAttribute("name") . "'")) . " import as " . $node->getAttribute("aliases") );
         }
         
         $node->parentNode->replaceChild($pi, $node);

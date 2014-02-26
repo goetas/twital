@@ -2,13 +2,13 @@
 namespace Goetas\Twital\Node;
 
 use Goetas\Twital\Node;
-use Goetas\Twital\Compiler;
+use Goetas\Twital\CompilationContext;
 
 use Goetas\Twital\DOMHelper;
 use Exception;
 class BlockNode implements Node
 {
-    function visit(\DOMElement $node, Compiler $twital)
+    function visit(\DOMElement $node, CompilationContext $context)
     {
         if (! $node->hasAttribute("name")) {
             throw new Exception("Name attribute is required");
@@ -17,16 +17,16 @@ class BlockNode implements Node
 
         $currPrima = $node->previousSibling;
 
-        $sandbox = $node->ownerDocument->createElementNS(Compiler::NS, "sandbox");
+        $sandbox = $node->ownerDocument->createElementNS(CompilationContext::NS, "sandbox");
         $node->parentNode->insertBefore($sandbox,$node);
         $node->parentNode->removeChild($node);
         $sandbox->appendChild($node);
 
-        $twital->applyTemplatesToAttributes($node);
-        $twital->applyTemplatesToChilds($node);
+        $context->getCompiler()->applyTemplatesToAttributes($node);
+        $context->getCompiler()->applyTemplatesToChilds($node);
 
-        $start = $node->ownerDocument->createTextNode("\n{% block " . $node->getAttribute("name") . " %}");
-        $end = $node->ownerDocument->createTextNode("{% endblock %}\n");
+        $start = $context->createControlNode("block " . $node->getAttribute("name") );
+        $end = $context->createControlNode("endblock");
 
         $sandbox->insertBefore($start, $sandbox->firstChild);
         $sandbox->appendChild($end);

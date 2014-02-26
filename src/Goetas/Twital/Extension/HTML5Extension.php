@@ -6,7 +6,7 @@ use Goetas\Twital\DOMLoader\HTML5DOMLoader;
 use Goetas\Twital\Dumper\HTML5Dumper;
 use Goetas\Twital\Loader\HTML5Loader;
 
-class HTML5Extension implements Extension
+class HTML5Extension extends AbstractExtension
 {
 
     public function getDumpers()
@@ -20,25 +20,5 @@ class HTML5Extension implements Extension
         return array(
             'html5' => new HTML5Loader()
         );
-    }
-
-    public function getAttributes()
-    {
-        return array();
-    }
-
-    public function getNodes()
-    {
-        return array();
-    }
-
-    public function getPostFilters()
-    {
-        return array();
-    }
-
-    public function getPreFilters()
-    {
-        return array();
     }
 }

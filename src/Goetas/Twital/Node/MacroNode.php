@@ -2,28 +2,28 @@
 namespace Goetas\Twital\Node;
 
 use Goetas\Twital\Node;
-use Goetas\Twital\Compiler;
+use Goetas\Twital\CompilationContext;
 use goetas\xml;
 use Goetas\Twital\DOMHelper;
 
 class MacroNode implements Node
 {
 
-    function visit(\DOMElement $node, Compiler $twital)
+    function visit(\DOMElement $node, CompilationContext $context)
     {
         if (! $node->hasAttribute("name")) {
             throw new Exception("Name attribute is required");
         }
 
-        $twital->applyTemplatesToChilds($node);
+        $context->applyTemplatesToChilds($node);
 
         $set = iterator_to_array($node->childNodes);
 
-        $start = $node->ownerDocument->createTextNode("{% macro " . $node->getAttribute("name") . "(" . $node->getAttribute("args") . ") %}");
+        $start = $context->createControlNode("macro " . $node->getAttribute("name") . "(" . $node->getAttribute("args") . ")");
         array_unshift($set, $start);
 
 
-        $set[] = $node->ownerDocument->createTextNode("{% endmacro %}");
+        $set[] = $context->createControlNode("endmacro");
 
         DOMHelper::replaceNodeWithSet($node, $set);
     }

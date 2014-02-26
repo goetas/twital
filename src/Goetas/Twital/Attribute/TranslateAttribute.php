@@ -2,13 +2,13 @@
 namespace Goetas\Twital\Attribute;
 
 use Goetas\Twital\Attribute;
-use Goetas\Twital\Compiler;
+use Goetas\Twital\CompilationContext;
 use DOMAttr;
 
 class TranslateAttribute implements Attribute
 {
 
-    public function visit(DOMAttr $att, Compiler $twital)
+    public function visit(DOMAttr $att, CompilationContext $context)
     {
         $node = $att->ownerElement;
 
@@ -16,8 +16,8 @@ class TranslateAttribute implements Attribute
         if ($att->value) {
             $with = "with ".html_entity_decode($att->value);
         }
-        $start = $node->ownerDocument->createTextNode("{% trans $with %}");
-        $end = $node->ownerDocument->createTextNode("{% endtrans %}");
+        $start = $context->createControlNode("trans $with");
+        $end = $context->createControlNode("endtrans");
 
         $node->insertBefore($start, $node->firstChild);
 

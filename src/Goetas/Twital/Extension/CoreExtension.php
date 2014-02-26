@@ -11,10 +11,8 @@ use Goetas\Twital\Compiler;
 use Goetas\Twital\Loader\XMLLoader;
 use Goetas\Twital\Dumper\XMLDumper;
 
-class CoreExtension implements Extension
+class CoreExtension extends AbstractExtension
 {
-
-
     public function getLoaders()
     {
         return array(
@@ -38,7 +36,6 @@ class CoreExtension implements Extension
         $attributes[Compiler::NS]['capture'] = new Attribute\CaptureAttribute();
         $attributes[Compiler::NS]['attr'] = new Attribute\AttrAttribute();
         $attributes[Compiler::NS]['attr-append'] = new Attribute\AttrAppendAttribute();
-        $attributes[Compiler::NS]['attr-translate'] = new Attribute\AttrTranslateAttribute();
         return $attributes;
     }
 
@@ -47,10 +44,10 @@ class CoreExtension implements Extension
         $nodes = array();
         $nodes[Compiler::NS]['extends'] = new Node\ExtendsNode();
         $nodes[Compiler::NS]['block'] = new Node\BlockNode();
-        $nodes[Compiler::NS]['block-call'] = new Node\BlockCallNode();
         $nodes[Compiler::NS]['macro'] = new Node\MacroNode();
         $nodes[Compiler::NS]['import'] = new Node\ImportNode();
         $nodes[Compiler::NS]['include'] = new Node\IncludeNode();
+        //$nodes[Compiler::NS]['embed'] = new Node\IncludeNode();
         return $nodes;
     }
 
@@ -69,10 +66,5 @@ class CoreExtension implements Extension
                 }, $string);
             }
         );
-    }
-
-    public function getPreFilters()
-    {
-        return array();
     }
 }

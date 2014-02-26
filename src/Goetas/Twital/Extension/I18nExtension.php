@@ -9,37 +9,13 @@ use Goetas\Twital\Attribute;
 use Goetas\Twital\Node;
 use Goetas\Twital\Compiler;
 
-class I18nExtension implements Extension
+class I18nExtension extends AbstractExtension
 {
-
-    public function getLoaders()
-    {
-        return array();
-    }
-    public function getDumpers()
-    {
-        return array();
-    }
     public function getAttributes()
     {
         $attributes = array();
         $attributes[Compiler::NS]['trans'] = new Attribute\TranslateAttribute();
         $attributes[Compiler::NS]['trans-n'] = new Attribute\TranslateNAttribute();
         return $attributes;
-    }
-
-    public function getNodes()
-    {
-        return array();
-    }
-
-    public function getPostFilters()
-    {
-        return array();
-    }
-
-    public function getPreFilters()
-    {
-        return array();
     }
 }

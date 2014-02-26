@@ -4,55 +4,83 @@ namespace Goetas\Twital;
 class TwitalEnviroment extends \Twig_Environment
 {
 
+    /**
+     *
+     * @var \Twig_Environment
+     */
     private $twig;
 
+    /**
+     *
+     * @var Compiler
+     */
     private $twitalCompiler;
 
-    private $twitalPathComponent;
+    /**
+     *
+     * @var array
+     */
+    private $fileNamePatterns = array();
 
-    public function __construct(\Twig_Environment $twig = null, Compiler $twitalCompiler = null, $twitalPathComponent = '.twital')
+    public function __construct(\Twig_Environment $twig = null, array $fileNamePatterns = array())
     {
         $this->twig = $twig;
-        $this->twitalCompiler = $twitalCompiler?:new Compiler();
-        $this->twitalPathComponent = $twitalPathComponent;
+        $this->fileNamePatterns = $fileNamePatterns ?  : array(
+            '/\.twital\./',
+            '/\.twital$/'
+        );
+    }
+
+    public function addFileNamePattern($pattern)
+    {
+        $this->fileNamePatterns[] = $pattern;
+        return $this;
+    }
+
+    public function getFileNamePatterns()
+    {
+        return $this->fileNamePatterns;
+    }
+
+    protected function canCompileTwital($source, $name)
+    {
+        $filename = basename($name);
+        foreach ($this->fileNamePatterns as $pattern) {
+            if (is_string($pattern)) {
+                if (preg_match($pattern, $filename)) {
+                    return true;
+                }
+            } else {
+                if (call_user_func($pattern, $filename, $name, $source)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     *
+     * @return \Goetas\Twital\Compiler
+     */
+    public function getTwitalCompiler()
+    {
+        if (! $this->twitalCompiler) {
+            $this->twitalCompiler = new Compiler($this);
+        }
+        return $this->twitalCompiler;
     }
 
     public function compileSource($source, $name = null)
     {
-        // a brutal way to decide if use Twital or not
-        if ((!$this->twitalPathComponent || strpos($name, $this->twitalPathComponent) !== false) && strpos($source, Compiler::NS) !== false) {
-            $source = $this->twitalCompiler->compile($source);
+        if ((! $this->canCompileTwital($source, $name))) {
+            $source = $this->getTwitalCompiler()->compile($source);
         }
         return $this->twig->compileSource($source, $name);
     }
-
-    public function loadTemplate($name, $index = null)
-    {
-        $cls = $this->getTemplateClass($name, $index);
-
-        if (isset($this->loadedTemplates[$cls])) {
-            return $this->loadedTemplates[$cls];
-        }
-
-        if (! class_exists($cls, false)) {
-            if (false === $cache = $this->getCacheFilename($name)) {
-                eval('?>' . $this->compileSource($this->getLoader()->getSource($name), $name));
-            } else {
-                if (! is_file($cache) || ($this->isAutoReload() && ! $this->isTemplateFresh($name, filemtime($cache)))) {
-                    $this->writeCacheFile($cache, $this->compileSource($this->getLoader()->getSource($name), $name));
-                }
-                require_once $cache;
-            }
-        }
-
-        if (! $this->runtimeInitialized) {
-            $this->initRuntime();
-            $this->runtimeInitialized = true;
-        }
-
-        return $this->loadedTemplates[$cls] = new $cls($this);
-    }
-
+    /*
+     * public function loadTemplate($name, $index = null) { $cls = $this->getTemplateClass($name, $index); if (isset($this->loadedTemplates[$cls])) { return $this->loadedTemplates[$cls]; } if (! class_exists($cls, false)) { if (false === $cache = $this->getCacheFilename($name)) { eval('?>' . $this->compileSource($this->getLoader() ->getSource($name), $name)); } else { if (! is_file($cache) || ($this->isAutoReload() && ! $this->isTemplateFresh($name, filemtime($cache)))) { $this->writeCacheFile($cache, $this->compileSource($this->getLoader() ->getSource($name), $name)); } require_once $cache; } } if (! $this->runtimeInitialized) { $this->initRuntime(); $this->runtimeInitialized = true; } return $this->loadedTemplates[$cls] = new $cls($this); }
+     */
     public function getBaseTemplateClass()
     {
         return $this->twig->getBaseTemplateClass();
@@ -132,27 +160,16 @@ class TwitalEnviroment extends \Twig_Environment
     {
         return $this->twig->getTemplateClassPrefix();
     }
-
-    public function render($name, array $context = array())
-    {
-        return $this->twig->render($name, $context);
-    }
-
-    public function display($name, array $context = array())
-    {
-        $this->twig->display($name, $context);
-    }
-
+    /*
+     * public function render($name, array $context = array()) { return $this->loadTemplate($name)->render($context); } public function display($name, array $context = array()) { $this->loadTemplate($name)->display($context); }
+     */
     public function isTemplateFresh($name, $time)
     {
         return $this->twig->isTemplateFresh($name, $time);
     }
-
-    public function resolveTemplate($names)
-    {
-        return $this->twig->resolveTemplate($names);
-    }
-
+    /*
+     * public function resolveTemplate($names) { throw new \Twig_Error_Loader(sprintf('Unable to find one of the following templates: "%s".', implode('", "', $names))); }
+     */
     public function clearTemplateCache()
     {
         $this->twig->clearTemplateCache();
@@ -195,7 +212,7 @@ class TwitalEnviroment extends \Twig_Environment
 
     public function getCompiler()
     {
-        return $this->twig->getCompiler($stream);
+        return $this->twig->getCompiler();
     }
 
     public function setCompiler(\Twig_CompilerInterface $compiler)
