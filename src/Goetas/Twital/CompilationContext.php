@@ -59,10 +59,10 @@ class CompilationContext
      * @param string $content
      * @return DOMCDATASection
      */
-    public function crateContolNode($content)
+    public function createControlNode($content)
     {
         $printPart = $this->getLexerOption('tag_block');
-        return $this->doc->createCDATASection("__[__ {$printPart[0]}{$content}{$printPart[1]} __]__");
+        return $this->doc->createCDATASection("__[__ {$printPart[0]}".$content."{$printPart[1]} __]__");
     }
 
     private $ref;

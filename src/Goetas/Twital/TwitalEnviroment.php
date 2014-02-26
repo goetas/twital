@@ -22,15 +22,19 @@ class TwitalEnviroment extends \Twig_Environment
      */
     private $fileNamePatterns = array();
 
-    public function __construct(\Twig_Environment $twig = null, array $fileNamePatterns = array())
+    public function __construct(\Twig_Environment $twig)
     {
         $this->twig = $twig;
-        $this->fileNamePatterns = $fileNamePatterns ?  : array(
+        $this->fileNamePatterns = array(
             '/\.twital\./',
             '/\.twital$/'
         );
     }
-
+    public function setFileNamePatterns(array $patterns)
+    {
+        $this->fileNamePatterns = $patterns;
+        return $this;
+    }
     public function addFileNamePattern($pattern)
     {
         $this->fileNamePatterns[] = $pattern;
@@ -73,7 +77,7 @@ class TwitalEnviroment extends \Twig_Environment
 
     public function compileSource($source, $name = null)
     {
-        if ((! $this->canCompileTwital($source, $name))) {
+        if ($this->canCompileTwital($source, $name)) {
             $source = $this->getTwitalCompiler()->compile($source);
         }
         return $this->twig->compileSource($source, $name);

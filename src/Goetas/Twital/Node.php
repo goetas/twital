@@ -4,5 +4,5 @@ namespace Goetas\Twital;
 Interface Node
 {
 
-    public function visit(\DOMElement $node, Compiler $twital);
+    public function visit(\DOMElement $node, CompilationContext $context);
 }

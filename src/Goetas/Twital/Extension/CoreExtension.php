@@ -10,7 +10,7 @@ use Goetas\Twital\Dumper\XMLDumper;
 
 class CoreExtension extends AbstractExtension
 {
-    public function getNamespaces()
+    public function getPrefixes()
     {
         return array(
             't' => Compiler::NS
@@ -51,6 +51,7 @@ class CoreExtension extends AbstractExtension
         $nodes[Compiler::NS]['macro'] = new Node\MacroNode();
         $nodes[Compiler::NS]['import'] = new Node\ImportNode();
         $nodes[Compiler::NS]['include'] = new Node\IncludeNode();
+        $nodes[Compiler::NS]['omit'] = new Node\OmitNode();
         //$nodes[Compiler::NS]['embed'] = new Node\IncludeNode();
         return $nodes;
     }
@@ -61,6 +62,10 @@ class CoreExtension extends AbstractExtension
             function ($string)
             {
                 return preg_replace('#<(.*) xmlns:[a-zA-Z0-9]+=("|\')' . Compiler::NS . '("|\')(.*)>#m', "<\\1\\4>", $string);
+            },
+            function ($string)
+            {
+                return str_replace(array("<![CDATA[__[__", "__]__]]>"), "", $string);
             },
             function ($string)
             {

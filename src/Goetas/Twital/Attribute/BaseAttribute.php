@@ -10,10 +10,10 @@ class BaseAttribute implements AttributeBase
     {
         $node = $att->ownerElement;
 
-        $pi = $context->crateContolNode("{$att->localName} " . html_entity_decode($att->value));
+        $pi = $context->createControlNode("{$att->localName} " . html_entity_decode($att->value));
         $node->parentNode->insertBefore($pi, $node);
 
-        $pi = $node->crateContolNode("end{$att->localName}");
+        $pi = $context->createControlNode("end{$att->localName}");
 
         $node->parentNode->insertBefore($pi, $node->nextSibling); // insert after
 

@@ -1,0 +1,4 @@
+<div xmlns="html">
+	<t:omit>zzz</t:omit>
+	<span t:if="true">xx</span>
+</div>

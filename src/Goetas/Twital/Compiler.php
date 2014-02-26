@@ -21,7 +21,7 @@ class Compiler
      *
      * @var array
      */
-    protected $extensions = array();
+    protected $extension = array();
 
     /**
      *
@@ -61,7 +61,7 @@ class Compiler
 
     protected $twital;
 
-    public function __construct(TwitalEnviroment $twital, $domLoader = 'html5', $domDumper = 'html5')
+    public function __construct(TwitalEnviroment $twital, $domLoader = 'xml', $domDumper = 'xml')
     {
         $this->domLoader = $domLoader;
         $this->domDumper = $domDumper;
@@ -76,18 +76,18 @@ class Compiler
     {
         $this->extensions[] = $extension;
     }
-    protected $extensionsinitialized = false;
+    protected $extensioninitialized = false;
     protected function initExtensions()
     {
         if (!$this->extensionsinitialized) {
-            foreach ($this->extensions as $extensions) {
-                $this->attributes = array_merge_recursive($this->attributes, $extensions->getAttributes());
-                $this->node = array_merge_recursive($this->node, $extensions->getNodes());
-                $this->preFlter = array_merge($this->preFlter, $extensions->getPreFilters());
-                $this->postFilter = array_merge($this->postFilter, $extensions->getPostFilters());
-                $this->domLoaders = array_merge($this->domLoaders, $extensions->getLoaders());
-                $this->domDumpers = array_merge($this->domDumpers, $extensions->getDumpers());
-                $this->customNamespaces = array_merge($this->customNamespaces, $extensions->getPrefixes());
+            foreach ($this->extensions as $extension) {
+                $this->attributes = array_merge_recursive($this->attributes, $extension->getAttributes());
+                $this->node = array_merge_recursive($this->node, $extension->getNodes());
+                $this->preFlter = array_merge($this->preFlter, $extension->getPreFilters());
+                $this->postFilter = array_merge($this->postFilter, $extension->getPostFilters());
+                $this->domLoaders = array_merge($this->domLoaders, $extension->getLoaders());
+                $this->domDumpers = array_merge($this->domDumpers, $extension->getDumpers());
+                $this->customNamespaces = array_merge($this->customNamespaces, $extension->getPrefixes());
             }
             $this->extensionsinitialized = true;
         }
@@ -118,7 +118,7 @@ class Compiler
         $metadata = $dumper->collectMetadata($xml, $source);
 
 
-        $context = new CompilationContext($xml, $this->twital->getLexer(), $this);
+        $this->context = new CompilationContext($xml, $this->twital->getLexer(), $this);
 
         $this->applyTemplatesToChilds($xml);
 
@@ -139,10 +139,10 @@ class Compiler
     }
     protected static function checkNamespaces(\DOMElement $element, array $namespaces = array()){
 
-        if ($element->namespaceURI===null && preg_match('/^([a-z0-9\-]+):(.+)$/i', $element->nodeName, $mch) && isset($namespaces[$mch[0]])){
+        if ($element->namespaceURI===null && preg_match('/^([a-z0-9\-]+):(.+)$/i', $element->nodeName, $mch) && isset($namespaces[$mch[1]])){
 
             $oldElement = $element;
-            $element = $element->ownerDocument->createElementNS($namespaces[$mch[0]], $element->nodeName);
+            $element = $element->ownerDocument->createElementNS($namespaces[$mch[1]], $element->nodeName);
 
             // copy attrs
             foreach (iterator_to_array($oldElement->attributes) as $attr) {
@@ -162,10 +162,10 @@ class Compiler
         }
         // fix attrs
         foreach (iterator_to_array($element->attributes) as $attr) {
-            if ($attr->namespaceURI===null && preg_match('/^([a-z0-9\-]+):(.+)$/i', $attr->name, $mch) && isset($namespaces[$mch[0]])){
+            if ($attr->namespaceURI===null && preg_match('/^([a-z0-9\-]+):/i', $attr->name, $mch) && isset($namespaces[$mch[1]])){
 
                 $element->removeAttributeNode($attr);
-                $element->setAttributeNS($namespaces[$mch[0]], $attr->name, $attr->value);
+                $element->setAttributeNS($namespaces[$mch[1]], $attr->name, $attr->value);
             }
         }
         foreach (iterator_to_array($element->childNodes) as $child) {
@@ -206,7 +206,7 @@ class Compiler
     public function applyTemplates(\DOMElement $node)
     {
         if (isset($this->node[$node->namespaceURI][$node->localName])) {
-            $this->node[$node->namespaceURI][$node->localName]->visit($node, $this);
+            $this->node[$node->namespaceURI][$node->localName]->visit($node, $this->context);
         } elseif (isset($this->node[$node->namespaceURI]['__base__'])) {
             $this->node[$node->namespaceURI]['__base__']->visit($node, $this->context);
         } else {
