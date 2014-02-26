@@ -1,7 +1,6 @@
 <?php
 namespace Goetas\Twital\Loader;
 
-use Goetas\Twital\DOMLoader;
 use HTML5;
 use Goetas\Twital\Loader;
 
@@ -22,16 +21,16 @@ class HTML5Loader implements Loader
         return $dom;
     }
 
-    protected static function fixNss(\DOMElement $element, $nss = array())
+    protected static function fixNss(\DOMElement $element, $namespaces = array())
     {
         foreach ($element->attributes as $attr) {
             if (preg_match("/^xmlns:(.+)/", $attr->name, $mch)) {
-                $nss[$mch[1]] = $attr->value;
+                $namespaces[$mch[1]] = $attr->value;
             }
         }
-        if (preg_match("/^([a-z0-9\-]+):(.+)/", $element->nodeName, $mch) && isset($nss[$mch[1]])) {
+        if (preg_match('/^([a-z0-9\-]+):(.+)/i', $element->nodeName, $mch) && isset($namespaces[$mch[1]])) {
             $oldElement = $element;
-            $element = $element->ownerDocument->createElementNS($nss[$mch[1]], $element->nodeName);
+            $element = $element->ownerDocument->createElementNS($namespaces[$mch[1]], $element->nodeName);
 
             // copy attrs
             foreach (iterator_to_array($oldElement->attributes) as $attr) {
@@ -51,14 +50,14 @@ class HTML5Loader implements Loader
         }
         // fix attrs
         foreach (iterator_to_array($element->attributes) as $attr) {
-            if (preg_match("/^([a-z0-9\-]+):(.+)/", $attr->name, $mch) && isset($nss[$mch[1]])) {
+            if (preg_match('/^([a-z0-9\-]+):(.+)/', $attr->name, $mch) && isset($namespaces[$mch[1]])) {
                 $element->removeAttributeNode($attr);
-                $element->setAttributeNS($nss[$mch[1]], $attr->name, $attr->value);
+                $element->setAttributeNS($namespaces[$mch[1]], $attr->name, $attr->value);
             }
         }
         foreach (iterator_to_array($element->childNodes) as $child) {
             if ($child instanceof \DOMElement) {
-                self::fixNss($child, $nss);
+                self::fixNss($child, $namespaces);
             }
         }
     }

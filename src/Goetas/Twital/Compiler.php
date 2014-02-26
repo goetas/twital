@@ -51,7 +51,11 @@ class Compiler
      * @var array
      */
     protected $postFilter = array();
-
+    /**
+     *
+     * @var array
+     */
+    protected $customNamespaces = array();
     protected $domLoader;
     protected $domDumper;
 
@@ -83,6 +87,7 @@ class Compiler
                 $this->postFilter = array_merge($this->postFilter, $extensions->getPostFilters());
                 $this->domLoaders = array_merge($this->domLoaders, $extensions->getLoaders());
                 $this->domDumpers = array_merge($this->domDumpers, $extensions->getDumpers());
+                $this->customNamespaces = array_merge($this->customNamespaces, $extensions->getPrefixes());
             }
             $this->extensionsinitialized = true;
         }
@@ -108,6 +113,8 @@ class Compiler
 
         $xml = $loader->load($source);
 
+        $this->checkDocumentNamespaces($xml);
+
         $metadata = $dumper->collectMetadata($xml, $source);
 
 
@@ -122,6 +129,50 @@ class Compiler
         }
 
         return $source;
+    }
+    public function checkDocumentNamespaces(\DOMDocument $dom){
+        foreach (iterator_to_array($dom->childNodes) as $child) {
+            if ($child instanceof \DOMElement) {
+                self::checkNamespaces($child, $this->customNamespaces);
+            }
+        }
+    }
+    protected static function checkNamespaces(\DOMElement $element, array $namespaces = array()){
+
+        if ($element->namespaceURI===null && preg_match('/^([a-z0-9\-]+):(.+)$/i', $element->nodeName, $mch) && isset($namespaces[$mch[0]])){
+
+            $oldElement = $element;
+            $element = $element->ownerDocument->createElementNS($namespaces[$mch[0]], $element->nodeName);
+
+            // copy attrs
+            foreach (iterator_to_array($oldElement->attributes) as $attr) {
+                $oldElement->removeAttributeNode($attr);
+                if ($attr->namespaceURI) {
+                    $element->setAttributeNodeNS($attr);
+                } else {
+                    $element->setAttributeNode($attr);
+                }
+            }
+            // copy childs
+            while ($child = $oldElement->firstChild) {
+                $oldElement->removeChild($child);
+                $element->appendChild($child);
+            }
+            $oldElement->parentNode->replaceChild($element, $oldElement);
+        }
+        // fix attrs
+        foreach (iterator_to_array($element->attributes) as $attr) {
+            if ($attr->namespaceURI===null && preg_match('/^([a-z0-9\-]+):(.+)$/i', $attr->name, $mch) && isset($namespaces[$mch[0]])){
+
+                $element->removeAttributeNode($attr);
+                $element->setAttributeNS($namespaces[$mch[0]], $attr->name, $attr->value);
+            }
+        }
+        foreach (iterator_to_array($element->childNodes) as $child) {
+            if ($child instanceof \DOMElement) {
+                self::checkNamespaces($child, $namespaces);
+            }
+        }
     }
     /**
      *

@@ -27,7 +27,7 @@ class AttrTranslateAttribute implements Attribute
             $attrExpr = ParserHelper::staticSplitExpression($expression, "=");
 
             if (! $node->hasAttribute($attrExpr[0])) {
-                throw new Exception("non trovo l'attributo " . $attrExpr[0] . " da tradurre");
+                throw new \Exception("non trovo l'attributo " . $attrExpr[0] . " da tradurre");
             }
 
             $attNode = $node->getAttributeNode($attrExpr[0]);

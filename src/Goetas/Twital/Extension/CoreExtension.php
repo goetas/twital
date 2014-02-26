@@ -2,9 +2,6 @@
 namespace Goetas\Twital\Extension;
 
 use DOMDocument;
-use Goetas\Twital\DOMLoader\XMLDOMLoader;
-use Goetas\Twital\DOMLoader\XHTMLDOMLoader;
-use Goetas\Twital\Extension;
 use Goetas\Twital\Attribute;
 use Goetas\Twital\Node;
 use Goetas\Twital\Compiler;
@@ -13,6 +10,13 @@ use Goetas\Twital\Dumper\XMLDumper;
 
 class CoreExtension extends AbstractExtension
 {
+    public function getNamespaces()
+    {
+        return array(
+            't' => Compiler::NS
+        );
+    }
+
     public function getLoaders()
     {
         return array(

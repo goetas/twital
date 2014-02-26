@@ -1,12 +1,7 @@
 <?php
 namespace Goetas\Twital\Extension;
 
-use DOMDocument;
-use Goetas\Twital\DOMLoader\XMLDOMLoader;
-use Goetas\Twital\DOMLoader\XHTMLDOMLoader;
-use Goetas\Twital\Extension;
 use Goetas\Twital\Attribute;
-use Goetas\Twital\Node;
 use Goetas\Twital\Compiler;
 
 class I18nExtension extends AbstractExtension
