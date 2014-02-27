@@ -1,6 +1,9 @@
 <?php
 namespace Goetas\Twital;
 
+use Goetas\Twital\Extension\CoreExtension;
+use Goetas\Twital\Extension\I18nExtension;
+use Goetas\Twital\Extension\HTML5Extension;
 class TwitalEnviroment extends \Twig_Environment
 {
 
@@ -22,6 +25,8 @@ class TwitalEnviroment extends \Twig_Environment
      */
     private $fileNamePatterns = array();
 
+    protected $twitalExtensions = array();
+
     public function __construct(\Twig_Environment $twig)
     {
         $this->twig = $twig;
@@ -29,6 +34,9 @@ class TwitalEnviroment extends \Twig_Environment
             '/\.twital\./',
             '/\.twital$/'
         );
+        $this->addTwitalExtension(new CoreExtension());
+        $this->addTwitalExtension(new I18nExtension());
+        $this->addTwitalExtension(new HTML5Extension());
     }
 
     public function setFileNamePatterns(array $patterns)
@@ -293,6 +301,25 @@ class TwitalEnviroment extends \Twig_Environment
     public function getExtensions()
     {
         return $this->twig->getExtensions();
+    }
+
+
+
+
+
+    public function addTwitalExtension(Extension $extension)
+    {
+        return $this->twitalExtensions[]=$extension;
+    }
+
+    public function setTwitalExtensions(array $extensions)
+    {
+        $this->twitalExtensions = $extensions;
+    }
+
+    public function getTwitalExtensions()
+    {
+        return $this->twitalExtensions;
     }
 
     public function addTokenParser(\Twig_TokenParserInterface $parser)

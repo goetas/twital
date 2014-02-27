@@ -7,6 +7,7 @@ use Goetas\Twital\Node;
 use Goetas\Twital\Compiler;
 use Goetas\Twital\Loader\XMLLoader;
 use Goetas\Twital\Dumper\XMLDumper;
+use Goetas\Twital\Dumper\XMLAdapter;
 
 class CoreExtension extends AbstractExtension
 {
@@ -17,16 +18,10 @@ class CoreExtension extends AbstractExtension
         );
     }
 
-    public function getLoaders()
+    public function getSourceAdapters()
     {
         return array(
-            'xml' => new XMLLoader()
-        );
-    }
-    public function getDumpers()
-    {
-        return array(
-            'xml' => new XMLDumper()
+            'xml' => new XMLAdapter()
         );
     }
 

@@ -21,30 +21,13 @@ class Compiler
      *
      * @var array
      */
-    protected $extension = array();
-
-    /**
-     *
-     * @var array
-     */
     protected $node = array();
 
     /**
      *
      * @var array
      */
-    protected $preFlter = array();
-
-    /**
-     *
-     * @var array
-     */
-    protected $domLoaders = array();
-    /**
-     *
-     * @var array
-     */
-    protected $domDumpers = array();
+    protected $sourceAdapters = array();
 
     /**
      *
@@ -56,37 +39,24 @@ class Compiler
      * @var array
      */
     protected $customNamespaces = array();
-    protected $domLoader;
-    protected $domDumper;
+    protected $adpter;
 
     protected $twital;
 
-    public function __construct(TwitalEnviroment $twital, $domLoader = 'xml', $domDumper = 'xml')
+    public function __construct(TwitalEnviroment $twital, $adpter = 'xml')
     {
-        $this->domLoader = $domLoader;
-        $this->domDumper = $domDumper;
+        $this->adpter = $adpter;
         $this->twital = $twital;
-
-        $this->addExtension(new CoreExtension());
-        $this->addExtension(new I18nExtension());
-        $this->addExtension(new HTML5Extension());
-
-    }
-    public function addExtension(Extension $extension)
-    {
-        $this->extensions[] = $extension;
     }
     protected $extensioninitialized = false;
     protected function initExtensions()
     {
         if (!$this->extensionsinitialized) {
-            foreach ($this->extensions as $extension) {
+            foreach ($this->twital->getExtensions() as $extension) {
                 $this->attributes = array_merge_recursive($this->attributes, $extension->getAttributes());
                 $this->node = array_merge_recursive($this->node, $extension->getNodes());
-                $this->preFlter = array_merge($this->preFlter, $extension->getPreFilters());
                 $this->postFilter = array_merge($this->postFilter, $extension->getPostFilters());
-                $this->domLoaders = array_merge($this->domLoaders, $extension->getLoaders());
-                $this->domDumpers = array_merge($this->domDumpers, $extension->getDumpers());
+                $this->sourceAdapters = array_merge($this->sourceAdapters, $extension->getSourceAdapters());
                 $this->customNamespaces = array_merge($this->customNamespaces, $extension->getPrefixes());
             }
             $this->extensionsinitialized = true;
@@ -104,25 +74,19 @@ class Compiler
 
         $this->initExtensions();
 
-        foreach ($this->preFlter as $filter) {
-            $source = call_user_func($filter, $source);
-        }
+        $adapter = $this->getSourceAdapter($this->adpter);
 
-        $loader = $this->getLoader($this->domLoader);
-        $dumper = $this->getDumper($this->domDumper);
-
-        $xml = $loader->load($source);
+        $xml = $adapter->load($source);
 
         $this->checkDocumentNamespaces($xml);
 
-        $metadata = $dumper->collectMetadata($xml, $source);
-
+        $metadata = $adapter->collectMetadata($xml, $source);
 
         $this->context = new CompilationContext($xml, $this->twital->getLexer(), $this);
 
         $this->applyTemplatesToChilds($xml);
 
-        $source = $dumper->dump($xml, $metadata);
+        $source = $adapter->dump($xml, $metadata);
 
         foreach ($this->postFilter as $filter) {
             $source = call_user_func($filter, $source);
@@ -176,31 +140,17 @@ class Compiler
     }
     /**
      *
-     * @param string $loader
+     * @param string $name
      * @throws Exception
-     * @return Loader
+     * @return SourceAdapter
      */
-    protected function getLoader($loader)
+    protected function getSourceAdapter($name)
     {
-        if (! isset($this->domLoaders[$loader])) {
-            throw new Exception("Can't find a loader called {$loader}");
+        if (! isset($this->sourceAdapters[$name])) {
+            throw new Exception("Can't find a source adapter called {$name}");
         }
 
-        return $this->domLoaders[$loader];
-    }
-    /**
-     *
-     * @param string $dumper
-     * @throws Exception
-     * @return Dumper
-     */
-    protected function getDumper($dumper)
-    {
-        if (! isset($this->domDumpers[$dumper])) {
-            throw new Exception("Can't find a dumper called {$dumper}");
-        }
-
-        return $this->domDumpers[$dumper];
+        return $this->domLoaders[$name];
     }
 
     public function applyTemplates(\DOMElement $node)

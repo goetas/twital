@@ -54,13 +54,6 @@ interface Extension
      * The key of
      * @return array
      */
-    public function getLoaders();
+    public function getSourceAdapters();
 
-
-    /**
-     * Array of objects implementing {DOMDumper} interface, responsible of DOM dumping into Twig source code.
-     * The key of
-     * @return array
-     */
-    public function getDumpers();
 }

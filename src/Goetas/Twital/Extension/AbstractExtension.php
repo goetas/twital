@@ -31,13 +31,9 @@ abstract class AbstractExtension implements Extension
         return array();
     }
 
-    public function getLoaders()
+    public function getSourceAdapters()
     {
         return array();
     }
 
-    public function getDumpers()
-    {
-        return array();
-    }
 }

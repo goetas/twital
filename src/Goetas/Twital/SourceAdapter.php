@@ -1,9 +1,14 @@
 <?php
 namespace Goetas\Twital;
 
-interface Dumper
+interface SourceAdapter
 {
-
+    /**
+     *
+     * @param string $string
+     * @return \DOMDocument
+     */
+    public function load($string);
     /**
      * Dumps a DOM into a string
      * @param \DOMDocument $dom

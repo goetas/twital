@@ -3,20 +3,15 @@ namespace Goetas\Twital\Extension;
 
 use Goetas\Twital\Dumper\HTML5Dumper;
 use Goetas\Twital\Loader\HTML5Loader;
+use Goetas\Twital\Dumper\HTML5Adapter;
 
 class HTML5Extension extends AbstractExtension
 {
 
-    public function getDumpers()
+    public function getSourceAdapters()
     {
         return array(
-            'html5' => new HTML5Dumper()
-        );
-    }
-    public function getLoaders()
-    {
-        return array(
-            'html5' => new HTML5Loader()
+            'html5' => new HTML5Adapter()
         );
     }
 }
