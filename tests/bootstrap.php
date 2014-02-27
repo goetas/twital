@@ -1,10 +1,10 @@
-<?php 
+<?php
 
 
 //psr-0 autoloader
 foreach(array(
 		"Goetas\\Twital\\"=>__DIR__."/../src/",
-		"goetas\\xml\\"=>__DIR__."/../../xmldom/src/",	
+
 		//"goetas\\atal\\"=>__DIR__."/../src/",
 		) as $ns => $dir){
 
@@ -17,7 +17,7 @@ foreach(array(
 }
 //psr-0 autoloader
 foreach(array(
-		"Twig_"=>(__DIR__."/../../twig/lib/"),
+		"Twig_"=>(__DIR__."/../twig/lib/"),
 
 		//"goetas\\atal\\"=>__DIR__."/../src/",
 ) as $ns => $dir){
@@ -31,10 +31,10 @@ foreach(array(
 }
 
 $loader = new Twig_Loader_Filesystem(array(__DIR__."/suite/templates"));
+$twig = new Twig_Environment($loader);
 
-
-$tal = new \Goetas\Twital\Twital($loader);
-echo $tal->getSource("include.xml");
+$tal = new \Goetas\Twital\TwitalEnviroment($twig);
+echo $tal->display("1.twital.xml");
 echo "\n\n";
 //echo $tal->compile(__DIR__."/suite/templates/foreach.xml");
 
