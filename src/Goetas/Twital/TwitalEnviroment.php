@@ -30,11 +30,13 @@ class TwitalEnviroment extends \Twig_Environment
             '/\.twital$/'
         );
     }
+
     public function setFileNamePatterns(array $patterns)
     {
         $this->fileNamePatterns = $patterns;
         return $this;
     }
+
     public function addFileNamePattern($pattern)
     {
         $this->fileNamePatterns[] = $pattern;
@@ -77,14 +79,19 @@ class TwitalEnviroment extends \Twig_Environment
 
     public function compileSource($source, $name = null)
     {
-        if ($this->canCompileTwital($source, $name)) {
+        if ($name!==null && $this->canCompileTwital($source, $name)) {
             $source = $this->getTwitalCompiler()->compile($source);
         }
         return $this->twig->compileSource($source, $name);
     }
-    /*
-     * public function loadTemplate($name, $index = null) { $cls = $this->getTemplateClass($name, $index); if (isset($this->loadedTemplates[$cls])) { return $this->loadedTemplates[$cls]; } if (! class_exists($cls, false)) { if (false === $cache = $this->getCacheFilename($name)) { eval('?>' . $this->compileSource($this->getLoader() ->getSource($name), $name)); } else { if (! is_file($cache) || ($this->isAutoReload() && ! $this->isTemplateFresh($name, filemtime($cache)))) { $this->writeCacheFile($cache, $this->compileSource($this->getLoader() ->getSource($name), $name)); } require_once $cache; } } if (! $this->runtimeInitialized) { $this->initRuntime(); $this->runtimeInitialized = true; } return $this->loadedTemplates[$cls] = new $cls($this); }
-     */
+
+    protected function isRuntimeInitialized()
+    {
+        $ref = new \ReflectionProperty(get_class($this->twig), 'runtimeInitialized');
+        $ref->setAccessible(true);
+        return $this->runtimeInitialized = $ref->getValue($this->twig);
+    }
+
     public function getBaseTemplateClass()
     {
         return $this->twig->getBaseTemplateClass();
@@ -164,16 +171,11 @@ class TwitalEnviroment extends \Twig_Environment
     {
         return $this->twig->getTemplateClassPrefix();
     }
-    /*
-     * public function render($name, array $context = array()) { return $this->loadTemplate($name)->render($context); } public function display($name, array $context = array()) { $this->loadTemplate($name)->display($context); }
-     */
+
     public function isTemplateFresh($name, $time)
     {
         return $this->twig->isTemplateFresh($name, $time);
     }
-    /*
-     * public function resolveTemplate($names) { throw new \Twig_Error_Loader(sprintf('Unable to find one of the following templates: "%s".', implode('", "', $names))); }
-     */
     public function clearTemplateCache()
     {
         $this->twig->clearTemplateCache();
@@ -251,7 +253,10 @@ class TwitalEnviroment extends \Twig_Environment
 
     public function initRuntime()
     {
-        return $this->twig->initRuntime();
+        if ($this->runtimeInitialized || $this->isRuntimeInitialized()) {
+            return;
+        }
+        $this->twig->initRuntime();
     }
 
     public function hasExtension($name)
