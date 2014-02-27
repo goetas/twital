@@ -65,6 +65,12 @@ class TwitalEnviroment extends \Twig_Environment
         return false;
     }
 
+    public function setTwitalCompiler(Compiler $compiler)
+    {
+        $this->twitalCompiler = $compiler;
+        return $this;
+    }
+
     /**
      *
      * @return \Goetas\Twital\Compiler
