@@ -13,23 +13,7 @@ class NamespaceAdapter
         if ($element->namespaceURI===null && preg_match('/^([a-z0-9\-]+):(.+)$/i', $element->nodeName, $mch) && isset($namespaces[$mch[1]])){
 
             $oldElement = $element;
-            $element = $element->ownerDocument->createElementNS($namespaces[$mch[1]], $element->nodeName);
-
-            // copy attrs
-            foreach (iterator_to_array($oldElement->attributes) as $attr) {
-                $oldElement->removeAttributeNode($attr);
-                if ($attr->namespaceURI) {
-                    $element->setAttributeNodeNS($attr);
-                } else {
-                    $element->setAttributeNode($attr);
-                }
-            }
-            // copy childs
-            while ($child = $oldElement->firstChild) {
-                $oldElement->removeChild($child);
-                $element->appendChild($child);
-            }
-            $oldElement->parentNode->replaceChild($element, $oldElement);
+            $element = self::copyElementInNs($oldElement, $namespaces[$mch[1]]);
         }
         // fix attrs
         foreach (iterator_to_array($element->attributes) as $attr) {
@@ -44,5 +28,25 @@ class NamespaceAdapter
                 self::checkNamespaces($child, $namespaces);
             }
         }
+    }
+    public static function copyElementInNs($oldElement, $newNamespace){
+        $element = $element->ownerDocument->createElementNS($newNamespace, $element->nodeName);
+
+        // copy attrs
+        foreach (iterator_to_array($oldElement->attributes) as $attr) {
+            $oldElement->removeAttributeNode($attr);
+            if ($attr->namespaceURI) {
+                $element->setAttributeNodeNS($attr);
+            } else {
+                $element->setAttributeNode($attr);
+            }
+        }
+        // copy childs
+        while ($child = $oldElement->firstChild) {
+            $oldElement->removeChild($child);
+            $element->appendChild($child);
+        }
+        $oldElement->parentNode->replaceChild($element, $oldElement);
+        return $element;
     }
 }

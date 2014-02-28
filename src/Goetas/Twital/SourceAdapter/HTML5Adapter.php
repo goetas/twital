@@ -4,6 +4,7 @@ namespace Goetas\Twital\SourceAdapter;
 use HTML5;
 use Goetas\Twital\Dumper;
 use Goetas\Twital\SourceAdapter;
+use Goetas\Twital\NamespaceAdapter;
 
 class HTML5Adapter implements SourceAdapter
 {
@@ -35,23 +36,7 @@ class HTML5Adapter implements SourceAdapter
         }
         if (preg_match('/^([a-z0-9\-]+):(.+)/i', $element->nodeName, $mch) && isset($namespaces[$mch[1]])) {
             $oldElement = $element;
-            $element = $element->ownerDocument->createElementNS($namespaces[$mch[1]], $element->nodeName);
-
-            // copy attrs
-            foreach (iterator_to_array($oldElement->attributes) as $attr) {
-                $oldElement->removeAttributeNode($attr);
-                if ($attr->namespaceURI) {
-                    $element->setAttributeNodeNS($attr);
-                } else {
-                    $element->setAttributeNode($attr);
-                }
-            }
-            // copy childs
-            while ($child = $oldElement->firstChild) {
-                $oldElement->removeChild($child);
-                $element->appendChild($child);
-            }
-            $oldElement->parentNode->replaceChild($element, $oldElement);
+            $element = NamespaceAdapter::copyElementInNs($oldElement, $namespaces[$mch[1]]);
         }
         // fix attrs
         foreach (iterator_to_array($element->attributes) as $attr) {
