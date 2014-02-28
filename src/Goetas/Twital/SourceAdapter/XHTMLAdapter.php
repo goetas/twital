@@ -1,5 +1,5 @@
 <?php
-namespace Goetas\Twital\Dumper;
+namespace Goetas\Twital\SourceAdapter;
 
 class XHTMLAdapter extends XMLAdapter
 {

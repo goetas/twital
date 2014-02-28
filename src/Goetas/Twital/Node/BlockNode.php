@@ -22,8 +22,8 @@ class BlockNode implements Node
         $node->parentNode->removeChild($node);
         $sandbox->appendChild($node);
 
-        $context->getCompiler()->applyTemplatesToAttributes($node);
-        $context->getCompiler()->applyTemplatesToChilds($node);
+        $context->getCompiler()->compileElementToAttributes($node);
+        $context->getCompiler()->compileChilds($node);
 
         $start = $context->createControlNode("block " . $node->getAttribute("name") );
         $end = $context->createControlNode("endblock");

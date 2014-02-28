@@ -15,7 +15,7 @@ class MacroNode implements Node
             throw new Exception("Name attribute is required");
         }
 
-        $context->applyTemplatesToChilds($node);
+        $context->compileChilds($node);
 
         $set = iterator_to_array($node->childNodes);
 

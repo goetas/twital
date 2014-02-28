@@ -43,13 +43,6 @@ interface Extension
     public function getPostFilters();
 
     /**
-     * Array of callbacks that runs before DOM compilation process (after template loading).
-     * @return array
-     */
-    public function getPreFilters();
-
-
-    /**
      * Array of objects implementing {DOMLoader} interface, responsible of DOM loading from Twital ource code.
      * The key of
      * @return array

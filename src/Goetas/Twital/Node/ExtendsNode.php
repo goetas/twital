@@ -21,7 +21,7 @@ class ExtendsNode implements Node
             }
         }
 
-        $context->getCompiler()->applyTemplatesToChilds($node);
+        $context->getCompiler()->compileChilds($node);
 
         $ext = $context->createControlNode("extends " . ($node->hasAttributeNS(CompilationContext::NS, "name") ? $node->getAttributens(CompilationContext::NS, "name") : ("'" . $node->getAttribute("name") . "'")));
 

@@ -1,9 +1,7 @@
 <?php
 namespace Goetas\Twital\Extension;
 
-use Goetas\Twital\Dumper\HTML5Dumper;
-use Goetas\Twital\Loader\HTML5Loader;
-use Goetas\Twital\Dumper\HTML5Adapter;
+use Goetas\Twital\SourceAdapter\HTML5Adapter;
 
 class HTML5Extension extends AbstractExtension
 {

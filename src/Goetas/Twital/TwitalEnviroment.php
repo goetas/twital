@@ -26,10 +26,45 @@ class TwitalEnviroment extends \Twig_Environment
     private $fileNamePatterns = array();
 
     protected $twitalExtensions = array();
+    protected $adapter;
+    protected $twitalExtensionsInitialized = false;
 
-    public function __construct(\Twig_Environment $twig)
+
+    const NS = 'urn:goetas:twital';
+
+    /**
+     *
+     * @var array
+     */
+    protected $attributes = array();
+
+    /**
+     *
+     * @var array
+    */
+    protected $nodes = array();
+
+    /**
+     *
+     * @var array
+    */
+    protected $sourceAdapters = array();
+
+    /**
+     *
+     * @var array
+    */
+    protected $postFilter = array();
+    /**
+     *
+     * @var array
+    */
+    protected $customNamespaces = array();
+
+    public function __construct(\Twig_Environment $twig, $defaultAdapter = 'xml')
     {
         $this->twig = $twig;
+        $this->adapter = $defaultAdapter;
         $this->fileNamePatterns = array(
             '/\.twital\./',
             '/\.twital$/'
@@ -39,7 +74,81 @@ class TwitalEnviroment extends \Twig_Environment
         $this->addTwitalExtension(new HTML5Extension());
     }
 
-    public function setFileNamePatterns(array $patterns)
+    protected function initTwitalExtensions()
+    {
+        if (!$this->extensionsinitialized) {
+            foreach ($this->getTwitalExtensions() as $extension) {
+                $this->attributes = array_merge_recursive($this->attributes, $extension->getAttributes());
+                $this->nodes = array_merge_recursive($this->nodes, $extension->getNodes());
+                $this->postFilter = array_merge($this->postFilter, $extension->getPostFilters());
+                $this->sourceAdapters = array_merge($this->sourceAdapters, $extension->getSourceAdapters());
+                $this->customNamespaces = array_merge($this->customNamespaces, $extension->getPrefixes());
+            }
+            $this->extensionsinitialized = true;
+        }
+    }
+
+    /**
+     * @param $source
+     * @return string
+     */
+    public function compileTwital($source, SourceAdapter $adapter)
+    {
+
+        $xml = $adapter->load($source);
+        $this->checkDocumentNamespaces($xml);
+
+        $metadata = $adapter->collectMetadata($xml, $source);
+
+        $context = new CompilationContext($xml, $this->getLexer(), $this, $this->nodes, $this->attributes);
+        $context->compileChilds($xml);
+
+        $source = $adapter->dump($xml, $metadata);
+        foreach ($this->postFilter as $filter) {
+            $source = call_user_func($filter, $source);
+        }
+
+        return $source;
+    }
+
+    protected function checkDocumentNamespaces(\DOMDocument $dom){
+        foreach (iterator_to_array($dom->childNodes) as $child) {
+            if ($child instanceof \DOMElement) {
+                NamespaceAdapter::checkNamespaces($child, $this->customNamespaces);
+            }
+        }
+    }
+    /**
+     *
+     * @param string $name
+     * @throws Exception
+     * @return SourceAdapter
+     */
+    protected function getSourceAdapter($name)
+    {
+        if (! isset($this->sourceAdapters[$name])) {
+            throw new Exception("Can't find a source adapter called {$name}");
+        }
+
+        return $this->sourceAdapters[$name];
+    }
+    /**
+     * @return the $adapter
+     */
+    public function getAdapter()
+    {
+        return $this->adapter;
+    }
+
+	/**
+     * @param string $adapter
+     */
+    public function setAdapter($adapter)
+    {
+        $this->adapter = $adapter;
+    }
+
+	public function setFileNamePatterns(array $patterns)
     {
         $this->fileNamePatterns = $patterns;
         return $this;
@@ -73,28 +182,11 @@ class TwitalEnviroment extends \Twig_Environment
         return false;
     }
 
-    public function setTwitalCompiler(Compiler $compiler)
-    {
-        $this->twitalCompiler = $compiler;
-        return $this;
-    }
-
-    /**
-     *
-     * @return \Goetas\Twital\Compiler
-     */
-    public function getTwitalCompiler()
-    {
-        if (! $this->twitalCompiler) {
-            $this->twitalCompiler = new Compiler($this);
-        }
-        return $this->twitalCompiler;
-    }
-
     public function compileSource($source, $name = null)
     {
         if ($name!==null && $this->canCompileTwital($source, $name)) {
-            $source = $this->getTwitalCompiler()->compile($source);
+            $this->initTwitalExtensions();
+            $source = $this->compileTwital($source, $this->getSourceAdapter($this->adapter));
         }
         return $this->twig->compileSource($source, $name);
     }

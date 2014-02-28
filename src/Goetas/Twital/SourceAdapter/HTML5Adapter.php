@@ -1,5 +1,5 @@
 <?php
-namespace Goetas\Twital\Dumper;
+namespace Goetas\Twital\SourceAdapter;
 
 use HTML5;
 use Goetas\Twital\Dumper;

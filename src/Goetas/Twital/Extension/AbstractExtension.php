@@ -26,11 +26,6 @@ abstract class AbstractExtension implements Extension
         return array();
     }
 
-    public function getPreFilters()
-    {
-        return array();
-    }
-
     public function getSourceAdapters()
     {
         return array();

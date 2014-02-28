@@ -4,17 +4,15 @@ namespace Goetas\Twital\Extension;
 use DOMDocument;
 use Goetas\Twital\Attribute;
 use Goetas\Twital\Node;
-use Goetas\Twital\Compiler;
-use Goetas\Twital\Loader\XMLLoader;
-use Goetas\Twital\Dumper\XMLDumper;
-use Goetas\Twital\Dumper\XMLAdapter;
+use Goetas\Twital\TwitalEnviroment;
+use Goetas\Twital\SourceAdapter\XMLAdapter;
 
 class CoreExtension extends AbstractExtension
 {
     public function getPrefixes()
     {
         return array(
-            't' => Compiler::NS
+            't' => TwitalEnviroment::NS
         );
     }
 
@@ -28,26 +26,26 @@ class CoreExtension extends AbstractExtension
     public function getAttributes()
     {
         $attributes = array();
-        $attributes[Compiler::NS]['__base__'] = new Attribute\BaseAttribute();
-        $attributes[Compiler::NS]['set'] = new Attribute\SetAttribute();
-        $attributes[Compiler::NS]['content'] = new Attribute\ContentAttribute();
-        $attributes[Compiler::NS]['omit'] = new Attribute\OmitAttribute();
-        $attributes[Compiler::NS]['capture'] = new Attribute\CaptureAttribute();
-        $attributes[Compiler::NS]['attr'] = new Attribute\AttrAttribute();
-        $attributes[Compiler::NS]['attr-append'] = new Attribute\AttrAppendAttribute();
+        $attributes[TwitalEnviroment::NS]['__base__'] = new Attribute\BaseAttribute();
+        $attributes[TwitalEnviroment::NS]['set'] = new Attribute\SetAttribute();
+        $attributes[TwitalEnviroment::NS]['content'] = new Attribute\ContentAttribute();
+        $attributes[TwitalEnviroment::NS]['omit'] = new Attribute\OmitAttribute();
+        $attributes[TwitalEnviroment::NS]['capture'] = new Attribute\CaptureAttribute();
+        $attributes[TwitalEnviroment::NS]['attr'] = new Attribute\AttrAttribute();
+        $attributes[TwitalEnviroment::NS]['attr-append'] = new Attribute\AttrAppendAttribute();
         return $attributes;
     }
 
     public function getNodes()
     {
         $nodes = array();
-        $nodes[Compiler::NS]['extends'] = new Node\ExtendsNode();
-        $nodes[Compiler::NS]['block'] = new Node\BlockNode();
-        $nodes[Compiler::NS]['macro'] = new Node\MacroNode();
-        $nodes[Compiler::NS]['import'] = new Node\ImportNode();
-        $nodes[Compiler::NS]['include'] = new Node\IncludeNode();
-        $nodes[Compiler::NS]['omit'] = new Node\OmitNode();
-        //$nodes[Compiler::NS]['embed'] = new Node\IncludeNode();
+        $nodes[TwitalEnviroment::NS]['extends'] = new Node\ExtendsNode();
+        $nodes[TwitalEnviroment::NS]['block'] = new Node\BlockNode();
+        $nodes[TwitalEnviroment::NS]['macro'] = new Node\MacroNode();
+        $nodes[TwitalEnviroment::NS]['import'] = new Node\ImportNode();
+        $nodes[TwitalEnviroment::NS]['include'] = new Node\IncludeNode();
+        $nodes[TwitalEnviroment::NS]['omit'] = new Node\OmitNode();
+        //$nodes[TwitalEnviroment::NS]['embed'] = new Node\IncludeNode();
         return $nodes;
     }
 
@@ -56,7 +54,7 @@ class CoreExtension extends AbstractExtension
         return array(
             function ($string)
             {
-                return preg_replace('#<(.*) xmlns:[a-zA-Z0-9]+=("|\')' . Compiler::NS . '("|\')(.*)>#m', "<\\1\\4>", $string);
+                return preg_replace('#<(.*) xmlns:[a-zA-Z0-9]+=("|\')' . TwitalEnviroment::NS . '("|\')(.*)>#m', "<\\1\\4>", $string);
             },
             function ($string)
             {

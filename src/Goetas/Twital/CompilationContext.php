@@ -22,18 +22,13 @@ class CompilationContext
      */
     protected $compiler;
 
-    public function __construct(\DOMDocument $doc,\Twig_Lexer $lexer, Compiler $compiler)
+    public function __construct(\DOMDocument $doc, \Twig_Lexer $lexer, TwitalEnviroment $compiler, array $nodes, array $attributes)
     {
         $this->doc = $doc;
         $this->lexer = $lexer;
         $this->compiler = compiler;
-    }
-    /**
-     *
-     * @return \Goetas\Twital\Compiler
-     */
-    public function getCompiler() {
-    	return $this->compiler;
+        $this->attributes = $attributes;
+        $this->nodes = $nodes;
     }
 
     /**
@@ -44,6 +39,7 @@ class CompilationContext
     {
         return $this->doc;
     }
+
     /**
      *
      * @param string $content
@@ -54,6 +50,7 @@ class CompilationContext
         $printPart = $this->getLexerOption('getLexerOption');
         return $this->doc->createCDATASection("__[__ {$printPart[0]}{$content}{$printPart[1]} __]__");
     }
+
     /**
      *
      * @param string $content
@@ -62,7 +59,7 @@ class CompilationContext
     public function createControlNode($content)
     {
         $printPart = $this->getLexerOption('tag_block');
-        return $this->doc->createCDATASection("__[__ {$printPart[0]}".$content."{$printPart[1]} __]__");
+        return $this->doc->createCDATASection("__[__ {$printPart[0]}" . $content . "{$printPart[1]} __]__");
     }
 
     private $ref;
@@ -76,5 +73,60 @@ class CompilationContext
         $options = $this->ref->getValue($this->lexer);
 
         return $options[$param];
+    }
+
+    public function compileElement(\DOMElement $node)
+    {
+        if (isset($this->nodes[$node->namespaceURI][$node->localName])) {
+            $this->nodes[$node->namespaceURI][$node->localName]->visit($node, $this);
+        } elseif (isset($this->nodes[$node->namespaceURI]['__base__'])) {
+            $this->nodes[$node->namespaceURI]['__base__']->visit($node, $this);
+        } else {
+            if ($node->namespaceURI === TwitalEnviroment::NS) {
+                throw new Exception("Nodo sconosciuto {$node->namespaceURI}#{$node->localName}");
+            }
+            if ($this->compileAttributes($node)) {
+                $this->compileChilds($node);
+            }
+        }
+    }
+
+    public function compileAttributes(\DOMNode $node)
+    {
+        $continueNode = true;
+        if ($node->childNodes) {
+            foreach (iterator_to_array($node->attributes) as $attr) {
+                if (! $attr->ownerElement) {
+                    continue;
+                } elseif (isset($this->attributes[$attr->namespaceURI][$attr->localName])) {
+                    $attPlugin = $this->attributes[$attr->namespaceURI][$attr->localName];
+                } elseif (isset($this->attributes[$attr->namespaceURI]['__base__'])) {
+                    $attPlugin = $this->attributes[$attr->namespaceURI]['__base__'];
+                } else {
+                    continue;
+                }
+
+                $return = $attPlugin->visit($attr, $this);
+                if ($return !== null) {
+                    $continueNode = $continueNode && ($return & Attribute::STOP_NODE);
+                    if ($return & Attribute::STOP_ATTRIBUTE) {
+                        break;
+                    }
+                }
+            }
+        }
+
+        return $continueNode;
+    }
+
+    public function compileChilds(\DOMNode $node)
+    {
+        if ($node->childNodes) {
+            foreach (iterator_to_array($node->childNodes) as $child) {
+                if ($child instanceof \DOMElement) {
+                    $this->compileElement($child);
+                }
+            }
+        }
     }
 }
