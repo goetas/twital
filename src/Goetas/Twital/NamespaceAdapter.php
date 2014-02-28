@@ -30,7 +30,7 @@ class NamespaceAdapter
         }
     }
     public static function copyElementInNs($oldElement, $newNamespace){
-        $element = $element->ownerDocument->createElementNS($newNamespace, $element->nodeName);
+        $element = $oldElement->ownerDocument->createElementNS($newNamespace, $oldElement->nodeName);
 
         // copy attrs
         foreach (iterator_to_array($oldElement->attributes) as $attr) {
