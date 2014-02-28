@@ -95,6 +95,8 @@ class TwitalLoader implements \Twig_LoaderInterface
             $source = call_user_func($filter, $source);
         }
 
+        die($source);
+
         return $source;
     }
 
