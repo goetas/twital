@@ -14,14 +14,18 @@ class HTML5Adapter implements SourceAdapter
         $dom = new \DOMDocument('1.0', 'UTF-8');
         $dom->appendChild($dom->importNode($f, 1));
 
-        foreach (iterator_to_array($dom->childNodes) as $child) {
-            if ($child instanceof \DOMElement) {
-                self::fixNss($child, array());
-            }
-        }
+        self::fixElements($dom);
         return $dom;
     }
 
+    protected static function fixElements(\DOMNode $node, $namespaces = array())
+    {
+        foreach (iterator_to_array($node->childNodes) as $child) {
+            if ($child instanceof \DOMElement) {
+                self::fixNss($child, $namespaces);
+            }
+        }
+    }
     protected static function fixNss(\DOMElement $element, $namespaces = array())
     {
         foreach ($element->attributes as $attr) {
@@ -56,11 +60,8 @@ class HTML5Adapter implements SourceAdapter
                 $element->setAttributeNS($namespaces[$mch[1]], $attr->name, $attr->value);
             }
         }
-        foreach (iterator_to_array($element->childNodes) as $child) {
-            if ($child instanceof \DOMElement) {
-                self::fixNss($child, $namespaces);
-            }
-        }
+
+        self::fixElements($element,$namespaces);
     }
 
     public function dump(\DOMDocument $dom, $metedata)
