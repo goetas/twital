@@ -1,4 +1,3 @@
 <div xmlns="html">
-	<t:omit>zzz</t:omit>
-	<span t:if="true">xx</span>
+	<span  bbb="sss" ccc="ddd" t:attr="true ? bbb='ccc'">xx</span>
 </div>

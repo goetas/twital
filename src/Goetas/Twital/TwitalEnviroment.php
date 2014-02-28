@@ -190,6 +190,7 @@ class TwitalEnviroment extends \Twig_Environment
         if ($name !== null && $this->canCompileTwital($source, $name)) {
             $this->initTwitalExtensions();
             $source = $this->compileTwital($source, $this->getSourceAdapter($this->adapter));
+
         }
         return $this->twig->compileSource($source, $name);
     }

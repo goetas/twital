@@ -36,13 +36,15 @@ class AttrAttribute implements Attribute
             }
         }
 
-        $code = "set $varName = $varName|default({})|merge({" . ParserHelper::implodeKeyed(",", $parts) .
-             "})\n";
-
+        $code=array();
+        $setAdd = $parts ?("|merge({" . ParserHelper::implodeKeyed(",", $parts) ."})"):"";
+        $code[] = $context->createControlNode(
+            "set $varName = $varName|default({})$setAdd"
+        );
         foreach ($expressions as $attrExpr) {
 
             $nameParts = explode(":", $attrExpr['name']);
-            $codeAttr = '';
+            $codeAttr = $context->getDocument()->createTextNode('');
             if (count($nameParts) == 2) {
                 if ($node->lookupNamespaceURI($nameParts[0]) === null) {
                     throw new Exception(
@@ -51,22 +53,31 @@ class AttrAttribute implements Attribute
                 } else {
                     $codeAttr = self::setExpression($varName, "xmlns:{$nameParts[0]}",
                         "['" . addcslashes($node->lookupNamespaceURI($nameParts[0]), "'") . "']");
+                    $codeAttr = $context->createControlNode($codeAttr);
                 }
             }
 
-            $attCode = $codeAttr . $this->getSetExpression($varName, $attrExpr['name'], $attrExpr['expr']);
+
             if (isset($attrExpr['test']) && ($attrExpr['test'] == "true" || $attrExpr['test'] == "1")) {
-                $code .= "if {$attrExpr['test']}" . $attCode . "endif\n";
+                $code [] = $context->createControlNode("if {$attrExpr['test']}");
+                $code [] = $codeAttr;
+                $code [] = $context->createControlNode($this->getSetExpression($varName, $attrExpr['name'], $attrExpr['expr']));
+                $code[] = $context->createControlNode("endif");
             } else {
-                $code .= $attCode;
+                $code [] = $codeAttr;
+                $code [] = $this->getSetExpression($varName, $attrExpr['name'], $attrExpr['expr']);;
             }
         }
 
         $node->setAttribute("__attr__", $varName);
 
-        $pi = $context->createControlNode($code);
+        $ref = $node;
+        foreach(array_reverse($code) as $line){
+            $node->parentNode->insertBefore($line, $ref);
+            $ref = $line;
+        }
 
-        $node->parentNode->insertBefore($pi, $node);
+
         $node->removeAttributeNode($att);
     }
 
@@ -77,7 +88,7 @@ class AttrAttribute implements Attribute
 
     protected static function setExpression($varName, $attName, $expr)
     {
-        return "set {$varName}.{$attName} = [{$expr}];";
+        return "set {$varName} = {$varName}|merge({ $attName:[{$expr}] })";
     }
 
     public static function splitAttrExpression($str)
