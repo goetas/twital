@@ -5,14 +5,14 @@ use Goetas\Twital\Node;
 use Exception;
 use Goetas\Twital\CompilationContext;
 use Goetas\Twital\DOMHelper;
-use Goetas\Twital\TwitalEnviroment;
+use Goetas\Twital\TwitalLoader;
 
 class ExtendsNode implements Node
 {
 
     public function visit(\DOMElement $node, CompilationContext $context)
     {
-        if (! $node->hasAttribute("name") && ! $node->hasAttributeNS(TwitalEnviroment::NS,"name")) {
+        if (! $node->hasAttribute("name") && ! $node->hasAttributeNS(TwitalLoader::NS,"name")) {
             throw new Exception("name or name-exp attribute is required");
         }
 
@@ -24,7 +24,7 @@ class ExtendsNode implements Node
 
         $context->compileChilds($node);
 
-        $ext = $context->createControlNode("extends " . ($node->hasAttributeNS(TwitalEnviroment::NS, "name") ? $node->getAttributens(CompilationContext::NS, "name") : ("'" . $node->getAttribute("name") . "'")));
+        $ext = $context->createControlNode("extends " . ($node->hasAttributeNS(TwitalLoader::NS, "name") ? $node->getAttributens(CompilationContext::NS, "name") : ("'" . $node->getAttribute("name") . "'")));
 
         $set = iterator_to_array($node->childNodes);
         array_unshift($set, $ext);

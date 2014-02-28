@@ -4,7 +4,7 @@ namespace Goetas\Twital\Attribute;
 use Goetas\Twital\Attribute;
 use Goetas\Twital\CompilationContext;
 use DOMAttr;
-use Goetas\Twital\TwitalEnviroment;
+use Goetas\Twital\TwitalLoader;
 
 class TranslateNAttribute implements Attribute
 {
@@ -13,7 +13,7 @@ class TranslateNAttribute implements Attribute
     {
 
         $node = $att->ownerElement;
-        $varNode = $node->getAttributeNodeNS(TwitalEnviroment::NS, 'trans');
+        $varNode = $node->getAttributeNodeNS(TwitalLoader::NS, 'trans');
         $with = '{\'%count%\':'.html_entity_decode($att->value).'}';
         if ($varNode && $varNode->value) {
             $with = "($with|merge(".html_entity_decode($varNode->value).')';

@@ -6,7 +6,7 @@ use Goetas\Twital\CompilationContext;
 
 use Goetas\Twital\DOMHelper;
 use Exception;
-use Goetas\Twital\TwitalEnviroment;
+use Goetas\Twital\TwitalLoader;
 class BlockNode implements Node
 {
     public function visit(\DOMElement $node, CompilationContext $context)
@@ -18,7 +18,7 @@ class BlockNode implements Node
 
         $currPrima = $node->previousSibling;
 
-        $sandbox = $node->ownerDocument->createElementNS(TwitalEnviroment::NS, "sandbox");
+        $sandbox = $node->ownerDocument->createElementNS(TwitalLoader::NS, "sandbox");
         $node->parentNode->insertBefore($sandbox,$node);
         $node->parentNode->removeChild($node);
         $sandbox->appendChild($node);

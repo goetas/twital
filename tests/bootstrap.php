@@ -1,6 +1,7 @@
 <?php
 
 
+use Goetas\Twital\TwitalLoader;
 //psr-0 autoloader
 foreach(array(
 		"Goetas\\Twital\\"=>__DIR__."/../src/",
@@ -31,10 +32,11 @@ foreach(array(
 }
 
 $loader = new Twig_Loader_Filesystem(array(__DIR__."/suite/templates"));
-$twig = new Twig_Environment($loader);
+$twitalLoader = new TwitalLoader($loader);
 
-$tal = new \Goetas\Twital\TwitalEnviroment($twig);
-echo $tal->display("1.twital.xml");
+$twig = new Twig_Environment($twitalLoader);
+
+echo $twig->display("1.twital.xml");
 echo "\n\n";
 //echo $tal->compile(__DIR__."/suite/templates/foreach.xml");
 

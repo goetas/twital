@@ -8,7 +8,7 @@ class CompilationContext
      *
      * @var unknown
      */
-    protected $lexer;
+    protected $lexerOptions;
 
     /**
      *
@@ -22,13 +22,19 @@ class CompilationContext
      */
     protected $compiler;
 
-    public function __construct(\DOMDocument $doc, \Twig_Lexer $lexer, TwitalEnviroment $compiler, array $nodes, array $attributes)
+    public function __construct(\DOMDocument $doc, TwitalLoader $compiler, array $nodes, array $attributes, array $options = array())
     {
         $this->doc = $doc;
-        $this->lexer = $lexer;
         $this->compiler = compiler;
         $this->attributes = $attributes;
         $this->nodes = $nodes;
+        $this->lexerOptions = array_merge(array(
+            'tag_comment'     => array('{#', '#}'),
+            'tag_block'       => array('{%', '%}'),
+            'tag_variable'    => array('{{', '}}'),
+            'whitespace_trim' => '-',
+            'interpolation'   => array('#{', '}'),
+        ), $options);
     }
 
     /**
@@ -64,15 +70,10 @@ class CompilationContext
 
     private $ref;
 
-    private function getLexerOption($param)
+    private function getLexerOption($name)
     {
-        if (! $this->ref) {
-            $this->ref = new \ReflectionProperty(get_class($this->lexer), 'options');
-            $this->ref->setAccessible(true);
-        }
-        $options = $this->ref->getValue($this->lexer);
 
-        return $options[$param];
+        return $this->lexerOptions[$name];
     }
 
     public function compileElement(\DOMElement $node)
@@ -82,7 +83,7 @@ class CompilationContext
         } elseif (isset($this->nodes[$node->namespaceURI]['__base__'])) {
             $this->nodes[$node->namespaceURI]['__base__']->visit($node, $this);
         } else {
-            if ($node->namespaceURI === TwitalEnviroment::NS) {
+            if ($node->namespaceURI === TwitalLoader::NS) {
                 throw new Exception("Nodo sconosciuto {$node->namespaceURI}#{$node->localName}");
             }
             if ($this->compileAttributes($node)) {
