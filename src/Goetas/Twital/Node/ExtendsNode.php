@@ -10,7 +10,7 @@ use Goetas\Twital\TwitalEnviroment;
 class ExtendsNode implements Node
 {
 
-    function visit(\DOMElement $node, CompilationContext $context)
+    public function visit(\DOMElement $node, CompilationContext $context)
     {
         if (! $node->hasAttribute("name") && ! $node->hasAttributeNS(TwitalEnviroment::NS,"name")) {
             throw new Exception("name or name-exp attribute is required");

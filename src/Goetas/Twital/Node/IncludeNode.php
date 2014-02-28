@@ -8,7 +8,7 @@ use Goetas\Twital\Exception;
 class IncludeNode implements Node
 {
 
-    function visit(\DOMElement $node, CompilationContext $context)
+    public function visit(\DOMElement $node, CompilationContext $context)
     {
         if (! $node->hasAttribute("name") && ! $node->hasAttribute("name-exp")) {
             throw new Exception("Name or name-exp attribute is required");

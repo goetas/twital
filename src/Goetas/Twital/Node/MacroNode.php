@@ -9,7 +9,7 @@ use Goetas\Twital\DOMHelper;
 class MacroNode implements Node
 {
 
-    function visit(\DOMElement $node, CompilationContext $context)
+    public function visit(\DOMElement $node, CompilationContext $context)
     {
         if (! $node->hasAttribute("name")) {
             throw new Exception("Name attribute is required");

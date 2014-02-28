@@ -8,7 +8,7 @@ use Goetas\Twital\DOMHelper;
 use Exception;
 class OmitNode implements Node
 {
-    function visit(\DOMElement $node, CompilationContext $context)
+    public function visit(\DOMElement $node, CompilationContext $context)
     {
         DOMHelper::replaceWithSet($node, iterator_to_array($node->childNodes));
     }
