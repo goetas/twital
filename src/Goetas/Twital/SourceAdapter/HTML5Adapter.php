@@ -13,7 +13,7 @@ class HTML5Adapter implements SourceAdapter
     {
         $f = HTML5::loadHTMLFragment($html);
         $dom = new \DOMDocument('1.0', 'UTF-8');
-        $dom->appendChild($dom->importNode($f, 1));
+        $dom->appendChild($dom->importNode($f, true));
 
         self::fixElements($dom);
         return $dom;

@@ -25,6 +25,6 @@ class MacroNode implements Node
 
         $set[] = $context->createControlNode("endmacro");
 
-        DOMHelper::replaceNodeWithSet($node, $set);
+        DOMHelper::replaceWithSet($node, $set);
     }
 }

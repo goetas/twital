@@ -4,6 +4,7 @@ namespace Goetas\Twital;
 use Goetas\Twital\Extension\CoreExtension;
 use Goetas\Twital\Extension\I18nExtension;
 use Goetas\Twital\Extension\HTML5Extension;
+
 class TwitalEnviroment extends \Twig_Environment
 {
 
@@ -15,20 +16,15 @@ class TwitalEnviroment extends \Twig_Environment
 
     /**
      *
-     * @var Compiler
-     */
-    private $twitalCompiler;
-
-    /**
-     *
      * @var array
      */
     private $fileNamePatterns = array();
 
     protected $twitalExtensions = array();
-    protected $adapter;
-    protected $twitalExtensionsInitialized = false;
 
+    protected $adapter;
+
+    protected $twitalExtensionsInitialized = false;
 
     const NS = 'urn:goetas:twital';
 
@@ -41,24 +37,25 @@ class TwitalEnviroment extends \Twig_Environment
     /**
      *
      * @var array
-    */
+     */
     protected $nodes = array();
 
     /**
      *
      * @var array
-    */
+     */
     protected $sourceAdapters = array();
 
     /**
      *
      * @var array
-    */
+     */
     protected $postFilter = array();
+
     /**
      *
      * @var array
-    */
+     */
     protected $customNamespaces = array();
 
     public function __construct(\Twig_Environment $twig, $defaultAdapter = 'xml')
@@ -76,7 +73,7 @@ class TwitalEnviroment extends \Twig_Environment
 
     protected function initTwitalExtensions()
     {
-        if (!$this->extensionsinitialized) {
+        if (! $this->extensionsinitialized) {
             foreach ($this->getTwitalExtensions() as $extension) {
                 $this->attributes = array_merge_recursive($this->attributes, $extension->getAttributes());
                 $this->nodes = array_merge_recursive($this->nodes, $extension->getNodes());
@@ -89,12 +86,13 @@ class TwitalEnviroment extends \Twig_Environment
     }
 
     /**
-     * @param $source
+     *
+     * @param
+     *            $source
      * @return string
      */
     public function compileTwital($source, SourceAdapter $adapter)
     {
-
         $xml = $adapter->load($source);
         $this->checkDocumentNamespaces($xml);
 
@@ -111,13 +109,15 @@ class TwitalEnviroment extends \Twig_Environment
         return $source;
     }
 
-    protected function checkDocumentNamespaces(\DOMDocument $dom){
+    protected function checkDocumentNamespaces(\DOMDocument $dom)
+    {
         foreach (iterator_to_array($dom->childNodes) as $child) {
             if ($child instanceof \DOMElement) {
                 NamespaceAdapter::checkNamespaces($child, $this->customNamespaces);
             }
         }
     }
+
     /**
      *
      * @param string $name
@@ -132,7 +132,9 @@ class TwitalEnviroment extends \Twig_Environment
 
         return $this->sourceAdapters[$name];
     }
+
     /**
+     *
      * @return the $adapter
      */
     public function getAdapter()
@@ -140,7 +142,8 @@ class TwitalEnviroment extends \Twig_Environment
         return $this->adapter;
     }
 
-	/**
+    /**
+     *
      * @param string $adapter
      */
     public function setAdapter($adapter)
@@ -148,7 +151,7 @@ class TwitalEnviroment extends \Twig_Environment
         $this->adapter = $adapter;
     }
 
-	public function setFileNamePatterns(array $patterns)
+    public function setFileNamePatterns(array $patterns)
     {
         $this->fileNamePatterns = $patterns;
         return $this;
@@ -184,7 +187,7 @@ class TwitalEnviroment extends \Twig_Environment
 
     public function compileSource($source, $name = null)
     {
-        if ($name!==null && $this->canCompileTwital($source, $name)) {
+        if ($name !== null && $this->canCompileTwital($source, $name)) {
             $this->initTwitalExtensions();
             $source = $this->compileTwital($source, $this->getSourceAdapter($this->adapter));
         }
@@ -282,6 +285,7 @@ class TwitalEnviroment extends \Twig_Environment
     {
         return $this->twig->isTemplateFresh($name, $time);
     }
+
     public function clearTemplateCache()
     {
         $this->twig->clearTemplateCache();
@@ -395,13 +399,9 @@ class TwitalEnviroment extends \Twig_Environment
         return $this->twig->getExtensions();
     }
 
-
-
-
-
     public function addTwitalExtension(Extension $extension)
     {
-        return $this->twitalExtensions[]=$extension;
+        return $this->twitalExtensions[] = $extension;
     }
 
     public function setTwitalExtensions(array $extensions)
