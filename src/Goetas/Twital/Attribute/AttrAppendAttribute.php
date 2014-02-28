@@ -1,10 +1,57 @@
 <?php
 namespace Goetas\Twital\Attribute;
 
+use Goetas\Twital\CompilationContext;
+use Goetas\Twital\ParserHelper;
 class AttrAppendAttribute extends AttrAttribute
 {
-    protected function getSetExpression($varName, $attName, $expr)
+
+    public function visit(\DOMAttr $att, CompilationContext $context)
     {
-        return "set {$varName}.{$attName} = {$varName}.{$attName}|default([])|merge($expr);\n";
+        $node = $att->ownerElement;
+        $expressions = ParserHelper::staticSplitExpression($att->value, ",");
+
+        $attributes = array();
+        foreach ($expressions as $k => $expression) {
+            $expressions[$k] = $attrExpr = self::splitAttrExpression($expression);
+            $attNode = null;
+            if(!isset($attributes[$attrExpr['name']])){
+                $attributes[$attrExpr['name']] = array();
+            }
+            if ($node->hasAttribute($attrExpr['name'])) {
+                $attNode = $node->getAttributeNode($attrExpr['name']);
+                $node->removeAttributeNode($attNode);
+                $attributes[$attrExpr['name']][] = "'" . addcslashes($attNode->value, "'") . "'";
+            }
+            if ($attrExpr['test'] === "true" || $attrExpr['test'] === "1") {
+                unset($expressions[$k]);
+                $attributes[$attrExpr['name']][] = $attrExpr['expr'];
+            }
+        }
+
+        $code = array();
+
+        $varName = self::getVarname($node);
+        $code[] = $context->createControlNode("if $varName is not defined");
+        $code[] = $context->createControlNode("set $varName = {" . ParserHelper::implodeKeyedDouble(",", $attributes) . " }");
+        $code[] = $context->createControlNode("else");
+        $code[] = $context->createControlNode("set $varName = $varName|merge({" . ParserHelper::implodeKeyedDouble(",", $attributes) . "})");
+        $code[] = $context->createControlNode("endif");
+
+        foreach ($expressions as $attrExpr) {
+            $code[] = $context->createControlNode("if {$attrExpr['test']}");
+            $code[] = $context->createControlNode("set {$varName} = {$varName}|merge({ '{$attrExpr['name']}':{$varName}.{$attrExpr['name']}|merge([{$attrExpr['expr']}]) })");
+            $code[] = $context->createControlNode("endif");
+        }
+
+        $node->setAttribute("__attr__", $varName);
+
+        $ref = $node;
+        foreach (array_reverse($code) as $line) {
+            $node->parentNode->insertBefore($line, $ref);
+            $ref = $line;
+        }
+
+        $node->removeAttributeNode($att);
     }
 }

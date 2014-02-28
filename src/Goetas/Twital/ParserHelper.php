@@ -45,6 +45,15 @@ class ParserHelper
         return $parts;
     }
 
+    public static function implodeKeyedDouble($glue, array $array)
+    {
+        $a = array();
+        foreach ($array as $key => $val) {
+            $a[] = "$key:[".implode(",", $val)."]";
+        }
+
+        return implode($glue, $a);
+    }
     public static function implodeKeyed($glue, array $array)
     {
         $a = array();

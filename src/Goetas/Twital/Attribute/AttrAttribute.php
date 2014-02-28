@@ -12,7 +12,7 @@ class AttrAttribute implements Attribute
 
     public static function getVarname(\DOMNode $node)
     {
-        return "__a"; // . md5(spl_object_hash($node));
+        return "__a9"; // . md5(spl_object_hash($node));
     }
 
     public function visit(DOMAttr $att, CompilationContext $context)
@@ -51,7 +51,7 @@ class AttrAttribute implements Attribute
 
         foreach ($expressions as $attrExpr) {
             $code[] = $context->createControlNode("if {$attrExpr['test']}");
-            $code[] = $context->createControlNode($this->getSetExpression($varName, $attrExpr['name'], $attrExpr['expr']));
+            $code[] = $context->createControlNode("set {$varName} = {$varName}|merge({ '{$attrExpr['name']}':[{$attrExpr['expr']}] })");
             $code[] = $context->createControlNode("endif");
         }
 
@@ -62,13 +62,7 @@ class AttrAttribute implements Attribute
             $node->parentNode->insertBefore($line, $ref);
             $ref = $line;
         }
-
         $node->removeAttributeNode($att);
-    }
-
-    protected function getSetExpression($varName, $attName, $expr)
-    {
-        return "set {$varName} = {$varName}|merge({ '$attName':[{$expr}] })";
     }
 
     public static function splitAttrExpression($str)
