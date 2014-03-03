@@ -7,9 +7,8 @@ use Goetas\Twital\CompilationContext;
 use Goetas\Twital\DOMHelper;
 use Goetas\Twital\TwitalLoader;
 
-class ExtendsNode implements Node
+class EmbedNode implements Node
 {
-
     public function visit(\DOMElement $node, CompilationContext $context)
     {
         if (! $node->hasAttribute("from") && ! $node->hasAttributeNS(TwitalLoader::NS,"from")) {
@@ -25,7 +24,12 @@ class ExtendsNode implements Node
         $filename = $node->hasAttributeNS(TwitalLoader::NS, "from") ? $node->getAttributens(CompilationContext::NS, "from") : ("'" . $node->getAttribute("from") . "'");
         $context->compileChilds($node);
 
-        $ext = $context->createControlNode("extends {$filename}");
+        $code = "embed {$filename}";
+        $code .= $node->getAttribute("ignore-missing") ? " ignore missing" : "";
+        $code .= $node->hasAttribute("with") ? (" with " . $node->getAttribute("with")) : "";
+        $code .= $node->getAttribute("only") == "true" ? " only " : "";
+
+        $ext = $context->createControlNode($code);
 
         $set = iterator_to_array($node->childNodes);
         array_unshift($set, $ext);

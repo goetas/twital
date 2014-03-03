@@ -45,7 +45,7 @@ class CoreExtension extends AbstractExtension
         $nodes[TwitalLoader::NS]['import'] = new Node\ImportNode();
         $nodes[TwitalLoader::NS]['include'] = new Node\IncludeNode();
         $nodes[TwitalLoader::NS]['omit'] = new Node\OmitNode();
-        //$nodes[TwitalLoader::NS]['embed'] = new Node\IncludeNode();
+        $nodes[TwitalLoader::NS]['embed'] = new Node\EmbedNode();
         return $nodes;
     }
 
