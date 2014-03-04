@@ -17,13 +17,14 @@ class TwitalLoader implements \Twig_LoaderInterface
 
     /**
      *
-     * @var \Twig_LoaderInterface
+     * @var Compiler
      */
     protected $compiler;
 
-    public function __construct(\Twig_LoaderInterface $loader, array $namePatterns = array())
+    public function __construct(\Twig_LoaderInterface $loader, Compiler $compiler)
     {
         $this->loader = $loader;
+        $this->compiler = $compiler;
         $this->namePatterns = $namePatterns;
 
         if (! count($this->namePatterns)) {
@@ -53,7 +54,7 @@ class TwitalLoader implements \Twig_LoaderInterface
 
     public function getCompiler()
     {
-        return $this->compiler ?  : new Twital();
+        return $this->compiler;
     }
 
     public function getNamePatterns()

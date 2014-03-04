@@ -4,7 +4,7 @@ namespace Goetas\Twital;
 use Goetas\Twital\Extension\CoreExtension;
 use Goetas\Twital\Extension\I18nExtension;
 use Goetas\Twital\Extension\HTML5Extension;
-class Twital
+class Twital implements Compiler
 {
 
     const NS = 'urn:goetas:twital';
@@ -16,26 +16,33 @@ class Twital
      *
      * @var array
      */
-    protected $attributes = array();
+    private $attributes = array();
 
     /**
      *
      * @var array
-    */
-    protected $nodes = array();
+     */
+    private $nodes = array();
+
+    /**
+     *
+     * @var array
+     */
+    private $sourceAdapters = array();
+    /**
+     *
+     * @var array
+     */
+    private $postFilters = array();
+
+    /**
+     *
+     * @var array
+     */
+    private $extensions = array();
+
 
     protected $defaultSourceAdapter;
-    /**
-     *
-     * @var array
-    */
-    protected $sourceAdapters = array();
-
-    /**
-     *
-     * @var array
-    */
-    protected $postFilter = array();
 
     /**
      *
@@ -43,16 +50,15 @@ class Twital
     */
     protected $customNamespaces = array();
 
-
-
-    public function __construct($defaultAdapter = 'xml')
+    public function __construct($defaultAdapter = 'xml', array $options = array())
     {
-
         $this->defaultAdapter = $defaultAdapter;
+        $this->options = $options;
 
         $this->addExtension(new CoreExtension());
-        $this->addExtension(new I18nExtension());
         $this->addExtension(new HTML5Extension());
+
+        //$this->addExtension(new I18nExtension());
     }
     public function getNodes()
     {
@@ -70,15 +76,21 @@ class Twital
             foreach ($this->getExtensions() as $extension) {
                 $this->attributes = array_merge_recursive($this->attributes, $extension->getAttributes());
                 $this->nodes = array_merge_recursive($this->nodes, $extension->getNodes());
-                $this->postFilter = array_merge($this->postFilter, $extension->getPostFilters());
+                $this->postFilters = array_merge($this->postFilters, $extension->getPostFilters());
                 $this->sourceAdapters = array_merge($this->sourceAdapters, $extension->getSourceAdapters());
                 $this->customNamespaces = array_merge($this->customNamespaces, $extension->getPrefixes());
             }
             $this->extensionsInitialized = true;
         }
     }
-
-    protected function compile($source, $name = null)
+    protected function applyPostFilters($source)
+    {
+        foreach ($this->getPostFilters() as $filter) {
+            $source = call_user_func($filter, $source);
+        }
+        return $source;
+    }
+    public function compile($source, $name = null)
     {
         $this->initExtensions();
 
@@ -89,13 +101,11 @@ class Twital
 
         $metadata = $adapter->collectMetadata($xml, $source);
 
-        $context = new CompilationContext($xml, $this);
+        $context = new CompilationContext($xml, $this, isset($this->options['lexerOptions'])?$this->options['lexerOptions']:array());
         $context->compileChilds($xml);
 
         $source = $adapter->dump($xml, $metadata);
-        foreach ($this->postFilter as $filter) {
-            $source = call_user_func($filter, $source);
-        }
+        $source = $this->applyPostFilters();
         return $source;
     }
 
@@ -150,5 +160,15 @@ class Twital
         $this->defaultSourceAdapter = $defaultSourceAdapter;
         return $this;
     }
+
+	public function getSourceAdapters() {
+	return $this->sourceAdapters;
+}
+
+	public function getPostFilters() {
+	return $this->postFilters;
+}
+
+
 
 }
