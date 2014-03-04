@@ -16,16 +16,11 @@ class CompilationContext
      */
     protected $doc;
 
-    /**
-     *
-     * @var Compiler
-     */
-    protected $compiler;
 
-    public function __construct(\DOMDocument $doc, TwitalLoader $compiler, array $nodes, array $attributes, array $options = array())
+
+    public function __construct(\DOMDocument $doc, array $nodes, array $attributes, array $options = array())
     {
         $this->doc = $doc;
-        $this->compiler = compiler;
         $this->attributes = $attributes;
         $this->nodes = $nodes;
         $this->lexerOptions = array_merge(array(
@@ -51,9 +46,9 @@ class CompilationContext
      * @param string $content
      * @return DOMCDATASection
      */
-    public function cratePrintNode($content)
+    public function createPrintNode($content)
     {
-        $printPart = $this->getLexerOption('getLexerOption');
+        $printPart = $this->getLexerOption('tag_variable');
         return $this->doc->createCDATASection("__[__{$printPart[0]} {$content} {$printPart[1]}__]__");
     }
 
@@ -83,7 +78,7 @@ class CompilationContext
         } elseif (isset($this->nodes[$node->namespaceURI]['__base__'])) {
             $this->nodes[$node->namespaceURI]['__base__']->visit($node, $this);
         } else {
-            if ($node->namespaceURI === TwitalLoader::NS) {
+            if ($node->namespaceURI === Twital::NS) {
                 throw new Exception("Nodo sconosciuto {$node->namespaceURI}#{$node->localName}");
             }
             if ($this->compileAttributes($node)) {

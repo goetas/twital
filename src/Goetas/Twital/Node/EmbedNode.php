@@ -5,13 +5,13 @@ use Goetas\Twital\Node;
 use Exception;
 use Goetas\Twital\CompilationContext;
 use Goetas\Twital\DOMHelper;
-use Goetas\Twital\TwitalLoader;
+use Goetas\Twital\Twital;
 
 class EmbedNode implements Node
 {
     public function visit(\DOMElement $node, CompilationContext $context)
     {
-        if (! $node->hasAttribute("from") && ! $node->hasAttributeNS(TwitalLoader::NS,"from")) {
+        if (! $node->hasAttribute("from") && ! $node->hasAttributeNS(Twital::NS,"from")) {
             throw new Exception("name or name-exp attribute is required");
         }
 
@@ -21,7 +21,7 @@ class EmbedNode implements Node
                 $child->parentNode->removeChild($child);
             }
         }
-        $filename = $node->hasAttributeNS(TwitalLoader::NS, "from") ? $node->getAttributens(CompilationContext::NS, "from") : ("'" . $node->getAttribute("from") . "'");
+        $filename = $node->hasAttributeNS(Twital::NS, "from") ? $node->getAttributens(CompilationContext::NS, "from") : ("'" . $node->getAttribute("from") . "'");
         $context->compileChilds($node);
 
         $code = "embed {$filename}";

@@ -1,24 +1,37 @@
 {
-  "name" : "goetas/twital",
-  "description" : "Twig templating engine",
-  "require" : {
-    "masterminds/html5" : "~1.0",
-    "twig/twig" : "~1.10",
-    "php" : ">=5.3.3"
-  },
-  "require-dev" : {
-    "phpunit/phpunit" : "3.7.*"
-  },
-  "authors" : [ {
-    "name" : "Asmir Mustafic",
-    "email" : "goetas@lignano.it"
-  } ],
-  "keywords" : [ "php", "xml", "templating", "twig" ],
-  "extra" : {
-    "branch-alias" : {
-      "dev-master" : "1.0-dev"
-    }
-  },
-  "license" : [ "MIT" ],
-  "homepage" : "https://github.com/goetas/twital"
+	"name" : "goetas/twital",
+	"description" : "Twig templating engine",
+	"authors" : [{
+			"name" : "Asmir Mustafic",
+			"email" : "goetas@lignano.it"
+		}
+	],
+	"keywords" : [
+		"php",
+		"xml",
+		"templating",
+		"twig"
+	],
+	"homepage" : "https://github.com/goetas/twital",
+	"license" : [
+		"MIT"
+	],
+	"require" : {
+		"masterminds/html5" : "~1.0",
+		"twig/twig" : "~1.10",
+		"php" : ">=5.3.3"
+	},
+	"require-dev" : {
+		"phpunit/phpunit" : "3.7.*"
+	},
+	"autoload" : {
+		"psr-0" : {
+			"Goetas\\Twital" : "src/"
+		}
+	},
+	"extra" : {
+		"branch-alias" : {
+			"dev-master" : "1.0-dev"
+		}
+	}
 }

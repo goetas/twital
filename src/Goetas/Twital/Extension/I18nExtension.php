@@ -3,15 +3,15 @@ namespace Goetas\Twital\Extension;
 
 use Goetas\Twital\Attribute;
 use Goetas\Twital\Compiler;
-use Goetas\Twital\TwitalLoader;
+use Goetas\Twital\Twital;
 
 class I18nExtension extends AbstractExtension
 {
     public function getAttributes()
     {
         $attributes = array();
-        $attributes[TwitalLoader::NS]['trans'] = new Attribute\TranslateAttribute();
-        $attributes[TwitalLoader::NS]['trans-n'] = new Attribute\TranslateNAttribute();
+        $attributes[Twital::NS]['trans'] = new Attribute\TranslateAttribute();
+        $attributes[Twital::NS]['trans-n'] = new Attribute\TranslateNAttribute();
         return $attributes;
     }
 }
