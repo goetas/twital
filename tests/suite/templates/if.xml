@@ -1,9 +1,0 @@
-<div xmlns:t="Twital">
-	<span 
-		t:attr="cont?clss='asmir'"
-		t:attr-append="cont?clss='asmir'"
-		t:content="xxx|raw"
-		>
-		
-	</span>
-</div>

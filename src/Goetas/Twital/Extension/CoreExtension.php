@@ -64,7 +64,7 @@ class CoreExtension extends AbstractExtension
             {
                 return preg_replace_callback('/ __attr__="(__a[0-9a-f]+)"/', function ($mch)
                 {
-                    return '{% for ____ak,____av in ' . $mch[1] . ' if ____av|length>0 %} {{____ak}}="{{ ____av|join(\'\') }}"{% endfor %}';
+                    return '{% for ____ak,____av in ' . $mch[1] . ' if ____av|length>0 %} {{____ak | raw}}="{{ ____av|join(\'\') }}"{% endfor %}';
                 }, $string);
             }
         );

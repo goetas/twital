@@ -3,6 +3,7 @@ namespace Goetas\Twital\Attribute;
 
 use Goetas\Twital\CompilationContext;
 use Goetas\Twital\ParserHelper;
+
 class AttrAppendAttribute extends AttrAttribute
 {
 
@@ -15,7 +16,7 @@ class AttrAppendAttribute extends AttrAttribute
         foreach ($expressions as $k => $expression) {
             $expressions[$k] = $attrExpr = self::splitAttrExpression($expression);
             $attNode = null;
-            if(!isset($attributes[$attrExpr['name']])){
+            if (! isset($attributes[$attrExpr['name']])) {
                 $attributes[$attrExpr['name']] = array();
             }
             if ($node->hasAttribute($attrExpr['name'])) {
@@ -40,18 +41,12 @@ class AttrAppendAttribute extends AttrAttribute
 
         foreach ($expressions as $attrExpr) {
             $code[] = $context->createControlNode("if {$attrExpr['test']}");
-            $code[] = $context->createControlNode("set {$varName} = {$varName}|merge({ '{$attrExpr['name']}':{$varName}.{$attrExpr['name']}|merge([{$attrExpr['expr']}]) })");
+            $code[] = $context->createControlNode(
+                "set {$varName} = {$varName}|merge({ '{$attrExpr['name']}':{$varName}.{$attrExpr['name']}|merge([{$attrExpr['expr']}]) })");
             $code[] = $context->createControlNode("endif");
         }
 
-        $node->setAttribute("__attr__", $varName);
-
-        $ref = $node;
-        foreach (array_reverse($code) as $line) {
-            $node->parentNode->insertBefore($line, $ref);
-            $ref = $line;
-        }
-
+        $this->addSpecialAttr($node, $varName, $code);
         $node->removeAttributeNode($att);
     }
 }

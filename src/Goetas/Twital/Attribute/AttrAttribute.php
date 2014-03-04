@@ -12,7 +12,7 @@ class AttrAttribute implements Attribute
 
     public static function getVarname(\DOMNode $node)
     {
-        return "__a9"; // . md5(spl_object_hash($node));
+        return "__a9" . strtr(spl_object_hash($node), "-","_");
     }
 
     public function visit(DOMAttr $att, CompilationContext $context)
@@ -40,9 +40,8 @@ class AttrAttribute implements Attribute
             }
         }
 
-        $code = array();
-
         $varName = self::getVarname($node);
+        $code = array();
         $code[] = $context->createControlNode("if $varName is not defined");
         $code[] = $context->createControlNode("set $varName = {" . ParserHelper::implodeKeyed(",", $attributes) . " }");
         $code[] = $context->createControlNode("else");
@@ -55,6 +54,12 @@ class AttrAttribute implements Attribute
             $code[] = $context->createControlNode("endif");
         }
 
+        $this->addSpecialAttr($node, $varName, $code);
+        $node->removeAttributeNode($att);
+    }
+
+    protected function addSpecialAttr($node, $varName, array $code)
+    {
         $node->setAttribute("__attr__", $varName);
 
         $ref = $node;
@@ -62,7 +67,6 @@ class AttrAttribute implements Attribute
             $node->parentNode->insertBefore($line, $ref);
             $ref = $line;
         }
-        $node->removeAttributeNode($att);
     }
 
     public static function splitAttrExpression($str)

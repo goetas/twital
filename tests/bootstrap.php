@@ -1,36 +1,21 @@
 <?php
 
 
-use Goetas\Twital\TwitalLoader;
-//psr-0 autoloader
-foreach(array(
-		"Goetas\\Twital\\"=>__DIR__."/../src/",
+error_reporting(E_ALL | E_STRICT);
 
-		//"goetas\\atal\\"=>__DIR__."/../src/",
-		) as $ns => $dir){
-
-	spl_autoload_register ( function($cname)use($ns, $dir){
-		if(strpos($cname,$ns)===0){
-			$path = $dir.strtr($cname, "\\","/").".php";
-			require_once ($path);
-		}
-	});
-}
-//psr-0 autoloader
-foreach(array(
-		"Twig_"=>(__DIR__."/../twig/lib/"),
-
-		//"goetas\\atal\\"=>__DIR__."/../src/",
-) as $ns => $dir){
-
-	spl_autoload_register ( function($cname)use($ns, $dir){
-		if(strpos($cname,$ns)===0){
-			$path = $dir.strtr($cname, "\\_","//").".php";
-			require_once ($path);
-		}
-	});
+if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
+    // dependencies were installed via composer - this is the main project
+    $classLoader = require __DIR__ . '/../vendor/autoload.php';
+} elseif (file_exists(__DIR__ . '/../../../../../autoload.php')) {
+    // installed as a dependency in `vendor`
+    $classLoader = require __DIR__ . '/../../../../../autoload.php';
+} else {
+    print('Can\'t find autoload.php. Did you install dependencies via composer?');
 }
 
+
+
+/*
 $loader = new Twig_Loader_Filesystem(array(__DIR__."/suite/templates"));
 $twitalLoader = new TwitalLoader($loader);
 
@@ -40,3 +25,4 @@ echo $twig->display("1.twital.xml");
 echo "\n\n";
 //echo $tal->compile(__DIR__."/suite/templates/foreach.xml");
 
+*/
