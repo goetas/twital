@@ -1,4 +1,0 @@
-<div xmlns:t="Twital">
-	<t:include name="input.html" ignore-missing="true"/>
-	<t:include name="input.html" with="forms"/>
-</div>

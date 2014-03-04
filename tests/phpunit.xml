@@ -7,21 +7,21 @@
          convertNoticesToExceptions="false"
          convertWarningsToExceptions="true"
          forceCoversAnnotation="false"
-         
+
          processIsolation="false"
          stopOnError="false"
          stopOnFailure="false"
          stopOnIncomplete="false"
          stopOnSkipped="false"
-         
+
          testSuiteLoaderClass="PHPUnit_Runner_StandardTestSuiteLoader"
          strict="false"
          verbose="false">
     <testsuites>
         <testsuite name="Twital">
-            <directory>./suite</directory>
+            <directory>./</directory>
         </testsuite>
     </testsuites>
-  
+
 </phpunit>
 

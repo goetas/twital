@@ -1,3 +1,0 @@
-<div xmlns="html">
-	<span  bbb="sss" ccc="ddd" t:attr="true ? bbb='ccc'">xx</span>
-</div>

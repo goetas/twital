@@ -1,0 +1,10 @@
+<div xmlns="html">
+	<span lang="it"  t:attr-append="
+	true==1 ? lang='de',
+	true ? bbb='xxxx',
+	 ddd='aaa'|upper
+	" t:translate="">xx</span>
+
+
+
+</div>
