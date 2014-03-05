@@ -143,7 +143,12 @@ class TwitalLoader implements \Twig_LoaderInterface
         $source = $this->loader->getSource($name);
 
         if ($this->shouldCompile($name)) {
-            $source = $this->getCompiler()->compile($source, $name);
+
+            $loader = $this->getLoader($name); // html5
+
+            $source = $this->getCompiler()->compile($loader, $source);
+
+
         }
 
         return $source;

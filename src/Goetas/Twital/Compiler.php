@@ -8,5 +8,4 @@ interface Compiler
     public function getNodes();
     public function getAttributes();
     public function getSourceAdapters();
-    public function getPostFilters();
 }

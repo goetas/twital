@@ -4,11 +4,11 @@ namespace Goetas\Twital;
 use Goetas\Twital\Extension\CoreExtension;
 use Goetas\Twital\Extension\I18nExtension;
 use Goetas\Twital\Extension\HTML5Extension;
+
 class Twital implements Compiler
 {
 
     const NS = 'urn:goetas:twital';
-
 
     protected $extensionsInitialized = false;
 
@@ -29,11 +29,6 @@ class Twital implements Compiler
      * @var array
      */
     private $sourceAdapters = array();
-    /**
-     *
-     * @var array
-     */
-    private $postFilters = array();
 
     /**
      *
@@ -41,82 +36,117 @@ class Twital implements Compiler
      */
     private $extensions = array();
 
-
     protected $defaultSourceAdapter;
 
-    /**
-     *
-     * @var array
-    */
-    protected $customNamespaces = array();
 
-    public function __construct($defaultAdapter = 'xml', array $options = array())
+    public function __construct($defaultAdapter = 'xml', array $options = array(), $addDefaultExtensions = true)
     {
         $this->defaultAdapter = $defaultAdapter;
         $this->options = $options;
 
         $this->addExtension(new CoreExtension());
-        $this->addExtension(new HTML5Extension());
 
-        //$this->addExtension(new I18nExtension());
+        if ($addDefaultExtensions){
+            $this->addExtension(new HTML5Extension());
+        }
+        // $this->addExtension(new I18nExtension());
     }
+
     public function getNodes()
     {
         $this->initExtensions();
-    	return $this->nodes;
+        return $this->nodes;
     }
+
     public function getAttributes()
     {
         $this->initExtensions();
         return $this->attributes;
     }
+
     protected function initExtensions()
     {
-        if (!$this->extensionsInitialized) {
+        if (! $this->extensionsInitialized) {
             foreach ($this->getExtensions() as $extension) {
                 $this->attributes = array_merge_recursive($this->attributes, $extension->getAttributes());
                 $this->nodes = array_merge_recursive($this->nodes, $extension->getNodes());
-                $this->postFilters = array_merge($this->postFilters, $extension->getPostFilters());
-                $this->sourceAdapters = array_merge($this->sourceAdapters, $extension->getSourceAdapters());
-                $this->customNamespaces = array_merge($this->customNamespaces, $extension->getPrefixes());
             }
             $this->extensionsInitialized = true;
         }
     }
-    protected function applyPostFilters($source)
-    {
-        foreach ($this->getPostFilters() as $filter) {
-            $source = call_user_func($filter, $source);
-        }
-        return $source;
-    }
+
     public function compile($source, $name = null)
     {
         $this->initExtensions();
 
         $adapter = $this->getSourceAdapter($name);
 
-        $xml = $adapter->load($source);
-        $this->checkDocumentNamespaces($xml);
+        $template = $adapter->load($source);
 
-        $metadata = $adapter->collectMetadata($xml, $source);
+        $dom = $template->getTemplate();
 
-        $context = new CompilationContext($xml, $this, isset($this->options['lexerOptions'])?$this->options['lexerOptions']:array());
-        $context->compileChilds($xml);
+        $this->compileChilds($dom, new CompilationContext($dom, $this, isset($this->options['lexer']) ? $this->options['lexer'] : array()));
 
-        $source = $adapter->dump($xml, $metadata);
-        $source = $this->applyPostFilters();
+        $source = $adapter->dump($template);
+
         return $source;
     }
 
-    protected function checkDocumentNamespaces(\DOMDocument $dom)
+    public function compileElement(\DOMElement $node, CompilationContext $context)
     {
-        foreach (iterator_to_array($dom->childNodes) as $child) {
-            if ($child instanceof \DOMElement) {
-                NamespaceAdapter::checkNamespaces($child, $this->customNamespaces);
+        $nodes = $this->getNodes();
+        if (isset($nodes[$node->namespaceURI][$node->localName])) {
+            $nodes[$node->namespaceURI][$node->localName]->visit($node, $context);
+        } elseif (isset($nodes[$node->namespaceURI]['__base__'])) {
+            $nodes[$node->namespaceURI]['__base__']->visit($node, $context);
+        } else {
+            if ($node->namespaceURI === Twital::NS) {
+                throw new Exception("Can't handle the {$node->namespaceURI}#{$node->localName} node at line ".$node->getLineNo());
+            }
+            if ($this->compileAttributes($node, $context)) {
+                $this->compileChilds($node, $context);
             }
         }
     }
+
+    public function compileAttributes(\DOMNode $node, CompilationContext $context)
+    {
+        $node->attributes = $this->compiler->getAttributes();
+        $continueNode = true;
+        foreach (iterator_to_array($node->attributes) as $attr) {
+            if (! $attr->ownerElement) {
+                continue;
+            } elseif (isset($attributes[$attr->namespaceURI][$attr->localName])) {
+                $attPlugin = $attributes[$attr->namespaceURI][$attr->localName];
+            } elseif (isset($attributes[$attr->namespaceURI]['__base__'])) {
+                $attPlugin = $attributes[$attr->namespaceURI]['__base__'];
+            } elseif ($attr->namespaceURI === Twital::NS) {
+                throw new Exception("Can't handle the {$attr->namespaceURI}#{$attr->localName} attribute on {$node->namespaceURI}#{$node->localName} node at line ".$attr->getLineNo());
+            } else {
+                continue;
+            }
+
+            $return = $attPlugin->visit($attr, $context);
+            if ($return !== null) {
+                $continueNode = $continueNode && ($return & Attribute::STOP_NODE);
+                if ($return & Attribute::STOP_ATTRIBUTE) {
+                    break;
+                }
+            }
+        }
+
+        return $continueNode;
+    }
+
+    public function compileChilds(\DOMNode $node, CompilationContext $context)
+    {
+        foreach (iterator_to_array($node->childNodes) as $child) {
+            if ($child instanceof \DOMElement) {
+                $this->compileElement($child, $context);
+            }
+        }
+    }
+
 
     /**
      *
@@ -126,14 +156,37 @@ class Twital implements Compiler
      */
     protected function getSourceAdapter($name)
     {
-        $name = $this->getDefaultSourceAdapter();
-        if (! isset($this->sourceAdapters[$name])) {
-            throw new Exception("Can't find a source adapter called {$name}");
-        }
+        $adapter = $this->getRootSourceAdapter();
 
-        return $this->sourceAdapters[$name];
+        foreach ($this->getExtensions() as $extension) {
+            if ($newAdaper = $extension->getSourceAdapter($name)){
+                $adapter = $newAdaper;
+            }
+        }
+        return $adapter;
     }
 
+    /**
+     *
+     * @param string $name
+     * @throws Exception
+     * @return SourceAdapter
+     */
+    protected function getRootSourceAdapter($name)
+    {
+        $adapter = null;
+        foreach ($this->getExtensions() as $extension) {
+            if ($newAdaper = $extension->getRootSourceAdapter($name)){
+                $adapter = $newAdaper;
+            }
+        }
+
+        if (! $adapter ) {
+            throw new Exception("Can't find a source adapter for a file called {$name}. Do you have configured it well?");
+        }
+
+        return $adapter;
+    }
 
     public function addExtension(Extension $extension)
     {
@@ -161,14 +214,9 @@ class Twital implements Compiler
         return $this;
     }
 
-	public function getSourceAdapters() {
-	return $this->sourceAdapters;
-}
-
-	public function getPostFilters() {
-	return $this->postFilters;
-}
-
-
+    public function getSourceAdapters()
+    {
+        return $this->sourceAdapters;
+    }
 
 }
