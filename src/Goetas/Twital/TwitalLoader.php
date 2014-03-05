@@ -39,7 +39,7 @@ class TwitalLoader implements \Twig_LoaderInterface
      * Creates a new Twital loader.
      * @param \Twig_LoaderInterface $loader
      * @param Compiler $compiler
-     * @param array|null $namePatterns If NULL, some standard rules will be used (`*.twital.*` and `*.twital`).
+     * @param array $namePatterns If NULL, some standard rules will be used (`*.twital.*` and `*.twital`).
      */
     public function __construct(\Twig_LoaderInterface $loader, Compiler $compiler, $namePatterns = null)
     {

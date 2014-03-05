@@ -129,7 +129,7 @@ class Twital implements Compiler
      */
     protected function getSourceAdapter($name)
     {
-        $adapter = $this->getRootSourceAdapter();
+        $adapter = $this->getRootSourceAdapter($name);
 
 
 
