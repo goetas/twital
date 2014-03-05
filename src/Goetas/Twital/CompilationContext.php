@@ -86,7 +86,7 @@ class CompilationContext
     public function compile(\DOMDocument $doc)
     {
         $this->document = $doc;
-        $this->compileChilds($doc, $this);
+        $this->compileChilds($doc);
     }
 
     public function compileElement(\DOMElement $node)
