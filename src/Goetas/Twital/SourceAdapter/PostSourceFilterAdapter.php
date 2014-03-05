@@ -6,7 +6,10 @@ use Goetas\Twital\Template;
 
 class PostSourceFilterAdapter extends AbstractWrapAdapter
 {
-
+    /**
+     *
+     * @var array
+     */
     protected $postFilters = array();
 
     public function __construct(SourceAdapter $adapter, array $postFilters)
@@ -24,7 +27,7 @@ class PostSourceFilterAdapter extends AbstractWrapAdapter
 
     protected function applyPostFilters($source)
     {
-        foreach ($this->getPostFilters() as $filter) {
+        foreach ($this->postFilters as $filter) {
             $source = call_user_func($filter, $source);
         }
         return $source;

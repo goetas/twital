@@ -5,6 +5,10 @@ use Goetas\Twital\SourceAdapter;
 
 class PreSourceFilterAdapter extends AbstractWrapAdapter
 {
+    /**
+     *
+     * @var array
+     */
     protected $preFilters = array();
 
     public function __construct(SourceAdapter $adapter, array $preFilters)
@@ -20,7 +24,7 @@ class PreSourceFilterAdapter extends AbstractWrapAdapter
     }
     protected function applyPostFilters($source)
     {
-        foreach ($this->getPostFilters() as $filter) {
+        foreach ($this->preFilters as $filter) {
             $source = call_user_func($filter, $source);
         }
         return $source;
