@@ -10,7 +10,7 @@ class NamespaceSourceAdapter extends AbstractWrapAdapter
 
     /**
      *
-     * @var SourceAdapter
+     * @var array
      */
     protected $customNamespaces;
 
