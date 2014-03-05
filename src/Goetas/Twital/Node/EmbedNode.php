@@ -12,12 +12,12 @@ class EmbedNode implements Node
 
     public function visit(\DOMElement $node, CompilationContext $context)
     {
-        if ($node->hasAttribute("from-")) {
+        if ($node->hasAttribute("from-exp")) {
             $filename = $node->getAttribute("from-exp");
         } elseif ($node->hasAttribute("from")) {
             $filename = "'" . $node->getAttribute("from") . "'";
         } else {
-            throw new Exception("name or name-exp attribute is required");
+            throw new Exception("The 'from' or 'from-exp' attribute is required");
         }
 
         // remove any non-element node

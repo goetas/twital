@@ -10,16 +10,38 @@ class IncludeNode implements Node
 
     public function visit(\DOMElement $node, CompilationContext $context)
     {
-        if (! $node->hasAttribute("name") && ! $node->hasAttribute("name-exp")) {
-            throw new Exception("Name or name-exp attribute is required");
+        if ($node->hasAttribute("from-exp")) {
+            $filename = $node->getAttribute("from-exp");
+        } elseif ($node->hasAttribute("from")) {
+            $filename = "'" . $node->getAttribute("from") . "'";
+        } else {
+            throw new Exception("The 'from' or 'from-exp' attribute is required");
         }
 
-        $code = "include ";
-        $code .= ($node->hasAttribute("name-exp") ? $node->getAttribute("name-exp") : ("'" . $node->getAttribute("name") . "'"));
-        $code .= $node->getAttribute("ignore-missing") ? " ignore missing" : "";
-        $code .= $node->hasAttribute("with") ? (" with " . $node->getAttribute("with")) : "";
-        $code .= $node->getAttribute("sandboxed") == "true" ? " sandboxed = true " : "";
-        $code .= "";
+        // remove any non-element node
+        foreach (iterator_to_array($node->childNodes) as $child) {
+            if (! ($child instanceof \DOMElement)) {
+                $child->parentNode->removeChild($child);
+            }
+        }
+
+        $context->compileChilds($node);
+
+        $code = "include {$filename}";
+
+        if ($node->hasAttribute("ignore-missing") && $node->hasAttribute("ignore-missing") !== false) {
+            $code .= " ignore missing";
+        }
+        if ($node->hasAttribute("with")) {
+            $code .= " with " . $node->getAttribute("with");
+        }
+        if ($node->hasAttribute("only") && $node->getAttribute("only") !== "false") {
+            $code .= " ignore missing";
+        }
+        if ($node->hasAttribute("sandboxed") && $node->getAttribute("sandboxed") !== "false") {
+            $code .= " sandboxed = true";
+        }
+
         $pi = $context->createControlNode($code);
 
         $node->parentNode->replaceChild($pi, $node);
