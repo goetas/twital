@@ -144,9 +144,9 @@ class TwitalLoader implements \Twig_LoaderInterface
 
         if ($this->shouldCompile($name)) {
 
-            $loader = $this->getLoader($name); // html5
+            //$loader = $this->getLoader($name); // html5
 
-            $source = $this->getCompiler()->compile($loader, $source);
+            $source = $this->getCompiler()->compile($source);
 
 
         }
