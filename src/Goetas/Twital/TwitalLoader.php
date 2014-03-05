@@ -7,7 +7,7 @@ use Goetas\Twital\Extension\HTML5Extension;
 
 /**
  * This is a Twital Loader.
- * Compile a Twital template into Twig template.
+ * Compiles a Twital template into a Twig template.
  *
  * @author Asmir Mustafic <goetas@gmail.com>
  */
