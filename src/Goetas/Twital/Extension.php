@@ -3,7 +3,6 @@ namespace Goetas\Twital;
 
 interface Extension
 {
-    public function getPrefixes();
     /**
      * Array of objects implementing Node interface, responsible of DOM node handling.
      * The returned array must be a "two level array", first level as namespace and second level as attribute name.
@@ -35,12 +34,6 @@ interface Extension
      * @return array
      */
     public function getNodes();
-
-    /**
-     * Array of callbacks that runs after DOM compilation process.
-     * @return array
-     */
-    public function getPostFilters();
 
     /**
      * Array of objects implementing {DOMLoader} interface, responsible of DOM loading from Twital ource code.
