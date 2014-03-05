@@ -35,14 +35,19 @@ class TwitalLoader implements \Twig_LoaderInterface
      * @var Compiler
      */
     protected $compiler;
-
-    public function __construct(\Twig_LoaderInterface $loader, Compiler $compiler, array $namePatterns = array())
+    /**
+     * Creates a new Twital loader.
+     * @param \Twig_LoaderInterface $loader
+     * @param Compiler $compiler
+     * @param array|null $namePatterns If NULL, some standard rules will be used (`*.twital.*` and `*.twital`).
+     */
+    public function __construct(\Twig_LoaderInterface $loader, Compiler $compiler, $namePatterns = null)
     {
         $this->loader = $loader;
         $this->compiler = $compiler;
         $this->namePatterns = $namePatterns;
 
-        if (! count($this->namePatterns)) {
+        if (is_null($this->namePatterns)) {
             $this->namePatterns = array(
                 '/\.twital\.[a-z]+$/i',
                 '/\.twital$/i'
