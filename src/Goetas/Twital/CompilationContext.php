@@ -91,7 +91,7 @@ class CompilationContext
 
     public function compileElement(\DOMElement $node)
     {
-        $nodes = $this->getNodes();
+        $nodes = $this->compiler->getNodes();
         if (isset($nodes[$node->namespaceURI][$node->localName])) {
             $nodes[$node->namespaceURI][$node->localName]->visit($node, $this);
         } elseif (isset($nodes[$node->namespaceURI]['__base__'])) {
