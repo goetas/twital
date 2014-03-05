@@ -38,7 +38,6 @@ class Twital implements Compiler
 
     protected $defaultSourceAdapter;
 
-
     public function __construct($defaultAdapter = 'xml', array $options = array(), $addDefaultExtensions = true)
     {
         $this->defaultAdapter = $defaultAdapter;
@@ -46,7 +45,7 @@ class Twital implements Compiler
 
         $this->addExtension(new CoreExtension());
 
-        if ($addDefaultExtensions){
+        if ($addDefaultExtensions) {
             $this->addExtension(new HTML5Extension());
         }
         // $this->addExtension(new I18nExtension());
@@ -83,11 +82,9 @@ class Twital implements Compiler
 
         $template = $adapter->load($source);
 
-        $dom = $template->getTemplate();
-
         $context = new CompilationContext($this, isset($this->options['lexer']) ? $this->options['lexer'] : array());
 
-        $context->compile($dom);
+        $context->compile($template->getTemplate());
 
         $source = $adapter->dump($template);
 
@@ -105,7 +102,7 @@ class Twital implements Compiler
         $adapter = $this->getRootSourceAdapter();
 
         foreach ($this->getExtensions() as $extension) {
-            if ($newAdaper = $extension->getSourceAdapter($name)){
+            if ($newAdaper = $extension->getSourceAdapter($name)) {
                 $adapter = $newAdaper;
             }
         }
@@ -122,12 +119,12 @@ class Twital implements Compiler
     {
         $adapter = null;
         foreach ($this->getExtensions() as $extension) {
-            if ($newAdaper = $extension->getRootSourceAdapter($name)){
+            if ($newAdaper = $extension->getRootSourceAdapter($name)) {
                 $adapter = $newAdaper;
             }
         }
 
-        if (! $adapter ) {
+        if (! $adapter) {
             throw new Exception("Can't find a source adapter for a file called {$name}. Do you have configured it well?");
         }
 
@@ -164,5 +161,4 @@ class Twital implements Compiler
     {
         return $this->sourceAdapters;
     }
-
 }
