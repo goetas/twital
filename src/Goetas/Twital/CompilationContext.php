@@ -96,7 +96,7 @@ class CompilationContext
     }
     public function compileAttributes(\DOMNode $node)
     {
-        $node->attributes = $this->compiler->getAttributes();
+        $attributes = $this->compiler->getAttributes();
         $continueNode = true;
         foreach (iterator_to_array($node->attributes) as $attr) {
             if (! $attr->ownerElement) {
