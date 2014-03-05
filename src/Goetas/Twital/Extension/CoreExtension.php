@@ -5,24 +5,25 @@ use DOMDocument;
 use Goetas\Twital\Attribute;
 use Goetas\Twital\Node;
 use Goetas\Twital\Twital;
+use Goetas\Twital\SourceAdapter;
+use Goetas\Twital\SourceAdapter\NamespaceSourceAdapter;
+use Goetas\Twital\SourceAdapter\PostSourceFilterAdapter;
 use Goetas\Twital\SourceAdapter\XMLAdapter;
+use Goetas\Twital\SourceAdapter\XHTMLAdapter;
+use Goetas\Twital\SourceAdapter\HTML5Adapter;
 
 class CoreExtension extends AbstractExtension
 {
-    public function getPrefixes()
-    {
-        return array(
-            't' => Twital::NS
-        );
-    }
 
-    public function getSourceAdapters()
+    public function getAdapters()
     {
         return array(
             'xml' => new XMLAdapter()
         );
     }
-
+    /*
+     * public function getSourceAdapter($name, SourceAdapter $adapter, Twital $twital) { $adapter = new NamespaceSourceAdapter($adapter, $this->getCustomNamespaces()); $adapter = new PostSourceFilterAdapter($adapter, $this->getPostFilters()); return $adapter; }
+     */
     public function getAttributes()
     {
         $attributes = array();
@@ -49,7 +50,14 @@ class CoreExtension extends AbstractExtension
         return $nodes;
     }
 
-    public function getPostFilters()
+    protected function getCustomNamespaces()
+    {
+        return array(
+            't' => Twital::NS
+        );
+    }
+
+    protected function getPostFilters()
     {
         return array(
             function ($string)
@@ -58,7 +66,10 @@ class CoreExtension extends AbstractExtension
             },
             function ($string)
             {
-                return str_replace(array("<![CDATA[__[__", "__]__]]>"), "", $string);
+                return str_replace(array(
+                    "<![CDATA[__[__",
+                    "__]__]]>"
+                ), "", $string);
             },
             function ($string)
             {

@@ -4,6 +4,7 @@ namespace Goetas\Twital;
 use Goetas\Twital\Extension\CoreExtension;
 use Goetas\Twital\Extension\I18nExtension;
 use Goetas\Twital\Extension\HTML5Extension;
+use Goetas\Twital\SourceAdapter\XMLAdapter;
 
 class Twital implements Compiler
 {
@@ -90,6 +91,23 @@ class Twital implements Compiler
 
         return $source;
     }
+    public function setAdapter($pattern, $adapter)
+    {
+    	$patterns[$adapter][]=$pattern;
+    }
+    public function getAdapter($name)
+    {
+        $chid = null;
+        foreach($patterns as $id => $patts){
+            foreach ($patts as $patt){
+            	if(preg_match($patt, $name)){
+            	    $chid = $id;
+            		continue 2;
+            	}
+            }
+        }
+        return $chid;
+    }
 
     /**
      *
@@ -99,7 +117,22 @@ class Twital implements Compiler
      */
     protected function getSourceAdapter($name)
     {
+        return array(
+        	'/*.xml/i'=>new XMLAdapter(),
+        );
+    }
+    /**
+     *
+     * @param string $name
+     * @throws Exception
+     * @return SourceAdapter
+     */
+    protected function getSourceAdapter($name)
+    {
         $adapter = $this->getRootSourceAdapter();
+
+
+
 
         foreach ($this->getExtensions() as $extension) {
             if ($newAdaper = $extension->getSourceAdapter($name)) {

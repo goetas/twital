@@ -6,10 +6,8 @@ use Goetas\Twital\SourceAdapter\HTML5Adapter;
 class HTML5Extension extends AbstractExtension
 {
 
-    public function getSourceAdapters()
+    public function getRootSourceAdapter()
     {
-        return array(
-            'html5' => new HTML5Adapter()
-        );
+        return new HTML5Adapter();
     }
 }
