@@ -2,6 +2,7 @@
 namespace Goetas\Twital\SourceAdapter;
 
 use Goetas\Twital\SourceAdapter;
+use Goetas\Twital\Template;
 
 class XMLAdapter implements SourceAdapter
 {
@@ -10,13 +11,13 @@ class XMLAdapter implements SourceAdapter
     {
         $dom = new \DOMDocument('1.0', 'UTF-8');
 
-        if(!@$dom->loadXML($xml)){
+        if (! @$dom->loadXML($xml)) {
             throw new \Exception("Error during XML conversion into DOM");
         }
-        return $dom;
-    }
 
-    public function collectMetadata(\DOMDocument $dom, $original)
+        return new Template($dom, $this->collectMetadata($dom, $original));
+    }
+    protected function collectMetadata(\DOMDocument $dom, $original)
     {
         $metedata = array();
 
@@ -25,20 +26,19 @@ class XMLAdapter implements SourceAdapter
 
         return $metedata;
     }
-
-    public function dump(\DOMDocument $dom, $metedata)
+    public function dump(Template $template)
     {
+        $metedata = $template->getMetadata();
+        $dom = $template->getTemplate();
+
         if ($metedata['xmldeclaration']) {
             return $dom->saveXML();
         } else {
-            $cnt = array();
-
+            $source = '';
             foreach ($dom->childNodes as $node) {
-                $cnt[] = $dom->saveXML($node);
+                $source .= $dom->saveXML($node);
             }
-            $cnt = implode("", $cnt);
-
-            return $cnt;
+            return $source;
         }
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace Goetas\Twital\SourceAdapter;
 
+use Goetas\Twital\Template;
 class XHTMLAdapter extends XMLAdapter
 {
 
@@ -11,29 +12,49 @@ class XHTMLAdapter extends XMLAdapter
         if (! @$dom->loadXML($xml)) {
             throw new \Exception("Error during XML conversion into DOM");
         }
-        return $dom;
+
+        return new Template($dom, $this->collectMetadata($dom, $original));
     }
 
-    public function dump(\DOMDocument $dom, $metadata)
+    public function dump(\DOMDocument $dom, $metedata)
     {
-        $string = parent::dump($dom, $metadata);
-        $string = $this->replaceShortTags($string);
+        $metedata = $template->getMetadata();
+        $dom = $template->getTemplate();
 
-        return $string;
+        if ($metedata['xmldeclaration']) {
+            $source = $dom->saveXML();
+        } else {
+            $source = '';
+            foreach ($dom->childNodes as $node) {
+                $source .= $dom->saveXML($node);
+            }
+        }
+        return $this->replaceShortTags($source);
     }
 
     protected function replaceShortTags($str)
     {
-        $str = preg_replace_callback(
-            "#<(title|iframe|textarea|div|span|p|h1|h2|h3|h4|h5|h6|label|fieldset|legend|strong|small|cite|script|style|select|em|td|b)/>#i",
-            function ($mch)
-            {
-                if (strlen(trim($mch[2]))) {
-                    return "<$mch[1] " . trim($mch[2]) . "></$mch[1]>";
-                } else {
-                    return "<$mch[1]></$mch[1]>";
-                }
-            }, $str);
-        return $str;
+        $selfClosingTags = array(
+            "area",
+            "base",
+            "br",
+            "col",
+            "embed",
+            "hr",
+            "img",
+            "input",
+            "keygen",
+            "link",
+            "menuitem",
+            "meta",
+            "param",
+            "source",
+            "track",
+            "wbr"
+        );
+        $regex = implode("|", array_map(function ($tag) {
+            return "></\s*($tag)\s*>";
+        }, $selfClosingTags));
+        return preg_replace("#$regex#i", "<\\1 />", $str);
     }
 }

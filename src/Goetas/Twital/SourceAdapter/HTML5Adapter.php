@@ -2,9 +2,9 @@
 namespace Goetas\Twital\SourceAdapter;
 
 use HTML5;
-use Goetas\Twital\Dumper;
 use Goetas\Twital\SourceAdapter;
-use Goetas\Twital\NamespaceAdapter;
+use Goetas\Twital\NamespaceHelper;
+use Goetas\Twital\Template;
 
 class HTML5Adapter implements SourceAdapter
 {
@@ -16,7 +16,8 @@ class HTML5Adapter implements SourceAdapter
         $dom->appendChild($dom->importNode($f, true));
 
         self::fixElements($dom);
-        return $dom;
+
+        return new Template($dom, $this->collectMetadata($dom, $original));
     }
 
     protected static function fixElements(\DOMNode $node, $namespaces = array())
@@ -36,7 +37,7 @@ class HTML5Adapter implements SourceAdapter
         }
         if (preg_match('/^([a-z0-9\-]+):(.+)/i', $element->nodeName, $mch) && isset($namespaces[$mch[1]])) {
             $oldElement = $element;
-            $element = NamespaceAdapter::copyElementInNs($oldElement, $namespaces[$mch[1]]);
+            $element = NamespaceHelper::copyElementInNs($oldElement, $namespaces[$mch[1]]);
         }
         // fix attrs
         foreach (iterator_to_array($element->attributes) as $attr) {
@@ -49,15 +50,15 @@ class HTML5Adapter implements SourceAdapter
         self::fixElements($element,$namespaces);
     }
 
-    public function dump(\DOMDocument $dom, $metedata)
+    public function dump(Template $template)
     {
         if (! $metedata['doctype']) {
-            return HTML5::saveHTML($dom->childNodes);
+            return HTML5::saveHTML($template->getTemplate()->childNodes);
         }
-        return HTML5::saveHTML($dom->childNodes);
+        return HTML5::saveHTML($template->getTemplate()->childNodes);
     }
 
-    public function collectMetadata(\DOMDocument $dom, $original)
+    protected function collectMetadata(\DOMDocument $dom, $original)
     {
         $metedata = array();
 
