@@ -23,9 +23,8 @@ class CompilationContext
 
 
 
-    public function __construct(\DOMDocument $document, Twital $compiler, array $lexerOptions = array())
+    public function __construct(Twital $compiler, array $lexerOptions = array())
     {
-        $this->document = $document;
         $this->compiler = $compiler;
 
         $this->lexerOptions = array_merge(array(
@@ -74,19 +73,65 @@ class CompilationContext
         return $this->lexerOptions[$name];
     }
 
+    public function compile(\DOMDocument $doc)
+    {
+        $this->document = $doc;
+        $this->compileChilds($doc, $this);
+    }
     public function compileElement(\DOMElement $node)
     {
-        return $this->compiler->compileElement($node, $this);
+        $nodes = $this->getNodes();
+        if (isset($nodes[$node->namespaceURI][$node->localName])) {
+            $nodes[$node->namespaceURI][$node->localName]->visit($node, $this);
+        } elseif (isset($nodes[$node->namespaceURI]['__base__'])) {
+            $nodes[$node->namespaceURI]['__base__']->visit($node, $this);
+        } else {
+            if ($node->namespaceURI === Twital::NS) {
+                throw new Exception("Can't handle the {$node->namespaceURI}#{$node->localName} node at line ".$node->getLineNo());
+            }
+            if ($this->compileAttributes($node)) {
+                $this->compileChilds($node);
+            }
+        }
     }
-
     public function compileAttributes(\DOMNode $node)
     {
-        return $this->compiler->compileAttributes($node, $this);
+        $node->attributes = $this->compiler->getAttributes();
+        $continueNode = true;
+        foreach (iterator_to_array($node->attributes) as $attr) {
+            if (! $attr->ownerElement) {
+                continue;
+            } elseif (isset($attributes[$attr->namespaceURI][$attr->localName])) {
+                $attPlugin = $attributes[$attr->namespaceURI][$attr->localName];
+            } elseif (isset($attributes[$attr->namespaceURI]['__base__'])) {
+                $attPlugin = $attributes[$attr->namespaceURI]['__base__'];
+            } elseif ($attr->namespaceURI === Twital::NS) {
+                throw new Exception("Can't handle the {$attr->namespaceURI}#{$attr->localName} attribute on {$node->namespaceURI}#{$node->localName} node at line ".$attr->getLineNo());
+            } else {
+                continue;
+            }
+
+            $return = $attPlugin->visit($attr, $this);
+            if ($return !== null) {
+                $continueNode = $continueNode && !($return & Attribute::STOP_NODE);
+                if ($return & Attribute::STOP_ATTRIBUTE) {
+                    break;
+                }
+            }
+        }
+
+        return $continueNode;
     }
+
 
     public function compileChilds(\DOMNode $node)
     {
-        return $this->compiler->compileChilds($node, $this);
+        foreach (iterator_to_array($node->childNodes) as $child) {
+            if ($child instanceof \DOMElement) {
+                $this->compileElement($child);
+            }
+        }
     }
+
 
 }
