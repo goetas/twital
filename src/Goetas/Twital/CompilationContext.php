@@ -12,7 +12,7 @@ class CompilationContext
 
     /**
      *
-     * @var Template
+     * @var \DOMDocument
      */
     protected $document;
     /**
