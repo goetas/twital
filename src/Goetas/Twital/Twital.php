@@ -85,7 +85,8 @@ class Twital implements Compiler
 
         $dom = $template->getTemplate();
 
-        $this->compileChilds($dom, new CompilationContext($dom, $this, isset($this->options['lexer']) ? $this->options['lexer'] : array()));
+        $context = new CompilationContext($dom, $this, isset($this->options['lexer']) ? $this->options['lexer'] : array());
+        $this->compileChilds($dom, $context);
 
         $source = $adapter->dump($template);
 
@@ -128,7 +129,7 @@ class Twital implements Compiler
 
             $return = $attPlugin->visit($attr, $context);
             if ($return !== null) {
-                $continueNode = $continueNode && ($return & Attribute::STOP_NODE);
+                $continueNode = $continueNode && !($return & Attribute::STOP_NODE);
                 if ($return & Attribute::STOP_ATTRIBUTE) {
                     break;
                 }
