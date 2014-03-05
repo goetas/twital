@@ -12,8 +12,12 @@ class ExtendsNode implements Node
 
     public function visit(\DOMElement $node, CompilationContext $context)
     {
-        if (! $node->hasAttribute("from") && ! $node->hasAttributeNS(Twital::NS,"from")) {
-            throw new Exception("name or name-exp attribute is required");
+        if ($node->hasAttribute("from-exp")) {
+            $filename = $node->getAttribute("from-exp");
+        } elseif ($node->hasAttribute("from")) {
+            $filename = "'" . $node->getAttribute("from") . "'";
+        } else {
+            throw new Exception("The 'from' or 'from-exp' attribute is required");
         }
 
         // remove any non-element node
@@ -22,7 +26,7 @@ class ExtendsNode implements Node
                 $child->parentNode->removeChild($child);
             }
         }
-        $filename = $node->hasAttributeNS(Twital::NS, "from") ? $node->getAttributens(CompilationContext::NS, "from") : ("'" . $node->getAttribute("from") . "'");
+
         $context->compileChilds($node);
 
         $ext = $context->createControlNode("extends {$filename}");
