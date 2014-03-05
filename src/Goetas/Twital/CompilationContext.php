@@ -23,7 +23,7 @@ class CompilationContext
 
 
 
-    public function __construct(\DOMDocument $document, Compiler $compiler, array $lexerOptions = array())
+    public function __construct(\DOMDocument $document, Twital $compiler, array $lexerOptions = array())
     {
         $this->document = $document;
         $this->compiler = $compiler;
@@ -74,13 +74,19 @@ class CompilationContext
         return $this->lexerOptions[$name];
     }
 
-	public function getCompiler() {
-    	return $this->compiler;
+    public function compileElement(\DOMElement $node)
+    {
+        return $this->compiler->compileElement($node, $this);
     }
 
-	public function setCompiler(Compiler $compiler) {
-    	$this->compiler = $compiler;
-    	return $this;
+    public function compileAttributes(\DOMNode $node)
+    {
+        return $this->compiler->compileAttributes($node, $this);
+    }
+
+    public function compileChilds(\DOMNode $node)
+    {
+        return $this->compiler->compileChilds($node, $this);
     }
 
 }
