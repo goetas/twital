@@ -10,24 +10,17 @@ class IncludeNode implements Node
 
     public function visit(\DOMElement $node, CompilationContext $context)
     {
+
+        $code = "include ";
+
         if ($node->hasAttribute("from-exp")) {
-            $filename = $node->getAttribute("from-exp");
+            $code .= $node->getAttribute("from-exp");
         } elseif ($node->hasAttribute("from")) {
-            $filename = "'" . $node->getAttribute("from") . "'";
+            $code .= "'" . $node->getAttribute("from") . "'";
         } else {
             throw new Exception("The 'from' or 'from-exp' attribute is required");
         }
 
-        // remove any non-element node
-        foreach (iterator_to_array($node->childNodes) as $child) {
-            if (! ($child instanceof \DOMElement)) {
-                $child->parentNode->removeChild($child);
-            }
-        }
-
-        $context->compileChilds($node);
-
-        $code = "include {$filename}";
 
         if ($node->hasAttribute("ignore-missing") && $node->hasAttribute("ignore-missing") !== false) {
             $code .= " ignore missing";
@@ -43,7 +36,6 @@ class IncludeNode implements Node
         }
 
         $pi = $context->createControlNode($code);
-
         $node->parentNode->replaceChild($pi, $node);
     }
 }
