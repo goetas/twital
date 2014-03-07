@@ -4,7 +4,7 @@ namespace Goetas\Twital\Attribute;
 use Goetas\Twital\Attribute;
 use Goetas\Twital\CompilationContext;
 use DOMAttr;
-use Goetas\Twital\ParserHelper;
+use Goetas\Twital\Helper\ParserHelper;
 
 class AttrTranslateAttribute implements Attribute
 {

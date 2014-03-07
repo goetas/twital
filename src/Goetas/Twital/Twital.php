@@ -5,6 +5,11 @@ use Goetas\Twital\Extension\CoreExtension;
 use Goetas\Twital\Extension\I18nExtension;
 use Goetas\Twital\Extension\HTML5Extension;
 use Goetas\Twital\SourceAdapter\XMLAdapter;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\EventDispatcher\GenericEvent;
+use Goetas\Twital\EventDispatcher\SourceEvent;
+use Goetas\Twital\EventDispatcher\TemplateEvent;
 
 class Twital
 {
@@ -13,6 +18,11 @@ class Twital
 
     protected $extensionsInitialized = false;
 
+    /**
+     *
+     * @var EventDispatcher
+     */
+    protected $dispatcher;
     /**
      *
      * @var array
@@ -34,15 +44,19 @@ class Twital
     public function __construct(array $options = array(), $addDefaultExtensions = true)
     {
         $this->options = $options;
+        $this->dispatcher = new EventDispatcher();
 
         $this->addExtension(new CoreExtension());
 
         if ($addDefaultExtensions) {
             $this->addExtension(new HTML5Extension());
         }
-        // $this->addExtension(new I18nExtension());
-    }
 
+    }
+    public function getE()
+    {
+
+    }
     public function getNodes()
     {
         $this->initExtensions();
@@ -61,6 +75,10 @@ class Twital
             foreach ($this->getExtensions() as $extension) {
                 $this->attributes = array_merge_recursive($this->attributes, $extension->getAttributes());
                 $this->nodes = array_merge_recursive($this->nodes, $extension->getNodes());
+
+                foreach ($extension->getSubscribers() as $subscriber){
+                    $this->dispatcher->addSubscriber($subscriber);
+                }
             }
             $this->extensionsInitialized = true;
         }
@@ -70,15 +88,23 @@ class Twital
     {
         $this->initExtensions();
 
-        $template = $adapter->load($source);
+        $sourceEvent = new SourceEvent($this, $source);
+        $this->dispatcher->dispatch('compiler.pre_load', $sourceEvent);
+        $template = $adapter->load($sourceEvent->getTemplate());
 
-        $context = new CompilationContext($this, isset($this->options['lexer']) ? $this->options['lexer'] : array());
+        $templateEvent = new TemplateEvent($this, $template);
+        $this->dispatcher->dispatch('compiler.post_load', $templateEvent);
 
-        $context->compile($template->getTemplate());
+        $compiler = new Compiler($this, isset($this->options['lexer']) ? $this->options['lexer'] : array());
+        $template = $compiler->compile($templateEvent->getTemplate()->getDocument());
 
-        $source = $adapter->dump($template);
+        $templateEvent = new TemplateEvent($this, $template);
+        $this->dispatcher->dispatch('compiler.pre_dump', $templateEvent);
+        $source = $adapter->dump($templateEvent->getTemplate());
 
-        return $source;
+        $sourceEvent = new SourceEvent($this, $source);
+        $this->dispatcher->dispatch('compiler.post_dump', $sourceEvent);
+        return $sourceEvent->getTemplate();
     }
 
     public function addExtension(Extension $extension)

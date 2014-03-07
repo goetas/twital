@@ -4,7 +4,7 @@ namespace Goetas\Twital\Node;
 use Goetas\Twital\Node;
 use Exception;
 use Goetas\Twital\CompilationContext;
-use Goetas\Twital\DOMHelper;
+use Goetas\Twital\Helper\DOMHelper;
 use Goetas\Twital\Twital;
 
 class EmbedNode implements Node

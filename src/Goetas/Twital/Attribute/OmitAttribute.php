@@ -4,7 +4,7 @@ namespace Goetas\Twital\Attribute;
 use Goetas\Twital\Attribute;
 use Goetas\Twital\CompilationContext;
 use DOMAttr;
-use Goetas\Twital\DOMHelper;
+use Goetas\Twital\Helper\DOMHelper;
 
 class OmitAttribute implements Attribute
 {

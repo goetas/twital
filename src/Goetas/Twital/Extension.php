@@ -36,10 +36,9 @@ interface Extension
     public function getNodes();
 
     /**
-     * Array of objects implementing {DOMLoader} interface, responsible of DOM loading from Twital ource code.
-     * The key of
+     * Array of event subscribers
      * @return array
      */
-    public function getSourceAdapters();
+    public function getSubscribers();
 
 }

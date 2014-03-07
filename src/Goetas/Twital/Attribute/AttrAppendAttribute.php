@@ -2,7 +2,7 @@
 namespace Goetas\Twital\Attribute;
 
 use Goetas\Twital\CompilationContext;
-use Goetas\Twital\ParserHelper;
+use Goetas\Twital\Helper\ParserHelper;
 
 class AttrAppendAttribute extends AttrAttribute
 {

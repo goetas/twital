@@ -5,6 +5,7 @@ use HTML5;
 use Goetas\Twital\SourceAdapter;
 use Goetas\Twital\NamespaceHelper;
 use Goetas\Twital\Template;
+use Goetas\Twital\Helper\DOMHelper;
 
 class HTML5Adapter implements SourceAdapter
 {
@@ -37,7 +38,7 @@ class HTML5Adapter implements SourceAdapter
         }
         if (preg_match('/^([a-z0-9\-]+):(.+)/i', $element->nodeName, $mch) && isset($namespaces[$mch[1]])) {
             $oldElement = $element;
-            $element = NamespaceHelper::copyElementInNs($oldElement, $namespaces[$mch[1]]);
+            $element = DOMHelper::copyElementInNs($oldElement, $namespaces[$mch[1]]);
         }
         // fix attrs
         foreach (iterator_to_array($element->attributes) as $attr) {
@@ -53,9 +54,9 @@ class HTML5Adapter implements SourceAdapter
     public function dump(Template $template)
     {
         if (! $metedata['doctype']) {
-            return HTML5::saveHTML($template->getTemplate()->childNodes);
+            return HTML5::saveHTML($template->getDocument()->childNodes);
         }
-        return HTML5::saveHTML($template->getTemplate()->childNodes);
+        return HTML5::saveHTML($template->getDocument()->childNodes);
     }
 
     protected function collectMetadata(\DOMDocument $dom, $original)

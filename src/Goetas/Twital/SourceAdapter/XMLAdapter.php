@@ -29,7 +29,7 @@ class XMLAdapter implements SourceAdapter
     public function dump(Template $template)
     {
         $metedata = $template->getMetadata();
-        $dom = $template->getTemplate();
+        $dom = $template->getDocument();
 
         if ($metedata['xmldeclaration']) {
             return $dom->saveXML();

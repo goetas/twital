@@ -19,7 +19,7 @@ class XHTMLAdapter extends XMLAdapter
     public function dump(\DOMDocument $dom, $metedata)
     {
         $metedata = $template->getMetadata();
-        $dom = $template->getTemplate();
+        $dom = $template->getDocument();
 
         if ($metedata['xmldeclaration']) {
             $source = $dom->saveXML();

@@ -1,5 +1,5 @@
 <?php
-namespace Goetas\Twital;
+namespace Goetas\Twital\Helper;
 
 class ParserHelper
 {

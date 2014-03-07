@@ -11,24 +11,24 @@ class Template
      *
      * @var \DOMDocument
      */
-    protected $template;
+    protected $document;
     /**
      *
      * @var mixed
      */
     protected $metadata;
 
-    public function __construct(\DOMDocument $template, $metadata = null)
+    public function __construct(\DOMDocument $document, $metadata = null)
     {
-        $this->template = $template;
+        $this->document = $document;
         $this->metadata = $metadata;
     }
     /**
      *
      * @return \DOMDocument
      */
-	public function getTemplate() {
-		return $this->template;
+	public function getDocument() {
+		return $this->document;
 	}
     /**
      *

@@ -16,7 +16,7 @@ abstract class AbstractExtension implements Extension
         return array();
     }
 
-    public function getSourceAdapters()
+    public function getSubscribers()
     {
         return array();
     }

@@ -6,24 +6,22 @@ use Goetas\Twital\Attribute;
 use Goetas\Twital\Node;
 use Goetas\Twital\Twital;
 use Goetas\Twital\SourceAdapter;
-use Goetas\Twital\SourceAdapter\NamespaceSourceAdapter;
-use Goetas\Twital\SourceAdapter\PostSourceFilterAdapter;
-use Goetas\Twital\SourceAdapter\XMLAdapter;
-use Goetas\Twital\SourceAdapter\XHTMLAdapter;
-use Goetas\Twital\SourceAdapter\HTML5Adapter;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Goetas\Twital\EventSubscriber\CustomNamespaceSubscriber;
+use Goetas\Twital\EventSubscriber\DOMMessSubscriber;
 
 class CoreExtension extends AbstractExtension
 {
-
-    public function getAdapters()
+    public function getSubscribers()
     {
         return array(
-            'xml' => new XMLAdapter()
+            new DOMMessSubscriber(),
+            new CustomNamespaceSubscriber(array(
+                't' => Twital::NS
+            ))
         );
     }
-    /*
-     * public function getSourceAdapter($name, SourceAdapter $adapter, Twital $twital) { $adapter = new NamespaceSourceAdapter($adapter, $this->getCustomNamespaces()); $adapter = new PostSourceFilterAdapter($adapter, $this->getPostFilters()); return $adapter; }
-     */
+
     public function getAttributes()
     {
         $attributes = array();
@@ -48,36 +46,5 @@ class CoreExtension extends AbstractExtension
         $nodes[Twital::NS]['omit'] = new Node\OmitNode();
         $nodes[Twital::NS]['embed'] = new Node\EmbedNode();
         return $nodes;
-    }
-
-    protected function getCustomNamespaces()
-    {
-        return array(
-            't' => Twital::NS
-        );
-    }
-
-    protected function getPostFilters()
-    {
-        return array(
-            function ($string)
-            {
-                return preg_replace('#<(.*) xmlns:[a-zA-Z0-9]+=("|\')' . Twital::NS . '("|\')(.*)>#m', "<\\1\\4>", $string);
-            },
-            function ($string)
-            {
-                return str_replace(array(
-                    "<![CDATA[__[__",
-                    "__]__]]>"
-                ), "", $string);
-            },
-            function ($string)
-            {
-                return preg_replace_callback('/ __attr__="(__a[0-9a-f]+)"/', function ($mch)
-                {
-                    return '{% for ____ak,____av in ' . $mch[1] . ' if ____av|length>0 %} {{____ak | raw}}="{{ ____av|join(\'\') }}"{% endfor %}';
-                }, $string);
-            }
-        );
     }
 }

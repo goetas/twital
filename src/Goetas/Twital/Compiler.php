@@ -1,7 +1,7 @@
 <?php
 namespace Goetas\Twital;
 
-class CompilationContext
+class Compiler
 {
 
     /**
@@ -18,19 +18,15 @@ class CompilationContext
 
     /**
      *
-     * @var Compiler
+     * @var Twital
      */
-    protected $compiler;
+    protected $twital;
 
-    public function __construct(Twital $compiler, array $lexerOptions = array())
+    public function __construct(Twital $twital, array $lexerOptions = array())
     {
-        $this->compiler = $compiler;
+        $this->twital = $twital;
 
         $this->lexerOptions = array_merge(array(
-            'tag_comment' => array(
-                '{#',
-                '#}'
-            ),
             'tag_block' => array(
                 '{%',
                 '%}'
@@ -39,7 +35,6 @@ class CompilationContext
                 '{{',
                 '}}'
             ),
-            'whitespace_trim' => '-',
             'interpolation' => array(
                 '#{',
                 '}'
@@ -87,11 +82,12 @@ class CompilationContext
     {
         $this->document = $doc;
         $this->compileChilds($doc);
+        return $doc;
     }
 
     public function compileElement(\DOMElement $node)
     {
-        $nodes = $this->compiler->getNodes();
+        $nodes = $this->twital->getNodes();
         if (isset($nodes[$node->namespaceURI][$node->localName])) {
             $nodes[$node->namespaceURI][$node->localName]->visit($node, $this);
         } elseif (isset($nodes[$node->namespaceURI]['__base__'])) {
@@ -108,7 +104,7 @@ class CompilationContext
 
     public function compileAttributes(\DOMNode $node)
     {
-        $attributes = $this->compiler->getAttributes();
+        $attributes = $this->twital->getAttributes();
         $continueNode = true;
         foreach (iterator_to_array($node->attributes) as $attr) {
             if (! $attr->ownerElement) {
