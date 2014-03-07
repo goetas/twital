@@ -2,7 +2,7 @@
 namespace Goetas\Twital\Attribute;
 
 use Goetas\Twital\Attribute;
-use Goetas\Twital\CompilationContext;
+use Goetas\Twital\Compiler;
 use DOMAttr;
 use Goetas\Twital\Helper\ParserHelper;
 use Exception;
@@ -15,7 +15,7 @@ class AttrAttribute implements Attribute
         return "__a9" . strtr(spl_object_hash($node), "-","_");
     }
 
-    public function visit(DOMAttr $att, CompilationContext $context)
+    public function visit(DOMAttr $att, Compiler $context)
     {
         $node = $att->ownerElement;
         $expressions = ParserHelper::staticSplitExpression($att->value, ",");

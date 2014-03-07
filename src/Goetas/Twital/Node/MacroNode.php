@@ -2,14 +2,14 @@
 namespace Goetas\Twital\Node;
 
 use Goetas\Twital\Node;
-use Goetas\Twital\CompilationContext;
+use Goetas\Twital\Compiler;
 use goetas\xml;
 use Goetas\Twital\Helper\DOMHelper;
 
 class MacroNode implements Node
 {
 
-    public function visit(\DOMElement $node, CompilationContext $context)
+    public function visit(\DOMElement $node, Compiler $context)
     {
         if (! $node->hasAttribute("name")) {
             throw new Exception("Name attribute is required");

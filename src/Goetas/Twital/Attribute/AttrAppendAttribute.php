@@ -1,13 +1,13 @@
 <?php
 namespace Goetas\Twital\Attribute;
 
-use Goetas\Twital\CompilationContext;
+use Goetas\Twital\Compiler;
 use Goetas\Twital\Helper\ParserHelper;
 
 class AttrAppendAttribute extends AttrAttribute
 {
 
-    public function visit(\DOMAttr $att, CompilationContext $context)
+    public function visit(\DOMAttr $att, Compiler $context)
     {
         $node = $att->ownerElement;
         $expressions = ParserHelper::staticSplitExpression($att->value, ",");

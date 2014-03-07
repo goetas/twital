@@ -2,14 +2,14 @@
 namespace Goetas\Twital\Node;
 
 use Goetas\Twital\Node;
-use Goetas\Twital\CompilationContext;
+use Goetas\Twital\Compiler;
 
 use Goetas\Twital\Helper\DOMHelper;
 use Exception;
 use Goetas\Twital\Twital;
 class BlockNode implements Node
 {
-    public function visit(\DOMElement $node, CompilationContext $context)
+    public function visit(\DOMElement $node, Compiler $context)
     {
         if (! $node->hasAttribute("name")) {
             throw new Exception("Name attribute is required");

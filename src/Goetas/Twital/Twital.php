@@ -41,22 +41,24 @@ class Twital
      */
     private $extensions = array();
 
-    public function __construct(array $options = array(), $addDefaultExtensions = true)
+    public function __construct(array $options = array())
     {
         $this->options = $options;
         $this->dispatcher = new EventDispatcher();
 
         $this->addExtension(new CoreExtension());
 
-        if ($addDefaultExtensions) {
-            $this->addExtension(new HTML5Extension());
-        }
-
     }
-    public function getE()
+
+    /**
+     *
+     * @return \Symfony\Component\EventDispatcher\EventDispatcher
+     */
+    public function getEventDispatcher()
     {
-
+        return $this->dispatcher;
     }
+
     public function getNodes()
     {
         $this->initExtensions();

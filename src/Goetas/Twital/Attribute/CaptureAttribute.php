@@ -2,13 +2,13 @@
 namespace Goetas\Twital\Attribute;
 
 use Goetas\Twital\Attribute;
-use Goetas\Twital\CompilationContext;
+use Goetas\Twital\Compiler;
 use DOMAttr;
 
 class CaptureAttribute implements Attribute
 {
 
-    public function visit(DOMAttr $att, CompilationContext $context)
+    public function visit(DOMAttr $att, Compiler $context)
     {
         $node = $att->ownerElement;
 

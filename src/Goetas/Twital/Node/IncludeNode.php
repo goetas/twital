@@ -2,13 +2,13 @@
 namespace Goetas\Twital\Node;
 
 use Goetas\Twital\Node;
-use Goetas\Twital\CompilationContext;
+use Goetas\Twital\Compiler;
 use Goetas\Twital\Exception;
 
 class IncludeNode implements Node
 {
 
-    public function visit(\DOMElement $node, CompilationContext $context)
+    public function visit(\DOMElement $node, Compiler $context)
     {
 
         $code = "include ";

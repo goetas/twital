@@ -2,11 +2,11 @@
 namespace Goetas\Twital\Attribute;
 
 use Goetas\Twital\Attribute as AttributeBase;
-use Goetas\Twital\CompilationContext;
+use Goetas\Twital\Compiler;
 use DOMAttr;
 class IfAttribute implements AttributeBase
 {
-    public function visit(DOMAttr $att, CompilationContext $context)
+    public function visit(DOMAttr $att, Compiler $context)
     {
         $node = $att->ownerElement;
         if($att->value!=="1" && $att->value!=="true"){
