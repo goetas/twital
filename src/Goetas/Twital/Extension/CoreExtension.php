@@ -5,10 +5,9 @@ use DOMDocument;
 use Goetas\Twital\Attribute;
 use Goetas\Twital\Node;
 use Goetas\Twital\Twital;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-
 use Goetas\Twital\EventSubscriber\CustomNamespaceSubscriber;
 use Goetas\Twital\EventSubscriber\DOMMessSubscriber;
+use Goetas\Twital\EventSubscriber\CustomNamespaceRawSubscriber;
 
 class CoreExtension extends AbstractExtension
 {
@@ -16,9 +15,14 @@ class CoreExtension extends AbstractExtension
     {
         return array(
             new DOMMessSubscriber(),
+            new CustomNamespaceRawSubscriber(array(
+                't' => Twital::NS
+            ))
+            /*
             new CustomNamespaceSubscriber(array(
                 't' => Twital::NS
             ))
+            */
         );
     }
 
