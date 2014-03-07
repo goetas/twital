@@ -9,5 +9,3 @@ before_script:
   - composer install --prefer-dist --dev
 
 script: phpunit
-
-
