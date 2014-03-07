@@ -2,7 +2,6 @@
 namespace Goetas\Twital\Extension;
 
 use Goetas\Twital\Attribute;
-use Goetas\Twital\Compiler;
 use Goetas\Twital\Twital;
 
 class I18nExtension extends AbstractExtension

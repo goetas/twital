@@ -1,11 +1,9 @@
 <?php
 namespace Goetas\Twital\Extension;
 
-use DOMDocument;
 use Goetas\Twital\Attribute;
 use Goetas\Twital\Node;
 use Goetas\Twital\Twital;
-use Goetas\Twital\EventSubscriber\CustomNamespaceSubscriber;
 use Goetas\Twital\EventSubscriber\DOMMessSubscriber;
 use Goetas\Twital\EventSubscriber\CustomNamespaceRawSubscriber;
 

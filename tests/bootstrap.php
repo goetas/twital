@@ -1,7 +1,5 @@
 <?php
 
-use Goetas\Twital\EventSubscriber\DOMMessSubscriber;
-use Goetas\Twital\EventSubscriber\CustomNamespaceSubscriber;
 error_reporting(E_ALL | E_STRICT);
 
 if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
