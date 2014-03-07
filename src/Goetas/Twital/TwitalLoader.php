@@ -4,6 +4,9 @@ namespace Goetas\Twital;
 use Goetas\Twital\Extension\CoreExtension;
 use Goetas\Twital\Extension\I18nExtension;
 use Goetas\Twital\Extension\HTML5Extension;
+use Goetas\Twital\SourceAdapter\HTML5Adapter;
+use Goetas\Twital\SourceAdapter\XMLAdapter;
+use Goetas\Twital\SourceAdapter\XHTMLAdapter;
 
 /**
  * This is a Twital Loader.
@@ -20,7 +23,7 @@ class TwitalLoader implements \Twig_LoaderInterface
      *
      * @var array
      */
-    protected $namePatterns = array();
+    protected $sourceAdapters = array();
 
     /**
      * The wrapped Twig loader
@@ -39,33 +42,18 @@ class TwitalLoader implements \Twig_LoaderInterface
      * Creates a new Twital loader.
      * @param \Twig_LoaderInterface $loader
      * @param Compiler $compiler
-     * @param array $namePatterns If NULL, some standard rules will be used (`*.twital.*` and `*.twital`).
+     * @param array $sourceAdapters If NULL, some standard rules will be used (`*.twital.*` and `*.twital`).
      */
-    public function __construct(\Twig_LoaderInterface $loader, Compiler $compiler, $namePatterns = null)
+    public function __construct(\Twig_LoaderInterface $loader, Twital $compiler, $sourceAdapters = null)
     {
         $this->loader = $loader;
         $this->compiler = $compiler;
-        $this->namePatterns = $namePatterns;
 
-        if (is_null($this->namePatterns)) {
-            $this->namePatterns = array(
-                '/\.twital\.[a-z]+$/i',
-                '/\.twital$/i'
-            );
+        if (is_null($sourceAdapters)) {
+            $this->addSourceAdapter('/\.twital\.html$/i',new HTML5Adapter());
+            $this->addSourceAdapter('/\.twital\.xml$/i',new XMLAdapter());
+            $this->addSourceAdapter('/\.twital\.xhtml$/i',new XHTMLAdapter());
         }
-    }
-
-    /**
-     * Set all patterns used to decide if a template is twital-compilable or not.
-     *
-     * @see TwitalLoader::addNamePattern()
-     * @param array $patterns
-     * @return \Goetas\Twital\TwitalLoader
-     */
-    public function setNamePatterns(array $patterns)
-    {
-        $this->namePatterns = $patterns;
-        return $this;
     }
 
     /**
@@ -76,32 +64,10 @@ class TwitalLoader implements \Twig_LoaderInterface
      * @param string|callback $pattern
      * @return \Goetas\Twital\TwitalLoader
      */
-    public function addNamePattern($pattern)
+    public function addSourceAdapter($pattern, SourceAdapter $adapter)
     {
-        $this->namePatterns[] = $pattern;
+        $this->sourceAdapters[$pattern] = $adapter;
         return $this;
-    }
-
-    /**
-     * Set the internal compiler
-     *
-     * @param Twital $twital
-     * @return \Goetas\Twital\TwitalLoader
-     */
-    public function setCompiler(Twital $twital)
-    {
-        $this->compiler = $twital;
-        return $this;
-    }
-
-    /**
-     * Get the internal compiler
-     *
-     * @return \Goetas\Twital\Compiler
-     */
-    public function getCompiler()
-    {
-        return $this->compiler;
     }
 
     /**
@@ -109,28 +75,24 @@ class TwitalLoader implements \Twig_LoaderInterface
      *
      * @return array:
      */
-    public function getNamePatterns()
+    public function getSourceAdapters()
     {
-        return $this->namePatterns;
+        return $this->sourceAdapters;
     }
 
     /**
      * Decide if a template is twital-compilable or not.
      *
-     * @return array:
+     * @return SourceAdapter
      */
-    protected function shouldCompile($name)
+    protected function getSourceAdapter($name)
     {
-        foreach ($this->namePatterns as $pattern) {
-            if (is_string($pattern)) {
-                if (preg_match($pattern, $name)) {
-                    return true;
-                }
-            } elseif (call_user_func($pattern, $name)) {
-                return true;
+        foreach ($this->sourceAdapters as $pattern => $adapter) {
+            if (preg_match($pattern, $name)) {
+                return $adapter;
             }
         }
-        return false;
+        return null;
     }
 
     /**
@@ -142,12 +104,9 @@ class TwitalLoader implements \Twig_LoaderInterface
     {
         $source = $this->loader->getSource($name);
 
-        if ($this->shouldCompile($name)) {
+        if ($adapter = $this->getSourceAdapter($name)) {
 
-            //$loader = $this->getLoader($name); // html5
-
-            $source = $this->getCompiler()->compile($source);
-
+            $source = $this->compiler->compile($adapter, $source);
 
         }
 

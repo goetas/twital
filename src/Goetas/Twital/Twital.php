@@ -6,7 +6,7 @@ use Goetas\Twital\Extension\I18nExtension;
 use Goetas\Twital\Extension\HTML5Extension;
 use Goetas\Twital\SourceAdapter\XMLAdapter;
 
-class Twital implements Compiler
+class Twital
 {
 
     const NS = 'urn:goetas:twital';
@@ -29,19 +29,10 @@ class Twital implements Compiler
      *
      * @var array
      */
-    private $sourceAdapters = array();
-
-    /**
-     *
-     * @var array
-     */
     private $extensions = array();
 
-    protected $defaultSourceAdapter;
-
-    public function __construct($defaultAdapter = 'xml', array $options = array(), $addDefaultExtensions = true)
+    public function __construct(array $options = array(), $addDefaultExtensions = true)
     {
-        $this->defaultAdapter = $defaultAdapter;
         $this->options = $options;
 
         $this->addExtension(new CoreExtension());
@@ -75,11 +66,9 @@ class Twital implements Compiler
         }
     }
 
-    public function compile($source, $name)
+    public function compile(SourceAdapter $adapter, $source)
     {
         $this->initExtensions();
-
-        $adapter = $this->getSourceAdapter($name);
 
         $template = $adapter->load($source);
 
@@ -90,78 +79,6 @@ class Twital implements Compiler
         $source = $adapter->dump($template);
 
         return $source;
-    }
-    public function setAdapter($pattern, $adapter)
-    {
-    	$patterns[$adapter][]=$pattern;
-    }
-    public function getAdapter($name)
-    {
-        $chid = null;
-        foreach($patterns as $id => $patts){
-            foreach ($patts as $patt){
-            	if(preg_match($patt, $name)){
-            	    $chid = $id;
-            		continue 2;
-            	}
-            }
-        }
-        return $chid;
-    }
-
-    /**
-     *
-     * @param string $name
-     * @throws Exception
-     * @return SourceAdapter
-     */
-    protected function getSourceAdapter($name)
-    {
-        return array(
-        	'/*.xml/i'=>new XMLAdapter(),
-        );
-    }
-    /**
-     *
-     * @param string $name
-     * @throws Exception
-     * @return SourceAdapter
-     */
-    protected function getSourceAdapter($name)
-    {
-        $adapter = $this->getRootSourceAdapter($name);
-
-
-
-
-        foreach ($this->getExtensions() as $extension) {
-            if ($newAdaper = $extension->getSourceAdapter($name)) {
-                $adapter = $newAdaper;
-            }
-        }
-        return $adapter;
-    }
-
-    /**
-     *
-     * @param string $name
-     * @throws Exception
-     * @return SourceAdapter
-     */
-    protected function getRootSourceAdapter($name)
-    {
-        $adapter = null;
-        foreach ($this->getExtensions() as $extension) {
-            if ($newAdaper = $extension->getRootSourceAdapter($name)) {
-                $adapter = $newAdaper;
-            }
-        }
-
-        if (! $adapter) {
-            throw new Exception("Can't find a source adapter for a file called {$name}. Do you have configured it well?");
-        }
-
-        return $adapter;
     }
 
     public function addExtension(Extension $extension)
@@ -177,21 +94,5 @@ class Twital implements Compiler
     public function getExtensions()
     {
         return $this->extensions;
-    }
-
-    public function getDefaultSourceAdapter()
-    {
-        return $this->defaultSourceAdapter;
-    }
-
-    public function setDefaultSourceAdapter($defaultSourceAdapter)
-    {
-        $this->defaultSourceAdapter = $defaultSourceAdapter;
-        return $this;
-    }
-
-    public function getSourceAdapters()
-    {
-        return $this->sourceAdapters;
     }
 }
