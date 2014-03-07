@@ -10,7 +10,7 @@ class CustomNamespaceSubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents(){
     	return array(
-    		'post_load'=>'addCustomNamespace'
+    		'compiler.post_load'=>'addCustomNamespace'
     	);
     }
     /**
@@ -24,8 +24,7 @@ class CustomNamespaceSubscriber implements EventSubscriberInterface
         $this->customNamespaces = $customNamespaces;
     }
 
-
-    protected function addCustomNamespace(TemplateEvent $event)
+    public function addCustomNamespace(TemplateEvent $event)
     {
         foreach (iterator_to_array($event->getTemplate()->getDocument()->childNodes) as $child) {
             if ($child instanceof \DOMElement) {

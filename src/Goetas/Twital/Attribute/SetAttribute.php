@@ -12,7 +12,7 @@ class SetAttribute implements Attribute
     {
         $node = $att->ownerElement;
 
-        $pi = $context->createControlNode("set ".html_entity_decode($att->data));
+        $pi = $context->createControlNode("set ".html_entity_decode($att->value));
 
         $node->parentNode->insertBefore($pi, $node);
 

@@ -13,7 +13,7 @@ class DOMMessSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            'post_dump' => array(
+            'compiler.post_dump' => array(
                 array(
                     'removeNamespaces'
                 ),
@@ -32,7 +32,7 @@ class DOMMessSubscriber implements EventSubscriberInterface
         $event->setTemplate(preg_replace('#<(.*) xmlns:[a-zA-Z0-9]+=("|\')' . Twital::NS . '("|\')(.*)>#m', "<\\1\\4>", $event->getTemplate()));
     }
 
-    public function removeCdata($string)
+    public function removeCdata(SourceEvent $event)
     {
         $event->setTemplate(str_replace(array(
             "<![CDATA[__[__",
@@ -40,7 +40,7 @@ class DOMMessSubscriber implements EventSubscriberInterface
         ), "", $event->getTemplate()));
     }
 
-    public function fixAttributes($string)
+    public function fixAttributes(SourceEvent $event)
     {
         $event->setTemplate(preg_replace_callback('/ __attr__="(__a[0-9a-f]+)"/', function ($mch)
         {

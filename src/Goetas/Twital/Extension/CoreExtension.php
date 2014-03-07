@@ -5,8 +5,8 @@ use DOMDocument;
 use Goetas\Twital\Attribute;
 use Goetas\Twital\Node;
 use Goetas\Twital\Twital;
-use Goetas\Twital\SourceAdapter;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
 use Goetas\Twital\EventSubscriber\CustomNamespaceSubscriber;
 use Goetas\Twital\EventSubscriber\DOMMessSubscriber;
 
@@ -26,6 +26,7 @@ class CoreExtension extends AbstractExtension
     {
         $attributes = array();
         $attributes[Twital::NS]['__base__'] = new Attribute\BaseAttribute();
+        $attributes[Twital::NS]['if'] = new Attribute\IfAttribute();
         $attributes[Twital::NS]['set'] = new Attribute\SetAttribute();
         $attributes[Twital::NS]['content'] = new Attribute\ContentAttribute();
         $attributes[Twital::NS]['omit'] = new Attribute\OmitAttribute();

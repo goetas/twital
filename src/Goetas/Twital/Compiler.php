@@ -77,12 +77,14 @@ class Compiler
     {
         return $this->lexerOptions[$name];
     }
-
+    /**
+     * @param \DOMDocument $doc
+     * @return void
+     */
     public function compile(\DOMDocument $doc)
     {
         $this->document = $doc;
         $this->compileChilds($doc);
-        return $doc;
     }
 
     public function compileElement(\DOMElement $node)

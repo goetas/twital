@@ -20,5 +20,5 @@ interface Attribute
      */
     const STOP_ATTRIBUTE = 2;
 
-    public function visit(\DOMAttr $att, CompilationContext $context);
+    public function visit(\DOMAttr $att, Compiler $context);
 }

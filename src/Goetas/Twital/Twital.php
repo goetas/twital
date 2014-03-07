@@ -98,9 +98,9 @@ class Twital
         $this->dispatcher->dispatch('compiler.post_load', $templateEvent);
 
         $compiler = new Compiler($this, isset($this->options['lexer']) ? $this->options['lexer'] : array());
-        $template = $compiler->compile($templateEvent->getTemplate()->getDocument());
+        $compiler->compile($templateEvent->getTemplate()->getDocument());
 
-        $templateEvent = new TemplateEvent($this, $template);
+        $templateEvent = new TemplateEvent($this, $templateEvent->getTemplate());
         $this->dispatcher->dispatch('compiler.pre_dump', $templateEvent);
         $source = $adapter->dump($templateEvent->getTemplate());
 

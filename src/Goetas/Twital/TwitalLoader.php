@@ -37,17 +37,17 @@ class TwitalLoader implements \Twig_LoaderInterface
      *
      * @var Compiler
      */
-    protected $compiler;
+    protected $twital;
     /**
      * Creates a new Twital loader.
      * @param \Twig_LoaderInterface $loader
-     * @param Compiler $compiler
+     * @param Compiler $twital
      * @param array $sourceAdapters If NULL, some standard rules will be used (`*.twital.*` and `*.twital`).
      */
-    public function __construct(\Twig_LoaderInterface $loader, Twital $compiler, $addDefaults = true)
+    public function __construct(\Twig_LoaderInterface $loader, Twital $twital, $addDefaults = true)
     {
         $this->loader = $loader;
-        $this->compiler = $compiler;
+        $this->twital = $twital;
 
         if (is_null($addDefaults)) {
             $this->addSourceAdapter('/\.twital\.html$/i',new HTML5Adapter());
@@ -106,7 +106,7 @@ class TwitalLoader implements \Twig_LoaderInterface
 
         if ($adapter = $this->getSourceAdapter($name)) {
 
-            $source = $this->compiler->compile($adapter, $source);
+            $source = $this->twital->compile($adapter, $source);
 
         }
 

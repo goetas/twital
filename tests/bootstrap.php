@@ -1,6 +1,7 @@
 <?php
 
-
+use Goetas\Twital\EventSubscriber\DOMMessSubscriber;
+use Goetas\Twital\EventSubscriber\CustomNamespaceSubscriber;
 error_reporting(E_ALL | E_STRICT);
 
 if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
@@ -10,11 +11,20 @@ if (file_exists(__DIR__ . '/../vendor/autoload.php')) {
     // installed as a dependency in `vendor`
     $classLoader = require __DIR__ . '/../../../../../autoload.php';
 } else {
-    print('Can\'t find autoload.php. Did you install dependencies via composer?');
+    throw new Exception('Can\'t find autoload.php. Did you install dependencies via composer?');
 }
 
+/*
+$twigLoader = new Twig_Loader_Filesystem();
+$twitalLoader = new TwitalLoader($twigLoader, $compiler);
+
+$twitalLoader->addNamePattern('/*.xml.twital/i', new XMLAdapter());
+$twitalLoader->addNamePattern('/*.html.twital/i', new HTML5Adapter());
+$twitalLoader->addNamePattern('/*.xhtml.twital/i', new XHTMLAdapter());
 
 
+$twig = new Twig_Environment($twitalLoader);
+*/
 /*
 $loader = new Twig_Loader_Filesystem(array(__DIR__."/suite/templates"));
 $twitalLoader = new TwitalLoader($loader);
