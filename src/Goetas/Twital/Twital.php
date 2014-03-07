@@ -2,12 +2,7 @@
 namespace Goetas\Twital;
 
 use Goetas\Twital\Extension\CoreExtension;
-use Goetas\Twital\Extension\I18nExtension;
-use Goetas\Twital\Extension\HTML5Extension;
-use Goetas\Twital\SourceAdapter\XMLAdapter;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\EventDispatcher\Event;
-use Symfony\Component\EventDispatcher\GenericEvent;
 use Goetas\Twital\EventDispatcher\SourceEvent;
 use Goetas\Twital\EventDispatcher\TemplateEvent;
 

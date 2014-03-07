@@ -4,7 +4,6 @@ namespace Goetas\Twital\Tests;
 use Goetas\Twital\TwitalLoader;
 use Goetas\Twital\Twital;
 use Goetas\Twital\SourceAdapter\XMLAdapter;
-use Goetas\Twital\Compiler;
 
 
 class DynamicAttrAttributeTest extends \PHPUnit_Framework_TestCase

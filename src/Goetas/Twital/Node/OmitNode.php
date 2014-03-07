@@ -3,9 +3,7 @@ namespace Goetas\Twital\Node;
 
 use Goetas\Twital\Node;
 use Goetas\Twital\Compiler;
-
 use Goetas\Twital\Helper\DOMHelper;
-use Exception;
 class OmitNode implements Node
 {
     public function visit(\DOMElement $node, Compiler $context)

@@ -1,10 +1,6 @@
 <?php
 namespace Goetas\Twital;
 
-use Goetas\Twital\Extension\CoreExtension;
-use Goetas\Twital\Extension\I18nExtension;
-use Goetas\Twital\Extension\HTML5Extension;
-
 class Template
 {
     /**

@@ -1,9 +1,6 @@
 <?php
 namespace Goetas\Twital;
 
-use Goetas\Twital\Extension\CoreExtension;
-use Goetas\Twital\Extension\I18nExtension;
-use Goetas\Twital\Extension\HTML5Extension;
 use Goetas\Twital\SourceAdapter\HTML5Adapter;
 use Goetas\Twital\SourceAdapter\XMLAdapter;
 use Goetas\Twital\SourceAdapter\XHTMLAdapter;

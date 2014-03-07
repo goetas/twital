@@ -3,7 +3,6 @@ namespace Goetas\Twital\SourceAdapter;
 
 use HTML5;
 use Goetas\Twital\SourceAdapter;
-use Goetas\Twital\NamespaceHelper;
 use Goetas\Twital\Template;
 use Goetas\Twital\Helper\DOMHelper;
 
