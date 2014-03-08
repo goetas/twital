@@ -34,6 +34,9 @@ class CoreAttributeTest extends \PHPUnit_Framework_TestCase
             array('<div t:if="true">content</div>', '<div>content</div>'),
             array('<div t:for="foo">content</div>', '{% for foo %}<div>content</div>{% endfor %}'),
             array('<div t:set="foo = 1">content</div>', '{% set foo = 1 %}<div>content</div>'),
+            array('<div t:capture="foo">content</div>', '{% set foo %}<div>content</div>{% endset %}'),
+            array('<div t:content="foo">content</div>', '<div>{{ foo }}</div>'),
+            //array('<div t:omit="condition">content</div>', '<div>{{ foo }}</div>'),
         );
     }
 }

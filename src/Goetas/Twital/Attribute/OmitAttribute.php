@@ -19,6 +19,13 @@ class OmitAttribute implements Attribute
         $pi = $context->createControlNode("if not _tmp_omit");
         $node->parentNode->insertBefore($pi, $node);
 
+        $pi = $context->createControlNode("endif");
+        if ($node->firstChild) {
+            $node->insertBefore($pi, $node->firstChild);
+        }else{
+            $node->appendChild($pi);
+        }
+
         $pi = $context->createControlNode("if not _tmp_omit");
         $node->appendChild($pi);
 

@@ -47,6 +47,12 @@ class DynamicAttrAttributeTest extends \PHPUnit_Framework_TestCase
             array('<div t:attr-append="condition?class=\'foo\'">content</div>', '<div class="foo">content</div>', array('condition'=>1)),
             array('<div class="foo" t:attr-append="condition?class=\'bar\'">content</div>', '<div class="foobar">content</div>', array('condition'=>1)),
             array('<div t:attr-append="condition?class=\'foo\', condition?class=\'bar\'">content</div>', '<div class="foobar">content</div>', array('condition'=>1)),
+
+
+
+            array('<div t:omit="condition">content</div>', 'content', array('condition'=>1)),
+            array('<div t:omit="condition">content</div>', '<div>content</div>', array('condition'=>0)),
+            array('<div t:omit="true">content</div>', 'content'),
         );
     }
 }
