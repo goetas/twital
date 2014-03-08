@@ -48,6 +48,10 @@ class CoreAttributeTest extends \PHPUnit_Framework_TestCase
             array('<t:include from="aaa.html" with="{aaa:bbb} only"/>', '{% include "aaa.html" with {aaa:bbb} only %}'),
             array('<t:include from="aaa.html" with="{aaa:bbb}" only="true"/>', '{% include "aaa.html" with {aaa:bbb} only %}'),
 
+            array('<t:omit>foo</t:omit>', 'foo'),
+            array('<t:omit><div>foo</div></t:omit>', '<div>foo</div>'),
+
+            array('<t:include from-exp="foo"/>', '{% include foo %}'),
         );
     }
 }
