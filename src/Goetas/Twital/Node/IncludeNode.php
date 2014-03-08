@@ -16,20 +16,20 @@ class IncludeNode implements Node
         if ($node->hasAttribute("from-exp")) {
             $code .= $node->getAttribute("from-exp");
         } elseif ($node->hasAttribute("from")) {
-            $code .= "'" . $node->getAttribute("from") . "'";
+            $code .= "\"" . $node->getAttribute("from") . "\"";
         } else {
             throw new Exception("The 'from' or 'from-exp' attribute is required");
         }
 
 
-        if ($node->hasAttribute("ignore-missing") && $node->hasAttribute("ignore-missing") !== false) {
+        if ($node->hasAttribute("ignore-missing") && $node->getAttribute("ignore-missing") !== "false") {
             $code .= " ignore missing";
         }
         if ($node->hasAttribute("with")) {
             $code .= " with " . $node->getAttribute("with");
         }
         if ($node->hasAttribute("only") && $node->getAttribute("only") !== "false") {
-            $code .= " ignore missing";
+            $code .= " only";
         }
         if ($node->hasAttribute("sandboxed") && $node->getAttribute("sandboxed") !== "false") {
             $code .= " sandboxed = true";
