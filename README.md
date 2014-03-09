@@ -7,7 +7,8 @@ To learn more about Twig you can read more on "Twig Official Site":(http://www.)
 
 To understand better what are Twital benefits consider this Twig Template that simply shows a list of users from an array.
 
-```jinja
+
+```jinja+xml
 {% if users %}
 <div>
     <h1>Members</h1>
