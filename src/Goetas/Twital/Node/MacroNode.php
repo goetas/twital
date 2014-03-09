@@ -4,6 +4,7 @@ namespace Goetas\Twital\Node;
 use Goetas\Twital\Node;
 use Goetas\Twital\Compiler;
 use Goetas\Twital\Helper\DOMHelper;
+use Exception;
 
 class MacroNode implements Node
 {
