@@ -1,6 +1,6 @@
 <?php
 namespace Goetas\Twital\Helper;
-
+use Exception;
 class ParserHelper
 {
 
