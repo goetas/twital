@@ -1,3 +1,9 @@
+
+[![Build Status](https://travis-ci.org/goetas/twital.png?branch=dev)](https://travis-ci.org/goetas/twital)
+[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/goetas/twital/badges/quality-score.png?s=617ac058fc3c486427752fd3fb1f3931bca971ed)](https://scrutinizer-ci.com/g/goetas/twital/)
+[![Code Coverage](https://scrutinizer-ci.com/g/goetas/twital/badges/coverage.png?s=de8d714be4a97b4b11bb44a2ff6601dbda86696c)](https://scrutinizer-ci.com/g/goetas/twital/)
+
+
 What is Twital?
 ==============
 
@@ -8,7 +14,7 @@ To learn more about Twig you can read more on "Twig Official Site":(http://www.)
 To understand better what are Twital benefits consider this Twig Template that simply shows a list of users from an array.
 
 
-```jinja+xml
+```jinja
 {% if users %}
 <div>
     <h1>Members</h1>
