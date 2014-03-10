@@ -15,7 +15,7 @@ class EmbedNode implements Node
         if ($node->hasAttribute("from-exp")) {
             $filename = $node->getAttribute("from-exp");
         } elseif ($node->hasAttribute("from")) {
-            $filename = "'" . $node->getAttribute("from") . "'";
+            $filename = '"' . $node->getAttribute("from") . '"';
         } else {
             throw new Exception("The 'from' or 'from-exp' attribute is required");
         }
@@ -44,7 +44,12 @@ class EmbedNode implements Node
         $ext = $context->createControlNode($code);
 
         $set = iterator_to_array($node->childNodes);
+
+        $n = $node->ownerDocument->createTextNode("\n");
+        array_unshift($set, $n);
         array_unshift($set, $ext);
+
+        $set[] = $context->createControlNode("endembed");
 
         DOMHelper::replaceWithSet($node, $set);
     }

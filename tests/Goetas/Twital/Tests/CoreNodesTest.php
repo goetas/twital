@@ -46,15 +46,15 @@ class CoreNodesTest extends \PHPUnit_Framework_TestCase
 
     public function getDataFormTemplates()
     {
-    	$all = glob(__DIR__."/templates/*.xml");
-    	$data = array();
-    	foreach ($all as $file) {
-    	    $data[] = array(
-    	    	file_get_contents($file),
-    	        file_get_contents(substr($file, 0, -4).".twig"),
-    	    );
-    	}
-    	return $data;
+        $all = glob(__DIR__."/templates/*.xml");
+        $data = array();
+        foreach ($all as $file) {
+            $data[] = array(
+                trim(file_get_contents($file)),
+                str_replace(array("\r\n","\r"), "\n",trim(file_get_contents(substr($file, 0, -4).".twig"))),
+            );
+        }
+        return $data;
     }
 
     /**

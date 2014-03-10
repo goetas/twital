@@ -31,11 +31,6 @@ class BlockNode implements Node
         $sandbox->insertBefore($start, $sandbox->firstChild);
         $sandbox->appendChild($end);
 
-        // better code formatting
-        if ($sandbox->parentNode->namespaceURI == Twital::NS && $sandbox->parentNode->localName=="extends"){
-            $n = $node->ownerDocument->createTextNode("\n");
-            $sandbox->parentNode->insertBefore($n,$sandbox);
-        }
         DOMHelper::replaceWithSet($sandbox, iterator_to_array($sandbox->childNodes));
         DOMHelper::replaceWithSet($node, iterator_to_array($node->childNodes));
     }

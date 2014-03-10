@@ -32,6 +32,10 @@ class ExtendsNode implements Node
         $ext = $context->createControlNode("extends {$filename}");
 
         $set = iterator_to_array($node->childNodes);
+        if(count($set)){
+            $n = $node->ownerDocument->createTextNode("\n");
+            array_unshift($set, $n);
+        }
         array_unshift($set, $ext);
 
         DOMHelper::replaceWithSet($node, $set);
