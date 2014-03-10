@@ -15,7 +15,7 @@ class ExtendsNode implements Node
         if ($node->hasAttribute("from-exp")) {
             $filename = $node->getAttribute("from-exp");
         } elseif ($node->hasAttribute("from")) {
-            $filename = "'" . $node->getAttribute("from") . "'";
+            $filename = '"' . $node->getAttribute("from") . '"';
         } else {
             throw new Exception("The 'from' or 'from-exp' attribute is required");
         }

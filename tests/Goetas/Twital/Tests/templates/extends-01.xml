@@ -1,0 +1,5 @@
+<t:extends from="foo.twig">
+<t:block name="block01">
+    Test content
+</t:block>
+</t:extends>

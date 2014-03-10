@@ -16,7 +16,7 @@ class IncludeNode implements Node
         if ($node->hasAttribute("from-exp")) {
             $code .= $node->getAttribute("from-exp");
         } elseif ($node->hasAttribute("from")) {
-            $code .= "\"" . $node->getAttribute("from") . "\"";
+            $code .= '"' . $node->getAttribute("from") . '"';
         } else {
             throw new Exception("The 'from' or 'from-exp' attribute is required");
         }

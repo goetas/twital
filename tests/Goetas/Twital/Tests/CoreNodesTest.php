@@ -41,10 +41,31 @@ class CoreNodesTest extends \PHPUnit_Framework_TestCase
 
             array('<t:omit>foo</t:omit>', 'foo'),
             array('<t:omit><div>foo</div></t:omit>', '<div>foo</div>'),
-
-            array('<t:include from-exp="foo"/>', '{% include foo %}'),
         );
     }
+
+    public function getDataFormTemplates()
+    {
+    	$all = glob(__DIR__."/templates/*.xml");
+    	$data = array();
+    	foreach ($all as $file) {
+    	    $data[] = array(
+    	    	file_get_contents($file),
+    	        file_get_contents(substr($file, 0, -4).".twig"),
+    	    );
+    	}
+    	return $data;
+    }
+
+    /**
+     * @dataProvider getDataFormTemplates
+     */
+    public function testVisitNodeTemplates($source, $expected)
+    {
+        $compiled = $this->twital->compile($this->sourceAdapter, $source);
+        $this->assertEquals($expected, $compiled);
+    }
+
 }
 
 
