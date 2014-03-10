@@ -28,7 +28,7 @@ class CustomNamespaceRawSubscriber implements EventSubscriberInterface
         $xml = trim($event->getTemplate());
 
         foreach($this->customNamespaces as $prefix => $ns){
-            if(!preg_match('/ xmlns:' . $prefix . '=("|\')' . preg_quote($ns, '/') . '("|\')/', $xml)){
+            if(!preg_match('/ xmlns:([a-z0-9\-]+)=("|\')' . preg_quote($ns, '/') . '("|\')/', $xml)){
 
                 $start = strpos($xml, '<?')!==0?(strpos($xml, '?>')+2):0;
 
