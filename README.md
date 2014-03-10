@@ -17,12 +17,9 @@ To understand better what are Twital benefits consider this Twig Template that s
 ```jinja
 {% if users %}
 <div>
-    <h1>Members</h1>
     <ul>
         {% for user in users %}
-        <li>
-            {{ user.name }}
-        </li>
+            <li>{{ user.name }}</li>
         {% endfor %}
     </ul>
 </div>
@@ -31,13 +28,10 @@ To understand better what are Twital benefits consider this Twig Template that s
 
 To express the same template using Twital plugin for Twig you can do:
 
-```jinja
+```xml
 <div t:if="users">
-    <h1>Members</h1>
     <ul t:for="user in users">
-        <li>
-            {{ user.name }}
-        </li>
+        <li>{{ user.name }}</li>
     </ul>
 </div>
 ```
@@ -52,7 +46,7 @@ If some Twig functionality is not available for Twital you can freely mix these 
 
 ```jinja
 <div t:if="users">
-    <h1>{% trans %}Members{% %}</h1>
+    <h1>{% trans %}Members{% endtrans %}</h1>
     <ul t:for="user in users">
         <li>
             {{ user.name }}
