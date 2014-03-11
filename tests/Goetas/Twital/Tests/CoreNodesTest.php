@@ -39,6 +39,9 @@ class CoreNodesTest extends \PHPUnit_Framework_TestCase
             array('<t:include from="aaa.html" with="{aaa:bbb} only"/>', '{% include "aaa.html" with {aaa:bbb} only %}'),
             array('<t:include from="aaa.html" with="{aaa:bbb}" only="true"/>', '{% include "aaa.html" with {aaa:bbb} only %}'),
 
+            array('<t:import from="forms.html" as="forms"/>','{% import "forms.html" as forms %}'),
+            array('<t:import from="forms.html" aliases="input as input_field, textarea"/>', '{% from "forms.html" import input as input_field, textarea %}'),
+
             array('<t:omit>foo</t:omit>', 'foo'),
             array('<t:omit><div>foo</div></t:omit>', '<div>foo</div>'),
         );

@@ -10,18 +10,24 @@ class ImportNode implements Node
 
     public function visit(\DOMElement $node, Compiler $context)
     {
-        if (! $node->hasAttribute("name")) {
-            throw new Exception("Name attribute is required");
-        }
-        if (! $node->hasAttribute("as") && ! $node->hasAttribute("aliases")) {
-            throw new Exception("As or Alias attribute is required");
+        if ($node->hasAttribute("from-exp")) {
+            $filename = $node->getAttribute("from-exp");
+        } elseif ($node->hasAttribute("from")) {
+            $filename = '"' . $node->getAttribute("from") . '"';
+        } else {
+            throw new Exception("The 'from' or 'from-exp' attribute is required");
         }
 
         if ($node->hasAttribute("as")) {
-            $pi = $context->createControlNode("import " . ($node->getAttribute("name-exp") ? $node->getAttribute("name-exp") : ("'" . $node->getAttribute("name") . "'")) . " as " . $node->getAttribute("as") );
+            $code = "import $filename as " . $node->getAttribute("as");
+            $pi = $context->createControlNode("import " . ($node->getAttribute("fro-exp") ? $node->getAttribute("name-exp") : ("'" . $node->getAttribute("name") . "'")) . " as " . $node->getAttribute("as") );
+        } elseif ($node->hasAttribute("aliases")) {
+            $code = "from $filename import " . $node->getAttribute("aliases");
         } else {
-            $pi = $context->createControlNode("from " . ($node->hasAttribute("name-exp") ? $node->getAttribute("name-exp") : ("'" . $node->getAttribute("name") . "'")) . " import as " . $node->getAttribute("aliases") );
+            throw new Exception("As or Alias attribute is required");
         }
+
+        $pi = $context->createControlNode($code);
 
         $node->parentNode->replaceChild($pi, $node);
     }
