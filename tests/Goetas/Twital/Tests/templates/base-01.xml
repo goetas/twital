@@ -1,0 +1,3 @@
+<div t:block="block01">
+    Content {{ parent() }}
+</div>

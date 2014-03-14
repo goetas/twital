@@ -1,0 +1,12 @@
+<t:extends from="layout_skeleton.twig">
+<t:block name="content">
+<t:embed from="vertical_boxes_skeleton.twig" with="{'foo': 'bar'}" only="true" ignore-missing="true">
+<t:block name="top">
+    Some content for the top box
+</t:block>
+<t:block name="bottom">
+    Some content for the bottom box
+</t:block>
+</t:embed>
+</t:block>
+</t:extends>

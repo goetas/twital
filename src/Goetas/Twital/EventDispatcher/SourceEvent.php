@@ -1,0 +1,44 @@
+<?php
+namespace Goetas\Twital\EventDispatcher;
+
+use Symfony\Component\EventDispatcher\Event;
+use Goetas\Twital\Twital;
+class SourceEvent extends Event
+{
+    /**
+     *
+     * @var Twital
+     */
+    protected $twital;
+    /**
+     *
+     * @var string
+     */
+    protected $template;
+    public function __construct(Twital $twital, $template = null)
+    {
+    	$this->twital = $twital;
+    	$this->template = $template;
+    }
+    /**
+     * @return \Goetas\Twital\Twital
+     */
+	public function getTwital() {
+		return $this->twital;
+	}
+	/**
+	 * @return string
+	 */
+	public function getTemplate() {
+		return $this->template;
+	}
+
+	/**
+	 * @param string $template
+	 * @return void
+	 */
+	public function setTemplate($template) {
+		$this->template = $template;
+	}
+
+}

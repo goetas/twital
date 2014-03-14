@@ -1,0 +1,6 @@
+<t:extends from="foo.twig">
+<t:use from="blocks.html" with="sidebar as base_sidebar"/>
+<t:block name="block01">
+    Test content
+</t:block>
+</t:extends>
