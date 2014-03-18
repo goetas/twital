@@ -22,7 +22,7 @@ class DynamicAttrAttributeTest extends \PHPUnit_Framework_TestCase
         parent::setUp();
         $twital = new Twital();
 
-        $twitalLoader = new TwitalLoader(new \Twig_Loader_String(),$twital, false);
+        $twitalLoader = new TwitalLoader($twital, false, new \Twig_Loader_String());
         $twitalLoader->addSourceAdapter("/.*/", new XMLAdapter());
 
         $this->twig = new \Twig_Environment($twitalLoader);
