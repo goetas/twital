@@ -82,7 +82,7 @@ class TwitalLoader implements \Twig_LoaderInterface
      *
      * @return SourceAdapter
      */
-    protected function getSourceAdapter($name)
+    public function getSourceAdapter($name)
     {
         foreach (array_reverse($this->sourceAdapters) as $pattern => $adapter) {
             if (preg_match($pattern, $name)) {
@@ -149,4 +149,11 @@ class TwitalLoader implements \Twig_LoaderInterface
         $this->loader = $loader;
         return $this;
     }
+    /**
+     * @return \Goetas\Twital\Twital
+     */
+	public function getTwital() {
+		return $this->twital;
+	}
+
 }
