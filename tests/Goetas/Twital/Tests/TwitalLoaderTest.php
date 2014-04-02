@@ -16,7 +16,6 @@ class TwitalLoaderTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->twital = new Twital();
     }
 
     protected function getRequiredAdapters()
@@ -28,11 +27,33 @@ class TwitalLoaderTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function getMatchedFilenames()
+    {
+        return array(
+            array(
+                'foo.twital.xml',
+                true
+            ),
+            array(
+                'foo.twital.html',
+                true
+            ),
+            array(
+                'foo.twital.xhtml',
+                true
+            ),
+            array(
+                'foo.twital.atom',
+                false
+            )
+        );
+    }
+
     public function testInternalLoader()
     {
         $loader = new \Twig_Loader_String();
 
-        $twitalLoader = new TwitalLoader($this->twital, true, $loader);
+        $twitalLoader = new TwitalLoader($loader);
 
         $this->assertSame($loader, $twitalLoader->getLoader());
 
@@ -44,7 +65,7 @@ class TwitalLoaderTest extends \PHPUnit_Framework_TestCase
 
     public function testDefaultAdapters()
     {
-        $twitalLoader = new TwitalLoader($this->twital, true, new \Twig_Loader_String());
+        $twitalLoader = new TwitalLoader();
 
         $adapters = $twitalLoader->getSourceAdapters();
 
@@ -59,10 +80,20 @@ class TwitalLoaderTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     *
+     * @dataProvider getMatchedFilenames
+     */
+    public function testRegexAdapters($filename, $managed)
+    {
+        $twitalLoader = new TwitalLoader();
+        $this->assertEquals($managed, !!$twitalLoader->getSourceAdapter($filename));
+    }
+
     public function testTwitalFile()
     {
         $twital = $this->getMock('Goetas\Twital\Twital');
-        $twitalLoader = new TwitalLoader($twital, false, new \Twig_Loader_String());
+        $twitalLoader = new TwitalLoader(new \Twig_Loader_String(), $twital, false);
         $twitalLoader->addSourceAdapter('/.*\.xml$/', new XMLAdapter());
 
         $twital->expects($this->once())->method('compile');
@@ -72,19 +103,11 @@ class TwitalLoaderTest extends \PHPUnit_Framework_TestCase
     public function testNonTwitalFile()
     {
         $twital = $this->getMock('Goetas\Twital\Twital');
-        $twitalLoader = new TwitalLoader($twital, false, new \Twig_Loader_String());
+        $twitalLoader = new TwitalLoader(new \Twig_Loader_String(), $twital, false);
         $twitalLoader->addSourceAdapter('/.*\.xml$/', new XMLAdapter());
 
         $twital->expects($this->never())->method('compile');
         $twitalLoader->getSource('aaa.txt');
-    }
-
-    public function __test__VisitNode($source, $expected)
-    {
-        $twitalLoader = new TwitalLoader($this->twital, false, new \Twig_Loader_String());
-        $twitalLoader->addSourceAdapter("/.*/", new XMLAdapter());
-
-        $this->twig = new \Twig_Environment($twitalLoader);
     }
 }
 

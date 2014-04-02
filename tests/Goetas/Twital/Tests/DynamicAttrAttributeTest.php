@@ -20,9 +20,8 @@ class DynamicAttrAttributeTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $twital = new Twital();
 
-        $twitalLoader = new TwitalLoader($twital, false, new \Twig_Loader_String());
+        $twitalLoader = new TwitalLoader(new \Twig_Loader_String(), null, false);
         $twitalLoader->addSourceAdapter("/.*/", new XMLAdapter());
 
         $this->twig = new \Twig_Environment($twitalLoader);

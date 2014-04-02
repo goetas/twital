@@ -3,22 +3,34 @@ namespace Goetas\Twital;
 
 use DOMAttr;
 
+/**
+ * Reppresents the handler for custom attributes.
+ *
+ * @author Asmir Mustafic <goetas@gmail.com>
+ *
+ */
 interface Attribute
 {
 
     /**
-     * Ferma l'elaborazione del contenuto del nodo
+     * Stop processing current node childs.
      *
      * @var int
      */
     const STOP_NODE = 1;
 
     /**
-     * Ferma l'elaborazione degli attributi del nodo
+     * Stop processing current node attributes.
      *
      * @var int
      */
     const STOP_ATTRIBUTE = 2;
 
+    /**
+     *
+     * @param \DOMAttr $att
+     * @param Compiler $context
+     * @return int|null Bitmask of {Attribute::STOP_NODE} and {Attribute::STOP_ATTRIBUTE}
+     */
     public function visit(\DOMAttr $att, Compiler $context);
 }

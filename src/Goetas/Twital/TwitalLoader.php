@@ -41,17 +41,22 @@ class TwitalLoader implements \Twig_LoaderInterface
      * @param Compiler $twital
      * @param array $sourceAdapters If NULL, some standard rules will be used (`*.twital.*` and `*.twital`).
      */
-    public function __construct(Twital $twital, $addDefaults = true, \Twig_LoaderInterface $loader = null)
+    public function __construct(\Twig_LoaderInterface $loader = null, Twital $twital = null, $addDefaults = true)
     {
         $this->loader = $loader;
         $this->twital = $twital;
 
-        if ($addDefaults) {
+        if ($addDefaults === true || (is_array($addDefaults) && in_array('html', $addDefaults))) {
             $this->addSourceAdapter('/\.twital\.html$/i', new HTML5Adapter());
+        }
+        if ($addDefaults === true || (is_array($addDefaults) && in_array('xml', $addDefaults))) {
             $this->addSourceAdapter('/\.twital\.xml$/i', new XMLAdapter());
+        }
+        if ($addDefaults === true || (is_array($addDefaults) && in_array('xhtml', $addDefaults))) {
             $this->addSourceAdapter('/\.twital\.xhtml$/i', new XHTMLAdapter());
         }
     }
+
 
     /**
      * Add a new pattern that can decide if a template is twital-compilable or not.
@@ -102,7 +107,7 @@ class TwitalLoader implements \Twig_LoaderInterface
         $source = $this->loader->getSource($name);
 
         if ($adapter = $this->getSourceAdapter($name)) {
-            $source = $this->twital->compile($adapter, $source);
+            $source = $this->getTwital()->compile($adapter, $source);
         }
 
         return $source;
@@ -153,6 +158,10 @@ class TwitalLoader implements \Twig_LoaderInterface
      * @return \Goetas\Twital\Twital
      */
 	public function getTwital() {
+
+	    if ($this->twital===null) {
+	        $this->twital = new Twital();
+	    }
 		return $this->twital;
 	}
 

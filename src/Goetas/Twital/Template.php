@@ -1,39 +1,57 @@
 <?php
 namespace Goetas\Twital;
 
+/**
+ * This class represents a tempalte.
+ * A valid template is a {DOMDocument} with some additional metadata.
+ *
+ * @author Asmir Mustafic <goetas@gmail.com>
+ *
+ */
 class Template
 {
+
     /**
+     * The template {DOMDocument}
      *
      * @var \DOMDocument
      */
-    protected $document;
+    private $document;
+
     /**
+     * Template metadatas
      *
      * @var mixed
      */
-    protected $metadata;
+    private $metadata;
 
+    /**
+     * @param \DOMDocument $document The template {DOMDocument}
+     * @param string $metadata Template metadatas
+     */
     public function __construct(\DOMDocument $document, $metadata = null)
     {
         $this->document = $document;
         $this->metadata = $metadata;
     }
+
     /**
+     * Returns the {DOMDocument} of a template
      *
      * @return \DOMDocument
      */
-	public function getDocument() {
-		return $this->document;
-	}
+    public function getDocument()
+    {
+        return $this->document;
+    }
+
     /**
+     * Return template metadatas.
      *
      * @return mixed
      */
-	public function getMetadata() {
-		return $this->metadata;
-	}
-
-
-
+    public function getMetadata()
+    {
+        return $this->metadata;
+    }
 }
