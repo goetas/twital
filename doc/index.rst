@@ -69,7 +69,7 @@ Twital needs at least **Twig 1.10** to run.
 Installation
 ************
 
-The recommended way to install Twig is via Composer_.
+The recommended way to install Twital is via Composer_.
 
 Using  ``composer require`` command:
 
@@ -160,14 +160,14 @@ TwitalBunbdle_.
 The bundle integrates all most common functionalities as Assetic, Forms, Translations, Routing, etc.
 
 
-.. _Twig: http://twig.sensiolabs.org/
-.. _TwitalBunbdle: https://github.com/goetas/twital-bundle
-.. _Symfony2: http://symfony.com
-.. _Composer: https://getcomposer.org/
-
-
 Note
 ****
 
 I'm sorry for the *terrible* english fluency used inside the documentation, I'm trying to improve it. 
 Pull Requests are welcome.
+
+
+.. _Twig: http://twig.sensiolabs.org/
+.. _TwitalBunbdle: https://github.com/goetas/twital-bundle
+.. _Symfony2: http://symfony.com
+.. _Composer: https://getcomposer.org/
