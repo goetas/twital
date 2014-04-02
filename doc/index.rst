@@ -75,7 +75,7 @@ Using  ``composer require`` command:
 
 .. code-block:: bash
 
-    composer require goetas/twital:1.0.*
+    composer require 'goetas/twital:*'
 
 Otherwise you can add the dependency to your ``composer.json`` file
 
@@ -83,7 +83,7 @@ Otherwise you can add the dependency to your ``composer.json`` file
 
     "require": {
         ..
-        "goetas/twital":"1.0.*",
+        "goetas/twital":"*",
         ..
     }
 
