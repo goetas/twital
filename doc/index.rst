@@ -35,7 +35,7 @@ To do the same thing using Twig, you will need:
 
 
 As you can see, using Twital template is **more readable**, **less verbose** and
-you have **not to worry about opening and closing block instructions**, they
+you have to **don't worry about opening and closing block instructions**, they
 are inherited from HTML structure.
 
 
