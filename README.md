@@ -5,7 +5,7 @@
 What is Twital?
 ==============
 
-Twital is a little "plugin" for Twig (a template engine for PHP) that change its language syntax, adding
+Twital is a little "plugin" for [Twig](http://twig.sensiolabs.org/) (a template engine for PHP) that change its language syntax, adding
 some shortcuts ad making it more suitable for HTML based (XML, HTML5, XHTML,
 SGML) templates.
 
@@ -54,15 +54,10 @@ Twital and Twig syntax to use the Twig ``autoescape`` tag.
 </h1>
 ```
 
-Prerequisites
-------------
-
-Twital needs at least **Twig 1.10** and **PHP 5.3.8** to run.
-
 Installation
 -----------
 
-The recommended way to install Twig is via Composer.
+The recommended way to install Twig is via [Composer](https://getcomposer.org/).
 
 Using  ``composer require`` command
 
@@ -117,7 +112,7 @@ echo $twig->render('template.twital.html', array('name' => 'John'));
 Symfony2 Users
 --------------
 
-If you are a Symfony2 user, you can add Twital to your project using the TwitalBunbdle:https://github.com/goetas/twital-bundle.
+If you are a Symfony2 user, you can add Twital to your project using the [TwitalBunbdle](https://github.com/goetas/twital-bundle).
 
 The bundle integrates all most common functionalies as Assetic, Forms, Translations etc.
 
