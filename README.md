@@ -1,69 +1,66 @@
-
 [![Build Status](https://travis-ci.org/goetas/twital.png?branch=dev)](https://travis-ci.org/goetas/twital)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/goetas/twital/badges/quality-score.png?s=617ac058fc3c486427752fd3fb1f3931bca971ed)](https://scrutinizer-ci.com/g/goetas/twital/)
 [![Code Coverage](https://scrutinizer-ci.com/g/goetas/twital/badges/coverage.png?s=de8d714be4a97b4b11bb44a2ff6601dbda86696c)](https://scrutinizer-ci.com/g/goetas/twital/)
 
-
 What is Twital?
 ==============
 
-Twital is a little "plugin" for Twig that change its templating language syntax, adding some shortcuts ad making it syntax more suitable for HTML based (XML, HTML5) templates.
+Twital is a little "plugin" for Twig (a template engine for PHP) that change its language syntax, adding
+some shortcuts ad making it more suitable for HTML based (XML, HTML5, XHTML,
+SGML) templates.
 
-To learn more about Twig you can read more on "Twig Official Site":(http://www.)
+To understand better what are Twital benefits, consider the following **Twital** template that
+simply shows a list of users from an array.
 
-To understand better what are Twital benefits consider this Twig Template that simply shows a list of users from an array.
+```xml
+<ul t:if="users">
+    <li t:for="user in users">
+        {{ user.name }}
+    </li>
+</ul>
+```
 
+To do the same thing using Twig, you need:
 
 ```jinja
 {% if users %}
-<div>
     <ul>
         {% for user in users %}
-            <li>{{ user.name }}</li>
+            <li>
+                {{ user.name }}
+            </li>
         {% endfor %}
     </ul>
-</div>
 {% endif %}
 ```
 
-To express the same template using Twital plugin for Twig you can do:
+As you can see, using Twital template is **more readable**, **less verbose** and
+you have **not to worry about opening and closing block instructions**, they
+are inherited from HTML structure.
 
-```xml
-<div t:if="users">
-    <ul t:for="user in users">
-        <li>{{ user.name }}</li>
-    </ul>
-</div>
-```
 
-As you can see, using Twital template is more readable and you have not to worry about opening and closing block instructions, they are inherited from HTML structure.
+Of course Twital supports all other Twig's nice functionalities as template
+inheritance, translations, looping, filtering, escaping etc.
 
-Of course Twital supports all other Twig functionalities as template inheritance, translations, looping, escaping etc.
-
-Here you can find a complete list of Twital attributes and elements.
-
-If some Twig functionality is not available for Twital you can freely mix these two syntaxes:
+If some Twig functionality is not available directly for Twital you can
+**freely mix Twig and Twital** syntaxes. In the above example we have mixed
+Twital and Twig syntax to use the Twig ``autoescape`` tag.
 
 ```jinja
-<div t:if="users">
-    <h1>{% trans %}Members{% endtrans %}</h1>
-    <ul t:for="user in users">
-        <li>
-            {{ user.name }}
-        </li>
-    </ul>
-</div>
+<h1 t:if="users">
+    {% spaceless %}
+        Members
+    {% spaceless %}
+</h1>
 ```
 
-In the previous template we are mixing Twital and Twig syntax to use the Twig``trans`` tag (of course ``trans`` is anyway avaiable using Twital syntax).
-
 Prerequisites
-*************
+------------
 
-Twital needs at least **Twig 1.10** to run.
+Twital needs at least **Twig 1.10** and **PHP 5.3.8** to run.
 
 Installation
-************
+-----------
 
 The recommended way to install Twig is via Composer.
 
@@ -72,36 +69,60 @@ Using  ``composer require`` command
 ```bash
 composer require goetas/twital:1.0.*
 ```
-Adding dependency to your ``composer.json`` file
+
+Or adding its dependency to your ``composer.json`` file
 
 ```js
-{
-    "require":{
-        ..
-        "goetas/twital":"1.0.*",
-        ..
+"require": {
+    ..
+    "goetas/twital":"1.0.*",
+    ..
 }
 ```
-.. note::
 
-    To learn more about composer please refer to its original site.
+Documentation
+-------------
 
-Basic API Usage
-***************
+Go here http://twital.readthedocs.org/ to read a more detailed documentation about Twital.
 
-This section gives you a brief introduction to the PHP API for Twig.
+
+Basic Usage
+-----------
+
+This section gives you a brief introduction to Twital.
+
+On the "design" side you have to create a file that contains your template
+(named for example ``demo.twital.html``):
+
+```jinja
+<div t:if="name">
+    Hello {{ name }}
+</div>
+```
+
+On the PHP side you have to create a PHP script and load a Twital instance:
 
 ```php
-require_once '/path/to/vendor/autoload.php';
+require_once '/path/to/composer/vendor/autoload.php';
+use Goetas\Twital\TwitalLoader;
 
-$loader = new Twig_Loader_Filesystem('/path/to/templates');
-$twig = new Twig_Environment($loader);
+$fs = new Twig_Loader_Filesystem('/path/to/templates');
+$twitalLoader = new TwitalLoader($fs);
 
-$twital = new Twig_Environment($twig);
-
-echo $twital->render('template.html', array('name' => 'Fabien'));
+$twig = new Twig_Environment($twitalLoader);
+echo $twig->render('template.twital.html', array('name' => 'John'));
 ```
-Twital uses Twig to compile and render templates, so Twital performance is exactly the same of any other Twig Template.
-=======
-Twig tal wrapper
 
+
+Symfony2 Users
+--------------
+
+If you are a Symfony2 user, you can add Twital to your project using the TwitalBunbdle:https://github.com/goetas/twital-bundle.
+
+The bundle integrates all most common functionalies as Assetic, Forms, Translations etc.
+
+Note
+----
+
+I'm sorry for the *terrible* english fluency used inside the documentation, I'm trying to improve it. 
+Pull Requests are welcome.

@@ -1,5 +1,5 @@
 ``attr``
-=======
+========
 
 Twital allows you to create HTML/XML attributes in a very simple way.
 You have not to mess uop with control structures inside HTML tags.
@@ -16,7 +16,7 @@ Let's see how it works:
 Here we add conditionaly an attribute based on the value of `condition` expression.
 
 
-You can use any Twig test expression as **condition** and **attribute value*,
+You can use any Twig test expression as **condition** and **attribute value**,
 but the attribute name must be a litteral.
 
 .. code-block:: xml+jinja
@@ -35,6 +35,6 @@ When not needed you can omit he condition instruction.
          Class will be "row"
     </div>
 
-.. see::
+.. tip::
 
     `attr-append`

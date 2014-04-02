@@ -1,5 +1,5 @@
 ``use``
-===========
+=======
 
 The Twital instruction for Twig ``use`` tag is ``t:use`` node.
 
@@ -20,6 +20,7 @@ Let's see how it works:
 You can create some aliases for block inside "used" template to avoid name conflicting:
 
 .. code-block:: xml+jinja
+
     <t:extends from="layout.html.twig">
         <t:use from="bars.html" aliases="sidebar as sidebar_original, footer as old_footer"/>
 

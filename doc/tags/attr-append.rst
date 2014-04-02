@@ -1,5 +1,5 @@
 ``attr``
-=======
+========
 
 Twital allows you to create HTML/XML attributes in a very simple way.
 

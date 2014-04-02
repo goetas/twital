@@ -1,5 +1,5 @@
 ``capture``
-=======
+===========
 
 This attribute act as ``set`` tag and allows to 'capture' chunks of text into a variable:
 

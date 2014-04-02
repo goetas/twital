@@ -12,9 +12,9 @@ To declare a macro inside Twital, the syntax is:
     </t:macro>
 
 
-To use a macro inside your Twital template, take a look to :doc:`import<../tags/import>`` attribute.
+To use a macro inside your Twital template, take a look to :doc:``import<../tags/import>`` attribute.
 
 .. note::
 
     For more information about ``macro`` tag please refer to
-    `Twig official documentation <http://twig.sensiolabs.org/doc/tags/macro.html>`_.
+    `Twig official documentation <http://twig.sensiolabs.org/doc/tags/macro.html>`__.
