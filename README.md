@@ -92,7 +92,7 @@ Basic Usage
 This section gives you a brief introduction to Twital.
 
 On the "design" side you have to create a file that contains your template
-(named for example ``demo.twital.html``):
+(here named ``demo.twital.html``):
 
 ```jinja
 <div t:if="name">
