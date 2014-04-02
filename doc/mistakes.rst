@@ -32,19 +32,17 @@ All templates must be XML valid (some excpetioins are allowed...).
     
 
 - The usage of `&` must follow XML syntax rules.
-  .. code-block:: xml
+  .. code-block:: html
 
     <div>
-        
         &amp; <!-- to output "&" you have to write "&amp;" -->
         &lt; <!-- to output "<" you have to write "&lt;" -->
-        &gt;<!-- to output ">" you have to write "&gt;" -->
+        &gt; <!-- to output ">" you have to write "&gt;" -->
         
         <!-- you can use all numeric entities -->
         &#160; &#160;
         
         <!-- you should not use named entities (&euro;)-->
-        
     </div>
     
 - To be compatible with all browsers, the use of `script` tag should be combined with  `CDATA` sections and script comments.
@@ -60,8 +58,8 @@ All templates must be XML valid (some excpetioins are allowed...).
     </script>  
     <style>
     /*<![CDATA[*/
-    if ( 1 > 2 && 2 < 0){
-        alert(' ok ')
+    head {
+        color: red;
     }
     /*]]>*/
     </style>
