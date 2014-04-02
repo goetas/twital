@@ -61,10 +61,6 @@ In the above example we have mixed Twital and Twig syntax to use the Twig ``auto
 Of course ``autoescape`` is available as Twital attribute
 :doc:`t:autoescape<tags/autoescape>`, this was just an example.
 
-Prerequisites
-*************
-
-Twital needs at least **Twig 1.10** to run.
 
 Installation
 ************

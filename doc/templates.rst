@@ -375,4 +375,4 @@ Extensions
 ----------
 
 Twital can be easily extended. To learn how to create your own extension you can
-read the :ref:``Extending Twital`` chapter.
+read the :ref:`Extending Twital` chapter.
