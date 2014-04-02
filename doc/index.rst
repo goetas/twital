@@ -171,3 +171,7 @@ Pull Requests are welcome.
 .. _TwitalBunbdle: https://github.com/goetas/twital-bundle
 .. _Symfony2: http://symfony.com
 .. _Composer: https://getcomposer.org/
+.. _TAL: http://en.wikipedia.org/wiki/Template_Attribute_Language
+.. _PHPTal: http://phptal.org/
+.. _AngularJS: http://angularjs.org/
+.. _Twig: http://angularjs.org/
