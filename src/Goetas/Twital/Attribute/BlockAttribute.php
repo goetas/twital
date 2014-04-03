@@ -4,6 +4,12 @@ namespace Goetas\Twital\Attribute;
 use Goetas\Twital\Attribute as AttributeBase;
 use Goetas\Twital\Compiler;
 use DOMAttr;
+
+/**
+ *
+ * @author Asmir Mustafic <goetas@gmail.com>
+ *
+ */
 class BlockAttribute implements AttributeBase
 {
     public function visit(DOMAttr $att, Compiler $context)

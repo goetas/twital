@@ -2,6 +2,11 @@
 namespace Goetas\Twital\SourceAdapter;
 
 use Goetas\Twital\Template;
+/**
+ *
+ * @author Asmir Mustafic <goetas@gmail.com>
+ *
+ */
 class XHTMLAdapter extends XMLAdapter
 {
 

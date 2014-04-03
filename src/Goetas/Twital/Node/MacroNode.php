@@ -6,6 +6,11 @@ use Goetas\Twital\Compiler;
 use Goetas\Twital\Helper\DOMHelper;
 use Exception;
 
+/**
+ *
+ * @author Asmir Mustafic <goetas@gmail.com>
+ *
+ */
 class MacroNode implements Node
 {
 

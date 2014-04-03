@@ -6,6 +6,12 @@ use Goetas\Twital\Compiler;
 use Goetas\Twital\Helper\DOMHelper;
 use Exception;
 use Goetas\Twital\Twital;
+
+/**
+ *
+ * @author Asmir Mustafic <goetas@gmail.com>
+ *
+ */
 class BlockNode implements Node
 {
     public function visit(\DOMElement $node, Compiler $context)

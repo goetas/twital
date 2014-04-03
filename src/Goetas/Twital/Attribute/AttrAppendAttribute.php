@@ -4,6 +4,11 @@ namespace Goetas\Twital\Attribute;
 use Goetas\Twital\Compiler;
 use Goetas\Twital\Helper\ParserHelper;
 
+/**
+ *
+ * @author Asmir Mustafic <goetas@gmail.com>
+ *
+ */
 class AttrAppendAttribute extends AttrAttribute
 {
 

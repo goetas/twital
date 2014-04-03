@@ -7,6 +7,11 @@ use Goetas\Twital\Twital;
 use Goetas\Twital\EventSubscriber\DOMMessSubscriber;
 use Goetas\Twital\EventSubscriber\CustomNamespaceRawSubscriber;
 
+/**
+ *
+ * @author Asmir Mustafic <goetas@gmail.com>
+ *
+ */
 class CoreExtension extends AbstractExtension
 {
     public function getSubscribers()

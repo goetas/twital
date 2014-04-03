@@ -6,6 +6,11 @@ use Goetas\Twital\SourceAdapter;
 use Goetas\Twital\Template;
 use Goetas\Twital\Helper\DOMHelper;
 
+/**
+ *
+ * @author Asmir Mustafic <goetas@gmail.com>
+ *
+ */
 class HTML5Adapter implements SourceAdapter
 {
 

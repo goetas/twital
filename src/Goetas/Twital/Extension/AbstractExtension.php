@@ -3,6 +3,11 @@ namespace Goetas\Twital\Extension;
 
 use Goetas\Twital\Extension;
 
+/**
+ *
+ * @author Asmir Mustafic <goetas@gmail.com>
+ *
+ */
 abstract class AbstractExtension implements Extension
 {
 

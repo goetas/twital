@@ -4,6 +4,12 @@ namespace Goetas\Twital\EventDispatcher;
 use Symfony\Component\EventDispatcher\Event;
 use Goetas\Twital\Twital;
 use Goetas\Twital\Template;
+
+/**
+ *
+ * @author Asmir Mustafic <goetas@gmail.com>
+ *
+ */
 class TemplateEvent extends Event
 {
     /**

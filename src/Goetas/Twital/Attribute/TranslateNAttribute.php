@@ -6,6 +6,11 @@ use Goetas\Twital\Compiler;
 use DOMAttr;
 use Goetas\Twital\Twital;
 
+/**
+ *
+ * @author Asmir Mustafic <goetas@gmail.com>
+ *
+ */
 class TranslateNAttribute implements Attribute
 {
 

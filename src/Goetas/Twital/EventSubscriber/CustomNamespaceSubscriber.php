@@ -5,7 +5,11 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Goetas\Twital\EventDispatcher\TemplateEvent;
 use Goetas\Twital\Helper\DOMHelper;
 
-
+/**
+ *
+ * @author Asmir Mustafic <goetas@gmail.com>
+ *
+ */
 class CustomNamespaceSubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents(){

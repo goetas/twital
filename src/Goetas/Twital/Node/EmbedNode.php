@@ -7,6 +7,11 @@ use Goetas\Twital\Compiler;
 use Goetas\Twital\Helper\DOMHelper;
 use Goetas\Twital\Twital;
 
+/**
+ *
+ * @author Asmir Mustafic <goetas@gmail.com>
+ *
+ */
 class EmbedNode implements Node
 {
 

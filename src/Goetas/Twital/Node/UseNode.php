@@ -4,6 +4,12 @@ namespace Goetas\Twital\Node;
 use Goetas\Twital\Node;
 use Goetas\Twital\Compiler;
 use Exception;
+
+/**
+ *
+ * @author Asmir Mustafic <goetas@gmail.com>
+ *
+ */
 class UseNode implements Node
 {
     public function visit(\DOMElement $node, Compiler $context)

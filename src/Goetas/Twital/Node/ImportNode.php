@@ -5,6 +5,11 @@ use Goetas\Twital\Node;
 use Goetas\Twital\Compiler;
 use Goetas\Twital\Exception;
 
+/**
+ *
+ * @author Asmir Mustafic <goetas@gmail.com>
+ *
+ */
 class ImportNode implements Node
 {
 

@@ -5,6 +5,11 @@ use Goetas\Twital\Attribute;
 use Goetas\Twital\Compiler;
 use DOMAttr;
 
+/**
+ *
+ * @author Asmir Mustafic <goetas@gmail.com>
+ *
+ */
 class CaptureAttribute implements Attribute
 {
 

@@ -3,6 +3,12 @@ namespace Goetas\Twital\EventDispatcher;
 
 use Symfony\Component\EventDispatcher\Event;
 use Goetas\Twital\Twital;
+
+/**
+ *
+ * @author Asmir Mustafic <goetas@gmail.com>
+ *
+ */
 class SourceEvent extends Event
 {
     /**

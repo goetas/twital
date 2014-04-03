@@ -4,7 +4,11 @@ namespace Goetas\Twital\EventSubscriber;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Goetas\Twital\EventDispatcher\SourceEvent;
 
-
+/**
+ *
+ * @author Asmir Mustafic <goetas@gmail.com>
+ *
+ */
 class CustomNamespaceRawSubscriber implements EventSubscriberInterface
 {
     public static function getSubscribedEvents(){

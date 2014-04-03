@@ -6,6 +6,12 @@ use Goetas\Twital\Compiler;
 use DOMAttr;
 use Goetas\Twital\Twital;
 use Goetas\Twital\Exception;
+
+/**
+ *
+ * @author Asmir Mustafic <goetas@gmail.com>
+ *
+ */
 class ElseAttribute implements AttributeBase
 {
     public function visit(DOMAttr $att, Compiler $context)

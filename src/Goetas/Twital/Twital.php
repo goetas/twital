@@ -6,6 +6,11 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 use Goetas\Twital\EventDispatcher\SourceEvent;
 use Goetas\Twital\EventDispatcher\TemplateEvent;
 
+/**
+ *
+ * @author Asmir Mustafic <goetas@gmail.com>
+ *
+ */
 class Twital
 {
 

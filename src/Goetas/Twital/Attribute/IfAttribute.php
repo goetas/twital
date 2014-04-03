@@ -5,6 +5,12 @@ use Goetas\Twital\Attribute as AttributeBase;
 use Goetas\Twital\Compiler;
 use DOMAttr;
 use Goetas\Twital\Twital;
+
+/**
+ *
+ * @author Asmir Mustafic <goetas@gmail.com>
+ *
+ */
 class IfAttribute implements AttributeBase
 {
     public function visit(DOMAttr $att, Compiler $context)

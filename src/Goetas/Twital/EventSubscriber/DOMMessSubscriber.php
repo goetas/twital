@@ -5,6 +5,11 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Goetas\Twital\Twital;
 use Goetas\Twital\EventDispatcher\SourceEvent;
 
+/**
+ *
+ * @author Asmir Mustafic <goetas@gmail.com>
+ *
+ */
 class DOMMessSubscriber implements EventSubscriberInterface
 {
 

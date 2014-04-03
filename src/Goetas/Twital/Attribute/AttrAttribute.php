@@ -7,6 +7,11 @@ use DOMAttr;
 use Goetas\Twital\Helper\ParserHelper;
 use Exception;
 
+/**
+ *
+ * @author Asmir Mustafic <goetas@gmail.com>
+ *
+ */
 class AttrAttribute implements Attribute
 {
 
