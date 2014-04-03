@@ -48,6 +48,7 @@ abstract class CoreNodesTest extends \PHPUnit_Framework_TestCase
 
             array('<t:omit>foo</t:omit>', 'foo'),
             array('<t:omit><div>foo</div></t:omit>', '<div>foo</div>'),
+            array('<div><t:omit t:if="0">foo</t:omit>bar</div>', '<div>{% if 0 %}foo{% endif %}bar</div>'),
             array('<div><![CDATA[aa]]></div>', '<div><![CDATA[aa]]></div>'),
             array('<t:omit><![CDATA[{{ foo }}]]></t:omit>', '<![CDATA[{{ foo }}]]>'),
 

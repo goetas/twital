@@ -32,7 +32,6 @@ class CoreAttributeTest extends \PHPUnit_Framework_TestCase
         return array(
             // if
             array('<div t:if="test">content</div>', '{% if test %}<div>content</div>{% endif %}'),
-            array('<div t:if="true">content</div>', '<div>content</div>'),
             array('<div><div t:if="test1">content1</div><div t:elseif="test2">content2</div></div>', '<div>{% if test1 %}<div>content1</div>{% elseif test2 %}<div>content2</div>{% endif %}</div>'),
             array('<div><div t:if="test1">content1</div>  <div t:elseif="test2">content2</div></div>', '<div>{% if test1 %}<div>content1</div>{% elseif test2 %}<div>content2</div>{% endif %}</div>'),
             array('<div><div t:if="test1">content1</div>  <div t:elseif="test2">content2</div>  <div t:elseif="test3">content3</div></div>', '<div>{% if test1 %}<div>content1</div>{% elseif test2 %}<div>content2</div>{% elseif test3 %}<div>content3</div>{% endif %}</div>'),

@@ -16,17 +16,14 @@ class IfAttribute implements AttributeBase
     public function visit(DOMAttr $att, Compiler $context)
     {
         $node = $att->ownerElement;
-        if($att->value!=="1" && $att->value!=="true"){
+        $pi = $context->createControlNode("if " . html_entity_decode($att->value));
+        $node->parentNode->insertBefore($pi, $node);
 
-            $pi = $context->createControlNode("if " . html_entity_decode($att->value));
-            $node->parentNode->insertBefore($pi, $node);
-
-            if (!($nextElement = self::findNextElement($node)) || (!$nextElement->hasAttributeNS(Twital::NS, 'elseif') && !$nextElement->hasAttributeNS(Twital::NS, 'else'))) {
-                $pi = $context->createControlNode("endif");
-                $node->parentNode->insertBefore($pi, $node->nextSibling); // insert after
-            }else{
-                self::removeWhitespace($node);
-            }
+        if (!($nextElement = self::findNextElement($node)) || (!$nextElement->hasAttributeNS(Twital::NS, 'elseif') && !$nextElement->hasAttributeNS(Twital::NS, 'else'))) {
+            $pi = $context->createControlNode("endif");
+            $node->parentNode->insertBefore($pi, $node->nextSibling); // insert after
+        }else{
+            self::removeWhitespace($node);
         }
         $node->removeAttributeNode($att);
     }
