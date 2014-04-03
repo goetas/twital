@@ -62,7 +62,7 @@ The recommended way to install Twig is via [Composer](https://getcomposer.org/).
 Using  ``composer require`` command
 
 ```bash
-composer require goetas/twital:1.0.*
+composer require 'goetas/twital:*'
 ```
 
 Or adding its dependency to your ``composer.json`` file
@@ -70,7 +70,7 @@ Or adding its dependency to your ``composer.json`` file
 ```js
 "require": {
     ..
-    "goetas/twital":"1.0.*",
+    "goetas/twital":"*",
     ..
 }
 ```
@@ -89,7 +89,7 @@ This section gives you a brief introduction to Twital.
 On the "design" side you have to create a file that contains your template
 (here named ``demo.twital.html``):
 
-```jinja
+```xml
 <div t:if="name">
     Hello {{ name }}
 </div>
