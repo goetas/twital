@@ -40,6 +40,9 @@ class DynamicAttrAttributeTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array('<div t:attr="class=\'foo\'">content</div>', '<div class="foo">content</div>'),
+            array('<math xmlns="http://www.w3.org/1998/Math/MathML">a</math>', '<math xmlns="http://www.w3.org/1998/Math/MathML">a</math>'),
+            array('<m:math xmlns:m="http://www.w3.org/1998/Math/MathML">a</m:math>', '<m:math xmlns:m="http://www.w3.org/1998/Math/MathML">a</m:math>'),
+            array('<m:math xmlns:m="http://www.w3.org/1998/Math/MathML" m:expr="e">a</m:math>', '<m:math xmlns:m="http://www.w3.org/1998/Math/MathML" m:expr="e">a</m:math>'),
             array('<div t:attr="condition?class=\'foo\'">content</div>', '<div class="foo">content</div>', array('condition'=>1)),
             array('<div t:attr="condition?class=\'foo\'">content</div>', '<div>content</div>', array('condition'=>0)),
 

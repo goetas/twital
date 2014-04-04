@@ -35,7 +35,12 @@ class OmitAttribute implements Attribute
         $node->appendChild($pi);
 
         $pi = $context->createControlNode("endif");
-        DOMHelper::insertAfter($node->parentNode, $pi);
+
+        if ($node->parentNode->nextSibling) {
+            $node->parentNode->insertBefore($pi, $node->parentNode->nextSibling);
+        } else {
+            $node->parentNode->appendChild($pi);
+        }
 
         $node->removeAttributeNode($att);
 

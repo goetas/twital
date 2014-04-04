@@ -3,19 +3,6 @@ namespace Goetas\Twital\Helper;
 
 class DOMHelper
 {
-    /**
-     * @deprecated
-     * @param \DOMNode $cur
-     * @param \DOMNode $new
-     */
-    public static function insertAfter(\DOMNode $cur,\DOMNode $new)
-    {
-        if ($cur->nextSibling) {
-            $cur->insertBefore($new, $cur->nextSibling);
-        } else {
-            $cur->appendChild($new);
-        }
-    }
     public static function removeChilds(\DOMNode $ref)
     {
         while ($ref->hasChildNodes()) {

@@ -1,59 +1,81 @@
 <?php
 namespace Goetas\Twital\Helper;
+
 use Exception;
+
 class ParserHelper
 {
 
-    public static function staticSplitExpression($str, $splitrer)
+    private static $closing = array(
+        '}' => '{',
+        ')' => '(',
+        ']' => '['
+    );
+
+    public static function staticSplitExpression($str, $splitrer, $limit = 0)
     {
-        $str = str_split($str, 1);
-        $str[] = " ";
-        $str_len = count($str);
-
-        $splitrer = str_split($splitrer, 1);
-        $splitrer_len = count($splitrer);
-
-        $parts = array();
+        $in = array();
         $inApex = false;
-        $next = 0;
-        $pcount = 0;
-        for ($i = 0; $i < $str_len; $i ++) {
-            if ($inApex === false && ($i === 0 || $str[$i - 1] !== "\\") && ($str[$i] === "\"" || $str[$i] === "'")) { // ingresso
-                $inApex = $str[$i];
-            } elseif ($inApex === $str[$i] && $str[$i - 1] !== "\\") { // uscita
-                $inApex = false;
-            }
-            if ($inApex === false && $str[$i] === "(") {
-                $pcount ++;
-            } elseif ($inApex === false && $str[$i] === ")") {
-                $pcount --;
-            }
-            if ($inApex === false && $pcount === 0 && (array_slice($str, $i, $splitrer_len) == $splitrer || $i == ($str_len - 1))) {
-                $val = trim(implode('', array_slice($str, $next, $i - $next)));
-                if (strlen($val)) {
-                    $parts[] = $val;
+        $parts = array();
+        $prev = 0;
+
+        for ($i = 0, $l = strlen($str); $i < $l; $i ++) {
+            $chr = $str[$i];
+
+            if ($chr == "'" || $chr == '"') {
+                $j = 1;
+                while ($i>=$j && $str[$i - $j] === '\\') {
+                    $j ++;
                 }
-                $next = $i + $splitrer_len;
+
+                if ($j % 2 !== 0) {
+                    if (! $inApex) {
+                        $inApex = $chr;
+                    } elseif ($inApex === $chr) {
+                        $inApex = false;
+                    }
+                }
+            }
+
+            if (! $inApex) {
+                if (in_array($chr, self::$closing)) {
+                    array_push($in, $chr);
+                } elseif (isset(self::$closing[$chr]) && self::$closing[$chr] === end($in)) {
+                    array_pop($in);
+                } elseif (isset(self::$closing[$chr]) && ! count($in)) {
+                    throw new Exception(sprintf('Unexpected "%s" next to "%s"', $chr, substr($str, 0, $i + 1)));
+                }
+
+                if (! count($in) && $chr === $splitrer) {
+                    $parts[] = substr($str, $prev, $i - $prev);
+                    $prev = $i + 1;
+                    if($limit>1 && count($parts)==($limit-1)){
+                    	break;
+                    }
+                }
             }
         }
-        if ($pcount != 0) {
-            throw new Exception("Perentesi non bilanciate nell'espressione '" . implode("", $str) . "'");
-        } elseif ($inApex !== false) {
-            throw new Exception("Apici non bilanciati nell'espressione '" . implode("", $str) . "'");
+        if ($inApex) {
+            throw new Exception(sprintf('Can\'t find the closing "%s"', $inApex));
+        } elseif (count($in)) {
+            throw new Exception(sprintf('Can\'t find the closing braces for "%s" in "%s" expression', implode(',', $in), $str));
         }
 
-        return $parts;
+        $parts[] = substr($str, $prev);
+
+        return array_map('trim', $parts);
     }
 
     public static function implodeKeyedDouble($glue, array $array)
     {
         $a = array();
         foreach ($array as $key => $val) {
-            $a[] = "$key:[".implode(",", $val)."]";
+            $a[] = "$key:[" . implode(",", $val) . "]";
         }
 
         return implode($glue, $a);
     }
+
     public static function implodeKeyed($glue, array $array)
     {
         $a = array();
