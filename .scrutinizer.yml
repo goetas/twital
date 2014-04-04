@@ -1,3 +1,6 @@
+filter:
+    paths:
+        - src
 tools:
     php_mess_detector: true
     php_analyzer:
@@ -37,6 +40,5 @@ tools:
     php_pdepend: true
     php_code_coverage:
         config_path: phpunit.xml.dist
-filter:
-    paths:
-        - src/*
+before_commands:
+    - 'composer install --prefer-dist --dev'
