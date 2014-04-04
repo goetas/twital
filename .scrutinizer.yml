@@ -35,7 +35,8 @@ tools:
     php_cpd: true
     php_loc: true
     php_pdepend: true
-    external_code_coverage: true
+    php_code_coverage:
+        config_path: phpunit.xml.dist
 filter:
     paths:
         - src/*
