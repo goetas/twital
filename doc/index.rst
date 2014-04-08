@@ -47,19 +47,32 @@ Here you can find a  :doc:`complete list of Twital attributes and nodes.<tags/in
 If some Twig functionality is not available directly for Twital 
 you can **freely mix Twig and Twital** syntaxes. 
 
-In the above example we have mixed Twital and Twig syntax to use the Twig ``autoescape`` tag.
+In the above example we have mixed Twital and Twig syntax to extend form ``base.twig`` and to use the Twig ``autoescape`` tag end .
 
 .. code-block:: xml+jinja
 
-    <h1 t:if="users">
-        {% autoescape %}
-            {{ someUnsafeVariable }}
-        {% autoescape %}
-    </h1>
+    <t:extends from="base.twig">
     
+        <t:block name="content">
+            <h1 t:if="users">
+                {% autoescape %}
+                    {{ someUnsafeVariable }}
+                {% autoescape %}
+            </h1>
+        </t:block>
+    
+    </t:extends>
+    
+If Twig is well configured, you can alo extend from a Twital template:
 
-Of course ``autoescape`` is available as Twital attribute
-:doc:`t:autoescape<tags/autoescape>`, this was just an example.
+.. code-block:: xml+jinja
+
+    {% extends 'base.html.twital' %}
+    
+    {% block content %}
+        <!-- this block is a Twital block stored in 'base.html.twital' template -->
+    {% endblock %}
+    
 
 
 Installation
