@@ -1,11 +1,11 @@
 What is Twital?
 ###############
 
-Twital is a little "plugin" for `Twig`_ (a template engine for PHP) that change its syntax, adding
+Twital is a small "plugin" for Twig_ (a template engine for PHP) that changes its syntax, adding
 some shortcuts and making it more suitable for HTML based (XML, HTML5, XHTML,
 SGML) templates.
 Twital takes inspiration from PHPTal_, TAL_ and AngularJS_ (just for some aspects), 
-mixing their language syntaxes with the powerful Twig_ templating engine system.
+mixing their language syntaxes with the powerful Twig templating engine system.
 
 
 To understand better what are Twital benefits, consider the following **Twital** template that
@@ -136,17 +136,7 @@ That's all!
     Since Twital uses Twig to compile and render templates,
     Twital performance is exactly the same of any other Twig template.
 
-Contents
-********
 
-.. toctree::
-    :maxdepth: 3
-    
-    tags/index
-    templates
-    api
-    mistakes
-    symfony
 
 Contributing
 ************
@@ -176,6 +166,16 @@ I'm sorry for the *terrible* english fluency used inside the documentation, I'm 
 Pull Requests are welcome.
 
 
+.. toctree::
+    :hidden:
+    :maxdepth: 2
+    
+    tags/index
+    templates
+    api
+    mistakes
+    symfony
+
 .. _Twig: http://twig.sensiolabs.org/
 .. _TwitalBunbdle: https://github.com/goetas/twital-bundle
 .. _Symfony2: http://symfony.com
@@ -183,4 +183,3 @@ Pull Requests are welcome.
 .. _TAL: http://en.wikipedia.org/wiki/Template_Attribute_Language
 .. _PHPTal: http://phptal.org/
 .. _AngularJS: http://angularjs.org/
-.. _Twig: http://angularjs.org/

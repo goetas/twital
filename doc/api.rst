@@ -534,3 +534,4 @@ To do this you have to create and extension that ships your listeners.
     
     
 .. _DOMDocument: http://www.php.net/manual/en/class.domdocument.php
+.. _DOMElement: http://www.php.net/manual/en/class.domelement.php
