@@ -1,7 +1,7 @@
 What is Twital?
 ###############
 
-Twital is a little "plugin" for Twig_ (a template engine for PHP) that change its syntax, adding
+Twital is a little "plugin" for `Twig`_ (a template engine for PHP) that change its syntax, adding
 some shortcuts and making it more suitable for HTML based (XML, HTML5, XHTML,
 SGML) templates.
 Twital takes inspiration from PHPTal_, TAL_ and AngularJS_ (just for some aspects), 
