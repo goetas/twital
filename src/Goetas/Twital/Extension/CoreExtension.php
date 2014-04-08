@@ -33,16 +33,24 @@ class CoreExtension extends AbstractExtension
     {
         $attributes = array();
         $attributes[Twital::NS]['__base__'] = new Attribute\BaseAttribute();
+
         $attributes[Twital::NS]['if'] = new Attribute\IfAttribute();
         $attributes[Twital::NS]['elseif'] = new Attribute\ElseIfAttribute();
         $attributes[Twital::NS]['else'] = new Attribute\ElseAttribute();
-        $attributes[Twital::NS]['set'] = new Attribute\SetAttribute();
-        $attributes[Twital::NS]['content'] = new Attribute\ContentAttribute();
+
         $attributes[Twital::NS]['omit'] = new Attribute\OmitAttribute();
-        $attributes[Twital::NS]['capture'] = new Attribute\CaptureAttribute();
+        $attributes[Twital::NS]['set'] = new Attribute\SetAttribute();
+
+        $attributes[Twital::NS]['content'] = new Attribute\ContentAttribute();
+        $attributes[Twital::NS]['capture'] = new Attribute\CaptureAttribute()
+        ;
         $attributes[Twital::NS]['attr'] = new Attribute\AttrAttribute();
         $attributes[Twital::NS]['attr-append'] = new Attribute\AttrAppendAttribute();
-        $attributes[Twital::NS]['block'] = new Attribute\BlockAttribute();
+
+        $attributes[Twital::NS]['block'] = new Attribute\BlockInnerAttribute();
+        $attributes[Twital::NS]['block-inner'] = new Attribute\BlockInnerAttribute();
+        $attributes[Twital::NS]['block-outer'] = new Attribute\BlockOuterAttribute();
+
         return $attributes;
     }
 

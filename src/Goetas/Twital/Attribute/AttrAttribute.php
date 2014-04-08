@@ -48,9 +48,9 @@ class AttrAttribute implements Attribute
         $varName = self::getVarname($node);
         $code = array();
         $code[] = $context->createControlNode("if $varName is not defined");
-        $code[] = $context->createControlNode("set $varName = {" . ParserHelper::implodeKeyed(",", $attributes) . " }");
+        $code[] = $context->createControlNode("set $varName = {" . ParserHelper::implodeKeyed(",", $attributes, true) . " }");
         $code[] = $context->createControlNode("else");
-        $code[] = $context->createControlNode("set $varName = $varName|merge({" . ParserHelper::implodeKeyed(",", $attributes) . "})");
+        $code[] = $context->createControlNode("set $varName = $varName|merge({" . ParserHelper::implodeKeyed(",", $attributes, true) . "})");
         $code[] = $context->createControlNode("endif");
 
         foreach ($expressions as $attrExpr) {

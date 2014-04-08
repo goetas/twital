@@ -56,7 +56,7 @@ class ParserHelper
             }
         }
         if ($inApex) {
-            throw new Exception(sprintf('Can\'t find the closing "%s"', $inApex));
+            throw new Exception(sprintf('Can\'t find the closing "%s" in "%s" expression', $inApex, $str));
         } elseif (count($in)) {
             throw new Exception(sprintf('Can\'t find the closing braces for "%s" in "%s" expression', implode(',', $in), $str));
         }
@@ -66,21 +66,21 @@ class ParserHelper
         return array_map('trim', $parts);
     }
 
-    public static function implodeKeyedDouble($glue, array $array)
+    public static function implodeKeyedDouble($glue, array $array, $quoteKeys = false)
     {
         $a = array();
         foreach ($array as $key => $val) {
-            $a[] = "$key:[" . implode(",", $val) . "]";
+            $a[] = ($quoteKeys?"'$key'":$key).":[" . implode(",", $val) . "]";
         }
 
         return implode($glue, $a);
     }
 
-    public static function implodeKeyed($glue, array $array)
+    public static function implodeKeyed($glue, array $array, $quoteKeys = false)
     {
         $a = array();
         foreach ($array as $key => $val) {
-            $a[] = "$key:$val";
+            $a[] = ($quoteKeys?"'$key'":$key).":$val";
         }
 
         return implode($glue, $a);

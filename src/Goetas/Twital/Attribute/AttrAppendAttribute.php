@@ -39,9 +39,9 @@ class AttrAppendAttribute extends AttrAttribute
 
         $varName = self::getVarname($node);
         $code[] = $context->createControlNode("if $varName is not defined");
-        $code[] = $context->createControlNode("set $varName = {" . ParserHelper::implodeKeyedDouble(",", $attributes) . " }");
+        $code[] = $context->createControlNode("set $varName = {" . ParserHelper::implodeKeyedDouble(",", $attributes, true) . " }");
         $code[] = $context->createControlNode("else");
-        $code[] = $context->createControlNode("set $varName = $varName|merge({" . ParserHelper::implodeKeyedDouble(",", $attributes) . "})");
+        $code[] = $context->createControlNode("set $varName = $varName|merge({" . ParserHelper::implodeKeyedDouble(",", $attributes, true) . "})");
         $code[] = $context->createControlNode("endif");
 
         foreach ($expressions as $attrExpr) {
