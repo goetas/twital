@@ -6,17 +6,17 @@ use Goetas\Twital\Compiler;
 use DOMAttr;
 
 /**
- *
+ * This will translate '<div t:block-inner="name">foo</div>' into '<div>{% block name%}foo{% endblock %}</div>'
  * @author Asmir Mustafic <goetas@gmail.com>
  *
  */
-class BlockAttribute implements AttributeBase
+class BlockInnerAttribute implements AttributeBase
 {
     public function visit(DOMAttr $att, Compiler $context)
     {
         $node = $att->ownerElement;
 
-        $pi = $context->createControlNode("{$att->localName} " . html_entity_decode($att->value));
+        $pi = $context->createControlNode("block " . $att->value);
 
         if ($node->firstChild) {
             $node->insertBefore($pi, $node->firstChild);
@@ -24,7 +24,7 @@ class BlockAttribute implements AttributeBase
             $node->appendChild($pi);
         }
 
-        $pi = $context->createControlNode("end{$att->localName}");
+        $pi = $context->createControlNode("endblock");
         $node->appendChild($pi);
 
         $node->removeAttributeNode($att);
