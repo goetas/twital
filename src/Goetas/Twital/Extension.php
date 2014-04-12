@@ -10,12 +10,13 @@ interface Extension
 {
     /**
      * Array of objects implementing Node interface, responsible of DOM node handling.
-     * The returned array must be a "two level array", first level as namespace and second level as attribute name.
+     * The returned array must be a "two level array",
+     * first level as namespace and second level as attribute name.
      * Example:
      * <code>
      * 	array(
-     * 		'http://www.w3.org/1998/Math/MathML'=>array(
-     * 			'math'=>MathML\MathAttribute()
+     * 		'http://www.w3.org/1998/Math/MathML' => array(
+     * 			'math'=> new MathML\MathAttribute()
      * 		)
      *  )
      * </code>
@@ -26,12 +27,13 @@ interface Extension
 
     /**
      * Array of objects implementing Node interface, responsible of DOM node handling.
-     * The returned array must be a "two level array", first level as namespace and second level as attribute name.
+     * The returned array must be a "two level array",
+     * first level as namespace and second level as attribute name.
      * Example:
      * <code>
      * 	array(
-     * 		'http://www.w3.org/1998/Math/MathML'=>array(
-     * 			'math'=>MathML\MathAttribute()
+     * 		'http://www.w3.org/1998/Math/MathML' => array(
+     * 			'math'=> new MathML\MathNode()
      * 		)
      *  )
      * </code>
