@@ -11,7 +11,9 @@ use Goetas\Twital\Template;
  */
 class XMLAdapter implements SourceAdapter
 {
-
+    /**
+     * {@inheritdoc}
+     */
     public function load($source)
     {
         $dom = new \DOMDocument('1.0', 'UTF-8');
@@ -22,6 +24,13 @@ class XMLAdapter implements SourceAdapter
 
         return new Template($dom, $this->collectMetadata($dom, $source));
     }
+
+    /**
+     * Collect some metadata about $dom and $source
+     * @param \DOMDocument $dom
+     * @param string $original
+     * @return mixed
+     */
     protected function collectMetadata(\DOMDocument $dom, $source)
     {
         $metedata = array();
@@ -31,6 +40,10 @@ class XMLAdapter implements SourceAdapter
 
         return $metedata;
     }
+
+    /**
+     * {@inheritdoc}
+     */
     public function dump(Template $template)
     {
         $metedata = $template->getMetadata();

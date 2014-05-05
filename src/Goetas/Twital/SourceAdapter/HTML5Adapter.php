@@ -13,7 +13,9 @@ use Goetas\Twital\Helper\DOMHelper;
  */
 class HTML5Adapter implements SourceAdapter
 {
-
+    /**
+     * {@inheritdoc}
+     */
     public function load($source)
     {
         $f = HTML5::loadHTMLFragment($source);
@@ -33,6 +35,7 @@ class HTML5Adapter implements SourceAdapter
             }
         }
     }
+
     private static function fixNss(\DOMElement $element, $namespaces = array())
     {
         foreach ($element->attributes as $attr) {
@@ -55,6 +58,9 @@ class HTML5Adapter implements SourceAdapter
         self::fixElements($element,$namespaces);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function dump(Template $template)
     {
         $metedata = $template->getMetadata();
@@ -66,12 +72,18 @@ class HTML5Adapter implements SourceAdapter
         return HTML5::saveHTML($template->getDocument()->childNodes);
     }
 
-    protected function collectMetadata(\DOMDocument $dom, $original)
+    /**
+     * Collect some metadata about $dom and $content
+     * @param \DOMDocument $dom
+     * @param string $source
+     * @return mixed
+     */
+    protected function collectMetadata(\DOMDocument $dom, $source)
     {
         $metedata = array();
 
         $metedata['doctype'] = !! $dom->doctype;
-        $metedata['fragment'] = !! strpos(rtrim($original), '<!DOCTYPE html>') === 0;
+        $metedata['fragment'] = !! strpos(rtrim($source), '<!DOCTYPE html>') === 0;
 
         return $metedata;
     }

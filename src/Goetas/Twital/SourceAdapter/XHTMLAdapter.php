@@ -9,7 +9,9 @@ use Goetas\Twital\Template;
  */
 class XHTMLAdapter extends XMLAdapter
 {
-
+    /**
+     * {@inheritdoc}
+     */
     public function load($source)
     {
         $dom = new \DOMDocument('1.0', 'UTF-8');
@@ -21,6 +23,9 @@ class XHTMLAdapter extends XMLAdapter
         return new Template($dom, $this->collectMetadata($dom, $source));
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function dump(Template $template)
     {
         $metedata = $template->getMetadata();
@@ -60,6 +65,7 @@ class XHTMLAdapter extends XMLAdapter
         $regex = implode("|", array_map(function ($tag) {
             return "></\s*($tag)\s*>";
         }, $selfClosingTags));
+
         return preg_replace("#$regex#i", "<\\1 />", $str);
     }
 }
