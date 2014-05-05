@@ -21,7 +21,7 @@ class SourceEvent extends Event
      * @var string
      */
     protected $template;
-    public function __construct(Twital $twital, $template = null)
+    public function __construct(Twital $twital, $template)
     {
     	$this->twital = $twital;
     	$this->template = $template;

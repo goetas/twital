@@ -22,7 +22,7 @@ class TemplateEvent extends Event
      * @var Template
      */
     protected $template;
-    public function __construct(Twital $twital, Template $template = null)
+    public function __construct(Twital $twital, Template $template)
     {
     	$this->twital = $twital;
     	$this->template = $template;
