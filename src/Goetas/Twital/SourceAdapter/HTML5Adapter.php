@@ -25,7 +25,7 @@ class HTML5Adapter implements SourceAdapter
         return new Template($dom, $this->collectMetadata($dom, $source));
     }
 
-    protected static function fixElements(\DOMNode $node, $namespaces = array())
+    private static function fixElements(\DOMNode $node, $namespaces = array())
     {
         foreach (iterator_to_array($node->childNodes) as $child) {
             if ($child instanceof \DOMElement) {
@@ -33,7 +33,7 @@ class HTML5Adapter implements SourceAdapter
             }
         }
     }
-    protected static function fixNss(\DOMElement $element, $namespaces = array())
+    private static function fixNss(\DOMElement $element, $namespaces = array())
     {
         foreach ($element->attributes as $attr) {
             if (preg_match("/^xmlns:(.+)/", $attr->name, $mch)) {
