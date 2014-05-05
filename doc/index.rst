@@ -1,11 +1,11 @@
 What is Twital?
 ###############
 
-Twital is a little "plugin" for Twig_ (a template engine for PHP) that change its syntax, adding
+Twital is a small "plugin" for Twig_ (a template engine for PHP) that changes its syntax, adding
 some shortcuts and making it more suitable for HTML based (XML, HTML5, XHTML,
 SGML) templates.
 Twital takes inspiration from PHPTal_, TAL_ and AngularJS_ (just for some aspects), 
-mixing their language syntaxes with the powerful Twig_ templating engine system.
+mixing their language syntaxes with the powerful Twig templating engine system.
 
 
 To understand better what are Twital benefits, consider the following **Twital** template that
@@ -47,19 +47,32 @@ Here you can find a  :doc:`complete list of Twital attributes and nodes.<tags/in
 If some Twig functionality is not available directly for Twital 
 you can **freely mix Twig and Twital** syntaxes. 
 
-In the above example we have mixed Twital and Twig syntax to use the Twig ``autoescape`` tag.
+In the above example we have mixed Twital and Twig syntax to extend form ``base.twig`` and to use the Twig ``autoescape`` tag end .
 
 .. code-block:: xml+jinja
 
-    <h1 t:if="users">
-        {% autoescape %}
-            {{ someUnsafeVariable }}
-        {% autoescape %}
-    </h1>
+    <t:extends from="base.twig">
     
+        <t:block name="content">
+            <h1 t:if="users">
+                {% autoescape %}
+                    {{ someUnsafeVariable }}
+                {% autoescape %}
+            </h1>
+        </t:block>
+    
+    </t:extends>
+    
+If Twig is well configured, you can alo extend from a Twital template:
 
-Of course ``autoescape`` is available as Twital attribute
-:doc:`t:autoescape<tags/autoescape>`, this was just an example.
+.. code-block:: xml+jinja
+
+    {% extends 'base.html.twital' %}
+    
+    {% block content %}
+        <!-- this block is a Twital block stored in 'base.html.twital' template -->
+    {% endblock %}
+    
 
 
 Installation
@@ -123,17 +136,7 @@ That's all!
     Since Twital uses Twig to compile and render templates,
     Twital performance is exactly the same of any other Twig template.
 
-Contents
-********
 
-.. toctree::
-    :maxdepth: 3
-    
-    tags/index
-    templates
-    api
-    mistakes
-    symfony
 
 Contributing
 ************
@@ -163,6 +166,16 @@ I'm sorry for the *terrible* english fluency used inside the documentation, I'm 
 Pull Requests are welcome.
 
 
+.. toctree::
+    :hidden:
+    :maxdepth: 2
+    
+    tags/index
+    templates
+    api
+    mistakes
+    symfony
+
 .. _Twig: http://twig.sensiolabs.org/
 .. _TwitalBunbdle: https://github.com/goetas/twital-bundle
 .. _Symfony2: http://symfony.com
@@ -170,4 +183,3 @@ Pull Requests are welcome.
 .. _TAL: http://en.wikipedia.org/wiki/Template_Attribute_Language
 .. _PHPTal: http://phptal.org/
 .. _AngularJS: http://angularjs.org/
-.. _Twig: http://angularjs.org/
