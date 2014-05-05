@@ -40,7 +40,11 @@ class DynamicAttrAttributeTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array('<div t:attr="class=\'foo\'">content</div>', '<div class="foo">content</div>'),
+            array('<div class="bar" t:attr="class=\'foo\'">content</div>', '<div class="foo">content</div>'),
             array('<div t:attr="condition?class=\'foo\'">content</div>', '<div class="foo">content</div>', array('condition'=>1)),
+            array('<div class="bar" t:attr="condition?class=\'foo\'">content</div>', '<div class="bar">content</div>', array('condition'=>0)),
+            array('<div class="bar" t:attr="condition?class=\'foo\'">content</div>', '<div class="foo">content</div>', array('condition'=>1)),
+
             array('<div t:attr="condition?class=\'foo\'">content</div>', '<div>content</div>', array('condition'=>0)),
 
             array('<div t:attr-append="condition?class=\'foo\'">content</div>', '<div class="foo">content</div>', array('condition'=>1)),
@@ -53,6 +57,23 @@ class DynamicAttrAttributeTest extends \PHPUnit_Framework_TestCase
             array('<div t:omit="condition">content</div>', '<div>content</div>', array('condition'=>0)),
             array('<div t:omit="true">content</div>', 'content'),
         );
+    }
+
+    public function getInvalidData()
+    {
+        return array(
+            array('<div t:attr="!class?\'foo\'">content</div>'),
+            array('<div t:attr="class?\'foo\'?X">content</div>'),
+        );
+    }
+
+    /**
+     * @dataProvider getInvalidData
+     * @expectedException Exception
+     */
+    public function testInvalidVisitAttribute($source)
+    {
+        $this->twig->render($source);
     }
 }
 
