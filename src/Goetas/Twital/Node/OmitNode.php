@@ -14,6 +14,8 @@ class OmitNode implements Node
 {
     public function visit(\DOMElement $node, Compiler $context)
     {
+        $context->compileAttributes($node);
+        $context->compileChilds($node);
         DOMHelper::replaceWithSet($node, iterator_to_array($node->childNodes));
     }
 }

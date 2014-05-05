@@ -42,16 +42,28 @@ are inherited from HTML structure.
 Of course Twital supports all other Twig's nice functionalities as template
 inheritance, translations, looping, filtering, escaping etc.
 
-If some Twig functionality is not available directly for Twital you can
+If some Twig functionality is not available directly in Twital you can
 **freely mix Twig and Twital** syntaxes. In the above example we have mixed
 Twital and Twig syntax to use the Twig ``autoescape`` tag.
 
-```jinja
+```xml
 <h1 t:if="users">
     {% spaceless %}
         Members
     {% spaceless %}
 </h1>
+```
+
+You can also extend from a Twig template:
+
+```xml
+<t:extends from="layout.twig">
+    
+    <t:block name="content">
+        Hello {{name}}!
+    </t:block>
+    
+</t:extends>
 ```
 
 Installation
@@ -112,7 +124,7 @@ echo $twig->render('template.twital.html', array('name' => 'John'));
 Symfony2 Users
 --------------
 
-If you are a Symfony2 user, you can add Twital to your project using the [TwitalBunbdle](https://github.com/goetas/twital-bundle).
+If you are a Symfony2 user, you can add Twital to your project using the [TwitalBundle](https://github.com/goetas/twital-bundle).
 
 The bundle integrates all most common functionalies as Assetic, Forms, Translations etc.
 

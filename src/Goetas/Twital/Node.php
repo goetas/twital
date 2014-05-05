@@ -7,7 +7,7 @@ namespace Goetas\Twital;
  * @author Asmir Mustafic <goetas@gmail.com>
  *
  */
-Interface Node
+interface Node
 {
     /**
      * Visit a node.

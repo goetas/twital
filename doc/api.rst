@@ -27,25 +27,28 @@ Twital object.
     ));
 
 
-By default Twital will compile only templates that ends with `.twital.xml`, `.twital.html`, `.twital.xhtml`
+By default Twital will compile only templates that ends with ``.twital.xml``, ``.twital.html`` and ``.twital.xhtml``
 (using the right source adapter).
 If you want to change it, adding more supported file formats, you can do something like this:
 
 .. code-block:: php
 
     <?php
-    
+    use Goetas\Twital\SourceAdapter\XMLAdapter;
+    use Goetas\Twital\SourceAdapter\HTML5Adapter;
+     
     $twital = new TwitalLoader($loader);
     $twital->addSourceAdapter('\.wsdl$', new XMLAdapter()); // handle .wsdl files as XML
     $twital->addSourceAdapter('\.htm$', new HTML5Adapter()); // handle .htm files as HTML5
     
 .. note::
 
-    Built in adapters are: `XMLAdapter`, `XHTMLAdapter` and `HTML5Adpater`.
+    Built in adapters are: ``Goetas\Twital\SourceAdapter\XMLAdapter``, 
+    ``Goetas\Twital\SourceAdapter\XHTMLAdapter`` and ``Goetas\Twital\SourceAdapter\HTML5Adpater``.
 
 .. note::
 
-    To learn more about adapters, you can read the dedicated chapter :ref``Creating a SourceAdpater``.
+    To learn more about adapters, you can read the dedicated chapter :ref:``Creating a SourceAdpater``.
 
 
 Finally, to render a template with some variables, simply call the ``render()`` method on Twig instance:
@@ -72,7 +75,7 @@ The rendering of a template can be summarized into this steps:
     Here, listeners can transform the template source code before DOM loading;
   * The `SourceAdapter` will `load` the source code into a valid DOMDocument_ object;
   * Fourth the **compiler.post_load** event is fired.
-  * The compiler transforms the recognized attributes and nodes into relative Twig code;
+  * The Twital compiler transforms the recognized attributes and nodes into relative Twig code;
   * The **compiler.pre_dump** event is fired.
   * The `SourceAdapter` will `dump` transform the compiled `DOMDocument` into Twig source code;
   * The **compiler.post_dump** event is fired. Here, listeners can perform some 
@@ -115,10 +118,10 @@ To enable an adapter, you have to add it to Twital's loader instance by using th
     use Goetas\Twital\TwitalLoader;
     
     $twital = new TwitalLoader($fileLoader);
-    $twital->addSourceAdapter('/.*.xml$/i', new MyXMLAdapter());
+    $twital->addSourceAdapter('/.*.xml$/i', new MyXMLAdapter()); // bind the adapter to .xml files
 
 
-A "naive" implementation of `MyXMLAdapter` can be:
+A "naive" implementation of ``MyXMLAdapter`` can be:
 
 .. code-block:: php
 
@@ -181,7 +184,7 @@ To enable your extensions, you have to add them to your's Twital instance by usi
 
 .. tip::
 
-    The bundled extensions are great examples of how extensions work.
+    The bundled extensions are great examples to discover how extensions work.
 
 .. note::
 
@@ -191,9 +194,10 @@ To enable your extensions, you have to add them to your's Twital instance by usi
 Creating a `Node` parser
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Node parsers is aimed to handle any custom XML/HTML tag.
+Node parsers is aimed to handle any custom XML/HTML **tag**.
 
-Suppose that we would to create an extension to handle a tag ``<my:hello>`` that simply echoes `"Hello {name}"`.
+Suppose that we would to create an extension to handle a 
+tag ``<my:hello>`` that simply echoes `"Hello {name}"`.
 
 .. code-block:: xml
 
@@ -202,7 +206,7 @@ Suppose that we would to create an extension to handle a tag ``<my:hello>`` that
     </div>
 
 
-First, you have to create your node parser that handles this "new" tag. 
+First, you have to create your node parser that handles this tag. 
 To do this, you have to implement the ``Goetas\Twital\Node`` interface.
 
 .. literalinclude:: ../src/Goetas/Twital/Node.php
@@ -274,7 +278,7 @@ To make ``xmlns:my`` declaration optional, you can also use the event listener  
 Creating an `Attribute` parser
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-An attribute parser is aimed to handle custom XML/HTML attributes.
+An attribute parser is aimed to handle custom XML/HTML **attributes**.
 
 Suppose that we would to create an extension to handle an attribute that simply appends some text inside a node,
 removing its original content.
@@ -312,15 +316,15 @@ The ``HelloAttribute`` class can be something like this:
 
 Let's take a look to ``Goetas\Twital\Attribute::visit`` method:
 
-- ``$attr``: Gets the the `DOMAttr` node of our attribute.
-- ``$twital``: Gets the Twital compiler.
+* ``$attr``: Gets the the `DOMAttr` node of our attribute.
+* ``$twital``: Gets the Twital compiler.
 
 The ``visit`` method have to transform the custom attribute into valid Twig code.
 
 The ``visit`` method can also return one of the following constants:
 
-- ``Attribute::STOP_NODE``: instructs the compiler to skip to next node (go to next sibling) stoping the processing of possible node childs.
-- ``Attribute::STOP_ATTRIBUTE``: instructs the compiler to stop processing attributes of current node (continues normaily with child and sibling nodes)
+* ``Attribute::STOP_NODE``: instructs the compiler to skip to next node (go to next sibling) stoping the processing of possible node childs.
+* ``Attribute::STOP_ATTRIBUTE``: instructs the compiler to stop processing attributes of current node (continues normaily with child and sibling nodes)
 
 Finally you have to create your extension that ships your attribute parser.
 
@@ -358,7 +362,7 @@ The possible entry points for listeners are:
 - **compiler.pre_load**, fired before the source is passed to the source adapter. 
 - **compiler.post_load**, fired when the source has been loaded into a DOMDocument.
 - **compiler.pre_dump**, fired before source has been passed to source adapter for the dumping phase.
-- **compiler.post_dumo**, fired when the DOMDocument has been dumped into a string by source adapter.
+- **compiler.post_dump**, fired when the DOMDocument has been dumped into a string by source adapter.
 
 
 A valid listener must implement ``Symfony\Component\EventDispatcher\EventSubscriberInterface`` interface.
@@ -390,7 +394,7 @@ This is one example for a valid listener:
 Event ``compiler.pre_load``
 ...........................
 
-This event is fired just before a `SourceAdapeter` will try to load the source code into a `DOMDocument`_.
+This event is fired just before a ``SourceAdapeter`` will try to load the source code into a `DOMDocument`_.
 Here you can modify the source code, adapting it for a souce adpater.
 
 Here an example:
@@ -511,11 +515,11 @@ Here an example:
     
     Take a look to ``Goetas\Twital\EventSubscriber\DOMMessSubscriber`` to see what can be done using this event.
 
-Ship your listeners
-...................
+How to ship your listeners
+..........................
     
-If you have created your listeners, you have to add them to Tiwtal.
-To do this you have to create and extension that ships your listeners.
+If you have created some event listeners, you have to add them to Tiwtal.
+To do this you have to create and extension that ship your listeners.
 
 .. code-block:: php
 

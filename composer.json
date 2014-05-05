@@ -1,6 +1,6 @@
 {
 	"name" : "goetas/twital",
-	"description" : "Twig templating engine",
+	"description" : "PHP templating engine that combines Twig and PHPTal power points",
 	"authors" : [{
 			"name" : "Asmir Mustafic",
 			"email" : "goetas@gmail.com"
