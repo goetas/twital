@@ -50,6 +50,15 @@ abstract class CoreNodesTest extends \PHPUnit_Framework_TestCase
             array('<t:omit><div>foo</div></t:omit>', '<div>foo</div>'),
             array('<div><t:omit t:if="0">foo</t:omit>bar</div>', '<div>{% if 0 %}foo{% endif %}bar</div>'),
             array('<div><![CDATA[aa]]></div>', '<div><![CDATA[aa]]></div>'),
+            array('<div><!-- foo --></div>', '<div><!-- foo --></div>'),
+
+            //CustomNamespaceRawSubscriber & FixHtmlEntitiesInExpressionSubscriber
+            array('<div>{{ foo > 5 }}</div>', '<div>{{ foo > 5 }}</div>'),
+            array('<div t:if="foo > 5">foo</div>', '{% if foo > 5 %}<div>foo</div>{% endif %}'),
+            array('<div if="{{ \'foo > 5\' }}">foo</div>', '<div if="{{ \'foo > 5\' }}">foo</div>'),
+
+            array('<div>{{ foo }}&amp;foo</div>', '<div>{{ foo }}&amp;foo</div>'),
+            array('<div attr="{{ foo }}&amp;foo">test</div>', '<div attr="{{ foo }}&amp;foo">test</div>'),
             array('<t:omit><![CDATA[{{ foo }}]]></t:omit>', '<![CDATA[{{ foo }}]]>'),
 
             // array('<![CDATA[{{ foo }}]]>', '<![CDATA[{{ foo }}]]>'), // not possible

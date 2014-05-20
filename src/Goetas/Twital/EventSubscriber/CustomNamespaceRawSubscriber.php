@@ -11,16 +11,19 @@ use Goetas\Twital\EventDispatcher\SourceEvent;
  */
 class CustomNamespaceRawSubscriber implements EventSubscriberInterface
 {
-    public static function getSubscribedEvents(){
-    	return array(
-    		'compiler.pre_load'=>'addCustomNamespace'
-    	);
+
+    public static function getSubscribedEvents()
+    {
+        return array(
+            'compiler.pre_load' => 'addCustomNamespace'
+        );
     }
+
     /**
      *
      * @var array
      */
-    protected $customNamespaces=array();
+    protected $customNamespaces = array();
 
     public function __construct(array $customNamespaces)
     {
@@ -29,21 +32,17 @@ class CustomNamespaceRawSubscriber implements EventSubscriberInterface
 
     public function addCustomNamespace(SourceEvent $event)
     {
-        $xml = trim($event->getTemplate());
-
-        foreach($this->customNamespaces as $prefix => $ns){
-            if(!preg_match('/\sxmlns:([a-z0-9\-]+)="' . preg_quote($ns, '/') . '"/', $xml) && !preg_match('/\sxmlns:([a-z0-9\-]+)=".*?"/', $xml)){
-
-                $start = strpos($xml, '<?')!==0?(strpos($xml, '?>')+2):0;
-
-                $addPos = strpos($xml, '>', $start);
-                if($xml[$addPos-1]=="/"){
-                    $addPos--;
+        $xml = $event->getTemplate();
+        $mch = null;
+        if (preg_match('~<(([a-z0-9\-_]+):)?([a-z0-9\-_]+)~i', $xml, $mch, PREG_OFFSET_CAPTURE)) {
+            $addPos = $mch[0][1] + strlen($mch[0][0]);
+            foreach ($this->customNamespaces as $prefix => $ns) {
+                if (! preg_match('/\sxmlns:([a-z0-9\-]+)="' . preg_quote($ns, '/') . '"/', $xml) && ! preg_match('/\sxmlns:([a-z0-9\-]+)=".*?"/', $xml)) {
+                    $xml = substr_replace($xml, ' xmlns:' . $prefix . '="' . $ns . '"', $addPos, 0);
                 }
-                $xml = substr_replace($xml, ' xmlns:' . $prefix . '="' . $ns . '"', $addPos,0);
             }
-        }
 
-        $event->setTemplate($xml);
+            $event->setTemplate($xml);
+        }
     }
 }
