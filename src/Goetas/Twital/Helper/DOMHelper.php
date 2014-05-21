@@ -65,7 +65,7 @@ class DOMHelper
                 $element->setAttributeNode($attr);
             }
         }
-        // copy childs
+        // copy children
         while ($child = $oldElement->firstChild) {
             $oldElement->removeChild($child);
             $element->appendChild($child);

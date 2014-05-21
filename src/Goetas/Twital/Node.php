@@ -2,7 +2,7 @@
 namespace Goetas\Twital;
 
 /**
- * Reppresents the handler for custom nodes.
+ * Represents the handler for custom nodes.
  *
  * @author Asmir Mustafic <goetas@gmail.com>
  *

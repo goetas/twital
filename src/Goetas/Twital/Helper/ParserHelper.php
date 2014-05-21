@@ -12,7 +12,7 @@ class ParserHelper
         ']' => '['
     );
 
-    public static function staticSplitExpression($str, $splitrer, $limit = 0)
+    public static function staticSplitExpression($str, $splitter, $limit = 0)
     {
         $in = array();
         $inApex = false;
@@ -46,7 +46,7 @@ class ParserHelper
                     throw new Exception(sprintf('Unexpected "%s" next to "%s"', $chr, substr($str, 0, $i + 1)));
                 }
 
-                if (! count($in) && $chr === $splitrer) {
+                if (! count($in) && $chr === $splitter) {
                     $parts[] = substr($str, $prev, $i - $prev);
                     $prev = $i + 1;
                     if($limit>1 && count($parts)==($limit-1)){
