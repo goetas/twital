@@ -50,7 +50,7 @@ Twital and Twig syntax to use the Twig ``autoescape`` tag.
 <h1 t:if="users">
     {% spaceless %}
         Members
-    {% spaceless %}
+    {% endspaceless %}
 </h1>
 ```
 
