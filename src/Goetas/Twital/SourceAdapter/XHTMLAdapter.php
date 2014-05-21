@@ -2,6 +2,7 @@
 namespace Goetas\Twital\SourceAdapter;
 
 use Goetas\Twital\Template;
+
 /**
  *
  * @author Asmir Mustafic <goetas@gmail.com>
@@ -9,20 +10,6 @@ use Goetas\Twital\Template;
  */
 class XHTMLAdapter extends XMLAdapter
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function load($source)
-    {
-        $dom = new \DOMDocument('1.0', 'UTF-8');
-
-        if (! @$dom->loadXML($source)) {
-            throw new \Exception("Error during XML conversion into DOM");
-        }
-
-        return new Template($dom, $this->collectMetadata($dom, $source));
-    }
-
     /**
      * {@inheritdoc}
      */
