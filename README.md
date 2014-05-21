@@ -6,7 +6,7 @@ What is Twital?
 ==============
 
 Twital is a little "plugin" for [Twig](http://twig.sensiolabs.org/) (a template engine for PHP) that change its language syntax, adding
-some shortcuts ad making it more suitable for HTML based (XML, HTML5, XHTML,
+some shortcuts and making it more suitable for HTML based (XML, HTML5, XHTML,
 SGML) templates.
 
 To understand better what are Twital benefits, consider the following **Twital** template that
