@@ -4,7 +4,7 @@ namespace Goetas\Twital;
 use DOMAttr;
 
 /**
- * Reppresents the handler for custom attributes.
+ * Represents the handler for custom attributes.
  *
  * @author Asmir Mustafic <goetas@gmail.com>
  *
@@ -13,7 +13,7 @@ interface Attribute
 {
 
     /**
-     * Stop processing current node childs.
+     * Stop processing current node children.
      *
      * @var int
      */

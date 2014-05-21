@@ -126,7 +126,7 @@ Symfony2 Users
 
 If you are a Symfony2 user, you can add Twital to your project using the [TwitalBundle](https://github.com/goetas/twital-bundle).
 
-The bundle integrates all most common functionalies as Assetic, Forms, Translations etc.
+The bundle integrates all most common functionalities as Assetic, Forms, Translations etc.
 
 Note
 ----

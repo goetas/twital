@@ -28,17 +28,17 @@ class XMLAdapter implements SourceAdapter
     /**
      * Collect some metadata about $dom and $source
      * @param \DOMDocument $dom
-     * @param string $original
+     * @param string $source
      * @return mixed
      */
     protected function collectMetadata(\DOMDocument $dom, $source)
     {
-        $metedata = array();
+        $metadata = array();
 
-        $metedata['xmldeclaration'] = strpos(rtrim($source), '<?xml ') === 0;
-        $metedata['doctype'] = ! ! $dom->doctype;
+        $metadata['xmldeclaration'] = strpos(rtrim($source), '<?xml ') === 0;
+        $metadata['doctype'] = ! ! $dom->doctype;
 
-        return $metedata;
+        return $metadata;
     }
 
     /**
@@ -46,10 +46,10 @@ class XMLAdapter implements SourceAdapter
      */
     public function dump(Template $template)
     {
-        $metedata = $template->getMetadata();
+        $metadata = $template->getMetadata();
         $dom = $template->getDocument();
 
-        if ($metedata['xmldeclaration']) {
+        if ($metadata['xmldeclaration']) {
             return $dom->saveXML();
         } else {
             $source = '';

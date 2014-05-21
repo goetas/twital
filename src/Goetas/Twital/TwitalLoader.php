@@ -39,7 +39,7 @@ class TwitalLoader implements \Twig_LoaderInterface
      * Creates a new Twital loader.
      * @param \Twig_LoaderInterface $loader
      * @param Compiler $twital
-     * @param array $sourceAdapters If NULL, some standard rules will be used (`*.twital.*` and `*.twital`).
+     * @param bool $addDefaults If NULL, some standard rules will be used (`*.twital.*` and `*.twital`).
      */
     public function __construct(\Twig_LoaderInterface $loader = null, Twital $twital = null, $addDefaults = true)
     {
@@ -61,7 +61,7 @@ class TwitalLoader implements \Twig_LoaderInterface
     /**
      * Add a new pattern that can decide if a template is twital-compilable or not.
      * If $pattern is a string, then must be a valid regex that matches the template filename.
-     * If $pattern is a callback, then must return true if the tempalte is compilable, false otherwise.
+     * If $pattern is a callback, then must return true if the template is compilable, false otherwise.
      *
      * @param string|callback $pattern
      * @return \Goetas\Twital\TwitalLoader

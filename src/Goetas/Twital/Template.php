@@ -2,7 +2,7 @@
 namespace Goetas\Twital;
 
 /**
- * This class represents a tempalte.
+ * This class represents a template.
  * A valid template is a {DOMDocument} with some additional metadata.
  *
  * @author Asmir Mustafic <goetas@gmail.com>

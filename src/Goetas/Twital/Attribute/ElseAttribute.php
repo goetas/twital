@@ -19,7 +19,7 @@ class ElseAttribute implements AttributeBase
         $node = $att->ownerElement;
 
         if(!$prev = IfAttribute::findPrevElement($node)){
-            throw new Exception("The attribute 'elseif' must be the very next sibiling of an 'if' of 'elseif' attribute");
+            throw new Exception("The attribute 'elseif' must be the very next sibling of an 'if' of 'elseif' attribute");
         }
 
         $pi = $context->createControlNode("else");
