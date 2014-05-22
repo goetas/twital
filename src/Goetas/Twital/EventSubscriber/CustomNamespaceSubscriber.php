@@ -12,10 +12,11 @@ use Goetas\Twital\Helper\DOMHelper;
  */
 class CustomNamespaceSubscriber implements EventSubscriberInterface
 {
-    public static function getSubscribedEvents(){
-    	return array(
-    		'compiler.post_load'=>'addCustomNamespace'
-    	);
+    public static function getSubscribedEvents()
+    {
+        return array(
+            'compiler.post_load'=>'addCustomNamespace'
+        );
     }
     /**
      *

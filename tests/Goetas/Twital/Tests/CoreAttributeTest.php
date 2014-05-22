@@ -4,10 +4,8 @@ namespace Goetas\Twital\Tests;
 use Goetas\Twital\Twital;
 use Goetas\Twital\SourceAdapter\XMLAdapter;
 
-
 class CoreAttributeTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * Prepares the environment before running a test.
      */
@@ -56,5 +54,3 @@ class CoreAttributeTest extends \PHPUnit_Framework_TestCase
         );
     }
 }
-
-

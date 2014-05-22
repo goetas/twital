@@ -1,8 +1,6 @@
 <?php
 namespace Goetas\Twital;
 
-use DOMAttr;
-
 /**
  * Represents the handler for custom attributes.
  *
@@ -11,7 +9,6 @@ use DOMAttr;
  */
 interface Attribute
 {
-
     /**
      * Stop processing current node children.
      *

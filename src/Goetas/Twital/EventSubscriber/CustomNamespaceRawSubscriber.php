@@ -11,7 +11,6 @@ use Goetas\Twital\EventDispatcher\SourceEvent;
  */
 class CustomNamespaceRawSubscriber implements EventSubscriberInterface
 {
-
     public static function getSubscribedEvents()
     {
         return array(

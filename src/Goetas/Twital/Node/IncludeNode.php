@@ -12,7 +12,6 @@ use Goetas\Twital\Exception;
  */
 class IncludeNode implements Node
 {
-
     public function visit(\DOMElement $node, Compiler $context)
     {
         $code = "include ";
@@ -24,7 +23,6 @@ class IncludeNode implements Node
         } else {
             throw new Exception("The 'from' or 'from-exp' attribute is required");
         }
-
 
         if ($node->hasAttribute("ignore-missing") && $node->getAttribute("ignore-missing") !== "false") {
             $code .= " ignore missing";

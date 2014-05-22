@@ -13,7 +13,6 @@ use Goetas\Twital\SourceAdapter\XHTMLAdapter;
  */
 class TwitalLoader implements \Twig_LoaderInterface
 {
-
     /**
      * Array of patterns used to decide if a template is twital-compilable or not.
      * Items are strings or callbacks
@@ -35,10 +34,11 @@ class TwitalLoader implements \Twig_LoaderInterface
      * @var Twital
      */
     protected $twital;
+
     /**
      * Creates a new Twital loader.
      * @param \Twig_LoaderInterface $loader
-     * @param Compiler $twital
+     * @param Twital $twital
      * @param bool $addDefaults If NULL, some standard rules will be used (`*.twital.*` and `*.twital`).
      */
     public function __construct(\Twig_LoaderInterface $loader = null, Twital $twital = null, $addDefaults = true)
@@ -57,18 +57,19 @@ class TwitalLoader implements \Twig_LoaderInterface
         }
     }
 
-
     /**
      * Add a new pattern that can decide if a template is twital-compilable or not.
      * If $pattern is a string, then must be a valid regex that matches the template filename.
      * If $pattern is a callback, then must return true if the template is compilable, false otherwise.
      *
      * @param string|callback $pattern
+     * @param SourceAdapter $adapter
      * @return \Goetas\Twital\TwitalLoader
      */
     public function addSourceAdapter($pattern, SourceAdapter $adapter)
     {
         $this->sourceAdapters[$pattern] = $adapter;
+
         return $this;
     }
 
@@ -85,6 +86,7 @@ class TwitalLoader implements \Twig_LoaderInterface
     /**
      * Decide if a template is twital-compilable or not.
      *
+     * @param string $name
      * @return SourceAdapter
      */
     public function getSourceAdapter($name)
@@ -94,6 +96,7 @@ class TwitalLoader implements \Twig_LoaderInterface
                 return $adapter;
             }
         }
+
         return null;
     }
 
@@ -152,17 +155,20 @@ class TwitalLoader implements \Twig_LoaderInterface
     public function setLoader(\Twig_LoaderInterface $loader)
     {
         $this->loader = $loader;
+
         return $this;
     }
+
     /**
      * @return \Goetas\Twital\Twital
      */
-	public function getTwital() {
+    public function getTwital()
+    {
+        if ($this->twital===null) {
+            $this->twital = new Twital();
+        }
 
-	    if ($this->twital===null) {
-	        $this->twital = new Twital();
-	    }
-		return $this->twital;
-	}
+        return $this->twital;
+    }
 
 }

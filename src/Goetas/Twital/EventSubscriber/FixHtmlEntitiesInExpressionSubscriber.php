@@ -13,12 +13,10 @@ use Goetas\Twital\Twital;
  */
 class FixHtmlEntitiesInExpressionSubscriber implements EventSubscriberInterface
 {
-
     public static function getSubscribedEvents()
     {
         return array(
             'compiler.pre_load' => 'addPlaceholderOnLoad',
-            //'compiler.pre_dump' => 'addPlaceholder',
             'compiler.post_dump' => 'removePlaceholder'
         );
     }
@@ -48,25 +46,25 @@ class FixHtmlEntitiesInExpressionSubscriber implements EventSubscriberInterface
             '{#' => '#}'
         );
         $offset = 0;
-        while(preg_match ("/".implode("|", array_map('preg_quote', array_keys($exprs)))."/" , $source , $matches , PREG_OFFSET_CAPTURE, $offset)){
+        while (preg_match("/" . implode("|", array_map('preg_quote', array_keys($exprs))) . "/", $source, $matches, PREG_OFFSET_CAPTURE, $offset)) {
 
-            $source = substr($source, 0, $matches[0][1]).$this->placeholder[0].substr($source, $matches[0][1]);
+            $source = substr($source, 0, $matches[0][1]) . $this->placeholder[0] . substr($source, $matches[0][1]);
 
-            $startoffset = $offset = $matches[0][1]+strlen($matches[0][0])+strlen($this->placeholder[0]);
+            $startoffset = $offset = $matches[0][1] + strlen($matches[0][0]) + strlen($this->placeholder[0]);
 
-            do{
+            do {
                 $matches2 = array();
-                if(preg_match ("/".preg_quote($exprs[$matches[0][0]])."/" , $source , $matches2 , PREG_OFFSET_CAPTURE, $offset)){
+                if (preg_match("/" . preg_quote($exprs[$matches[0][0]]) . "/", $source, $matches2, PREG_OFFSET_CAPTURE, $offset)) {
 
-                    $offset = $matches2[0][1]+strlen($matches2[0][0]);
+                    $offset = $matches2[0][1] + strlen($matches2[0][0]);
 
                     $inApex = false;
-                    for ($i = $startoffset; $i <$offset; $i ++) {
+                    for ($i = $startoffset; $i < $offset; $i ++) {
                         $chr = $source[$i];
 
                         if ($chr == "'" || $chr == '"') {
                             $j = 1;
-                            while ($i>=$j && $source[$i - $j] === '\\') {
+                            while ($i >= $j && $source[$i - $j] === '\\') {
                                 $j ++;
                             }
 
@@ -79,23 +77,22 @@ class FixHtmlEntitiesInExpressionSubscriber implements EventSubscriberInterface
                             }
                         }
                     }
-                    if(!$inApex){
-                        $original = $offset-$startoffset;
-                        $encoded = htmlspecialchars(substr($source, $startoffset, $offset-$startoffset), ENT_COMPAT, 'UTF-8');
+                    if (! $inApex) {
+                        $original = $offset - $startoffset;
+                        $encoded = htmlspecialchars(substr($source, $startoffset, $offset - $startoffset), ENT_COMPAT, 'UTF-8');
 
-                        $source = substr($source, 0, $startoffset). $encoded .$this->placeholder[1].substr($source, $offset);
+                        $source = substr($source, 0, $startoffset) . $encoded . $this->placeholder[1] . substr($source, $offset);
 
-                        $offset +=strlen($this->placeholder[1])+(strlen($encoded)-$original);
-
+                        $offset += strlen($this->placeholder[1]) + (strlen($encoded) - $original);
                     }
-                }else{
+                } else {
                     break;
                 }
-             } while($inApex && $offset<strlen($source));
-
+            } while ($inApex && $offset < strlen($source));
         }
         $event->setTemplate($source);
     }
+
     /**
      *
      * @param SourceEvent $event

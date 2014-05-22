@@ -3,8 +3,6 @@ namespace Goetas\Twital\Attribute;
 
 use Goetas\Twital\Attribute;
 use Goetas\Twital\Compiler;
-use DOMAttr;
-use Goetas\Twital\Helper\DOMHelper;
 
 /**
  *
@@ -13,8 +11,7 @@ use Goetas\Twital\Helper\DOMHelper;
  */
 class OmitAttribute implements Attribute
 {
-
-    public function visit(DOMAttr $att, Compiler $context)
+    public function visit(\DOMAttr $att, Compiler $context)
     {
         $node = $att->ownerElement;
 

@@ -67,7 +67,7 @@ class CoreExtension extends AbstractExtension
         $nodes[Twital::NS]['omit'] = new Node\OmitNode();
         $nodes[Twital::NS]['embed'] = new Node\EmbedNode();
         $nodes[Twital::NS]['use'] = new Node\UseNode();
+
         return $nodes;
     }
 }
-

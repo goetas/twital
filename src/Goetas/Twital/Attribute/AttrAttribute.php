@@ -3,9 +3,8 @@ namespace Goetas\Twital\Attribute;
 
 use Goetas\Twital\Attribute;
 use Goetas\Twital\Compiler;
-use DOMAttr;
 use Goetas\Twital\Helper\ParserHelper;
-use Exception;
+use Goetas\Twital\Exception;
 
 /**
  *
@@ -14,13 +13,12 @@ use Exception;
  */
 class AttrAttribute implements Attribute
 {
-
     public static function getVarname(\DOMNode $node)
     {
         return "__a9" . strtr(spl_object_hash($node), "-","_");
     }
 
-    public function visit(DOMAttr $att, Compiler $context)
+    public function visit(\DOMAttr $att, Compiler $context)
     {
         $node = $att->ownerElement;
         $expressions = ParserHelper::staticSplitExpression($att->value, ",");

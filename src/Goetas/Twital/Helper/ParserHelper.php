@@ -1,11 +1,15 @@
 <?php
 namespace Goetas\Twital\Helper;
 
-use Exception;
+use Goetas\Twital\Exception;
 
+/**
+ *
+ * @author Asmir Mustafic <goetas@gmail.com>
+ *
+ */
 class ParserHelper
 {
-
     private static $closing = array(
         '}' => '{',
         ')' => '(',
@@ -49,8 +53,8 @@ class ParserHelper
                 if (! count($in) && $chr === $splitter) {
                     $parts[] = substr($str, $prev, $i - $prev);
                     $prev = $i + 1;
-                    if($limit>1 && count($parts)==($limit-1)){
-                    	break;
+                    if ($limit>1 && count($parts)==($limit-1)) {
+                        break;
                     }
                 }
             }

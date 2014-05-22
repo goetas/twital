@@ -26,6 +26,7 @@ class XHTMLAdapter extends XMLAdapter
                 $source .= $dom->saveXML($node);
             }
         }
+
         return $this->replaceShortTags($source);
     }
 

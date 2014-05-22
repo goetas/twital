@@ -8,7 +8,6 @@ namespace Goetas\Twital;
  */
 class Compiler
 {
-
     /**
      *
      * @var array
@@ -39,17 +38,13 @@ class Compiler
             'tag_variable' => array(
                 '{{',
                 '}}'
-            ),
-            'interpolation' => array(
-                '#{',
-                '}'
             )
         ), $lexerOptions);
     }
 
     /**
      *
-     * @return DOMDocument
+     * @return \DOMDocument
      */
     public function getDocument()
     {
@@ -59,22 +54,24 @@ class Compiler
     /**
      *
      * @param string $content
-     * @return DOMCDATASection
+     * @return \DOMCDATASection
      */
     public function createPrintNode($content)
     {
         $printPart = $this->getLexerOption('tag_variable');
+
         return $this->document->createCDATASection("__[__{$printPart[0]} {$content} {$printPart[1]}__]__");
     }
 
     /**
      *
      * @param string $content
-     * @return DOMCDATASection
+     * @return \DOMCDATASection
      */
     public function createControlNode($content)
     {
         $printPart = $this->getLexerOption('tag_block');
+
         return $this->document->createCDATASection("__[__{$printPart[0]} " . $content . " {$printPart[1]}__]__");
     }
 
@@ -82,6 +79,7 @@ class Compiler
     {
         return $this->lexerOptions[$name];
     }
+
     /**
      * @param \DOMDocument $doc
      * @return void
