@@ -34,9 +34,15 @@ class CoreTwigTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             // operators
+
             array('<div>{% if foo > 5 and bar < 8 and bar & 4 %}foo{% endif %}</div>', '<div>{% if foo > 5 and bar < 8 and bar & 4 %}foo{% endif %}</div>'),
             array('<div>{{ foo > 5 and bar < 8 and bar & 4 ? "foo" }}</div>', '<div>{{ foo > 5 and bar < 8 and bar & 4 ? "foo" }}</div>'),
             array('<div>{# foo > 5 and bar < 8 and bar & 4 ? "foo" #}</div>', '<div>{# foo > 5 and bar < 8 and bar & 4 ? "foo" #}</div>'),
+
+            array("<div>{% '{%' and '%}' and '{{' and '}}' and '{#' and '#}' %}</div>", "<div>{% '{%' and '%}' and '{{' and '}}' and '{#' and '#}' %}</div>"),
+            array("<div>{{ '{%' and '%}' and '{{' and '}}' and '{#' and '#}' }}</div>", "<div>{{ '{%' and '%}' and '{{' and '}}' and '{#' and '#}' }}</div>"),
+
+            array("<div>{# '{%' and '%}' and '{{' and '}}' and '{#' and '#}' #}</div>", "<div>{# '{%' and '%}' and '{{' and '}}' and '{#' and '#}' #}</div>"),
         );
     }
 }
