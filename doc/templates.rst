@@ -1,8 +1,7 @@
 Twital for Template Designers
 =============================
 
-This document gives to you an overview on Twital principles, how to write a template and
-and thing to have in mind to make it work well.
+This document gives you an overview on Twital principles: how to write a template and what to bear in mind for making it work well.
 
 Introduction
 ------------
@@ -11,12 +10,12 @@ A template is simply a text file. Twital can generate any HTML/XML format.
 
 To make it work, your templates must match the configured file extension.
 
-By default Twital will compile only templates that ends with ``.twital.xml``, ``.twital.html``, ``.twital.xhtml``
+By default, Twital compiles only templates whose name ends with ``.twital.xml``, ``.twital.html``, ``.twital.xhtml``
 (using respectively XML, HTML5 and XHTML rules to format the output).
 
-A Twital template basically is a Twig template that take advantage of the natural HTML/XML tree structure
-(avoiding redundant control flow instructions). All expressions are completely Twig compatible,
-just control flow structures (Twig calls them *tags*) are replaced by some Twital *tags* or *attributes*.
+A Twital template is basically a Twig template that takes advantage of the natural HTML/XML tree structure
+(avoiding redundant control flow instructions). All expressions are completely Twig compatible;
+control flow structures (Twig calls them *tags*) are just replaced by some Twital *tags* or *attributes*.
 
 Here is a minimal template that illustrates a few basics:
 
@@ -50,12 +49,12 @@ IDEs Integration
 Any IDE that supports Twig syntax highlighting and auto-completion should be configured to support Twital.
 
 Here you can find a list of
-`IDEs that supports Twig/Twital <http://twig.sensiolabs.org/doc/templates.html#ides-integration>`__
+`IDEs that support Twig/Twital <http://twig.sensiolabs.org/doc/templates.html#ides-integration>`__
 
 Variables
 ---------
 
-To print the content of variables you can use exactly the same Twig syntax, using Twig functions, filters ecc.
+To print the content of variables, you can use exactly the same Twig syntax, using Twig functions, filters etc.
 
 .. code-block:: xml+jinja
 
@@ -65,11 +64,11 @@ To print the content of variables you can use exactly the same Twig syntax, usin
 
 .. note::
 
-    To learn more about Twig variables you can read the `Twig official documentation <http://twig.sensiolabs.org/doc/templates.html#variables>`__
+    To learn more about Twig variables, you can read the `Twig official documentation <http://twig.sensiolabs.org/doc/templates.html#variables>`__
 
 Setting Variables
 ~~~~~~~~~~~~~~~~~
-The ``t:set`` attribute acts same as Twig ``set`` tag and allows you to set a variable form a template.
+The ``t:set`` attribute acts in the same way as the Twig's ``set`` tag and allows you to set a variable from a template.
 
 .. code-block:: xml+jinja
 
@@ -78,11 +77,11 @@ The ``t:set`` attribute acts same as Twig ``set`` tag and allows you to set a va
     </div>
 
     <t:omit t:set="numbers = [1,2], items = {'item':'one'}"/>
-    {# no tags will be output-ed since t:omit tag will be omit-ed #}
+    {# t:omit tag will not be output-ed, but t:set will work #}
 
 .. note::
 
-    To learn more about Twig ``set``  you can read the `Twig official documentation <http://twig.sensiolabs.org/doc/tags/set.html>`__
+    To learn more about Twig ``set``, you can read the `Twig official documentation <http://twig.sensiolabs.org/doc/tags/set.html>`__
 
 Filters
 -------
@@ -105,7 +104,7 @@ You can also use the Twital attribute ``t:filter`` to filter the content of an e
 
 .. note::
 
-    To learn more about Twig filters  you can read the `Twig official documentation <http://twig.sensiolabs.org/doc/templates.html#filters>`__
+    To learn more about Twig filters, you can read the `Twig official documentation <http://twig.sensiolabs.org/doc/templates.html#filters>`__
 
 
 Functions
@@ -124,14 +123,14 @@ progression of integers:
 
 .. note::
 
-    To learn more about Twig filters  you can read the `Twig official documentation <http://twig.sensiolabs.org/doc/templates.html#functions>`__
+    To learn more about Twig filters, you can read the `Twig official documentation <http://twig.sensiolabs.org/doc/templates.html#functions>`__
 
 
 Control Structure
 -----------------
 Almost all Twig control structures have a Twital equivalent node or attribute.
 
-For example, to display a list of users provided in a variable called
+For example, to display a list of users, provided in a variable called
 ``users``, use the :doc:`for<tags/for>` attribute:
 
 .. code-block:: xml+jinja
@@ -155,16 +154,16 @@ The :doc:`if<tags/if>` attribute can be used to test an expression:
 
 Go to the :doc:`tags<tags/index>` page to learn more about the built-in attributes and nodes.
 
-To learn more about Twig control structures you can read the `Twig official documentation <http://twig.sensiolabs.org/doc/templates.html#control-structure>`__
+To learn more about Twig control structures, you can read the `Twig official documentation <http://twig.sensiolabs.org/doc/templates.html#control-structure>`__
 
 Attributes
 ----------
 
-To create HML/XML attributes you have not to mess up with control structures inside HTML tags,
-with Twital things are really easy.
+To create HTML/XML attributes, you do not have to mess up HTML tags with control structures.
+Twital makes things really easy!
 
-Take a look to the following example, using the :doc:`t:attr<tags/attr>` attribute 
- you can add conditionally an attribute based on the value of ``condition`` expression.
+
+Take a look at the following example:
 
 .. code-block:: xml+jinja
 
@@ -172,16 +171,18 @@ Take a look to the following example, using the :doc:`t:attr<tags/attr>` attribu
         My Company
     </div>
 
+Using the :doc:`t:attr<tags/attr>` attribute, 
+you can conditionally add an attribute depending on the value of the ``condition`` expression.
 
 
-You can use any twig expression as condition and attribute value. The attribute name must be a literal.
+You can use any Twig expression as a condition or attribute value. The attribute name must be a literal.
 
 .. code-block:: xml+jinja
 
     <div t:attr="
         users | length ? class='header'|upper ,
         item in array ? class=item">
-        Here wins the last class that condition will be evaluated to true.
+        Here wins the last condition, which will be evaluated as true.
     </div>
 
 You can also append some content to existing attributes using the :doc:`t:attr-append<tags/attr-append>`.
@@ -193,7 +194,7 @@ You can also append some content to existing attributes using the :doc:`t:attr-a
          class will be "row even" if 'i' is odd.
     </div>
 
-When not needed you can omit he condition instruction.
+If not needed, you can omit the condition instruction.
 
 .. code-block:: xml+jinja
 
@@ -201,6 +202,13 @@ When not needed you can omit he condition instruction.
          Class will be "row even"
     </div>
 
+To remove an attribute:
+
+.. code-block:: xml+jinja
+
+    <div t:attr=" condition ? class=null">
+         Class will be "row even"
+    </div>
 
 Comments
 --------
@@ -211,18 +219,18 @@ To comment-out part of a line in a template, you can use the Twig comment syntax
 Including other Templates
 -------------------------
 
-The :doc:`include<tags/include>` tag is useful to include a template and
-return the rendered content of that template into the current one:
+The :doc:`include<tags/include>` tag is useful for including a template and
+returning the rendered content of that template into the current one:
 
 .. code-block:: xml+jinja
 
     <t:include from="sidebar.html"/>
 
-Inclusion works exactly as Twig.
+Inclusions work exactly as in Twig.
 
 .. note::
 
-    To learn more about Twig inclusion techniques  you can read the `Twig official documentation <http://twig.sensiolabs.org/doc/templates.html#including-other-templates>`__
+    To learn more about Twig inclusion techniques, you can read the `Twig official documentation <http://twig.sensiolabs.org/doc/templates.html#including-other-templates>`__
 
 
 Template Inheritance
@@ -253,7 +261,7 @@ skeleton document that you might use for a simple two-column page:
     </html>
 
 In this example, the :doc:`t:block<tags/block>` attributes define four blocks that
-child templates can fill in. All the ``t:block`` attributes does is to tell the
+child templates can fill in. All the ``t:block`` attributes tell the
 template engine that a child template may override those portions of the
 template.
 
@@ -281,17 +289,18 @@ A child template might look like this:
 
     </t:extends>
 
-The :doc:`t:extends<tags/extends>` node  tells the template
-engine that this template "extends" another template. When the template system
-evaluates this template, first it locates the parent. The extends tag should
-be the first tag in the template.
+The :doc:`t:extends<tags/extends>` node tells the template
+engine that the template "extends" another template. When the template system
+evaluates the template, it first locates the parent. 
 
-Note that since the child template doesn't define the ``footer`` block, the
+The `extends` tag should be the first tag in the template.
+
+Note that, since the child template does not define the ``footer`` block, the
 value from the parent template is used instead.
 
-To render the contents of the parent block by using the
+To render the contents of the parent block, use the
 `parent <http://twig.sensiolabs.org/doc/functions/parent.html>`__ Twig function.
-This gives back the results of the parent block:
+The following template gives back the results of the parent block:
 
 .. code-block:: xml+jinja
 
@@ -309,42 +318,21 @@ This gives back the results of the parent block:
 
 .. note::
 
-    To learn more about Twig inheritance you can read the `Twig official documentation <http://twig.sensiolabs.org/doc/templates.html#template-inheritance>`__
+    To learn more about Twig inheritance, you can read the `Twig official documentation <http://twig.sensiolabs.org/doc/templates.html#template-inheritance>`__
 
 Macros
 ------
 
-Twital also supports Twig macros. It is done thanks to ``t:macro`` note.
-
-
-A macro is defined via the :doc:`macro<tags/macro>` tag. Here is a small example
-(subsequently called ``forms.html``) of a macro that renders a form element:
-
-.. code-block:: xml+jinja
-
-    {% macro input(name, value, type, size) %}
-        <input type="{{ type|default('text') }}" name="{{ name }}" value="{{ value|e }}" size="{{ size|default(20) }}" />
-    {% endmacro %}
-
-Macros can be defined in any template, and need to be "imported" via the
-:doc:`import<tags/import>` tag before being used:
-
-.. code-block:: xml+jinja
-
-    {% import "forms.html" as forms %}
-
-    <p>{{ forms.input('username') }}</p>
-
-
+Twital also supports Twig macros. A macro is defined via the :doc:`macro<tags/macro>` tag.
 
 .. note::
 
-    To learn more about Twig macros you can read the `Twig official documentation <http://twig.sensiolabs.org/doc/templates.html#macros>`__
+    To learn more about Twig macros, you can read the `Twig official documentation <http://twig.sensiolabs.org/doc/templates.html#macros>`__
 
-Expressions,Literals and Operators
+Expressions, Literals and Operators
 ----------------------------------
 
-All expressions, literals and operators that can be used with Twig, can be also used with Twital.
+All expressions, literals and operators that can be used with Twig, can also be used with Twital.
 
 .. note::
 
@@ -354,7 +342,7 @@ Whitespace Control
 ------------------
 
 Twital will try to respect almost all whitespaces that you type.
-To remove whitespaces between HTML tags you can use the ``t:spaceless`` attribute:
+To remove whitespaces between HTML tags, you can use the ``t:spaceless`` attribute:
 
 .. code-block:: xml+jinja
 
@@ -364,15 +352,11 @@ To remove whitespaces between HTML tags you can use the ``t:spaceless`` attribut
 
     {# output will be <div><strong>foo bar</strong></div> #}
 
-More generaly, Twital have the same behaviour of Twig in whitespaces handling.
-
-.. note::
-
-    To learn more about Twig macros you can read the `Twig official documentation <http://twig.sensiolabs.org/doc/templates.html#whitespace-control>`__
+Twital behaves the same as Twig in whitespaces handling.
 
 
 Extensions
 ----------
 
-Twital can be easily extended. To learn how to create your own extension you can
+Twital can be easily extended. To learn how to create your own extension, you can
 read the :ref:`Extending Twital` chapter.

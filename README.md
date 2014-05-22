@@ -5,12 +5,16 @@
 What is Twital?
 ==============
 
-Twital is a little "plugin" for [Twig](http://twig.sensiolabs.org/) (a template engine for PHP) that change its language syntax, adding
-some shortcuts and making it more suitable for HTML based (XML, HTML5, XHTML,
-SGML) templates.
+Twital is a small "plugin" for [Twig](http://twig.sensiolabs.org/) (a template engine for PHP) 
+that adds some shortcuts and makes Twig's syntax more suitable for HTML based (XML, HTML5, XHTML, SGML) templates.
+Twital takes inspiration from [PHPTal](http://phptal.org/), [TAL](http://en.wikipedia.org/wiki/Template_Attribute_Language) 
+and [AngularJS](http://angularjs.org/) (just for some aspects), 
+mixing their language syntaxes with the powerful [Twig](http://twig.sensiolabs.org/) templating engine system.
 
-To understand better what are Twital benefits, consider the following **Twital** template that
-simply shows a list of users from an array.
+
+
+To better understand the Twital's benefits, consider the following **Twital** template, which
+simply shows a list of users from an array:
 
 ```xml
 <ul t:if="users">
@@ -34,23 +38,25 @@ To do the same thing using Twig, you need:
 {% endif %}
 ```
 
-As you can see, using Twital template is **more readable**, **less verbose** and
-you have **not to worry about opening and closing block instructions**, they
-are inherited from HTML structure.
+As you can see, the Twital template is **more readable**, **less verbose** and
+and **you don't have to worry about opening and closing block instructions** 
+(they are inherited from the HTML structure).
 
 
-Of course Twital supports all other Twig's nice functionalities as template
-inheritance, translations, looping, filtering, escaping etc.
+One of the main advantages of Twital is the *implicit* presence of control statements, which makes
+templates more readable and less verbose. Furthermore, it has all Twig functionalities,
+such as template inheritance, translations, looping, filtering, escaping, etc.
 
-If some Twig functionality is not available directly in Twital you can
-**freely mix Twig and Twital** syntaxes. In the above example we have mixed
-Twital and Twig syntax to use the Twig ``autoescape`` tag.
+If some Twig functionality is not directly available for Twital, 
+you can **freely mix Twig and Twital** syntaxes. 
+
+In the example below, we have mixed Twital and Twig syntaxes to use Twig custom tags:
 
 ```xml
 <h1 t:if="users">
-    {% spaceless %}
-        Members
-    {% endspaceless %}
+    {% custom_tag %}
+        {{ someUnsafeVariable }}
+    {% endcustom_tag %}
 </h1>
 ```
 
@@ -69,15 +75,15 @@ You can also extend from a Twig template:
 Installation
 -----------
 
-The recommended way to install Twig is via [Composer](https://getcomposer.org/).
+There are two recommended ways to install Twital via [Composer](https://getcomposer.org/):
 
-Using  ``composer require`` command
+* using the``composer require`` command:
 
 ```bash
 composer require 'goetas/twital:*'
 ```
 
-Or adding its dependency to your ``composer.json`` file
+* adding the dependency to your ``composer.json`` file
 
 ```js
 "require": {
@@ -93,13 +99,11 @@ Documentation
 Go here http://twital.readthedocs.org/ to read a more detailed documentation about Twital.
 
 
-Basic Usage
------------
+Getting started
+---------------
 
-This section gives you a brief introduction to Twital.
-
-On the "design" side you have to create a file that contains your template
-(here named ``demo.twital.html``):
+First, you have to create a file that contains your template
+(named for example `demo.twital.html`):
 
 ```xml
 <div t:if="name">
@@ -107,29 +111,35 @@ On the "design" side you have to create a file that contains your template
 </div>
 ```
 
-On the PHP side you have to create a PHP script and load a Twital instance:
+Afterwards, you have to create a PHP script that instantiate the required objects:
 
 ```php
 require_once '/path/to/composer/vendor/autoload.php';
 use Goetas\Twital\TwitalLoader;
 
-$fs = new Twig_Loader_Filesystem('/path/to/templates');
-$twitalLoader = new TwitalLoader($fs);
+$fileLoader = new Twig_Loader_Filesystem('/path/to/templates');
+$twitalLoader = new TwitalLoader($fileLoader);
 
 $twig = new Twig_Environment($twitalLoader);
-echo $twig->render('template.twital.html', array('name' => 'John'));
+echo $twig->render('demo.twital.html', array('name' => 'John'));
 ```
+
+That's all!
 
 
 Symfony2 Users
 --------------
 
-If you are a Symfony2 user, you can add Twital to your project using the [TwitalBundle](https://github.com/goetas/twital-bundle).
+If you are a [Symfony2](http://symfony.com/) user, you can add Twital to your project using the 
+[TwitalBundle](https://github.com/goetas/twital-bundle).
 
-The bundle integrates all most common functionalities as Assetic, Forms, Translations etc.
+The bundle integrates all most common functionalities as Assetic, Forms, Translations, Routing, etc.
 
 Note
 ----
 
 I'm sorry for the *terrible* english fluency used inside the documentation, I'm trying to improve it. 
 Pull Requests are welcome.
+
+
+

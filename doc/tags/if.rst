@@ -61,4 +61,4 @@ This example will not work:
 
 .. note::
 
-    To learn more about Twig ``if`` tag please refer to `Twig official documentation <http://twig.sensiolabs.org/doc/tags/if.html>`_.
+    To learn more about the Twig ``if`` tag, please refer to `Twig official documentation <http://twig.sensiolabs.org/doc/tags/if.html>`_.

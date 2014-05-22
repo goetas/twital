@@ -3,8 +3,8 @@
 
 Twital allows you to create HTML/XML attributes in a very simple way.
 
-`t:attr-append` is a different version of `t:attr`
-that allows to append content to existing attributes instead of replacing it.
+`t:attr-append` is a different version of `t:attr`:
+it allows to append content to existing attributes instead of replacing it.
 
 .. code-block:: xml+jinja
 
@@ -22,7 +22,7 @@ In the same way of `t:attr`, `condition` and the value of attribute can be any v
     </div>
 
 
-When not needed you can omit he condition instruction.
+When not needed, you can omit the condition instruction.
 
 .. code-block:: xml+jinja
 

@@ -4,7 +4,7 @@
 The Twital instruction for Twig ``set`` tag is the ``t:set`` attribute.
 
 
-You can use ``set`` to assign variables. The syntax to use ``set`` attribute is:
+You can use ``set`` to assign variables. The syntax to use the ``set`` attribute is:
 
 .. code-block:: xml+jinja
 
@@ -16,5 +16,5 @@ You can use ``set`` to assign variables. The syntax to use ``set`` attribute is:
 
 .. note::
 
-    For more information about ``set`` tag please refer to
+    For more information about the ``set`` tag, please refer to
     `Twig official documentation <http://twig.sensiolabs.org/doc/tags/set.html>`_.

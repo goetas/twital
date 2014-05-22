@@ -2,9 +2,9 @@
 ========
 
 Twital allows you to create HTML/XML attributes in a very simple way.
-You have not to mess uop with control structures inside HTML tags.
+You do not have to mess up with control structures inside HTML tags.
 
-Let's see how it works:
+Let's see how does it work:
 
 .. code-block:: xml+jinja
 
@@ -13,7 +13,7 @@ Let's see how it works:
     </div>
 
 
-Here we add conditionaly an attribute based on the value of `condition` expression.
+Here we add conditionally an attribute based on the value of the `condition` expression.
 
 
 You can use any Twig test expression as **condition** and **attribute value**,
@@ -27,7 +27,7 @@ but the attribute name must be a litteral.
         Here wins the last class that condition will be evaluated to true.
     </div>
 
-When not needed you can omit he condition instruction.
+When not needed, you can omit the condition instruction.
 
 .. code-block:: xml+jinja
 

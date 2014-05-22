@@ -7,10 +7,10 @@ The Twital instruction for Twig ``import`` tag is ``t:import`` node.
 Since Twig supports putting often used code into :doc:`macros<../tags/macro>`. These
 macros can go into different templates and get imported from there.
 
-There are two ways to import templates. You can import the complete template
-into a variable or request specific macros from it.
+There are two ways to import templates: (1) you can import the complete template into a variable or (2) 
+request specific macros from it.
 
-Imagine we have a helper module that renders forms (called ``forms.html``):
+Imagine that we have a helper module that renders forms (called ``forms.html``):
 
 .. code-block:: xml+jinja
 
@@ -55,7 +55,7 @@ If you want to import your macros directly into your template (without referring
 
 .. note::
 
-    For more information about ``import`` tag please refer to
+    For more information about the ``import`` tag, please refer to
     `Twig official documentation <http://twig.sensiolabs.org/doc/tags/import.html>`_.
 
 .. seealso:: :doc:`macro<../tags/macro>`

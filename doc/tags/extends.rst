@@ -3,13 +3,13 @@
 
 
 The Twital instruction for Twig ``extends`` tag is ``t:extends`` node.
-To see how to use it, take a look to this example:
+To see how to use it, take a look at this example:
 
 
 Consider the following base template named ``layout.html.twital``.
 Here we are creating a simple page that says hello to someone.
 
-With `t:block` attribute we mark the body content as extensibile.
+With the `t:block` attribute we mark the body content as extensibile.
 
 .. code-block:: xml+jinja
 
@@ -25,7 +25,7 @@ With `t:block` attribute we mark the body content as extensibile.
     </html>
 
 
-To improove the greating message we can extend it using the ``t:textends`` node,
+To improve the greating message, we can extend it using the ``t:textends`` node,
 so we can create a new template called ``hello.html.twital``.
 
 .. code-block:: xml+jinja
@@ -36,8 +36,8 @@ so we can create a new template called ``hello.html.twital``.
         </t:block>
     </t:extends>
 
-As you can see we have overwritten the content of ``content`` block, with a new one.
-To do this whe have used a ``t:block`` node.
+As you can see, we have overwritten the content of the ``content`` block with a new one.
+To do this, we have used a ``t:block`` node.
 
 You can also **extend a Twig Template**, so you can mix Twig and Twital Templates.
 
@@ -50,8 +50,8 @@ You can also **extend a Twig Template**, so you can mix Twig and Twital Template
     </t:extends>
 
 
-Sometimes is useful to obtain the layout **template name from a variable**,
-to do this you  have to add the Twital namespace to attribute name:
+Sometimes it's useful to obtain the layout **template name from a variable**:
+to do this you have to add the Twital namespace to attribute name:
 
 .. code-block:: xml+jinja
 
@@ -66,5 +66,5 @@ Now the tempalte name can be any valid Twig expression.
 
 .. note::
 
-    To learn more about template inheritance you can read
+    To learn more about template inheritance, you can read
     the `Twig official documentation <http://twig.sensiolabs.org/doc/tags/extends.html>`_.

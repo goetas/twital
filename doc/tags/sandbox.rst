@@ -19,5 +19,5 @@ template, when sandboxing is not enabled globally for the Twig environment:
 
 .. note::
 
-    For more information about ``sandbox`` tag please refer to
+    For more information about the ``sandbox`` tag, please refer to
     `Twig official documentation <http://twig.sensiolabs.org/doc/tags/sandbox.html>`_.

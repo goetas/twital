@@ -3,10 +3,10 @@
 
 The Twital instruction for Twig ``use`` tag is ``t:use`` node.
 
-This is a fature that allow horizontal reuse of templates.
-To learn more about it you can read the official documentation.
+This is a fature that allows a/the horizontal reuse of templates.
+To learn more about it, you can read the official documentation.
 
-Let's see how it works:
+Let's see how does it work:
 
 .. code-block:: xml+jinja
 
@@ -31,5 +31,5 @@ You can create some aliases for block inside "used" template to avoid name confl
 
 .. note::
 
-    For more information about ``use`` tag please refer to
+    For more information about the ``use`` tag, please refer to
     `Twig official documentation <http://twig.sensiolabs.org/doc/tags/use.html>`_.

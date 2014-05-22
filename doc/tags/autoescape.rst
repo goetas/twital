@@ -7,7 +7,7 @@ The Twital instruction for Twig ``autoescape`` tag is ``t:autoescape`` attribute
 Whether automatic escaping is enabled or not, you can mark a section of a
 template to be escaped or not by using the ``autoescape`` tag.
 
-To see how to use it, take a look to this example:
+To see how to use it, take a look at this example:
 
 .. code-block:: xml+jinja
 
@@ -30,7 +30,7 @@ To see how to use it, take a look to this example:
         Everything will be outputted as is in this block
     </div>
 
-When automatic escaping is enabled everything is escaped by default except for
+When automatic escaping is enabled, everything is escaped by default, except for
 values explicitly marked as safe. Those can be marked in the template by using
 the Twig ``raw`` filter:
 

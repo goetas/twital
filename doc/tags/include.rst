@@ -1,7 +1,7 @@
 ``include``
 ===========
 
-The ``include`` statement includes a template and return the rendered content
+The ``include`` statement includes a template and returns the rendered content
 of that file into the current namespace:
 
 .. code-block:: xml+jinja
@@ -29,20 +29,20 @@ You can add additional variables by passing them after the ``with`` attribute:
     <t:include from="header.html" with="{'foo': 'bar'}"/>
 
 
-You can disable access to the current context by using the ``only`` attribute:
+You can disable the access to the current context by using the ``only`` attribute:
 
 .. code-block:: xml+jinja
 
     <t:include from="header.html" with="{'foo': 'bar'} only="true"/>
 
-You can mark an include with ``ignore-missing`` attribute in which case Twital
+You can mark an include with the ``ignore-missing`` attribute in which case Twital
  will ignore the statement if the template to be included does not exist.
 
 .. code-block:: xml+jinja
 
     <t:include from="header.html" with="{'foo': 'bar'} ignore-missing="true"/>
 
-``ignore-missing`` can't be an expression, it has to be evauluated only at compile time.
+``ignore-missing`` can not be an expression; it has to be evauluated only at compile time.
 
 
 To use Twig expressions as template name you have to use a namespace prefix on 'form' attribute:
@@ -54,5 +54,5 @@ To use Twig expressions as template name you have to use a namespace prefix on '
 
 .. note::
 
-    For more information about ``include`` tag please refer to
+    For more information about the ``include`` tag, please refer to
     `Twig official documentation <http://twig.sensiolabs.org/doc/tags/include.html>`_.
