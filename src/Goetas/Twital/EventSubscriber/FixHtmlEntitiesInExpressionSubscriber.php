@@ -4,7 +4,6 @@ namespace Goetas\Twital\EventSubscriber;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Goetas\Twital\EventDispatcher\SourceEvent;
 use Goetas\Twital\EventDispatcher\TemplateEvent;
-use Goetas\Twital\Twital;
 
 /**
  *
@@ -13,7 +12,6 @@ use Goetas\Twital\Twital;
  */
 class FixHtmlEntitiesInExpressionSubscriber implements EventSubscriberInterface
 {
-
     public static function getSubscribedEvents()
     {
         return array(
@@ -42,14 +40,14 @@ class FixHtmlEntitiesInExpressionSubscriber implements EventSubscriberInterface
 
         foreach ($xp->query("//@*") as $node) {
             if (preg_match_all("/(" . preg_quote("{{", "/") . ".*?" . preg_quote("}}", "/") . ")/", $node->value, $mch)) {
-                foreach ($mch[0] as $n => $m) {
+                foreach ($mch[0] as $m) {
                     $node->value = htmlspecialchars(str_replace($m, $this->placeholder[0] . $m . $this->placeholder[1], $node->value), ENT_COMPAT, 'UTF-8');
                 }
             }
         }
         foreach ($xp->query("//text()") as $node) {
             if (preg_match_all("/(" . preg_quote("{{", "/") . ".*?" . preg_quote("}}", "/") . ")/", $node->data, $mch)) {
-                foreach ($mch[0] as $n => $m) {
+                foreach ($mch[0] as $m) {
                     $node->data = str_replace($m, $this->placeholder[0] . $m . $this->placeholder[1], $node->data);
                 }
             }
@@ -70,4 +68,3 @@ class FixHtmlEntitiesInExpressionSubscriber implements EventSubscriberInterface
         }
     }
 }
-

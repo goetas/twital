@@ -1,14 +1,10 @@
 <?php
 namespace Goetas\Twital\Tests;
 
-use Goetas\Twital\Twital;
-use Goetas\Twital\SourceAdapter\XMLAdapter;
 use Goetas\Twital\Helper\ParserHelper;
-
 
 class ExpressionParserTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @dataProvider getData
      */
@@ -34,7 +30,6 @@ class ExpressionParserTest extends \PHPUnit_Framework_TestCase
     public function testWrongExpressions($expression)
     {
         $splitted = ParserHelper::staticSplitExpression($expression, "x");
-        $this->assertEquals($expected, $splitted);
     }
 
     public function getWrongData()
@@ -91,5 +86,3 @@ class ExpressionParserTest extends \PHPUnit_Framework_TestCase
         );
     }
 }
-
-

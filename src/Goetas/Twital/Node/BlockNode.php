@@ -4,7 +4,7 @@ namespace Goetas\Twital\Node;
 use Goetas\Twital\Node;
 use Goetas\Twital\Compiler;
 use Goetas\Twital\Helper\DOMHelper;
-use Exception;
+use Goetas\Twital\Exception;
 use Goetas\Twital\Twital;
 
 /**
@@ -19,9 +19,6 @@ class BlockNode implements Node
         if (! $node->hasAttribute("name")) {
             throw new Exception("Name attribute is required");
         }
-        $xp = new \DOMXPath($node->ownerDocument);
-
-        $currPrima = $node->previousSibling;
 
         $sandbox = $node->ownerDocument->createElementNS(Twital::NS, "sandbox");
         $node->parentNode->insertBefore($sandbox,$node);

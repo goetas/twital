@@ -65,10 +65,10 @@ class HTML5Adapter implements SourceAdapter
     {
         $metadata = $template->getMetadata();
 
-
         if (! $metadata['doctype']) {
             return HTML5::saveHTML($template->getDocument()->childNodes);
         }
+
         return HTML5::saveHTML($template->getDocument()->childNodes);
     }
 
