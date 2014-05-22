@@ -76,7 +76,7 @@ Installation
 
 There are two recommended ways to install Twital via [Composer](https://getcomposer.org/):
 
-* using the``composer require`` command:
+* using the ``composer require`` command:
 
 ```bash
 composer require 'goetas/twital:*'

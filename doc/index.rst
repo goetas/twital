@@ -4,7 +4,7 @@ What is Twital?
 Twital is a small "plugin" for Twig_ (a template engine for PHP) 
 that adds some shortcuts and makes Twig's syntax more suitable for HTML based (XML, HTML5, XHTML, SGML) templates.
 Twital takes inspiration from PHPTal_, TAL_ and AngularJS_ (just for some aspects), 
-mixing their language syntaxes with the powerful Twig_ templating engine system.
+mixing their language syntaxes with the powerful Twig templating engine system.
 
 
 To better understand the Twital's benefits, consider the following **Twital** template, which
@@ -62,7 +62,7 @@ Installation
 
 There are two recommended ways to install Twital via Composer_:
 
-* using the``composer require`` command:
+* using the ``composer require`` command:
 
 .. code-block:: bash
 
@@ -120,6 +120,7 @@ Contents
 
 .. toctree::
     :maxdepth: 3
+    :hidden:
     
     tags/index
     templates
