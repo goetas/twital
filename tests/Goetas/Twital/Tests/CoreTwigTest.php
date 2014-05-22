@@ -41,8 +41,11 @@ class CoreTwigTest extends \PHPUnit_Framework_TestCase
 
             array("<div>{% '{%' and '%}' and '{{' and '}}' and '{#' and '#}' %}</div>", "<div>{% '{%' and '%}' and '{{' and '}}' and '{#' and '#}' %}</div>"),
             array("<div>{{ '{%' and '%}' and '{{' and '}}' and '{#' and '#}' }}</div>", "<div>{{ '{%' and '%}' and '{{' and '}}' and '{#' and '#}' }}</div>"),
-
             array("<div>{# '{%' and '%}' and '{{' and '}}' and '{#' and '#}' #}</div>", "<div>{# '{%' and '%}' and '{{' and '}}' and '{#' and '#}' #}</div>"),
+
+            array('{% block title "title" %}', '{% block title "title" %}'),
+            array('<div>{% block title "title" %}</div>', '<div>{% block title "title" %}</div>'),
+            array('<div name="{% block title "title" %}"></div>', '<div name="{% block title "title" %}"></div>'),
         );
     }
 }
