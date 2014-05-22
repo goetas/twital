@@ -12,7 +12,6 @@ use Goetas\Twital\Exception;
  */
 class ImportNode implements Node
 {
-
     public function visit(\DOMElement $node, Compiler $context)
     {
         if ($node->hasAttribute("from-exp")) {

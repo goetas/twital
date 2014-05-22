@@ -23,28 +23,31 @@ class SourceEvent extends Event
     protected $template;
     public function __construct(Twital $twital, $template)
     {
-    	$this->twital = $twital;
-    	$this->template = $template;
+        $this->twital = $twital;
+        $this->template = $template;
     }
     /**
      * @return \Goetas\Twital\Twital
      */
-	public function getTwital() {
-		return $this->twital;
-	}
-	/**
-	 * @return string
-	 */
-	public function getTemplate() {
-		return $this->template;
-	}
+    public function getTwital()
+    {
+        return $this->twital;
+    }
+    /**
+     * @return string
+     */
+    public function getTemplate()
+    {
+        return $this->template;
+    }
 
-	/**
-	 * @param string $template
-	 * @return void
-	 */
-	public function setTemplate($template) {
-		$this->template = $template;
-	}
+    /**
+     * @param string $template
+     * @return void
+     */
+    public function setTemplate($template)
+    {
+        $this->template = $template;
+    }
 
 }

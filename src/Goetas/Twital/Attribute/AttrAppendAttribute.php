@@ -11,7 +11,6 @@ use Goetas\Twital\Helper\ParserHelper;
  */
 class AttrAppendAttribute extends AttrAttribute
 {
-
     public function visit(\DOMAttr $att, Compiler $context)
     {
         $node = $att->ownerElement;

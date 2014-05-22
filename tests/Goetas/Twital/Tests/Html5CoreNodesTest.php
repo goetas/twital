@@ -1,17 +1,15 @@
 <?php
 namespace Goetas\Twital\Tests;
 
-use Goetas\Twital\Twital;
-use Goetas\Twital\SourceAdapter\XMLAdapter;
-use Goetas\Twital\SourceAdapter\XHTMLAdapter;
 use Goetas\Twital\SourceAdapter\HTML5Adapter;
-
 
 class Html5CoreNodesTest extends CoreNodesTest
 {
-    protected function getSourceAdapter(){
-    	return new HTML5Adapter();
+    protected function getSourceAdapter()
+    {
+        return new HTML5Adapter();
     }
+
     public function getDataFormTemplates()
     {
         $all = glob(__DIR__."/templates/*.xml");
@@ -31,6 +29,7 @@ class Html5CoreNodesTest extends CoreNodesTest
                 $expected,
             );
         }
+
         return $data;
     }
 }

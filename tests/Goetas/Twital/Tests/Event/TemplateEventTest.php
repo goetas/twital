@@ -6,6 +6,9 @@ use Goetas\Twital\EventDispatcher\TemplateEvent;
 
 class TemplateEventTest extends \PHPUnit_Framework_TestCase
 {
+    private $twital;
+    private $template;
+
     /**
      * Prepares the environment before running a test.
      */
@@ -39,5 +42,3 @@ class TemplateEventTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($template, $ist->getTemplate());
     }
 }
-
-

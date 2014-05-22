@@ -14,11 +14,11 @@ interface Extension
      * first level as namespace and second level as attribute name.
      * Example:
      * <code>
-     * 	array(
-     * 		'http://www.w3.org/1998/Math/MathML' => array(
-     * 			'math'=> new MathML\MathAttribute()
-     * 		)
-     *  )
+     *     array(
+     *         'http://www.w3.org/1998/Math/MathML' => array(
+     *             'math'=> new MathML\MathAttribute()
+     *         )
+     *     )
      * </code>
      *
      * @return array
@@ -31,11 +31,11 @@ interface Extension
      * first level as namespace and second level as attribute name.
      * Example:
      * <code>
-     * 	array(
-     * 		'http://www.w3.org/1998/Math/MathML' => array(
-     * 			'math'=> new MathML\MathNode()
-     * 		)
-     *  )
+     *     array(
+     *         'http://www.w3.org/1998/Math/MathML' => array(
+     *             'math'=> new MathML\MathNode()
+     *         )
+     *     )
      * </code>
      *
      * @return array

@@ -4,7 +4,7 @@ namespace Goetas\Twital\Node;
 use Goetas\Twital\Node;
 use Goetas\Twital\Compiler;
 use Goetas\Twital\Helper\DOMHelper;
-use Exception;
+use Goetas\Twital\Exception;
 
 /**
  *
@@ -13,7 +13,6 @@ use Exception;
  */
 class MacroNode implements Node
 {
-
     public function visit(\DOMElement $node, Compiler $context)
     {
         if (! $node->hasAttribute("name")) {
@@ -26,7 +25,6 @@ class MacroNode implements Node
 
         $start = $context->createControlNode("macro " . $node->getAttribute("name") . "(" . $node->getAttribute("args") . ")");
         array_unshift($set, $start);
-
 
         $set[] = $context->createControlNode("endmacro");
 

@@ -13,7 +13,6 @@ use Goetas\Twital\EventDispatcher\TemplateEvent;
  */
 class Twital
 {
-
     const NS = 'urn:goetas:twital';
 
     protected $extensionsInitialized = false;
@@ -62,12 +61,14 @@ class Twital
     public function getNodes()
     {
         $this->initExtensions();
+
         return $this->nodes;
     }
 
     public function getAttributes()
     {
         $this->initExtensions();
+
         return $this->attributes;
     }
 
@@ -78,7 +79,7 @@ class Twital
                 $this->attributes = array_merge_recursive($this->attributes, $extension->getAttributes());
                 $this->nodes = array_merge_recursive($this->nodes, $extension->getNodes());
 
-                foreach ($extension->getSubscribers() as $subscriber){
+                foreach ($extension->getSubscribers() as $subscriber) {
                     $this->dispatcher->addSubscriber($subscriber);
                 }
             }
@@ -111,6 +112,7 @@ class Twital
 
         $sourceEvent = new SourceEvent($this, $source);
         $this->dispatcher->dispatch('compiler.post_dump', $sourceEvent);
+
         return $sourceEvent->getTemplate();
     }
 
