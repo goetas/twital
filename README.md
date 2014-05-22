@@ -9,8 +9,7 @@ Twital is a small "plugin" for [Twig](http://twig.sensiolabs.org/) (a template e
 that adds some shortcuts and makes Twig's syntax more suitable for HTML based (XML, HTML5, XHTML, SGML) templates.
 Twital takes inspiration from [PHPTal](http://phptal.org/), [TAL](http://en.wikipedia.org/wiki/Template_Attribute_Language) 
 and [AngularJS](http://angularjs.org/) (just for some aspects), 
-mixing their language syntaxes with the powerful [Twig](http://twig.sensiolabs.org/) templating engine system.
-
+mixing their language syntaxes with the powerful Twig templating engine system.
 
 
 To better understand the Twital's benefits, consider the following **Twital** template, which
@@ -83,7 +82,7 @@ There are two recommended ways to install Twital via [Composer](https://getcompo
 composer require 'goetas/twital:*'
 ```
 
-* adding the dependency to your ``composer.json`` file
+* adding the dependency to your ``composer.json`` file:
 
 ```js
 "require": {
