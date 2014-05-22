@@ -3,7 +3,6 @@ namespace Goetas\Twital\Attribute;
 
 use Goetas\Twital\Attribute as AttributeBase;
 use Goetas\Twital\Compiler;
-use DOMAttr;
 
 /**
  *
@@ -12,7 +11,7 @@ use DOMAttr;
  */
 class BaseAttribute implements AttributeBase
 {
-    public function visit(DOMAttr $att, Compiler $context)
+    public function visit(\DOMAttr $att, Compiler $context)
     {
         $node = $att->ownerElement;
 

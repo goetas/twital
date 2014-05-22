@@ -2,12 +2,9 @@
 namespace Goetas\Twital\Tests;
 
 use Goetas\Twital\Twital;
-use Goetas\Twital\SourceAdapter\XMLAdapter;
-
 
 abstract class CoreNodesTest extends \PHPUnit_Framework_TestCase
 {
-
     protected $twital;
     protected $sourceAdapter;
     /**
@@ -20,7 +17,7 @@ abstract class CoreNodesTest extends \PHPUnit_Framework_TestCase
         $this->sourceAdapter = $this->getSourceAdapter();
     }
 
-    protected abstract function getSourceAdapter();
+    abstract protected function getSourceAdapter();
 
     /**
      * @dataProvider getData
@@ -79,6 +76,7 @@ abstract class CoreNodesTest extends \PHPUnit_Framework_TestCase
                 $expected,
             );
         }
+
         return $data;
     }
 
@@ -92,5 +90,3 @@ abstract class CoreNodesTest extends \PHPUnit_Framework_TestCase
     }
 
 }
-
-

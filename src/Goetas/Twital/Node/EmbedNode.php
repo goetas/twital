@@ -2,10 +2,9 @@
 namespace Goetas\Twital\Node;
 
 use Goetas\Twital\Node;
-use Exception;
+use Goetas\Twital\Exception;
 use Goetas\Twital\Compiler;
 use Goetas\Twital\Helper\DOMHelper;
-use Goetas\Twital\Twital;
 
 /**
  *
@@ -14,7 +13,6 @@ use Goetas\Twital\Twital;
  */
 class EmbedNode implements Node
 {
-
     public function visit(\DOMElement $node, Compiler $context)
     {
         if ($node->hasAttribute("from-exp")) {

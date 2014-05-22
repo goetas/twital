@@ -3,7 +3,7 @@ namespace Goetas\Twital\Node;
 
 use Goetas\Twital\Node;
 use Goetas\Twital\Compiler;
-use Exception;
+use Goetas\Twital\Exception;
 
 /**
  *
@@ -14,7 +14,6 @@ class UseNode implements Node
 {
     public function visit(\DOMElement $node, Compiler $context)
     {
-
         $code = "use ";
 
         if ($node->hasAttribute("from")) {

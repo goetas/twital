@@ -6,6 +6,8 @@ use Goetas\Twital\EventDispatcher\SourceEvent;
 
 class SourceEventTest extends \PHPUnit_Framework_TestCase
 {
+    private $twital;
+
     /**
      * Prepares the environment before running a test.
      */
@@ -38,5 +40,3 @@ class SourceEventTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($templateNew, $ist->getTemplate());
     }
 }
-
-

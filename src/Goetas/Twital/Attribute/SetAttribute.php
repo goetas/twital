@@ -3,7 +3,6 @@ namespace Goetas\Twital\Attribute;
 
 use Goetas\Twital\Attribute;
 use Goetas\Twital\Compiler;
-use DOMAttr;
 use Goetas\Twital\Helper\ParserHelper;
 
 /**
@@ -13,8 +12,7 @@ use Goetas\Twital\Helper\ParserHelper;
  */
 class SetAttribute implements Attribute
 {
-
-    public function visit(DOMAttr $att, Compiler $context)
+    public function visit(\DOMAttr $att, Compiler $context)
     {
         $node = $att->ownerElement;
 

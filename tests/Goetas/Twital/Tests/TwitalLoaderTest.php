@@ -2,12 +2,10 @@
 namespace Goetas\Twital\Tests;
 
 use Goetas\Twital\TwitalLoader;
-use Goetas\Twital\Twital;
 use Goetas\Twital\SourceAdapter\XMLAdapter;
 
 class TwitalLoaderTest extends \PHPUnit_Framework_TestCase
 {
-
     protected $twital;
 
     /**
@@ -72,8 +70,7 @@ class TwitalLoaderTest extends \PHPUnit_Framework_TestCase
         $this->assertContainsOnlyInstancesOf('Goetas\Twital\SourceAdapter', $adapters);
 
         foreach ($this->getRequiredAdapters() as $class) {
-            $filteredAdapters = array_filter($adapters, function ($adapter) use($class)
-            {
+            $filteredAdapters = array_filter($adapters, function ($adapter) use ($class) {
                 return is_a($adapter, $class);
             });
             $this->assertGreaterThanOrEqual(1, count($filteredAdapters), "Cant find any $class adapter");
@@ -110,5 +107,3 @@ class TwitalLoaderTest extends \PHPUnit_Framework_TestCase
         $twitalLoader->getSource('aaa.txt');
     }
 }
-
-

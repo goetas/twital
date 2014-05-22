@@ -1,6 +1,11 @@
 <?php
 namespace Goetas\Twital\Helper;
 
+/**
+ *
+ * @author Asmir Mustafic <goetas@gmail.com>
+ *
+ */
 class DOMHelper
 {
     public static function removeChilds(\DOMNode $ref)
@@ -9,6 +14,7 @@ class DOMHelper
             $ref->removeChild($ref->firstChild);
         }
     }
+
     public static function insertAfterSet(\DOMNode $node, array $newNodes)
     {
         $ref = $node;
@@ -26,10 +32,12 @@ class DOMHelper
         self::insertAfterSet($node, $newNodes);
         $node->parentNode->removeChild($node);
     }
+
     public static function remove(\DOMNode $ref)
     {
         return $ref->parentNode->removeChild($ref);
     }
+
     public static function checkNamespaces(\DOMElement $element, array $namespaces = array())
     {
         if ($element->namespaceURI === null && preg_match('/^([a-z0-9\-]+):(.+)$/i', $element->nodeName, $mch) && isset($namespaces[$mch[1]])) {
@@ -71,6 +79,7 @@ class DOMHelper
             $element->appendChild($child);
         }
         $oldElement->parentNode->replaceChild($element, $oldElement);
+
         return $element;
     }
 }

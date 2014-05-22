@@ -52,6 +52,7 @@ class XMLAdapter implements SourceAdapter
             foreach ($dom->childNodes as $node) {
                 $source .= $dom->saveXML($node);
             }
+
             return $source;
         }
     }

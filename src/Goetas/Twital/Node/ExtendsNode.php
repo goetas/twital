@@ -2,10 +2,9 @@
 namespace Goetas\Twital\Node;
 
 use Goetas\Twital\Node;
-use Exception;
+use Goetas\Twital\Exception;
 use Goetas\Twital\Compiler;
 use Goetas\Twital\Helper\DOMHelper;
-use Goetas\Twital\Twital;
 
 /**
  *
@@ -14,7 +13,6 @@ use Goetas\Twital\Twital;
  */
 class ExtendsNode implements Node
 {
-
     public function visit(\DOMElement $node, Compiler $context)
     {
         if ($node->hasAttribute("from-exp")) {
@@ -26,8 +24,8 @@ class ExtendsNode implements Node
         }
 
         // remove any non-element node
-        foreach (iterator_to_array($node->childNodes) as $child){
-            if(!($child instanceof \DOMElement)){
+        foreach (iterator_to_array($node->childNodes) as $child) {
+            if (!($child instanceof \DOMElement)) {
                 $child->parentNode->removeChild($child);
             }
         }
@@ -37,7 +35,7 @@ class ExtendsNode implements Node
         $ext = $context->createControlNode("extends {$filename}");
 
         $set = iterator_to_array($node->childNodes);
-        if(count($set)){
+        if (count($set)) {
             $n = $node->ownerDocument->createTextNode("\n");
             array_unshift($set, $n);
         }

@@ -10,7 +10,6 @@ namespace Goetas\Twital;
  */
 class Template
 {
-
     /**
      * The template {DOMDocument}
      *

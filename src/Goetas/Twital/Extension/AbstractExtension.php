@@ -10,7 +10,6 @@ use Goetas\Twital\Extension;
  */
 abstract class AbstractExtension implements Extension
 {
-
     public function getAttributes()
     {
         return array();
