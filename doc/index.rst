@@ -163,4 +163,3 @@ Pull Requests are welcome.
 .. _TAL: http://en.wikipedia.org/wiki/Template_Attribute_Language
 .. _PHPTal: http://phptal.org/
 .. _AngularJS: http://angularjs.org/
-.. _Twig: http://angularjs.org/
