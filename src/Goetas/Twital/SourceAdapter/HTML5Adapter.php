@@ -64,12 +64,9 @@ class HTML5Adapter implements SourceAdapter
     public function dump(Template $template)
     {
         $metadata = $template->getMetadata();
+        $dom = $template->getDocument();
 
-        if (! $metadata['doctype']) {
-            return HTML5::saveHTML($template->getDocument()->childNodes);
-        }
-
-        return HTML5::saveHTML($template->getDocument()->childNodes);
+        return HTML5::saveHTML($metadata['fragment'] ? $dom->childNodes : $dom);
     }
 
     /**
@@ -83,7 +80,7 @@ class HTML5Adapter implements SourceAdapter
         $metadata = array();
 
         $metadata['doctype'] = !! $dom->doctype;
-        $metadata['fragment'] = !! strpos(rtrim($source), '<!DOCTYPE html>') === 0;
+        $metadata['fragment'] = strpos(rtrim($source), '<!DOCTYPE html>') !== 0;
 
         return $metadata;
     }

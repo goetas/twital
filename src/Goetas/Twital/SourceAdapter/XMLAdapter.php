@@ -32,7 +32,7 @@ class XMLAdapter implements SourceAdapter
         $metadata = array();
 
         $metadata['xmldeclaration'] = strpos(rtrim($source), '<?xml ') === 0;
-        $metadata['doctype'] = ! ! $dom->doctype;
+        $metadata['doctype'] = !! $dom->doctype;
 
         return $metadata;
     }

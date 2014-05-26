@@ -22,7 +22,7 @@ class Html5CoreNodesTest extends CoreNodesTest
             } else {
                 $expectedFile = substr($file, 0, -4).".twig";
             }
-            $expected = trim(file_get_contents($expectedFile));
+            $expected = file_get_contents($expectedFile);
 
             $data[] = array(
                 $source,

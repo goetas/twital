@@ -15,19 +15,7 @@ class XHTMLAdapter extends XMLAdapter
      */
     public function dump(Template $template)
     {
-        $metedata = $template->getMetadata();
-        $dom = $template->getDocument();
-
-        if ($metedata['xmldeclaration']) {
-            $source = $dom->saveXML();
-        } else {
-            $source = '';
-            foreach ($dom->childNodes as $node) {
-                $source .= $dom->saveXML($node);
-            }
-        }
-
-        return $this->replaceShortTags($source);
+        return $this->replaceShortTags(parent::dump($template));
     }
 
     protected function replaceShortTags($str)
