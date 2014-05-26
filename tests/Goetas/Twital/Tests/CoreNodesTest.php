@@ -58,6 +58,17 @@ abstract class CoreNodesTest extends \PHPUnit_Framework_TestCase
             array('<div attr="{{ foo }}&amp;foo">test</div>', '<div attr="{{ foo }}&amp;foo">test</div>'),
             array('<t:omit><![CDATA[{{ foo }}]]></t:omit>', '<![CDATA[{{ foo }}]]>'),
 
+            array('<div>{% if foo > 5 and bar < 8 and bar & 4 %}foo{% endif %}</div>', '<div>{% if foo > 5 and bar < 8 and bar & 4 %}foo{% endif %}</div>'),
+            array('<div>{{ foo > 5 and bar < 8 and bar & 4 ? "foo" }}</div>', '<div>{{ foo > 5 and bar < 8 and bar & 4 ? "foo" }}</div>'),
+            array('<div>{# foo > 5 and bar < 8 and bar & 4 ? "foo" #}</div>', '<div>{# foo > 5 and bar < 8 and bar & 4 ? "foo" #}</div>'),
+
+            array("<div>{% '{%' and '%}' and '{{' and '}}' and '{#' and '#}' %}</div>", "<div>{% '{%' and '%}' and '{{' and '}}' and '{#' and '#}' %}</div>"),
+            array("<div>{{ '{%' and '%}' and '{{' and '}}' and '{#' and '#}' }}</div>", "<div>{{ '{%' and '%}' and '{{' and '}}' and '{#' and '#}' }}</div>"),
+            array("<div>{# '{%' and '%}' and '{{' and '}}' and '{#' and '#}' #}</div>", "<div>{# '{%' and '%}' and '{{' and '}}' and '{#' and '#}' #}</div>"),
+
+            array('<div>{% block title "title" %}</div>', '<div>{% block title "title" %}</div>'),
+            array('<div name="{% block title "title" %}">foo</div>', '<div name="{% block title "title" %}">foo</div>'),
+
             // array('<![CDATA[{{ foo }}]]>', '<![CDATA[{{ foo }}]]>'), // not possible
         );
     }
