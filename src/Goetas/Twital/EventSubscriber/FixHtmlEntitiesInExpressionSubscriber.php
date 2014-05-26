@@ -3,8 +3,6 @@ namespace Goetas\Twital\EventSubscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Goetas\Twital\EventDispatcher\SourceEvent;
-use Goetas\Twital\EventDispatcher\TemplateEvent;
-use Goetas\Twital\Twital;
 
 /**
  *
