@@ -22,6 +22,7 @@ class Twital
      * @var EventDispatcher
      */
     protected $dispatcher;
+
     /**
      *
      * @var array
@@ -46,7 +47,6 @@ class Twital
         $this->dispatcher = new EventDispatcher();
 
         $this->addExtension(new CoreExtension());
-
     }
 
     /**
@@ -55,6 +55,8 @@ class Twital
      */
     public function getEventDispatcher()
     {
+        $this->initExtensions();
+
         return $this->dispatcher;
     }
 
@@ -118,11 +120,15 @@ class Twital
 
     public function addExtension(Extension $extension)
     {
+        $this->extensionsInitialized = false;
+
         return $this->extensions[] = $extension;
     }
 
     public function setExtensions(array $extensions)
     {
+        $this->extensionsInitialized = false;
+
         $this->extensions = $extensions;
     }
 
