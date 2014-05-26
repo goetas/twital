@@ -1,7 +1,6 @@
 <?php
 namespace Goetas\Twital\EventSubscriber;
 
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Goetas\Twital\EventDispatcher\SourceEvent;
 
 /**
@@ -9,10 +8,8 @@ use Goetas\Twital\EventDispatcher\SourceEvent;
  * @author Martin Hasoň <martin.hason@gmail.com>
  *
  */
-class FixTwigExpressionSubscriber implements EventSubscriberInterface
+class FixTwigExpressionSubscriber extends AbstractTwigExpressionSubscriber
 {
-    const REGEX_STRING  = '"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"|\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'';
-
     public static function getSubscribedEvents()
     {
         return array(
@@ -23,30 +20,15 @@ class FixTwigExpressionSubscriber implements EventSubscriberInterface
 
     protected $placeholders = array();
 
-    protected $placeholderFormat = '';
-
-    protected $regexes = array();
-
     public function __construct($placeholder = array('twital', 'twital'), array $options = array())
     {
-        $this->placeholderFormat = $placeholder[0].'%s'.$placeholder[1];
+        parent::__construct($placeholder, $options);
 
-        $options = array_merge(array(
-            'tag_block' => array('{%', '%}'),
-            'tag_variable' => array('{{', '}}'),
-            'tag_comment' => array('{#', '#}'),
-        ), $options);
-
-        $this->regexes = array(
-            'twig' => '{('.preg_quote($options['tag_block'][0]).
-                '|'.preg_quote($options['tag_variable'][0]).'|'.preg_quote($options['tag_comment'][0]).
-                ')('.self::REGEX_STRING.'|[^"\']*)+('.preg_quote($options['tag_block'][1]).
-                '|'.preg_quote($options['tag_variable'][1]).'|'.preg_quote($options['tag_comment'][1]).
-                ')}siuU',
+        $this->regexes = array_merge($this->regexes, array(
             'attribute' => '{('.self::REGEX_STRING.'|'.preg_quote($placeholder[0]).'[a-z0-9]+?'.preg_quote($placeholder[1]).')}siu',
             'tag' => '{<('.self::REGEX_STRING.'|[^"\'>]*)*>}siuU',
             'placeholder' => '{( )?('.preg_quote($placeholder[0]).'[a-z0-9]+?'.preg_quote($placeholder[1]).'(="-")?)}iu',
-        );
+        ));
     }
 
     /**
