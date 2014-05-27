@@ -80,7 +80,7 @@ abstract class CoreNodesTest extends \PHPUnit_Framework_TestCase
         foreach ($all as $file) {
 
             $source = file_get_contents($file);
-            $expected = trim(file_get_contents(substr($file, 0, -4).".twig"));
+            $expected = file_get_contents(substr($file, 0, -4).".twig");
 
             $data[] = array(
                 $source,
@@ -97,6 +97,14 @@ abstract class CoreNodesTest extends \PHPUnit_Framework_TestCase
     public function testVisitNodeTemplates($source, $expected)
     {
         $compiled = $this->twital->compile($this->sourceAdapter, $source);
+        //$compiled = trim($compiled);
+        //$expected = trim($expected);
+        if($expected!== $compiled){
+            var_dump(get_class($this->sourceAdapter));
+            var_dump($compiled);
+            var_dump($expected);
+            echo "\n\n\n";
+        }
         $this->assertEquals($expected, $compiled);
     }
 

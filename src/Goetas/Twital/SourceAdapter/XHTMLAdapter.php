@@ -15,7 +15,24 @@ class XHTMLAdapter extends XMLAdapter
      */
     public function dump(Template $template)
     {
-        return $this->replaceShortTags(parent::dump($template));
+        $metadata = $template->getMetadata();
+        $dom = $template->getDocument();
+        $dom->preserveWhiteSpace = true;
+        $dom->formatOutput = false;
+
+        if ($metadata['xmldeclaration']) {
+            $xml = $dom->saveXML();
+        } else {
+            $xml = '';
+            foreach ($dom->childNodes as $node) {
+                $xml .= $dom->saveXML($node, LIBXML_NOEMPTYTAG);
+                if ($node instanceof \DOMDocumentType) {
+                    $xml.= PHP_EOL;
+                }
+            }
+        }
+
+        return $this->replaceShortTags($xml);
     }
 
     protected function replaceShortTags($str)
@@ -42,6 +59,6 @@ class XHTMLAdapter extends XMLAdapter
             return "></\s*($tag)\s*>";
         }, $selfClosingTags));
 
-        return preg_replace("#$regex#i", "<\\1 />", $str);
+        return preg_replace("#$regex#i", "/>", $str);
     }
 }
