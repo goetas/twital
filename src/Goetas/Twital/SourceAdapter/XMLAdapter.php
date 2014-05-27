@@ -44,16 +44,21 @@ class XMLAdapter implements SourceAdapter
     {
         $metadata = $template->getMetadata();
         $dom = $template->getDocument();
+        $dom->preserveWhiteSpace = true;
+        $dom->formatOutput = false;
 
         if ($metadata['xmldeclaration']) {
             return $dom->saveXML();
         } else {
-            $source = '';
+            $xml = '';
             foreach ($dom->childNodes as $node) {
-                $source .= $dom->saveXML($node);
+                $xml .= $dom->saveXML($node);
+                if ($node instanceof \DOMDocumentType) {
+                    $xml.= PHP_EOL;
+                }
             }
 
-            return $source;
+            return $xml;
         }
     }
 
