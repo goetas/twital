@@ -66,7 +66,7 @@ There are two recommended ways to install Twital via Composer_:
 
 .. code-block:: bash
 
-    composer require 'goetas/twital:1.*'
+    composer require 'goetas/twital:0.1.*'
 
 * adding the dependency to your ``composer.json`` file:
 
@@ -74,7 +74,7 @@ There are two recommended ways to install Twital via Composer_:
 
     "require": {
         ..
-        "goetas/twital":"*",
+        "goetas/twital":"0.1.*",
         ..
     }
 
