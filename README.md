@@ -59,7 +59,7 @@ In the example below, we have mixed Twital and Twig syntaxes to use Twig custom 
 </h1>
 ```
 
-You can also extend from a Twig template:
+When needed, you can extend from a Twig template:
 
 ```xml
 <t:extends from="layout.twig">
@@ -70,6 +70,18 @@ You can also extend from a Twig template:
     
 </t:extends>
 ```
+
+You can also extend from Twig a Twital template:
+```jinja
+{% extends "layout.twital" %}
+    
+{% block content %}
+    Hello {{name}}!
+{% endblock %}
+    
+
+```
+
 
 Installation
 -----------
