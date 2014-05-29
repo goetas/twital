@@ -106,4 +106,51 @@ class TwitalLoaderTest extends \PHPUnit_Framework_TestCase
         $twital->expects($this->never())->method('compile');
         $twitalLoader->getSource('aaa.txt');
     }
+
+    public function testExists()
+    {
+        $mockLoader = $this->getMock('Twig_Loader_Array', array(), array(array()));
+
+        $mockLoader->expects($this->once())
+        ->method('exists')
+        ->with($this->equalTo('foo'))
+        ->will($this->returnValue(true));
+
+        $twitalLoader = new TwitalLoader($mockLoader, null, false);
+        $this->assertTrue($twitalLoader->exists('foo'));
+
+    }
+    public function testExistsWithBaseLoader()
+    {
+        $mockLoader = $this->getMock('Twig_LoaderInterface');
+
+        $mockLoader->expects($this->once())
+        ->method('getSource')
+        ->with($this->equalTo('foo'));
+
+        $mockLoader->expects($this->never())
+        ->method('exists');
+
+        $twitalLoader = new TwitalLoader($mockLoader, null, false);
+        $this->assertTrue($twitalLoader->exists('foo'));
+
+    }
+
+    public function testNonExistsWithBaseLoader()
+    {
+        $mockLoader = $this->getMock('Twig_LoaderInterface');
+
+        $mockLoader->expects($this->once())
+        ->method('getSource')
+        ->with($this->equalTo('foo'))
+        ->will($this->throwException(new \Twig_Error_Loader("File not found")));
+        ;
+
+        $mockLoader->expects($this->never())
+        ->method('exists');
+
+        $twitalLoader = new TwitalLoader($mockLoader, null, false);
+        $this->assertFalse($twitalLoader->exists('foo'));
+
+    }
 }

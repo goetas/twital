@@ -11,7 +11,7 @@ use Goetas\Twital\SourceAdapter\XHTMLAdapter;
  *
  * @author Asmir Mustafic <goetas@gmail.com>
  */
-class TwitalLoader implements \Twig_LoaderInterface
+class TwitalLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface
 {
     /**
      * Array of patterns used to decide if a template is twital-compilable or not.
@@ -101,9 +101,7 @@ class TwitalLoader implements \Twig_LoaderInterface
     }
 
     /**
-     * (non-PHPdoc)
-     *
-     * @see Twig_LoaderInterface::getSource()
+     * {@inheritdoc}
      */
     public function getSource($name)
     {
@@ -117,9 +115,7 @@ class TwitalLoader implements \Twig_LoaderInterface
     }
 
     /**
-     * (non-PHPdoc)
-     *
-     * @see Twig_LoaderInterface::getCacheKey()
+     * {@inheritdoc}
      */
     public function getCacheKey($name)
     {
@@ -127,13 +123,29 @@ class TwitalLoader implements \Twig_LoaderInterface
     }
 
     /**
-     * (non-PHPdoc)
-     *
-     * @see Twig_LoaderInterface::isFresh()
+     * {@inheritdoc}
      */
     public function isFresh($name, $time)
     {
         return $this->loader->isFresh($name, $time);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function exists($name)
+    {
+        if ($this->loader instanceof \Twig_ExistsLoaderInterface) {
+            return $this->loader->exists($name);
+        } else {
+            try {
+                $this->loader->getSource($name);
+
+                return true;
+            } catch (\Twig_Error_Loader $e) {
+                return false;
+            }
+        }
     }
 
     /**
