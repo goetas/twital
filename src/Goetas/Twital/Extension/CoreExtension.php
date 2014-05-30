@@ -25,11 +25,6 @@ class CoreExtension extends AbstractExtension
             )),
             new FixHtmlEntitiesInExpressionSubscriber(),
             new ContextAwareEscapingSubscriber()
-            /*
-            new CustomNamespaceSubscriber(array(
-                't' => Twital::NS
-            ))
-            */
         );
     }
 
