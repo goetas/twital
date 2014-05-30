@@ -31,13 +31,13 @@ class ContextAwareEscapingSubscriber implements EventSubscriberInterface
 
         $xp = new \DOMXPath($doc);
 
-        // script escaping
+        // js escaping
         $res = $xp->query("//style[not(@type) or @type = 'text/css']/text()[contains(., '{{') and contains(., '}}')]"); // take care about namespaces
         foreach ($res as $node) {
             $node->data = preg_replace($regex, "{{\\1 | escape('css') }}", $node->data);
         }
 
-        // script escaping
+        // css escaping
         $res = $xp->query("//script[not(@type) or @type = 'text/javascript']/text()[contains(., '{{') and contains(., '}}')]"); // take care about namespaces
         foreach ($res as $node) {
             $node->data = preg_replace($regex, "{{\\1 | escape('js') }}", $node->data);
