@@ -34,13 +34,13 @@ class ContextAwareEscapingSubscriber implements EventSubscriberInterface
         // js escaping
         $res = $xp->query("//style[not(@type) or @type = 'text/css']/text()[contains(., '{{') and contains(., '}}')]"); // take care about namespaces
         foreach ($res as $node) {
-            $node->data = preg_replace($regex, "{{\\1 | escape('css') }}", $node->data);
+            $node->data = preg_replace($regex, "{{ (\\1)  | escape('css') }}", $node->data);
         }
 
         // css escaping
         $res = $xp->query("//script[not(@type) or @type = 'text/javascript']/text()[contains(., '{{') and contains(., '}}')]"); // take care about namespaces
         foreach ($res as $node) {
-            $node->data = preg_replace($regex, "{{\\1 | escape('js') }}", $node->data);
+            $node->data = preg_replace($regex, "{{ (\\1)  | escape('js') }}", $node->data);
         }
 
         // url escaping
@@ -49,7 +49,7 @@ class ContextAwareEscapingSubscriber implements EventSubscriberInterface
 
             $isFullValue = preg_match('{^' . preg_quote('{{') . '((' . self::REGEX_STRING . '|[^"\']*)+)' . preg_quote('}}') . '$}siuU', str_replace($placeholder, '', $node->value));
 
-            $node->value = preg_replace($regex, $isFullValue?"{{\\1 | escape('html_attr') }}":"{{\\1 | escape('url') }}", $node->value);
+            $node->value = preg_replace($regex, $isFullValue?"{{ (\\1)  | escape('html_attr') }}":"{{ (\\1)  | escape('url') }}", $node->value);
         }
     }
 }
