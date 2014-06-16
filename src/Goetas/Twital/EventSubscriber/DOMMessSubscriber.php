@@ -2,7 +2,6 @@
 namespace Goetas\Twital\EventSubscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Goetas\Twital\Twital;
 use Goetas\Twital\EventDispatcher\SourceEvent;
 
 /**
@@ -17,9 +16,6 @@ class DOMMessSubscriber implements EventSubscriberInterface
         return array(
             'compiler.post_dump' => array(
                 array(
-                    'removeNamespaces'
-                ),
-                array(
                     'removeCdata'
                 ),
                 array(
@@ -27,11 +23,6 @@ class DOMMessSubscriber implements EventSubscriberInterface
                 )
             )
         );
-    }
-
-    public function removeNamespaces(SourceEvent $event)
-    {
-        $event->setTemplate(preg_replace('#<(.*) xmlns:[a-zA-Z0-9]+=("|\')' . Twital::NS . '("|\')(.*)>#m', "<\\1\\4>", $event->getTemplate()));
     }
 
     public function removeCdata(SourceEvent $event)

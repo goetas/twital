@@ -14,7 +14,8 @@ class CustomNamespaceRawSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            'compiler.pre_load' => 'addCustomNamespace'
+            'compiler.pre_load' => 'addCustomNamespace',
+            'compiler.post_dump' => 'removeCustomNamespaces',
         );
     }
 
@@ -43,5 +44,14 @@ class CustomNamespaceRawSubscriber implements EventSubscriberInterface
 
             $event->setTemplate($xml);
         }
+    }
+
+    public function removeCustomNamespaces(SourceEvent $event)
+    {
+        $template = $event->getTemplate();
+        foreach ($this->customNamespaces as $prefix => $ns) {
+            $template = preg_replace('#<(.*) xmlns:' . $prefix . '=("|\')' . $ns . '("|\')(.*)>#mi', "<\\1\\4>", $template);
+        }
+        $event->setTemplate($template);
     }
 }
