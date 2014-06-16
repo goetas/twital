@@ -30,26 +30,36 @@ class ContextAwareEscapingSubscriber implements EventSubscriberInterface
         $doc = $event->getTemplate()->getDocument();
 
         $xp = new \DOMXPath($doc);
-
-        // js escaping
-        $res = $xp->query("//style[not(@type) or @type = 'text/css']/text()[contains(., '{{') and contains(., '}}')]"); // take care about namespaces
-        foreach ($res as $node) {
-            $node->data = preg_replace($regex, "{{ (\\1)  | escape('css') }}", $node->data);
-        }
+        $xp->registerNamespace("xh", "http://www.w3.org/1999/xhtml");
 
         // css escaping
-        $res = $xp->query("//script[not(@type) or @type = 'text/javascript']/text()[contains(., '{{') and contains(., '}}')]"); // take care about namespaces
+        $res = $xp->query("//xh:style[not(@type) or @type = 'text/css']/text()[contains(., '{{') and contains(., '}}')]", $doc, false);
         foreach ($res as $node) {
-            $node->data = preg_replace($regex, "{{ (\\1)  | escape('js') }}", $node->data);
+            $node->replaceData(0, $node->length, preg_replace($regex, "{{ (\\1)  | escape('css') }}", $node->data));
         }
 
-        // url escaping
-        $res = $xp->query("//a/@href[contains(., '{{') and contains(., '}}')]|//area/@href[contains(., '{{') and contains(., '}}')]|//link/@href[contains(., '{{') and contains(., '}}')]|//link/@href[contains(., '{{') and contains(., '}}')]|//img/@src[contains(., '{{') and contains(., '}}')]|//script/@src[contains(., '{{') and contains(., '}}')]"); // take care about namespaces
+        // js escaping
+        $res = $xp->query("//xh:script[not(@type) or @type = 'text/javascript']/text()[contains(., '{{') and contains(., '}}')]", $doc, false);
+        foreach ($res as $node) {
+            $node->replaceData(0, $node->length, preg_replace($regex, "{{ (\\1)  | escape('js') }}", $node->data));
+        }
+
+        // special attr escaping
+        $res = $xp->query("(//xh:*/@href|//xh:*/@src)[contains(., '{{') and contains(., '}}')]" ,$doc, false);
         foreach ($res as $node) {
 
-            $isFullValue = preg_match('{^' . preg_quote('{{') . '((' . self::REGEX_STRING . '|[^"\']*)+)' . preg_quote('}}') . '$}siuU', str_replace($placeholder, '', $node->value));
+            // href="{{ foo }}://{{ bar }}" or similar, are skipped
+            if(preg_match('{^' . preg_quote('{{') . '((' . self::REGEX_STRING . '|[^"\']*)+)' . preg_quote('}}') . '$}siuU', str_replace($placeholder, '', $node->value))){
+                continue;
+            }
 
-            $node->value = preg_replace($regex, $isFullValue?"{{ (\\1)  | escape('html_attr') }}":"{{ (\\1)  | escape('url') }}", $node->value);
+            if (substr($node->value, 0, 11)=="javascript:" && $node->name=="href") {
+                $newValue = preg_replace($regex, "{{ (\\1)  | escape('js') }}", $node->value);
+            }else{
+                $newValue = preg_replace($regex, "{{ (\\1)  | escape('url') }}", $node->value);
+            }
+
+            $node->value = htmlspecialchars($newValue, ENT_COMPAT, 'UTF-8');
         }
     }
 }

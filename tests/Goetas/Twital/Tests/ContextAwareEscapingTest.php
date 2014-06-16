@@ -8,8 +8,9 @@ use Goetas\Twital\SourceAdapter\XMLAdapter;
 use Goetas\Twital\Twital;
 use Goetas\Twital\SourceAdapter\HTML5Adapter;
 use Goetas\Twital\TwitalLoader;
+use Goetas\Twital\EventSubscriber\ContextAwareEscapingSubscriber;
 
-class ContextAvareEscapingTest extends \PHPUnit_Framework_TestCase
+class ContextAwareEscapingTest extends \PHPUnit_Framework_TestCase
 {
 
     private $twital;
@@ -38,12 +39,12 @@ class ContextAvareEscapingTest extends \PHPUnit_Framework_TestCase
         $expectedDom = $sourceAdapter->load($expected);
         $expectedStr = $sourceAdapter->dump($expectedDom);
 
-        $compiled = $this->twital->compile($sourceAdapter, $source);
-        $this->assertEquals($expectedStr, $compiled);
+        $compiled = $this->twital->compile($sourceAdapter, $this->wrap($source));
+        $this->assertEquals($this->wrap($expectedStr), $compiled);
 
         if ($renderedExpected) {
             $rendered = $this->twig->render($compiled, $vars);
-            $this->assertEquals($renderedExpected, $rendered);
+            $this->assertEquals($this->wrap($renderedExpected), $rendered);
         }
     }
 
@@ -54,12 +55,12 @@ class ContextAvareEscapingTest extends \PHPUnit_Framework_TestCase
     {
         $sourceAdapter = new XHTMLAdapter();
 
-        $compiled = $this->twital->compile($sourceAdapter, $source);
-        $this->assertEquals($expected, $compiled);
+        $compiled = $this->twital->compile($sourceAdapter, $this->wrap($source));
+        $this->assertEquals($this->wrap($expected), $compiled);
 
         if ($renderedExpected) {
             $rendered = $this->twig->render($compiled, $vars);
-            $this->assertEquals($renderedExpected, $rendered);
+            $this->assertEquals($this->wrap($renderedExpected), $rendered);
         }
     }
 
@@ -70,13 +71,17 @@ class ContextAvareEscapingTest extends \PHPUnit_Framework_TestCase
     {
         $sourceAdapter = new XMLAdapter();
 
-        $compiled = $this->twital->compile($sourceAdapter, $source);
-        $this->assertEquals($expected, $compiled);
+        $compiled = $this->twital->compile($sourceAdapter, $this->wrap($source));
+        $this->assertEquals($this->wrap($expected), $compiled);
 
         if ($renderedExpected) {
             $rendered = $this->twig->render($compiled, $vars);
-            $this->assertEquals($renderedExpected, $rendered);
+            $this->assertEquals($this->wrap($renderedExpected), $rendered);
         }
+    }
+    protected function wrap($html)
+    {
+        return "<html xmlns=\"http://www.w3.org/1999/xhtml\"><body>$html</body></html>";
     }
 
     public function getData()
@@ -126,15 +131,19 @@ class ContextAvareEscapingTest extends \PHPUnit_Framework_TestCase
             ),
 
             array(
+                '<a href="javascript:{{ foo }}">bar</a>',
+                '<a href="javascript:{{ ( foo )  | escape(\'js\') }}">bar</a>',
+            ),
+
+            array(
                 '<a href="{{ foo }}">bar</a>',
-                '<a href="{{ ( foo )  | escape(\'html_attr\') }}">bar</a>',
-                '<a href="http&#x3A;&#x2F;&#x2F;www.example.com">bar</a>',
+                '<a href="{{ foo }}">bar</a>',
+                '<a href="http://www.example.com">bar</a>',
                 array(
                     'foo' =>'http://www.example.com'
                 )
 
             ),
-
             array(
                 '<a href="foo?q={{ foo }}">bar</a>',
                 '<a href="foo?q={{ ( foo )  | escape(\'url\') }}">bar</a>',
@@ -143,22 +152,25 @@ class ContextAvareEscapingTest extends \PHPUnit_Framework_TestCase
                     'foo' =>'f ><oo'
                 )
             ),
-            array(
-                '<area href="{{ foo }}">bar</area>',
-                '<area href="{{ ( foo )  | escape(\'html_attr\') }}">bar</area>'
-            ),
-            array(
-                '<link href="{{ foo }}"/>',
-                '<link href="{{ ( foo )  | escape(\'html_attr\') }}"/>'
-            ),
-            array(
-                '<script src="{{ foo }}">alert(1)</script>',
-                '<script src="{{ ( foo )  | escape(\'html_attr\') }}">alert(1)</script>'
-            ),
+
             array(
                 '<img src="{{ foo }}"/>',
-                '<img src="{{ ( foo )  | escape(\'html_attr\') }}"/>'
-            )
+                '<img src="{{ foo }}"/>'
+            ),
+
+            array(
+                '<img src="a.gif?a=b&amp;{{ foo }}"/>',
+                '<img src="a.gif?a=b&amp;{{ ( foo )  | escape(\'url\') }}"/>'
+            ),
+            array(
+                '<style>/*<![CDATA[*/p > a { font-family: "{{ foo }}"; }/*]]>*/</style>',
+                '<style>/*<![CDATA[*/p > a { font-family: "{{ ( foo )  | escape(\'css\') }}"; }/*]]>*/</style>',
+            ),
+            array(
+                '<script>/*<![CDATA[*/if (a > a && c) alert(1);/*]]>*/</script>',
+                '<script>/*<![CDATA[*/if (a > a && c) alert(1);/*]]>*/</script>',
+            ),
+
         )
         ;
     }
