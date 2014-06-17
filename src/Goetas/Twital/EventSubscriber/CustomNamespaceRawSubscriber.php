@@ -50,7 +50,7 @@ class CustomNamespaceRawSubscriber implements EventSubscriberInterface
     {
         $template = $event->getTemplate();
         foreach ($this->customNamespaces as $prefix => $ns) {
-            $template = preg_replace('#<(.*) xmlns:' . $prefix . '=("|\')' . $ns . '("|\')(.*)>#mi', "<\\1\\4>", $template);
+            $template = preg_replace('#<(.*) xmlns:' . $prefix . '="' . $ns . '"(.*)>#mi', "<\\1\\2>", $template);
         }
         $event->setTemplate($template);
     }
