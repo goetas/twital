@@ -17,10 +17,7 @@ class HTML5Adapter implements SourceAdapter
     protected function getHTML5()
     {
         return new HTML5(array(
-            'xmlNamespaces' => true,
-            'implicitNamespaces' => array(
-                't'=>Twital::NS
-            )
+            'xmlNamespaces' => true
         ));
     }
     /**
@@ -46,6 +43,7 @@ class HTML5Adapter implements SourceAdapter
         $metadata = $template->getMetadata();
         $dom = $template->getDocument();
         $html5 = $this->getHTML5();
+
         return $html5->saveHTML($metadata['fragment'] ? $dom->childNodes : $dom);
     }
 
