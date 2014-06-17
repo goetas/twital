@@ -22,12 +22,7 @@ class CoreExtension extends AbstractExtension
             new CustomNamespaceRawSubscriber(array(
                 't' => Twital::NS
             )),
-            new FixHtmlEntitiesInExpressionSubscriber()
-            /*
-            new CustomNamespaceSubscriber(array(
-                't' => Twital::NS
-            ))
-            */
+            new FixHtmlEntitiesInExpressionSubscriber(),
         );
     }
 
