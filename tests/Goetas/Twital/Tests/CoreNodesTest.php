@@ -99,12 +99,6 @@ abstract class CoreNodesTest extends \PHPUnit_Framework_TestCase
         $compiled = $this->twital->compile($this->sourceAdapter, $source);
         //$compiled = trim($compiled);
         //$expected = trim($expected);
-        if($expected!== $compiled){
-            var_dump(get_class($this->sourceAdapter));
-            var_dump($compiled);
-            var_dump($expected);
-            echo "\n\n\n";
-        }
         $this->assertEquals($expected, $compiled);
     }
 
