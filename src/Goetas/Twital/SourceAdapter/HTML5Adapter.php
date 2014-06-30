@@ -1,7 +1,7 @@
 <?php
 namespace Goetas\Twital\SourceAdapter;
 
-use HTML5;
+use Masterminds\HTML5;
 use Goetas\Twital\SourceAdapter;
 use Goetas\Twital\Template;
 use Goetas\Twital\Helper\DOMHelper;
@@ -13,49 +13,26 @@ use Goetas\Twital\Helper\DOMHelper;
  */
 class HTML5Adapter implements SourceAdapter
 {
+    private $html5;
+    private function getHtml5(){
+        if (!$this->html5){
+            $this->html5 = new HTML5(array(
+                "xmlNamespaces" => true
+            ));
+        }
+        return $this->html5;
+    }
     /**
      * {@inheritdoc}
      */
     public function load($source)
     {
-        $f = HTML5::loadHTMLFragment($source);
+        $html5 = $this->getHtml5();
+        $f = $html5->loadHTMLFragment($source);
         $dom = new \DOMDocument('1.0', 'UTF-8');
         $dom->appendChild($dom->importNode($f, true));
 
-        self::fixElements($dom);
-
         return new Template($dom, $this->collectMetadata($dom, $source));
-    }
-
-    private static function fixElements(\DOMNode $node, $namespaces = array())
-    {
-        foreach (iterator_to_array($node->childNodes) as $child) {
-            if ($child instanceof \DOMElement) {
-                self::fixNss($child, $namespaces);
-            }
-        }
-    }
-
-    private static function fixNss(\DOMElement $element, $namespaces = array())
-    {
-        foreach ($element->attributes as $attr) {
-            if (preg_match("/^xmlns:(.+)/", $attr->name, $mch)) {
-                $namespaces[$mch[1]] = $attr->value;
-            }
-        }
-        if (preg_match('/^([a-z0-9\-]+):(.+)/i', $element->nodeName, $mch) && isset($namespaces[$mch[1]])) {
-            $oldElement = $element;
-            $element = DOMHelper::copyElementInNs($oldElement, $namespaces[$mch[1]]);
-        }
-        // fix attrs
-        foreach (iterator_to_array($element->attributes) as $attr) {
-            if (preg_match('/^([a-z0-9\-]+):(.+)/', $attr->name, $mch) && isset($namespaces[$mch[1]])) {
-                $element->removeAttributeNode($attr);
-                $element->setAttributeNS($namespaces[$mch[1]], $attr->name, $attr->value);
-            }
-        }
-
-        self::fixElements($element,$namespaces);
     }
 
     /**
@@ -65,8 +42,8 @@ class HTML5Adapter implements SourceAdapter
     {
         $metadata = $template->getMetadata();
         $dom = $template->getDocument();
-
-        return HTML5::saveHTML($metadata['fragment'] ? $dom->childNodes : $dom);
+        $html5 = $this->getHtml5();
+        return $html5->saveHTML($metadata['fragment'] ? $dom->childNodes : $dom);
     }
 
     /**
