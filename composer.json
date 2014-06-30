@@ -15,7 +15,7 @@
     "homepage" : "https://github.com/goetas/twital",
     "license" : "MIT",
     "require" : {
-        "masterminds/html5" : "~2.0",
+        "masterminds/html5" : "~2.0@dev",
         "twig/twig" : "~1.10",
         "symfony/event-dispatcher" : "~2.0",
         "php" : ">=5.3.3"
