@@ -41,7 +41,8 @@ class ContextAwareEscapingSubscriber implements EventSubscriberInterface
         // js escaping
         $res = $xp->query("//xh:script[not(@type) or @type = 'text/javascript']/text()[contains(., '{{') and contains(., '}}')]", $doc, false);
         foreach ($res as $node) {
-            $node->replaceData(0, $node->length, preg_replace($regex, "{{ (\\1)  | escape('js') }}", $node->data));
+            $node->insertBefore($doc->createTextnode('{% autoescape \'js\' %}'), $node->firstChild);
+            $node->appendChild($doc->createTextnode('{% endautoescape %}'));
         }
 
         // special attr escaping
