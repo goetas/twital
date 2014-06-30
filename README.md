@@ -91,7 +91,7 @@ There are two recommended ways to install Twital via [Composer](https://getcompo
 * using the ``composer require`` command:
 
 ```bash
-composer require 'goetas/twital:*'
+composer require 'goetas/twital:0.1.*'
 ```
 
 * adding the dependency to your ``composer.json`` file:
@@ -99,7 +99,7 @@ composer require 'goetas/twital:*'
 ```js
 "require": {
     ..
-    "goetas/twital":"*",
+    "goetas/twital":"0.1.*",
     ..
 }
 ```
