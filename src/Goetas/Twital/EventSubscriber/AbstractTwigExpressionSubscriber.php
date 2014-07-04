@@ -32,7 +32,7 @@ abstract class AbstractTwigExpressionSubscriber implements EventSubscriberInterf
                 ')('.self::REGEX_STRING.'|[^"\']*)+('.preg_quote($options['tag_block'][1]).
                 '|'.preg_quote($options['tag_variable'][1]).'|'.preg_quote($options['tag_comment'][1]).
                 ')}siuU',
-            'placeholder' => '{('.preg_quote($placeholder[0]).'(.+)'.preg_quote($placeholder[1]).')}iuU',
+            'placeholder' => '{('.preg_quote($placeholder[0]).'(.+)'.preg_quote($placeholder[1]).')}siuU',
         );
     }
 }

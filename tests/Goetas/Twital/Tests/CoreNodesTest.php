@@ -67,6 +67,8 @@ abstract class CoreNodesTest extends \PHPUnit_Framework_TestCase
             array("<div>{# '{%' and '%}' and '{{' and '}}' and '{#' and '#}' #}</div>", "<div>{# '{%' and '%}' and '{{' and '}}' and '{#' and '#}' #}</div>"),
 
             array('<div>{% block title "title" %}</div>', '<div>{% block title "title" %}</div>'),
+            array("<div>{% foo \n bar %}</div>", "<div>{% foo \n bar %}</div>"),
+            array("<div>{{ foo \n bar }}</div>", "<div>{{ foo \n bar }}</div>"),
             array('<div name="{% block title "title" %}">foo</div>', '<div name="{% block title "title" %}">foo</div>'),
 
             // array('<![CDATA[{{ foo }}]]>', '<![CDATA[{{ foo }}]]>'), // not possible
