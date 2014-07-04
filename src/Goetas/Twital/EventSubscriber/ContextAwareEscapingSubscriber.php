@@ -22,7 +22,7 @@ class ContextAwareEscapingSubscriber implements EventSubscriberInterface
         );
     }
 
-    public function addEscpaing(TemplateEvent $event)
+    public function addEscaping(TemplateEvent $event)
     {
         $doc = $event->getTemplate()->getDocument();
 
