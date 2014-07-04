@@ -24,43 +24,58 @@ class ContextAwareEscapingSubscriber implements EventSubscriberInterface
 
     public function addEscpaing(TemplateEvent $event)
     {
-        $regex = '{' . preg_quote('{{') . '((' . self::REGEX_STRING . '|[^"\']*)+)' . preg_quote('}}') . '}siuU';
-        $placeholder = array('[_TWITAL_[', ']_TWITAL_]');
-
         $doc = $event->getTemplate()->getDocument();
 
         $xp = new \DOMXPath($doc);
         $xp->registerNamespace("xh", "http://www.w3.org/1999/xhtml");
 
-        // css escaping
-        $res = $xp->query("//xh:style[not(@type) or @type = 'text/css']/text()[contains(., '{{') and contains(., '}}')]", $doc, false);
-        foreach ($res as $node) {
-            $node->replaceData(0, $node->length, preg_replace($regex, "{{ (\\1)  | escape('css') }}", $node->data));
-        }
+        $this->esapeScript($doc, $xp);
+        $this->esapeStyle($doc, $xp);
+        $this->esapeUrls($doc, $xp);
+    }
 
-        // js escaping
-        $res = $xp->query("//xh:script[not(@type) or @type = 'text/javascript']/text()[contains(., '{{') and contains(., '}}')]", $doc, false);
-        foreach ($res as $node) {
-            $node->insertBefore($doc->createTextnode('{% autoescape \'js\' %}'), $node->firstChild);
-            $node->appendChild($doc->createTextnode('{% endautoescape %}'));
-        }
-
+    private function esapeUrls(\DOMDocument $doc, \DOMXPath $xp)
+    {
+        $regex = '{' . preg_quote('{{') . '((' . self::REGEX_STRING . '|[^"\']*)+)' . preg_quote('}}') . '}siuU';
+        $placeholder = array(
+            '[_TWITAL_[',
+            ']_TWITAL_]'
+        );
         // special attr escaping
-        $res = $xp->query("(//xh:*/@href|//xh:*/@src)[contains(., '{{') and contains(., '}}')]" ,$doc, false);
+        $res = $xp->query("(//xh:*/@href|//xh:*/@src)[contains(., '{{') and contains(., '}}')]", $doc, false);
         foreach ($res as $node) {
 
             // href="{{ foo }}://{{ bar }}" or similar, are skipped
-            if(preg_match('{^' . preg_quote('{{') . '((' . self::REGEX_STRING . '|[^"\']*)+)' . preg_quote('}}') . '$}siuU', str_replace($placeholder, '', $node->value))){
+            if (preg_match('{^' . preg_quote('{{') . '((' . self::REGEX_STRING . '|[^"\']*)+)' . preg_quote('}}') . '$}siuU', str_replace($placeholder, '', $node->value))) {
                 continue;
             }
 
-            if (substr($node->value, 0, 11)=="javascript:" && $node->name=="href") {
+            if (substr($node->value, 0, 11) == "javascript:" && $node->name == "href") {
                 $newValue = preg_replace($regex, "{{ (\\1)  | escape('js') }}", $node->value);
-            }else{
+            } else {
                 $newValue = preg_replace($regex, "{{ (\\1)  | escape('url') }}", $node->value);
             }
 
             $node->value = htmlspecialchars($newValue, ENT_COMPAT, 'UTF-8');
+        }
+    }
+
+    private function esapeStyle(\DOMDocument $doc, \DOMXPath $xp)
+    {
+        $res = $xp->query("//xh:style[not(@type) or @type = 'text/css'][contains(., '{{') and contains(., '}}')]", $doc, false);
+
+        foreach ($res as $node) {
+            $node->insertBefore($doc->createTextnode('{% autoescape \'css\' %}'), $node->firstChild);
+            $node->appendChild($doc->createTextnode('{% endautoescape %}'));
+        }
+    }
+
+    private function esapeScript(\DOMDocument $doc, \DOMXPath $xp)
+    {
+        $res = $xp->query("//xh:script[not(@type) or @type = 'text/javascript'][contains(., '{{') and contains(., '}}')]", $doc, false);
+        foreach ($res as $node) {
+            $node->insertBefore($doc->createTextnode('{% autoescape \'js\' %}'), $node->firstChild);
+            $node->appendChild($doc->createTextnode('{% endautoescape %}'));
         }
     }
 }
