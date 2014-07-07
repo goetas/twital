@@ -5,8 +5,6 @@
 [![Analytics](https://ga-beacon.appspot.com/UA-52602579-1/goetas/index)](https://github.com/igrigorik/ga-beacon)
 
 
-https://ga-beacon.appspot.com/UA-52602579-1/goetas/index
-
 What is Twital?
 ==============
 
