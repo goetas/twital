@@ -2,9 +2,6 @@
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/goetas/twital/badges/quality-score.png?s=617ac058fc3c486427752fd3fb1f3931bca971ed)](https://scrutinizer-ci.com/g/goetas/twital/)
 [![Code Coverage](https://scrutinizer-ci.com/g/goetas/twital/badges/coverage.png?s=de8d714be4a97b4b11bb44a2ff6601dbda86696c)](https://scrutinizer-ci.com/g/goetas/twital/)
 
-[![Analytics](https://ga-beacon.appspot.com/UA-52602579-1/goetas/index)](https://github.com/igrigorik/ga-beacon)
-
-
 What is Twital?
 ==============
 
