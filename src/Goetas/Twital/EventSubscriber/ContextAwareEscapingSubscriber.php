@@ -50,12 +50,24 @@ class ContextAwareEscapingSubscriber implements EventSubscriberInterface
         $this->esapeUrls($doc, $xp);
     }
 
+    /**
+     *
+     * Used only to achieve HHVM compatibility. Sett https://github.com/facebook/hhvm/issues/2810
+     */
+    private function xpathQuery(\DOMXPath $xp, $expression, \DOMNode $contextnode = null, $registerNodeNS = true){
+        if (defined('HHVM_VERSION')) {
+            return $xp->query($expression, $contextnode);
+        } else {
+            return $xp->query($expression, $contextnode, $registerNodeNS);
+        }
+    }
+
     private function esapeUrls(\DOMDocument $doc, \DOMXPath $xp)
     {
         $regex = '{' . preg_quote($this->options['tag_variable'][0]) . '((' . self::REGEX_STRING . '|[^"\']*)+)' . preg_quote($this->options['tag_variable'][1]) . '}siuU';
 
         // special attr escaping
-        $res = $xp->query("(//xh:*/@href|//xh:*/@src)[contains(., '{$this->options['tag_variable'][0]}') and contains(., '{$this->options['tag_variable'][1]}')]", $doc, false);
+        $res = $this->xpathQuery($xp, "(//xh:*/@href|//xh:*/@src)[contains(., '{$this->options['tag_variable'][0]}') and contains(., '{$this->options['tag_variable'][1]}')]", $doc, false);
         foreach ($res as $node) {
 
             // href="{{ foo }}://{{ bar }}" or similar, are skipped
@@ -75,7 +87,7 @@ class ContextAwareEscapingSubscriber implements EventSubscriberInterface
 
     private function esapeStyle(\DOMDocument $doc, \DOMXPath $xp)
     {
-        $res = $xp->query("//xh:style[not(@type) or @type = 'text/css'][contains(., '{$this->options['tag_variable'][0]}') and contains(., '{$this->options['tag_variable'][1]}')]", $doc, false);
+        $res = $this->xpathQuery($xp, "//xh:style[not(@type) or @type = 'text/css'][contains(., '{$this->options['tag_variable'][0]}') and contains(., '{$this->options['tag_variable'][1]}')]", $doc, false);
 
         foreach ($res as $node) {
             $node->insertBefore($doc->createTextnode("{$this->options['tag_block'][0]} autoescape 'css' {$this->options['tag_block'][1]}"), $node->firstChild);
@@ -85,7 +97,7 @@ class ContextAwareEscapingSubscriber implements EventSubscriberInterface
 
     private function esapeScript(\DOMDocument $doc, \DOMXPath $xp)
     {
-        $res = $xp->query("//xh:script[not(@type) or @type = 'text/javascript'][contains(., '{$this->options['tag_variable'][0]}') and contains(., '{$this->options['tag_variable'][1]}')]", $doc, false);
+        $res = $this->xpathQuery($xp, "//xh:script[not(@type) or @type = 'text/javascript'][contains(., '{$this->options['tag_variable'][0]}') and contains(., '{$this->options['tag_variable'][1]}')]", $doc, false);
         foreach ($res as $node) {
             $node->insertBefore($doc->createTextnode("{$this->options['tag_block'][0]} autoescape 'js' {$this->options['tag_block'][1]}"), $node->firstChild);
             $node->appendChild($doc->createTextnode("{$this->options['tag_block'][0]} endautoescape {$this->options['tag_block'][1]}"));
