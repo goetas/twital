@@ -34,8 +34,8 @@ class ContextAwareEscapingTest extends \PHPUnit_Framework_TestCase
         $expectedDom = $sourceAdapter->load($expected);
         $expectedStr = $sourceAdapter->dump($expectedDom);
 
-        $compiled = $this->twital->compile($sourceAdapter, $this->wrap($source));
-        $this->assertEquals($this->wrap($expectedStr), $compiled);
+        $compiled = $this->twital->compile($sourceAdapter, $this->wrap($source, false));
+        $this->assertEquals($this->wrap($expectedStr, false), $compiled);
     }
 
     /**
@@ -73,9 +73,9 @@ class ContextAwareEscapingTest extends \PHPUnit_Framework_TestCase
         $compiled = $this->twital->compile($sourceAdapter, $this->wrap($source));
         $this->assertEquals($this->wrap($expected), $compiled);
     }
-    protected function wrap($html)
+    protected function wrap($html, $addNs = true)
     {
-        return "<html xmlns=\"http://www.w3.org/1999/xhtml\"><body>$html</body></html>";
+        return "<html". ($addNs?" xmlns=\"http://www.w3.org/1999/xhtml\"":"")."><body>$html</body></html>";
     }
 
     public function getData()
