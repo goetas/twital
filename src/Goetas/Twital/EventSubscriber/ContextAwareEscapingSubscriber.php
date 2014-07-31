@@ -70,8 +70,8 @@ class ContextAwareEscapingSubscriber implements EventSubscriberInterface
         $res = $this->xpathQuery($xp, "(//xh:*/@href|//xh:*/@src)[contains(., '{$this->options['tag_variable'][0]}') and contains(., '{$this->options['tag_variable'][1]}')]", $doc, false);
         foreach ($res as $node) {
 
-            // href="{{ foo }}://{{ bar }}" or similar, are skipped
-            if (preg_match('{^' . preg_quote($this->options['tag_variable'][0]) . '((' . self::REGEX_STRING . '|[^"\']*)+)' . preg_quote($this->options['tag_variable'][1]) . '$}siuU', str_replace($this->placeholder, '', $node->value))) {
+            // if the twig variable is at the beginning of attribute, we should skip it
+            if (preg_match('{^' . preg_quote($this->options['tag_variable'][0]) . '((' . self::REGEX_STRING . '|[^"\']*)+)' . preg_quote($this->options['tag_variable'][1]) . '}siuU', str_replace($this->placeholder, '', $node->value))) {
                 continue;
             }
 

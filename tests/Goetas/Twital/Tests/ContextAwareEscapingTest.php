@@ -139,6 +139,11 @@ class ContextAwareEscapingTest extends \PHPUnit_Framework_TestCase
             ),
 
             array(
+                '<a href="{{ foo }}?foo=bar">bar</a>',
+                '<a href="{{ foo }}?foo=bar">bar</a>',
+            ),
+
+            array(
                 '<img src="a.gif?a=b&amp;{{ foo }}"/>',
                 '<img src="a.gif?a=b&amp;{{ ( foo )  | escape(\'url\') }}"/>'
             ),
