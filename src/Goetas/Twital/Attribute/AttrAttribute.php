@@ -15,7 +15,7 @@ class AttrAttribute implements Attribute
 {
     public static function getVarname(\DOMNode $node)
     {
-        return "__a9" . strtr(spl_object_hash($node), "-","_");
+        return "__a9" . strtr(md5($node->ownerDocument->saveXML($node)).spl_object_hash($node), "-","_");
     }
 
     public function visit(\DOMAttr $att, Compiler $context)
