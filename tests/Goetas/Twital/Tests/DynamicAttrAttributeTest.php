@@ -59,6 +59,40 @@ class DynamicAttrAttributeTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testAttributeHash()
+    {
+
+        $source = <<<EOT
+<div>
+                <ol>
+                    <li t:attr="true ? style='display:none'"/>
+                </ol>
+                <div>
+                    <span>yyy</span>
+                </div>
+                <div>
+                    <input t:attr="true ? checked='checked'"/>
+                </div>
+            </div>
+EOT;
+
+        $rendered = $this->twig->render($source);
+        $expected = <<<EOT
+<div>
+                <ol>
+                    <li style="display:none"/>
+                </ol>
+                <div>
+                    <span>yyy</span>
+                </div>
+                <div>
+                    <input checked="checked"/>
+                </div>
+            </div>
+EOT;
+        $this->assertEquals($expected, $rendered);
+    }
+
     public function getInvalidData()
     {
         return array(
