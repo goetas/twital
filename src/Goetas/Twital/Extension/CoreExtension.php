@@ -8,6 +8,7 @@ use Goetas\Twital\EventSubscriber\DOMMessSubscriber;
 use Goetas\Twital\EventSubscriber\CustomNamespaceRawSubscriber;
 use Goetas\Twital\EventSubscriber\FixHtmlEntitiesInExpressionSubscriber;
 use Goetas\Twital\EventSubscriber\ContextAwareEscapingSubscriber;
+use Goetas\Twital\EventSubscriber\IDNodeSubscriber;
 
 /**
  *
@@ -24,7 +25,8 @@ class CoreExtension extends AbstractExtension
                 't' => Twital::NS
             )),
             new FixHtmlEntitiesInExpressionSubscriber(),
-            new ContextAwareEscapingSubscriber()
+            new ContextAwareEscapingSubscriber(),
+            new IDNodeSubscriber()
         );
     }
 
@@ -32,6 +34,7 @@ class CoreExtension extends AbstractExtension
     {
         $attributes = array();
         $attributes[Twital::NS]['__base__'] = new Attribute\BaseAttribute();
+        $attributes[Twital::NS]['__internal-id__'] = new Attribute\InternalIDAttribute();
 
         $attributes[Twital::NS]['if'] = new Attribute\IfAttribute();
         $attributes[Twital::NS]['elseif'] = new Attribute\ElseIfAttribute();
