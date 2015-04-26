@@ -33,9 +33,8 @@ class IDNodeSubscriber implements EventSubscriberInterface
         $doc = $event->getTemplate()->getDocument();
         $xp = new \DOMXPath($doc);
         $nodes = $xp->query("//*[@*[namespace-uri()='".Twital::NS."']]");
-        $cnt = 0;
         foreach ($nodes as $node) {
-            $node->setAttributeNS(Twital::NS, '__internal-id__', ++$cnt);
+            $node->setAttributeNS(Twital::NS, '__internal-id__', microtime(1).mt_rand());
         }
     }
 
