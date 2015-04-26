@@ -16,7 +16,7 @@ class AttrAttribute implements Attribute
 {
     public static function getVarname(\DOMElement $node)
     {
-        return "__a9" . strtr($node->getAttributeNS(Twital::NS, '__internal-id__').spl_object_hash($node), "-","_");
+        return "__a" . sha1($node->getAttributeNS(Twital::NS, '__internal-id__').spl_object_hash($node));
     }
 
     public function visit(\DOMAttr $att, Compiler $context)
