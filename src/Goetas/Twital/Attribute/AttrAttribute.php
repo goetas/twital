@@ -5,6 +5,7 @@ use Goetas\Twital\Attribute;
 use Goetas\Twital\Compiler;
 use Goetas\Twital\Helper\ParserHelper;
 use Goetas\Twital\Exception;
+use Goetas\Twital\Twital;
 
 /**
  *
@@ -13,9 +14,9 @@ use Goetas\Twital\Exception;
  */
 class AttrAttribute implements Attribute
 {
-    public static function getVarname(\DOMNode $node)
+    public static function getVarname(\DOMElement $node)
     {
-        return "__a9" . strtr(md5($node->ownerDocument->saveXML($node)).spl_object_hash($node), "-","_");
+        return "__a" . sha1($node->getAttributeNS(Twital::NS, '__internal-id__').spl_object_hash($node));
     }
 
     public function visit(\DOMAttr $att, Compiler $context)
