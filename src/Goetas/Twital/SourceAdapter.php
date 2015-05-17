@@ -12,14 +12,14 @@ interface SourceAdapter
      * Gets the raw template source code and return a {Goetas\Twital\Template} instance.
      *
      * @param string $string
-     * @return \Goetas\Twital\Template
+     * @return Template
      */
     public function load($string);
 
     /**
-     * Gets a {Goetas\Twital\Template}  instance and return the raw template source code.
+     * Gets a {Template}  instance and return the raw template source code.
      *
-     * @param \Goetas\Twital\Template $dom
+     * @param Template $dom
      * @return string
      */
     public function dump(Template $dom);

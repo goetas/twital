@@ -64,7 +64,7 @@ class TwitalLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface
      *
      * @param string|callback $pattern
      * @param SourceAdapter $adapter
-     * @return \Goetas\Twital\TwitalLoader
+     * @return TwitalLoader
      */
     public function addSourceAdapter($pattern, SourceAdapter $adapter)
     {
@@ -151,7 +151,7 @@ class TwitalLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface
     /**
      * Get the wrapped Twig loader
      *
-     * @return Twig_LoaderInterface
+     * @return \Twig_LoaderInterface
      */
     public function getLoader()
     {
@@ -162,7 +162,7 @@ class TwitalLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface
      * Set the wrapped Twig loader
      *
      * @param \Twig_LoaderInterface $loader
-     * @return \Goetas\Twital\TwitalLoader
+     * @return TwitalLoader
      */
     public function setLoader(\Twig_LoaderInterface $loader)
     {
@@ -172,7 +172,7 @@ class TwitalLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface
     }
 
     /**
-     * @return \Goetas\Twital\Twital
+     * @return Twital
      */
     public function getTwital()
     {

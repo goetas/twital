@@ -60,11 +60,16 @@ class DOMHelper
         }
     }
 
+    /**
+     * @param \DOMElement $oldElement
+     * @param string $newNamespace
+     * @return mixed
+     */
     public static function copyElementInNs($oldElement, $newNamespace)
     {
         $element = $oldElement->ownerDocument->createElementNS($newNamespace, $oldElement->nodeName);
 
-        // copy attrs
+        // copy attributes
         foreach (iterator_to_array($oldElement->attributes) as $attr) {
             $oldElement->removeAttributeNode($attr);
             if ($attr->namespaceURI) {

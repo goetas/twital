@@ -87,6 +87,9 @@ class ContextAwareEscapingSubscriber implements EventSubscriberInterface
 
     private function esapeStyle(\DOMDocument $doc, \DOMXPath $xp)
     {
+        /**
+         * @var \DOMNode[] $res
+         */
         $res = $this->xpathQuery($xp, "//xh:style[not(@type) or @type = 'text/css'][contains(., '{$this->options['tag_variable'][0]}') and contains(., '{$this->options['tag_variable'][1]}')]", $doc, false);
 
         foreach ($res as $node) {
@@ -97,6 +100,9 @@ class ContextAwareEscapingSubscriber implements EventSubscriberInterface
 
     private function esapeScript(\DOMDocument $doc, \DOMXPath $xp)
     {
+        /**
+         * @var \DOMNode[] $res
+         */
         $res = $this->xpathQuery($xp, "//xh:script[not(@type) or @type = 'text/javascript'][contains(., '{$this->options['tag_variable'][0]}') and contains(., '{$this->options['tag_variable'][1]}')]", $doc, false);
         foreach ($res as $node) {
             $node->insertBefore($doc->createTextnode("{$this->options['tag_block'][0]} autoescape 'js' {$this->options['tag_block'][1]}"), $node->firstChild);

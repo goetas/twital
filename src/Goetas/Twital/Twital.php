@@ -132,6 +132,9 @@ class Twital
         $this->extensions = $extensions;
     }
 
+    /**
+     * @return Extension\AbstractExtension[]
+     */
     public function getExtensions()
     {
         return $this->extensions;
