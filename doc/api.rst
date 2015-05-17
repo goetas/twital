@@ -44,7 +44,7 @@ If you want to change it, adding more supported file formats, you can do somethi
 
 .. note::
 
-    To learn more about adapters, you can read the dedicated chapter :ref``Creating a SourceAdpater``.
+    To learn more about adapters, you can read the dedicated chapter :ref``Creating a SourceAdapter``.
 
 
 Finally, to render a template with some variables, simply call the ``render()`` method on Twig instance:
@@ -89,7 +89,7 @@ The best way to extend Twital is to create your own "extension" and provide
 your functionalities.
 
 
-Creating a `SourceAdpater`
+Creating a `SourceAdapter`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Source adapters adapt a resource representation (usually a file or a string) 
@@ -97,7 +97,7 @@ to something that can be converted into a PHP `DOMDocument`_ object.
 Note that, the same object has to be "re-adapted" into its original representation.
 
 If you want to provide a source adapter, there is no need to create an extension;
-you can simply implement the ``Goetas\Twital\SourceAdpater`` interface and use it.
+you can simply implement the ``Goetas\Twital\SourceAdapter`` interface and use it.
 
 .. literalinclude:: ../src/Goetas/Twital/SourceAdapter.php
    :language: php

@@ -62,7 +62,7 @@ class AttrAttribute implements Attribute
         $node->removeAttributeNode($att);
     }
 
-    protected function addSpecialAttr($node, $varName, array $code)
+    protected function addSpecialAttr(\DOMElement $node, $varName, array $code)
     {
         $node->setAttribute("__attr__", $varName);
 
