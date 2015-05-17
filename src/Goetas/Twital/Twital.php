@@ -133,7 +133,7 @@ class Twital
     }
 
     /**
-     * @return Extension\AbstractExtension[]
+     * @return Extension[]
      */
     public function getExtensions()
     {
