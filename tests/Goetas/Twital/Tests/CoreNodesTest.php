@@ -28,6 +28,95 @@ abstract class CoreNodesTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $compiled);
     }
 
+    /**
+     * @dataProvider getAttributes
+     */
+    public function testNonEmptyHtmlAttributes($attributeName)
+    {
+        $source = '<div ' . $attributeName .'="">foo</div>';
+
+        $compiled = $this->twital->compile($this->sourceAdapter, $source);
+        $this->assertEquals($source, $compiled);
+    }
+
+    public function getAttributes()
+    {
+        return array_map(function ($v) {
+            return array($v);
+        }, array (
+                'href',
+                'hreflang',
+                'http-equiv',
+                'icon',
+                'id',
+                'keytype',
+                'kind',
+                'label',
+                'lang',
+                'language',
+                'list',
+                'maxlength',
+                'media',
+                'method',
+                'name',
+                'placeholder',
+                'rel',
+                'rows',
+                'rowspan',
+                'sandbox',
+                'spellcheck',
+                'scope',
+                'seamless',
+                'shape',
+                'size',
+                'sizes',
+                'span',
+                'src',
+                'srcdoc',
+                'srclang',
+                'srcset',
+                'start',
+                'step',
+                'style',
+                'summary',
+                'tabindex',
+                'target',
+                'title',
+                'type',
+                'value',
+                'width',
+                'border',
+                'charset',
+                'cite',
+                'class',
+                'code',
+                'codebase',
+                'color',
+                'cols',
+                'colspan',
+                'content',
+                'coords',
+                'data',
+                'datetime',
+                'default',
+                'dir',
+                'dirname',
+                'enctype',
+                'for',
+                'form',
+                'formaction',
+                'headers',
+                'height',
+                'accept',
+                'accept-charset',
+                'accesskey',
+                'action',
+                'align',
+                'alt',
+                'bgcolor'
+        ));
+    }
+
     public function getData()
     {
         return array(
