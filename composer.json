@@ -28,6 +28,11 @@
             "Goetas\\Twital" : "src/"
         }
     },
+    "autoload-dev" : {
+        "psr-0" : {
+            "Goetas\\Twital\\Tests" : "tests/"
+        }
+    },
     "extra" : {
         "branch-alias" : {
             "dev-master" : "0.1-dev"
