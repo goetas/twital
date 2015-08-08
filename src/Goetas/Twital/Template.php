@@ -26,7 +26,7 @@ class Template
 
     /**
      * @param \DOMDocument $document The template {DOMDocument}
-     * @param string $metadata Template metadatas
+     * @param mixed $metadata Template metadatas
      */
     public function __construct(\DOMDocument $document, $metadata = null)
     {
