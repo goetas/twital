@@ -8,8 +8,8 @@ php:
   - 7.0  
   - hhvm
 env:
-  - TWIG_VERSION="~1.10"
-  - TWIG_VERSION="2.0.x-dev"
+  - TWIG_VERSION=^1.10
+  - TWIG_VERSION=2.0.x-dev
   
 cache:
   directories:
@@ -25,3 +25,11 @@ script: vendor/bin/phpunit --coverage-clover=coverage.xml
 after_script:
   - bash -c 'if [ "$TRAVIS_PHP_VERSION" == "5.6" ] ; then wget https://scrutinizer-ci.com/ocular.phar; fi;'
   - bash -c 'if [ "$TRAVIS_PHP_VERSION" == "5.6" ] ; then php ocular.phar code-coverage:upload --format=php-clover coverage.xml; fi;'
+  
+matrix:
+  exclude:
+  - env: TWIG_VERSION=2.0.x-dev
+    php: 5.3
+  - env: TWIG_VERSION=2.0.x-dev
+    php: 5.4    
+      
