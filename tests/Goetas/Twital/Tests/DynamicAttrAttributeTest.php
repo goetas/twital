@@ -3,6 +3,7 @@ namespace Goetas\Twital\Tests;
 
 use Goetas\Twital\TwitalLoader;
 use Goetas\Twital\SourceAdapter\XMLAdapter;
+use Goetas\Twital\Tests\Twig\StringLoader;
 
 class DynamicAttrAttributeTest extends \PHPUnit_Framework_TestCase
 {
@@ -19,7 +20,7 @@ class DynamicAttrAttributeTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $twitalLoader = new TwitalLoader(new \Twig_Loader_String(), null, false);
+        $twitalLoader = new TwitalLoader(new StringLoader(), null, false);
         $twitalLoader->addSourceAdapter("/.*/", new XMLAdapter());
 
         $this->twig = new \Twig_Environment($twitalLoader);

@@ -3,6 +3,7 @@ namespace Goetas\Twital\Tests;
 
 use Goetas\Twital\TwitalLoader;
 use Goetas\Twital\SourceAdapter\XMLAdapter;
+use Goetas\Twital\Tests\Twig\StringLoader;
 
 class TwitalLoaderTest extends \PHPUnit_Framework_TestCase
 {
@@ -49,13 +50,13 @@ class TwitalLoaderTest extends \PHPUnit_Framework_TestCase
 
     public function testInternalLoader()
     {
-        $loader = new \Twig_Loader_String();
+        $loader = new StringLoader();
 
         $twitalLoader = new TwitalLoader($loader);
 
         $this->assertSame($loader, $twitalLoader->getLoader());
 
-        $newLoader = new \Twig_Loader_String();
+        $newLoader = new StringLoader();
         $twitalLoader->setLoader($newLoader);
         $this->assertSame($newLoader, $twitalLoader->getLoader());
         $this->assertNotSame($loader, $twitalLoader->getLoader());
@@ -90,7 +91,7 @@ class TwitalLoaderTest extends \PHPUnit_Framework_TestCase
     public function testTwitalFile()
     {
         $twital = $this->getMock('Goetas\Twital\Twital');
-        $twitalLoader = new TwitalLoader(new \Twig_Loader_String(), $twital, false);
+        $twitalLoader = new TwitalLoader(new StringLoader(), $twital, false);
         $twitalLoader->addSourceAdapter('/.*\.xml$/', new XMLAdapter());
 
         $twital->expects($this->once())->method('compile');
@@ -100,26 +101,13 @@ class TwitalLoaderTest extends \PHPUnit_Framework_TestCase
     public function testNonTwitalFile()
     {
         $twital = $this->getMock('Goetas\Twital\Twital');
-        $twitalLoader = new TwitalLoader(new \Twig_Loader_String(), $twital, false);
+        $twitalLoader = new TwitalLoader(new StringLoader(), $twital, false);
         $twitalLoader->addSourceAdapter('/.*\.xml$/', new XMLAdapter());
 
         $twital->expects($this->never())->method('compile');
         $twitalLoader->getSource('aaa.txt');
     }
 
-    public function testExists()
-    {
-        $mockLoader = $this->getMock('Twig_Loader_Array', array(), array(array()));
-
-        $mockLoader->expects($this->once())
-        ->method('exists')
-        ->with($this->equalTo('foo'))
-        ->will($this->returnValue(true));
-
-        $twitalLoader = new TwitalLoader($mockLoader, null, false);
-        $this->assertTrue($twitalLoader->exists('foo'));
-
-    }
     public function testExistsWithBaseLoader()
     {
         $mockLoader = $this->getMock('Twig_LoaderInterface');
