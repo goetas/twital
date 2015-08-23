@@ -23,13 +23,6 @@ class ExtendsNode implements Node
             throw new Exception("The 'from' or 'from-exp' attribute is required");
         }
 
-        // remove any non-element node
-        foreach (iterator_to_array($node->childNodes) as $child) {
-            if (!($child instanceof \DOMElement)) {
-                $child->parentNode->removeChild($child);
-            }
-        }
-
         $context->compileChilds($node);
 
         $ext = $context->createControlNode("extends {$filename}");
@@ -42,6 +35,5 @@ class ExtendsNode implements Node
         array_unshift($set, $ext);
 
         DOMHelper::replaceWithSet($node, $set);
-
     }
 }
