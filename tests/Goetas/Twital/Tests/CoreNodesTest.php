@@ -188,9 +188,11 @@ abstract class CoreNodesTest extends \PHPUnit_Framework_TestCase
     public function testVisitNodeTemplates($source, $expected)
     {
         $compiled = $this->twital->compile($this->sourceAdapter, $source);
-        //$compiled = trim($compiled);
-        //$expected = trim($expected);
-        $this->assertEquals($expected, $compiled);
+
+        $cleanup = function ($str) {
+        	return preg_replace("/\s+/", "", $str);
+        };
+        $this->assertEquals($cleanup($expected), $cleanup($compiled));
     }
 
 }

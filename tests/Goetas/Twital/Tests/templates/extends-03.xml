@@ -1,0 +1,12 @@
+<t:extends from="layout_skeleton.twig">
+    {% block a %}
+        a
+    {% endblock %}
+
+    {% block b %}
+       b
+    {% endblock %}
+    <t:block name="c">
+        c
+    </t:block>
+</t:extends>
