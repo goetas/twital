@@ -57,6 +57,11 @@ class DynamicAttrAttributeTest extends \PHPUnit_Framework_TestCase
             array('<div t:omit="condition">content</div>', 'content', array('condition'=>1)),
             array('<div t:omit="condition">content</div>', '<div>content</div>', array('condition'=>0)),
             array('<div t:omit="true">content</div>', 'content'),
+
+            array('<img src="{{a}}" />', '<img src="/a/x.jpg"/>', ['a' => '/a/x.jpg']),
+            array('<img src="{{ true ? "/b/x.jpg" }}" />', '<img src="/b/x.jpg"/>',),
+            array('<img src="{% if true %}/c/x.jpg{% endif %}" />', '<img src="/c/x.jpg"/>'),
+            array('<img src="{% if true %}{{a}}{% else %}{{b}}{% endif %}" />', '<img src="/d/x.jpg"/>', ['a' => '/d/x.jpg', 'b' => '/b/x.jpg']),
         );
     }
 
