@@ -27,9 +27,9 @@ class FixHtmlEntitiesInExpressionSubscriber extends AbstractTwigExpressionSubscr
         $source = $event->getTemplate();
         $format = $this->placeholderFormat;
 
-        $source = preg_replace_callback($this->regexes['twig'], function ($matches) use ($format) {
-            return sprintf($format, htmlspecialchars($matches[0], ENT_COMPAT, 'UTF-8'));
-        }, $source);
+        $source = $this->processTwig($source, function ($twig) use ($format) {
+            return sprintf($format, htmlspecialchars($twig, ENT_COMPAT, 'UTF-8'));
+        });
 
         $event->setTemplate($source);
     }
@@ -42,9 +42,9 @@ class FixHtmlEntitiesInExpressionSubscriber extends AbstractTwigExpressionSubscr
     {
         $source = $event->getTemplate();
 
-        $source = preg_replace_callback($this->regexes['placeholder'], function($matches) {
+        $source = $this->processPlaceholder($source, function($matches) {
             return html_entity_decode($matches[2], ENT_COMPAT, 'UTF-8');
-        }, $source);
+        });
 
         $event->setTemplate($source);
     }

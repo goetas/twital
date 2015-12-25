@@ -1,0 +1,36 @@
+{% extends '@widget/widget.html.twig' %}
+
+{% from '@widget/semantic-ui/macros.html.twig' import size %}
+
+{% block widget %}
+    {%- set align = (centered|default or center|default) ? 'center' : align|default -%}
+    {%- set align = left|default ? 'left' : (right|default ? 'right' : align) -%}
+
+{% set tag = 'h'~level %}
+<{{ tag }} class="ui header
+    {%- if 'icon' is block name %} icon{% endif -%}
+    {%- if disabled|default %} disabled{% endif -%}
+    {%- if dividing|default %} dividing{% endif -%}
+    {%- if block|default %} block{% endif -%}
+    {%- if attached|default %} {{ attached }} attached{% endif -%}
+    {%- if floated|default %} {{ floated }} floated{% endif -%}
+    {%- if align|default %} {{ align }} aligned{% endif -%}
+    {%- if color|default %} {{ color }}{% endif -%}
+    {%- if inverted|default %} inverted{% endif -%}
+    {%- if size|default %} {{ size(size) }}{% endif -%}
+">
+    {{ block('icon') }}
+    {% if 'icon' is block name or 'subheader' is block name %}
+        <div class="content">
+            {{ block('header') }}
+            {% if 'subheader' is block name %}<div class="sub header">{{ block('subheader') }}</div>{% endif %}
+        </div>
+    {% else %}
+        {{ block('header') }}
+    {% endif %}
+</{{ tag }}>
+{% endblock %}
+
+{% block header %}
+    {{ 'text' is block name ? block('text') : block('__content__') }}
+{% endblock %}
