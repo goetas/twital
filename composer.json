@@ -17,7 +17,7 @@
     "require" : {
         "masterminds/html5" : "^2.1.2",
         "twig/twig" : "^1.10||^2.0",
-        "symfony/event-dispatcher" : "~2.0",
+        "symfony/event-dispatcher" : "^2.0||^3.0",
         "php" : ">=5.3.3"
     },
     "require-dev" : {
