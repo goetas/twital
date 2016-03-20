@@ -25,9 +25,7 @@ class FixTwigExpressionSubscriber extends AbstractTwigExpressionSubscriber
         parent::__construct($placeholder, $options);
 
         $this->regexes = array_merge($this->regexes, array(
-            'attribute' => '{('.self::REGEX_STRING.'|'.preg_quote($placeholder[0]).'[a-z0-9]+?'.preg_quote($placeholder[1]).')}siu',
-            'tag' => '{<('.self::REGEX_STRING.'|[^"\'>]*)*>}siuU',
-            'placeholder' => '{( )?('.preg_quote($placeholder[0]).'[a-z0-9]+?'.preg_quote($placeholder[1]).'(="-")?)}iu',
+            'placeholder' => '{( ?)('.preg_quote($placeholder[0]).'[a-z0-9]+?'.preg_quote($placeholder[1]).')}iu',
         ));
     }
 
@@ -41,47 +39,19 @@ class FixTwigExpressionSubscriber extends AbstractTwigExpressionSubscriber
         $format = $this->placeholderFormat;
         $placeholders = array();
 
-        $source = preg_replace_callback($this->regexes['twig'], function ($matches) use ($format, &$placeholders) {
-            $placeholder = sprintf($format, md5($matches[0]));
-            $placeholders[$placeholder] = $matches[0];
+        $source = $this->processTwig($source, function ($twig, $source, $offset) use ($format, &$placeholders) {
+            $before = $offset > 0 ? $source[$offset - 1] : '';
+            $id = ('<' === $before || '/' === $before) ? $twig : mt_rand();
+            $placeholder = sprintf($format, md5($id));
+
+            if (!in_array($before, array(' ', '<', '>', '/'), true)) {
+                $placeholder = ' '.$placeholder;
+            }
+
+            $placeholders[$placeholder] = $twig;
 
             return $placeholder;
-        }, $source);
-
-        $attributeRegex = $this->regexes['attribute'];
-        $source = preg_replace_callback($this->regexes['tag'], function ($matches) use ($format, $attributeRegex, &$placeholders) {
-            $parts = preg_split($attributeRegex, $matches[0], -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
-            $source = '';
-            foreach ($parts as $i => $part) {
-                $placeholder = $part;
-                if (isset($placeholders[$placeholder])) {
-                    $prevChar = isset($parts[$i - 1]) ? substr($parts[$i - 1], -1) : null;
-                    switch ($prevChar) {
-                        case '<':
-                        case '/':
-                            break;
-                        case ' ':
-                        case "\t":
-                        case null:
-                            $placeholder = sprintf($format, md5(mt_rand()));
-                            break;
-                        default:
-                            $placeholder = ' '.sprintf($format, md5(mt_rand()));
-                            break;
-                    }
-
-                    if ($placeholder !== $part && !(isset($parts[$i + 1]) && '=' === trim($parts[$i + 1]))) {
-                        $placeholder .= '="-"';
-                    }
-
-                    $placeholders[$placeholder] = $placeholders[$part];
-                }
-
-                $source .= $placeholder;
-            };
-
-            return $source;
-        }, $source);
+        });
 
         $this->placeholders = $placeholders;
 
@@ -98,15 +68,15 @@ class FixTwigExpressionSubscriber extends AbstractTwigExpressionSubscriber
 
         $placeholders = $this->placeholders;
 
-        $source = preg_replace_callback($this->regexes['placeholder'], function($matches) use ($placeholders) {
+        $source = $this->processPlaceholder($source, function($matches) use ($placeholders) {
             if (isset($placeholders[$matches[0]])) {
                 return $placeholders[$matches[0]];
             } elseif (isset($placeholders[$matches[2]])) {
-                return $matches[1] . $placeholders[$matches[2]];
+                return $matches[1].$placeholders[$matches[2]];
             } else {
                 return $matches[0];
             }
-        }, $source);
+        });
 
         $event->setTemplate($source);
     }

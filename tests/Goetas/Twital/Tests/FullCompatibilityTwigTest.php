@@ -1,16 +1,16 @@
 <?php
 namespace Goetas\Twital\Tests;
 
+use Goetas\Twital\EventDispatcher\SourceEvent;
 use Goetas\Twital\EventSubscriber\FixTwigExpressionSubscriber;
 use Goetas\Twital\Extension\FullCompatibilityTwigExtension;
-use Goetas\Twital\SourceAdapter\XHTMLAdapter;
-use Goetas\Twital\SourceAdapter\XMLAdapter;
 use Goetas\Twital\Twital;
 use Goetas\Twital\SourceAdapter\HTML5Adapter;
-
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class FullCompatibilityTwigTest extends \PHPUnit_Framework_TestCase
 {
+    private $templateSubscriber;
     private $twital;
 
     /**
@@ -18,9 +18,11 @@ class FullCompatibilityTwigTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
+        $this->templateSubscriber = new DebugTemplateSubscriber();
+
         $this->twital = new Twital();
         $this->twital->addExtension(new FullCompatibilityTwigExtension());
-
+        $this->twital->getEventDispatcher()->addSubscriber($this->templateSubscriber);
     }
 
     public function testListenerPriority()
@@ -42,36 +44,12 @@ class FullCompatibilityTwigTest extends \PHPUnit_Framework_TestCase
         $sourceAdapter = new HTML5Adapter();
 
         $compiled = $this->twital->compile($sourceAdapter, $source);
-        $this->assertEquals($source, $compiled);
-    }
-
-    /**
-     * @dataProvider getData
-     */
-    public function testXHTMLSourceAdapter($source)
-    {
-        $sourceAdapter = new XHTMLAdapter();
-
-        $compiled = $this->twital->compile($sourceAdapter, $source);
-        $this->assertEquals($source, $compiled);
-    }
-
-    /**
-     * @dataProvider getData
-     */
-    public function testXMLSourceAdapter($source)
-    {
-        $sourceAdapter = new XMLAdapter();
-
-        $compiled = $this->twital->compile($sourceAdapter, $source);
-        $this->assertEquals($source, $compiled);
+        $this->assertEquals($source, $compiled, 'PRE: '.$this->templateSubscriber->preLoadTemplate."\n\nPOST: ".$this->templateSubscriber->postDumpTemplate);
     }
 
     public function getData()
     {
         return array(
-            // operators
-
             array('<div>{% if foo > 5 and bar < 8 and bar & 4 %}foo{% endif %}</div>'),
             array('<div>{{ foo > 5 and bar < 8 and bar & 4 ? "foo" }}</div>'),
             array('<div>{# foo > 5 and bar < 8 and bar & 4 ? "foo" #}</div>'),
@@ -92,8 +70,37 @@ class FullCompatibilityTwigTest extends \PHPUnit_Framework_TestCase
             array('<div{# attributes #} class="class {{ classes|filter("foo", "bar\\"") }}">foo</div>'),
             array('<div{{ foo > 5 or foo < 8 }} class="class {{ "foo" < "bar" and 5 > 3 }}">foo</div>'),
             array('<div {{ attributes({"foo": "bar"}) }}>foo</div>'),
+            array('<div {% if foo %}class="foo"{% endif %}>foo</div>'),
             array('<label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>foo</label>'),
             array('<div {{ block(\'widget_attributes\') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %}>foo</div>'),
+
+            array(file_get_contents(__DIR__.'/templates/web_profiler_js.html.twig')),
+            array(file_get_contents(__DIR__.'/templates/logger.html.twig')),
+            //array(file_get_contents(__DIR__.'/templates/widget-header.twig')),
         );
+    }
+}
+
+class DebugTemplateSubscriber implements EventSubscriberInterface
+{
+    public $preLoadTemplate;
+    public $postDumpTemplate;
+
+    public static function getSubscribedEvents()
+    {
+        return array(
+            'compiler.pre_load' => array('onPreLoad'),
+            'compiler.post_dump' => array('onPostDump'),
+        );
+    }
+
+    public function onPreLoad(SourceEvent $event)
+    {
+        $this->preLoadTemplate = $event->getTemplate();
+    }
+
+    public function onPostDump(SourceEvent $event)
+    {
+        $this->postDumpTemplate = $event->getTemplate();
     }
 }
