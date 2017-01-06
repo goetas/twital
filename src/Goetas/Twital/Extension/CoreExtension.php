@@ -45,6 +45,7 @@ class CoreExtension extends AbstractExtension
 
         $attributes[Twital::NS]['content'] = new Attribute\ContentAttribute();
         $attributes[Twital::NS]['capture'] = new Attribute\CaptureAttribute();
+        $attributes[Twital::NS]['replace'] = new Attribute\ReplaceAttribute();
 
         $attributes[Twital::NS]['attr'] = new Attribute\AttrAttribute();
         $attributes[Twital::NS]['attr-append'] = new Attribute\AttrAppendAttribute();

@@ -160,6 +160,9 @@ abstract class CoreNodesTest extends \PHPUnit_Framework_TestCase
             array("<div>{{ foo \n bar }}</div>", "<div>{{ foo \n bar }}</div>"),
             array('<div name="{% block title "title" %}">foo</div>', '<div name="{% block title "title" %}">foo</div>'),
 
+            array("<div t:content=\"'foo'\">test</div>", "<div>{{ 'foo' }}</div>"),
+            array("<div t:replace=\"'foo'\">test</div>", "{{ 'foo' }}"),
+
             // array('<![CDATA[{{ foo }}]]>', '<![CDATA[{{ foo }}]]>'), // not possible
         );
     }
