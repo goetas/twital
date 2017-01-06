@@ -22,3 +22,5 @@ Tags reference
     omit
     attr
     attr-append
+    content
+    replace
