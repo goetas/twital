@@ -27,7 +27,7 @@ class XHTMLAdapter extends XMLAdapter
             foreach ($dom->childNodes as $node) {
                 $xml .= $dom->saveXML($node, LIBXML_NOEMPTYTAG);
                 if ($node instanceof \DOMDocumentType) {
-                    $xml.= PHP_EOL;
+                    $xml .= PHP_EOL;
                 }
             }
         }

@@ -18,7 +18,7 @@ class SetAttribute implements Attribute
 
         $sets = ParserHelper::staticSplitExpression(html_entity_decode($att->value), ",");
         foreach ($sets as $set) {
-            $pi = $context->createControlNode("set ".$set);
+            $pi = $context->createControlNode("set " . $set);
             $node->parentNode->insertBefore($pi, $node);
         }
 

@@ -54,7 +54,8 @@ class ContextAwareEscapingSubscriber implements EventSubscriberInterface
      *
      * Used only to achieve HHVM compatibility. Sett https://github.com/facebook/hhvm/issues/2810
      */
-    private function xpathQuery(\DOMXPath $xp, $expression, \DOMNode $contextnode = null, $registerNodeNS = true){
+    private function xpathQuery(\DOMXPath $xp, $expression, \DOMNode $contextnode = null, $registerNodeNS = true)
+    {
         if (defined('HHVM_VERSION')) {
             return $xp->query($expression, $contextnode);
         } else {

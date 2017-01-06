@@ -35,9 +35,9 @@ class IDNodeSubscriber implements EventSubscriberInterface
         /**
          * @var \DOMElement[] $nodes
          */
-        $nodes = $xp->query("//*[@*[namespace-uri()='".Twital::NS."']]");
+        $nodes = $xp->query("//*[@*[namespace-uri()='" . Twital::NS . "']]");
         foreach ($nodes as $node) {
-            $node->setAttributeNS(Twital::NS, '__internal-id__', microtime(1).mt_rand());
+            $node->setAttributeNS(Twital::NS, '__internal-id__', microtime(1) . mt_rand());
         }
     }
 

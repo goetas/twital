@@ -42,7 +42,7 @@ class FixHtmlEntitiesInExpressionSubscriber extends AbstractTwigExpressionSubscr
     {
         $source = $event->getTemplate();
 
-        $source = $this->processPlaceholder($source, function($matches) {
+        $source = $this->processPlaceholder($source, function ($matches) {
             return html_entity_decode($matches[2], ENT_COMPAT, 'UTF-8');
         });
 

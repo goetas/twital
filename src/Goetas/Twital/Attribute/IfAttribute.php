@@ -26,6 +26,7 @@ class IfAttribute implements AttributeBase
         }
         $node->removeAttributeNode($att);
     }
+
     public static function removeWhitespace(\DOMElement $element)
     {
         while ($el = $element->nextSibling) {
@@ -36,6 +37,7 @@ class IfAttribute implements AttributeBase
             }
         }
     }
+
     public static function findNextElement(\DOMElement $element)
     {
         $next = $element;
@@ -50,6 +52,7 @@ class IfAttribute implements AttributeBase
 
         return null;
     }
+
     public static function findPrevElement(\DOMElement $element)
     {
         $prev = $element;

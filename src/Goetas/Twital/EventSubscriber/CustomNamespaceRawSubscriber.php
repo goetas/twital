@@ -37,7 +37,7 @@ class CustomNamespaceRawSubscriber implements EventSubscriberInterface
         if (preg_match('~<(([a-z0-9\-_]+):)?([a-z0-9\-_]+)~i', $xml, $mch, PREG_OFFSET_CAPTURE)) {
             $addPos = $mch[0][1] + strlen($mch[0][0]);
             foreach ($this->customNamespaces as $prefix => $ns) {
-                if (! preg_match('/\sxmlns:([a-z0-9\-]+)="' . preg_quote($ns, '/') . '"/', $xml) && ! preg_match('/\sxmlns:([a-z0-9\-]+)=".*?"/', $xml)) {
+                if (!preg_match('/\sxmlns:([a-z0-9\-]+)="' . preg_quote($ns, '/') . '"/', $xml) && !preg_match('/\sxmlns:([a-z0-9\-]+)=".*?"/', $xml)) {
                     $xml = substr_replace($xml, ' xmlns:' . $prefix . '="' . $ns . '"', $addPos, 0);
                 }
             }

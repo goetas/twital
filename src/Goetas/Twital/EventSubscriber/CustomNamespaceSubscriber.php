@@ -16,7 +16,7 @@ class CustomNamespaceSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            'compiler.post_load'=>'addCustomNamespace',
+            'compiler.post_load' => 'addCustomNamespace',
             'compiler.post_dump' => 'removeCustomNamespaces',
         );
     }
@@ -25,7 +25,7 @@ class CustomNamespaceSubscriber implements EventSubscriberInterface
      *
      * @var array
      */
-    protected $customNamespaces=array();
+    protected $customNamespaces = array();
 
     public function __construct(array $customNamespaces)
     {

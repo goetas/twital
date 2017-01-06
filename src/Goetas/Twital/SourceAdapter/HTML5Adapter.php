@@ -14,14 +14,17 @@ use Goetas\Twital\Helper\DOMHelper;
 class HTML5Adapter implements SourceAdapter
 {
     private $html5;
-    private function getHtml5(){
-        if (!$this->html5){
+
+    private function getHtml5()
+    {
+        if (!$this->html5) {
             $this->html5 = new HTML5(array(
                 "xmlNamespaces" => true
             ));
         }
         return $this->html5;
     }
+
     /**
      * {@inheritdoc}
      */
@@ -56,7 +59,7 @@ class HTML5Adapter implements SourceAdapter
     {
         $metadata = array();
 
-        $metadata['doctype'] = !! $dom->doctype;
+        $metadata['doctype'] = !!$dom->doctype;
         $metadata['fragment'] = strpos(rtrim($source), '<!DOCTYPE html>') !== 0;
 
         return $metadata;

@@ -16,7 +16,7 @@ class ContentAttribute implements Attribute
     {
         $node = $att->ownerElement;
         DOMHelper::removeChilds($node);
-        $pi = $context->createPrintNode( html_entity_decode($att->value));
+        $pi = $context->createPrintNode(html_entity_decode($att->value));
         $node->appendChild($pi);
 
         $node->removeAttributeNode($att);

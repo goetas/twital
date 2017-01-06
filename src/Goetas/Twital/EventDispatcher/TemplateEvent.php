@@ -22,11 +22,13 @@ class TemplateEvent extends Event
      * @var Template
      */
     protected $template;
+
     public function __construct(Twital $twital, Template $template)
     {
         $this->twital = $twital;
         $this->template = $template;
     }
+
     /**
      * @return \Goetas\Twital\Twital
      */
@@ -34,6 +36,7 @@ class TemplateEvent extends Event
     {
         return $this->twital;
     }
+
     /**
      * @return \Goetas\Twital\Template
      */

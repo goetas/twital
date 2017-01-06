@@ -26,7 +26,7 @@ class ExtendsAttribute implements AttributeBase
 
             $ancestors = $xp->query("ancestor::*[@t:block-inner or @t:block-outer or @t:extends]", $blockNode);
 
-            if ($ancestors->length===1){
+            if ($ancestors->length === 1) {
                 $candidates[] = $blockNode;
             }
         }

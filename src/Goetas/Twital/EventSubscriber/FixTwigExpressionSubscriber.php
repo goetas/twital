@@ -25,7 +25,7 @@ class FixTwigExpressionSubscriber extends AbstractTwigExpressionSubscriber
         parent::__construct($placeholder, $options);
 
         $this->regexes = array_merge($this->regexes, array(
-            'placeholder' => '{( ?)('.preg_quote($placeholder[0]).'[a-z0-9]+?'.preg_quote($placeholder[1]).')}iu',
+            'placeholder' => '{( ?)(' . preg_quote($placeholder[0]) . '[a-z0-9]+?' . preg_quote($placeholder[1]) . ')}iu',
         ));
     }
 
@@ -45,7 +45,7 @@ class FixTwigExpressionSubscriber extends AbstractTwigExpressionSubscriber
             $placeholder = sprintf($format, md5($id));
 
             if (!in_array($before, array(' ', '<', '>', '/'), true)) {
-                $placeholder = ' '.$placeholder;
+                $placeholder = ' ' . $placeholder;
             }
 
             $placeholders[$placeholder] = $twig;
@@ -68,11 +68,11 @@ class FixTwigExpressionSubscriber extends AbstractTwigExpressionSubscriber
 
         $placeholders = $this->placeholders;
 
-        $source = $this->processPlaceholder($source, function($matches) use ($placeholders) {
+        $source = $this->processPlaceholder($source, function ($matches) use ($placeholders) {
             if (isset($placeholders[$matches[0]])) {
                 return $placeholders[$matches[0]];
             } elseif (isset($placeholders[$matches[2]])) {
-                return $matches[1].$placeholders[$matches[2]];
+                return $matches[1] . $placeholders[$matches[2]];
             } else {
                 return $matches[0];
             }

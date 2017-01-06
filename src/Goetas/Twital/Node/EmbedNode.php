@@ -25,7 +25,7 @@ class EmbedNode implements Node
 
         // remove any non-element node
         foreach (iterator_to_array($node->childNodes) as $child) {
-            if (! ($child instanceof \DOMElement)) {
+            if (!($child instanceof \DOMElement)) {
                 $child->parentNode->removeChild($child);
             }
         }

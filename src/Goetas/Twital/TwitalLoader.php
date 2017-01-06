@@ -185,7 +185,7 @@ class TwitalLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface
      */
     public function getTwital()
     {
-        if ($this->twital===null) {
+        if ($this->twital === null) {
             $this->twital = new Twital();
         }
 

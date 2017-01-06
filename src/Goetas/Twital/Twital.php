@@ -76,7 +76,7 @@ class Twital
 
     protected function initExtensions()
     {
-        if (! $this->extensionsInitialized) {
+        if (!$this->extensionsInitialized) {
             foreach ($this->getExtensions() as $extension) {
                 $this->attributes = array_merge_recursive($this->attributes, $extension->getAttributes());
                 $this->nodes = array_merge_recursive($this->nodes, $extension->getNodes());
@@ -88,6 +88,7 @@ class Twital
             $this->extensionsInitialized = true;
         }
     }
+
     /**
      *
      * @param SourceAdapter $adapter

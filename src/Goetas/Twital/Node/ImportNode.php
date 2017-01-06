@@ -24,7 +24,7 @@ class ImportNode implements Node
 
         if ($node->hasAttribute("as")) {
             $code = "import $filename as " . $node->getAttribute("as");
-            $context->createControlNode("import " . ($node->getAttribute("fro-exp") ? $node->getAttribute("name-exp") : ("'" . $node->getAttribute("name") . "'")) . " as " . $node->getAttribute("as") );
+            $context->createControlNode("import " . ($node->getAttribute("fro-exp") ? $node->getAttribute("name-exp") : ("'" . $node->getAttribute("name") . "'")) . " as " . $node->getAttribute("as"));
         } elseif ($node->hasAttribute("aliases")) {
             $code = "from $filename import " . $node->getAttribute("aliases");
         } else {

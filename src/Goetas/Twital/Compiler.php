@@ -112,7 +112,7 @@ class Compiler
         $attributes = $this->twital->getAttributes();
         $continueNode = true;
         foreach (iterator_to_array($node->attributes) as $attr) {
-            if (! $attr->ownerElement) {
+            if (!$attr->ownerElement) {
                 continue;
             } elseif (isset($attributes[$attr->namespaceURI][$attr->localName])) {
                 $attPlugin = $attributes[$attr->namespaceURI][$attr->localName];
@@ -126,7 +126,7 @@ class Compiler
 
             $return = $attPlugin->visit($attr, $this);
             if ($return !== null) {
-                $continueNode = $continueNode && ! ($return & Attribute::STOP_NODE);
+                $continueNode = $continueNode && !($return & Attribute::STOP_NODE);
                 if ($return & Attribute::STOP_ATTRIBUTE) {
                     break;
                 }

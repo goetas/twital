@@ -15,7 +15,7 @@ class MacroNode implements Node
 {
     public function visit(\DOMElement $node, Compiler $context)
     {
-        if (! $node->hasAttribute("name")) {
+        if (!$node->hasAttribute("name")) {
             throw new Exception("Name attribute is required");
         }
 

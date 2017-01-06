@@ -32,7 +32,7 @@ class XMLAdapter implements SourceAdapter
         $metadata = array();
 
         $metadata['xmldeclaration'] = strpos(rtrim($source), '<?xml ') === 0;
-        $metadata['doctype'] = !! $dom->doctype;
+        $metadata['doctype'] = !!$dom->doctype;
 
         return $metadata;
     }
@@ -54,7 +54,7 @@ class XMLAdapter implements SourceAdapter
             foreach ($dom->childNodes as $node) {
                 $xml .= $dom->saveXML($node);
                 if ($node instanceof \DOMDocumentType) {
-                    $xml.= PHP_EOL;
+                    $xml .= PHP_EOL;
                 }
             }
 

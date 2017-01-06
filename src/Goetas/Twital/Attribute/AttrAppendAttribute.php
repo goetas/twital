@@ -20,7 +20,7 @@ class AttrAppendAttribute extends AttrAttribute
         foreach ($expressions as $k => $expression) {
             $expressions[$k] = $attrExpr = self::splitAttrExpression($expression);
             $attNode = null;
-            if (! isset($attributes[$attrExpr['name']])) {
+            if (!isset($attributes[$attrExpr['name']])) {
                 $attributes[$attrExpr['name']] = array();
             }
             if ($node->hasAttribute($attrExpr['name'])) {
@@ -41,7 +41,7 @@ class AttrAppendAttribute extends AttrAttribute
         $code[] = $context->createControlNode("set $varName = {" . ParserHelper::implodeKeyedDouble(",", $attributes, true) . " }");
         $code[] = $context->createControlNode("else");
 
-        foreach ($attributes as $attribute => $values){
+        foreach ($attributes as $attribute => $values) {
             $code[] = $context->createControlNode("if {$varName}['{$attribute}'] is defined");
             $code[] = $context->createControlNode("set $varName = $varName|merge({ '$attribute' : ({$varName}['{$attribute}']|merge([" . implode(",", $values) . "])) })");
             $code[] = $context->createControlNode("else");
