@@ -8,7 +8,7 @@ Suppose to have a variable ``foo`` with a value ``My name is John`` and the foll
 
 .. code-block:: xml+jinja
 
-    <div id="pagination" t:content="foo">
+    <div id="pagination" t:replace="foo">
         This <b>content</b> will be removed
     </div>
 
