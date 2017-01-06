@@ -21,7 +21,7 @@ class ExtendsAttribute implements AttributeBase
         $xp = new \DOMXPath($att->ownerDocument);
         $xp->registerNamespace("t", Twital::NS);
 
-        $candidates = [];
+        $candidates = array();
         foreach ($xp->query(".//*[@t:block-inner or @t:block-outer]|.//t:*", $node) as $blockNode) {
 
             $ancestors = $xp->query("ancestor::*[@t:block-inner or @t:block-outer or @t:extends]", $blockNode);
