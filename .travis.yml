@@ -26,13 +26,17 @@ matrix:
         - php: 7.0
         - php: 7.1
 
-        - php: 5.3 # oldest possible deps
-          env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable'
         # Twig 2
         - php: 7.0
           env: TWIG_VERSION='^2.0'
         - php: 7.1
           env: TWIG_VERSION='^2.0'
+
+        # oldest possible deps for twig 1.x
+        - php: 5.3 # for twig 1.x
+          env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable' TWIG_VERSION=^1.10
+        - php: 7.0 # for twig 2.x
+          env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable' TWIG_VERSION=^2.0
     fast_finish: true
 
 before_script:
