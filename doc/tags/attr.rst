@@ -38,3 +38,44 @@ When not needed, you can omit the condition instruction.
 .. tip::
 
     `attr-append`
+
+
+To set an HTML5 boolean attribute, just use booleans as ``true`` or ``false``.
+
+.. code-block:: xml+jinja
+
+    <option t:attr="selected=true">
+        My Company
+    </option>
+
+The previous template will be rendered as:
+
+.. code-block:: html
+
+    <option selected>
+        My Company
+    </option>
+
+.. note::
+
+    Since XML does not have the concept of "boolean attributes",
+    this feature may break your output if you are using XML.
+
+
+
+To to remove and already defined attribute, use ``false`` as attribute value
+
+.. code-block:: xml+jinja
+
+    <div class="foo" t:attr="class=false">
+        My Company
+    </div>
+
+The previous template will be rendered as:
+
+.. code-block:: html
+
+    <div>
+        My Company
+    </div>
+

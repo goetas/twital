@@ -40,7 +40,15 @@ class AttrAppendAttribute extends AttrAttribute
         $code[] = $context->createControlNode("if $varName is not defined");
         $code[] = $context->createControlNode("set $varName = {" . ParserHelper::implodeKeyedDouble(",", $attributes, true) . " }");
         $code[] = $context->createControlNode("else");
-        $code[] = $context->createControlNode("set $varName = $varName|merge({" . ParserHelper::implodeKeyedDouble(",", $attributes, true) . "})");
+
+        foreach ($attributes as $attribute => $values){
+            $code[] = $context->createControlNode("if {$varName}['{$attribute}'] is defined");
+            $code[] = $context->createControlNode("set $varName = $varName|merge({ '$attribute' : ({$varName}['{$attribute}']|merge([" . implode(",", $values) . "])) })");
+            $code[] = $context->createControlNode("else");
+            $code[] = $context->createControlNode("set $varName = $varName|merge({ '$attribute' : [" . implode(",", $values) . "]})");
+            $code[] = $context->createControlNode("endif");
+        }
+
         $code[] = $context->createControlNode("endif");
 
         foreach ($expressions as $attrExpr) {
