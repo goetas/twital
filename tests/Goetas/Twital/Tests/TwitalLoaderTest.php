@@ -110,6 +110,10 @@ class TwitalLoaderTest extends \PHPUnit_Framework_TestCase
 
     public function testExistsWithBaseLoader()
     {
+        if (\Twig_Environment::MAJOR_VERSION == 2){
+            $this->markTestSkipped("Twig 2.x has the Twig_LoaderInterface::exists method");
+        }
+
         $mockLoader = $this->getMock('Twig_LoaderInterface');
 
         $mockLoader->expects($this->once())
@@ -126,6 +130,10 @@ class TwitalLoaderTest extends \PHPUnit_Framework_TestCase
 
     public function testNonExistsWithBaseLoader()
     {
+        if (\Twig_Environment::MAJOR_VERSION == 2){
+            $this->markTestSkipped("Twig 2.x has the Twig_LoaderInterface::exists method");
+        }
+
         $mockLoader = $this->getMock('Twig_LoaderInterface');
 
         $mockLoader->expects($this->once())
@@ -139,6 +147,38 @@ class TwitalLoaderTest extends \PHPUnit_Framework_TestCase
 
         $twitalLoader = new TwitalLoader($mockLoader, null, false);
         $this->assertFalse($twitalLoader->exists('foo'));
+    }
 
+    public function testExistsWithBaseLoaderTwig2()
+    {
+        if (\Twig_Environment::MAJOR_VERSION != 2){
+            $this->markTestSkipped("Twig 2.x only");
+        }
+
+        $mockLoader = $this->getMock('Twig_LoaderInterface');
+
+        $mockLoader->expects($this->once())
+            ->method('exists')
+            ->will($this->returnValue(true));
+
+        $twitalLoader = new TwitalLoader($mockLoader, null, false);
+        $this->assertTrue($twitalLoader->exists('foo'));
+
+    }
+
+    public function testNonExistsWithBaseLoaderTwig2()
+    {
+        if (\Twig_Environment::MAJOR_VERSION != 2){
+            $this->markTestSkipped("Twig 2.x only");
+        }
+
+        $mockLoader = $this->getMock('Twig_LoaderInterface');
+
+        $mockLoader->expects($this->once())
+            ->method('exists')
+            ->will($this->returnValue(false));
+
+        $twitalLoader = new TwitalLoader($mockLoader, null, false);
+        $this->assertFalse($twitalLoader->exists('foo'));
     }
 }

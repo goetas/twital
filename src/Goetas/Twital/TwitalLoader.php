@@ -57,6 +57,15 @@ class TwitalLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface
         }
     }
 
+    public function getSourceContext($name)
+    {
+        $originalContext = $this->loader->getSourceContext($name);
+
+        $source = $this->getSource($name);
+
+        return new \Twig_Source($source, $name, $originalContext->getPath());
+    }
+
     /**
      * Add a new pattern that can decide if a template is twital-compilable or not.
      * If $pattern is a string, then must be a valid regex that matches the template filename.
@@ -135,7 +144,7 @@ class TwitalLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface
      */
     public function exists($name)
     {
-        if ($this->loader instanceof \Twig_ExistsLoaderInterface) {
+        if (\Twig_Environment::MAJOR_VERSION == 2 || ($this->loader instanceof \Twig_ExistsLoaderInterface)) {
             return $this->loader->exists($name);
         } else {
             try {

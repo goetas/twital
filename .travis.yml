@@ -9,7 +9,7 @@ php:
   - hhvm
 env:
   - TWIG_VERSION=^1.10
-  - TWIG_VERSION=2.0.x-dev
+  - TWIG_VERSION=^2.0
   
 cache:
   directories:
@@ -32,4 +32,3 @@ matrix:
     php: 5.3
   - env: TWIG_VERSION=2.0.x-dev
     php: 5.4    
-      

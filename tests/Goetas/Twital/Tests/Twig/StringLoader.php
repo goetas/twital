@@ -8,6 +8,11 @@ class StringLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface
         return $name;
     }
 
+    public function getSourceContext($name)
+    {
+        return new \Twig_Source($name, $name);
+    }
+
     public function exists($name)
     {
         return true;
