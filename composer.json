@@ -24,18 +24,18 @@
         "phpunit/phpunit" : "~4.0"
     },
     "autoload" : {
-        "psr-0" : {
-            "Goetas\\Twital" : "src/"
+        "psr-4" : {
+            "Goetas\\Twital\\" : "src/"
         }
     },
     "autoload-dev" : {
-        "psr-0" : {
-            "Goetas\\Twital\\Tests" : "tests/"
+        "psr-4" : {
+            "Goetas\\Twital\\Tests\\" : "tests/Tests"
         }
     },
     "extra" : {
         "branch-alias" : {
-            "dev-master" : "0.1-dev"
+            "dev-master" : "1.x-dev"
         }
     }
 }

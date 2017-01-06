@@ -1,20 +1,43 @@
 language: php
-sudo: false
-php:
-  - 5.3
-  - 5.4
-  - 5.5
-  - 5.6
-  - 7.0  
-  - hhvm
-env:
-  - TWIG_VERSION=^1.10
-  - TWIG_VERSION=2.0.x-dev
-  
+git:
+    depth: 1
+
 cache:
   directories:
-    - vendor
     - $HOME/.composer/cache
+
+env:
+  - TWIG_VERSION=^1.10
+
+matrix:
+    include:
+        - php: hhvm
+          sudo: required
+          dist: trusty
+          group: edge
+        - php: hhvm-nightly
+          sudo: required
+          dist: trusty
+          group: edge
+        - php: 5.3
+        - php: 5.4
+        - php: 5.5
+        - php: 5.6
+        - php: 7.0
+        - php: 7.1
+
+        # Twig 2
+        - php: 7.0
+          env: TWIG_VERSION='^2.0'
+        - php: 7.1
+          env: TWIG_VERSION='^2.0'
+
+        # oldest possible deps for twig 1.x
+        - php: 5.3 # for twig 1.x
+          env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable' TWIG_VERSION=^1.10
+        - php: 7.0 # for twig 2.x
+          env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable' TWIG_VERSION=^2.0
+    fast_finish: true
 
 before_script:
   - composer require twig/twig:${TWIG_VERSION} --no-update
@@ -25,11 +48,3 @@ script: vendor/bin/phpunit --coverage-clover=coverage.xml
 after_script:
   - bash -c 'if [ "$TRAVIS_PHP_VERSION" == "5.6" ] ; then wget https://scrutinizer-ci.com/ocular.phar; fi;'
   - bash -c 'if [ "$TRAVIS_PHP_VERSION" == "5.6" ] ; then php ocular.phar code-coverage:upload --format=php-clover coverage.xml; fi;'
-  
-matrix:
-  exclude:
-  - env: TWIG_VERSION=2.0.x-dev
-    php: 5.3
-  - env: TWIG_VERSION=2.0.x-dev
-    php: 5.4    
-      

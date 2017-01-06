@@ -1,11 +1,13 @@
 [![Build Status](https://travis-ci.org/goetas/twital.png?branch=dev)](https://travis-ci.org/goetas/twital)
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/goetas/twital/badges/quality-score.png?s=617ac058fc3c486427752fd3fb1f3931bca971ed)](https://scrutinizer-ci.com/g/goetas/twital/)
 [![Code Coverage](https://scrutinizer-ci.com/g/goetas/twital/badges/coverage.png?s=de8d714be4a97b4b11bb44a2ff6601dbda86696c)](https://scrutinizer-ci.com/g/goetas/twital/)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/goetas/twital/master/LICENSE)
+[![Packagist](https://img.shields.io/packagist/v/goetas/twital.svg)](https://packagist.org/packages/goetas/twital)
 
 What is Twital?
 ==============
 
-Twital is a small "plugin" for [Twig](http://twig.sensiolabs.org/) (a template engine for PHP) 
+Twital is a template engine built on top of [Twig](http://twig.sensiolabs.org/) (a template engine for PHP and default template engine on Symfomy) 
 that adds some shortcuts and makes Twig's syntax more suitable for HTML based (XML, HTML5, XHTML, SGML) templates.
 Twital takes inspiration from [PHPTal](http://phptal.org/), [TAL](http://en.wikipedia.org/wiki/Template_Attribute_Language) 
 and [AngularJS](http://angularjs.org/) (just for some aspects), 
@@ -82,26 +84,17 @@ You can also extend from Twig a Twital template:
 
 ```
 
+A presentation of Twital features and advantages is available on [this presentation](https://goetas.bitbucket.io/twital-02-08-2016-berlin-ug/#/).
+
 
 Installation
------------
+------------
 
-There are two recommended ways to install Twital via [Composer](https://getcomposer.org/):
+The recommended ways install Twital is via [Composer](https://getcomposer.org/).
 
-* using the ``composer require`` command:
 
 ```bash
-composer require 'goetas/twital:0.1.*'
-```
-
-* adding the dependency to your ``composer.json`` file:
-
-```js
-"require": {
-    ..
-    "goetas/twital":"0.1.*",
-    ..
-}
+composer require goetas/twital
 ```
 
 Documentation
@@ -135,7 +128,7 @@ $twig = new Twig_Environment($twitalLoader);
 echo $twig->render('demo.twital.html', array('name' => 'John'));
 ```
 
-That's all!
+That's it!
 
 
 Symfony2 Users
@@ -146,11 +139,9 @@ If you are a [Symfony2](http://symfony.com/) user, you can add Twital to your pr
 
 The bundle integrates all most common functionalities as Assetic, Forms, Translations, Routing, etc.
 
-Note
-----
+Twig Users
+----------
 
-I'm sorry for the *terrible* english fluency used inside the documentation, I'm trying to improve it. 
-Pull Requests are welcome.
-
+Starting from version Twital 1.0.0,  both twig 1.x and 2.x versions are supported- 
 
 

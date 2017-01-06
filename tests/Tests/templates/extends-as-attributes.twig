@@ -1,0 +1,25 @@
+{% extends "foo.twig" %}
+
+{% block block01 %}
+    <div>
+        01
+        {% block block02 %}
+            <h2>
+                02
+                {% block block03 %}
+                    <h3>03</h3>
+                {% endblock %}
+            </h2>
+        {% endblock %}
+
+        some
+
+        {% block block04 %}
+            <h4>04</h4>
+        {% endblock %}
+    </div>
+{% endblock %}
+
+{% block block05 %}
+    <footer>05</footer>
+{% endblock %}

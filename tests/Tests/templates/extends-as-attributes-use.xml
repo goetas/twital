@@ -1,0 +1,11 @@
+<html t:extends="foo.twig">
+    <t:use from="blocks.html"/>
+    <body>
+        <div t:block-outer="block01">
+            01
+        </div>
+        <footer t:block-outer="block05">
+            05
+        </footer>
+    </body>
+</html>
