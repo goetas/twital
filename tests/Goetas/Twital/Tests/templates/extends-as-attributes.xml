@@ -1,0 +1,24 @@
+<html t:extends="foo.twig">
+    <body>
+        <div t:block-outer="block01">
+            01
+
+            <h2 t:block-outer="block02">
+
+                02
+
+                <h3 t:block-outer="block03">
+                    03
+                </h3>
+
+            </h2>
+            some
+            <h4 t:block-outer="block04">
+                04
+            </h4>
+        </div>
+        <footer t:block-outer="block05">
+            05
+        </footer>
+    </body>
+</html>
