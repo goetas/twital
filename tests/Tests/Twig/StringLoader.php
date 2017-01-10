@@ -1,7 +1,7 @@
 <?php
 namespace Goetas\Twital\Tests\Twig;
 
-class StringLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface
+class StringLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface, \Twig_SourceContextLoaderInterface
 {
     public function getSource($name)
     {

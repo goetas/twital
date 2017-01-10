@@ -95,7 +95,7 @@ class TwitalLoaderTest extends \PHPUnit_Framework_TestCase
         $twitalLoader->addSourceAdapter('/.*\.xml$/', new XMLAdapter());
 
         $twital->expects($this->once())->method('compile');
-        $twitalLoader->getSource('aaa.xml');
+        $twitalLoader->getSourceContext('aaa.xml');
     }
 
     public function testNonTwitalFile()
@@ -105,12 +105,12 @@ class TwitalLoaderTest extends \PHPUnit_Framework_TestCase
         $twitalLoader->addSourceAdapter('/.*\.xml$/', new XMLAdapter());
 
         $twital->expects($this->never())->method('compile');
-        $twitalLoader->getSource('aaa.txt');
+        $twitalLoader->getSourceContext('aaa.txt');
     }
 
     public function testExistsWithBaseLoader()
     {
-        if (\Twig_Environment::MAJOR_VERSION == 2){
+        if (\Twig_Environment::MAJOR_VERSION === 2) {
             $this->markTestSkipped("Twig 2.x has the Twig_LoaderInterface::exists method");
         }
 
@@ -130,20 +130,19 @@ class TwitalLoaderTest extends \PHPUnit_Framework_TestCase
 
     public function testNonExistsWithBaseLoader()
     {
-        if (\Twig_Environment::MAJOR_VERSION == 2){
+        if (\Twig_Environment::MAJOR_VERSION === 2) {
             $this->markTestSkipped("Twig 2.x has the Twig_LoaderInterface::exists method");
         }
 
         $mockLoader = $this->getMock('Twig_LoaderInterface');
 
         $mockLoader->expects($this->once())
-        ->method('getSource')
-        ->with($this->equalTo('foo'))
-        ->will($this->throwException(new \Twig_Error_Loader("File not found")));
-        ;
+            ->method('getSource')
+            ->with($this->equalTo('foo'))
+            ->will($this->throwException(new \Twig_Error_Loader("File not found")));
 
         $mockLoader->expects($this->never())
-        ->method('exists');
+            ->method('exists');
 
         $twitalLoader = new TwitalLoader($mockLoader, null, false);
         $this->assertFalse($twitalLoader->exists('foo'));
@@ -151,7 +150,7 @@ class TwitalLoaderTest extends \PHPUnit_Framework_TestCase
 
     public function testExistsWithBaseLoaderTwig2()
     {
-        if (\Twig_Environment::MAJOR_VERSION != 2){
+        if (\Twig_Environment::MAJOR_VERSION !== 2) {
             $this->markTestSkipped("Twig 2.x only");
         }
 
@@ -168,7 +167,7 @@ class TwitalLoaderTest extends \PHPUnit_Framework_TestCase
 
     public function testNonExistsWithBaseLoaderTwig2()
     {
-        if (\Twig_Environment::MAJOR_VERSION != 2){
+        if (\Twig_Environment::MAJOR_VERSION !== 2) {
             $this->markTestSkipped("Twig 2.x only");
         }
 

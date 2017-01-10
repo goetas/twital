@@ -11,7 +11,7 @@ use Goetas\Twital\SourceAdapter\XHTMLAdapter;
  *
  * @author Asmir Mustafic <goetas@gmail.com>
  */
-class TwitalLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface
+class TwitalLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface, \Twig_SourceContextLoaderInterface
 {
     /**
      * Array of patterns used to decide if a template is twital-compilable or not.
@@ -59,11 +59,20 @@ class TwitalLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface
 
     public function getSourceContext($name)
     {
-        $originalContext = $this->loader->getSourceContext($name);
+        if (\Twig_Environment::MAJOR_VERSION === 2 || $this->loader instanceof \Twig_SourceContextLoaderInterface) {
+            $originalContext = $this->loader->getSourceContext($name);
+            $code = $originalContext->getCode();
+            $path = $originalContext->getPath();
+        } else {
+            $code = $this->loader->getSource($name);
+            $path = null;
+        }
 
-        $source = $this->getSource($name);
+        if ($adapter = $this->getSourceAdapter($name)) {
+            $code = $this->getTwital()->compile($adapter, $code);
+        }
 
-        return new \Twig_Source($source, $name, $originalContext->getPath());
+        return new \Twig_Source($code, $name, $path);
     }
 
     /**
@@ -114,13 +123,7 @@ class TwitalLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface
      */
     public function getSource($name)
     {
-        $source = $this->loader->getSource($name);
-
-        if ($adapter = $this->getSourceAdapter($name)) {
-            $source = $this->getTwital()->compile($adapter, $source);
-        }
-
-        return $source;
+        return $this->getSourceContext($name)->getCode();
     }
 
     /**
@@ -144,11 +147,11 @@ class TwitalLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface
      */
     public function exists($name)
     {
-        if (\Twig_Environment::MAJOR_VERSION == 2 || ($this->loader instanceof \Twig_ExistsLoaderInterface)) {
+        if (\Twig_Environment::MAJOR_VERSION === 2 || $this->loader instanceof \Twig_ExistsLoaderInterface) {
             return $this->loader->exists($name);
         } else {
             try {
-                $this->loader->getSource($name);
+                $this->getSourceContext($name);
 
                 return true;
             } catch (\Twig_Error_Loader $e) {
