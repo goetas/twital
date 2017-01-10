@@ -7,7 +7,7 @@ cache:
     - $HOME/.composer/cache
 
 env:
-  - TWIG_VERSION=^1.10
+  - TWIG_VERSION=^1.28
 
 matrix:
     include:
@@ -34,14 +34,14 @@ matrix:
 
         # oldest possible deps for twig 1.x
         - php: 5.3 # for twig 1.x
-          env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable' TWIG_VERSION=^1.10
+          env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable' TWIG_VERSION=^1.28
         - php: 7.0 # for twig 2.x
           env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable' TWIG_VERSION=^2.0
     fast_finish: true
 
 before_script:
   - composer require twig/twig:${TWIG_VERSION} --no-update
-  - composer install --prefer-dist
+  - composer update --prefer-dist ${COMPOSER_FLAGS}
 
 script: vendor/bin/phpunit --coverage-clover=coverage.xml
 
