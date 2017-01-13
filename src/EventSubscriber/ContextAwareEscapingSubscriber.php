@@ -45,9 +45,9 @@ class ContextAwareEscapingSubscriber implements EventSubscriberInterface
         $xp = new \DOMXPath($doc);
         $xp->registerNamespace("xh", "http://www.w3.org/1999/xhtml");
 
-        $this->esapeScript($doc, $xp);
-        $this->esapeStyle($doc, $xp);
-        $this->esapeUrls($doc, $xp);
+        $this->escapeScript($doc, $xp);
+        $this->escapeStyle($doc, $xp);
+        $this->escapeUrls($doc, $xp);
     }
 
     /**
@@ -56,14 +56,14 @@ class ContextAwareEscapingSubscriber implements EventSubscriberInterface
      */
     private function xpathQuery(\DOMXPath $xp, $expression, \DOMNode $contextnode = null, $registerNodeNS = true)
     {
-        if (defined('HHVM_VERSION')) {
+        if (defined('HHVM_VERSION') && HHVM_VERSION_ID < 30500) {
             return $xp->query($expression, $contextnode);
         } else {
             return $xp->query($expression, $contextnode, $registerNodeNS);
         }
     }
 
-    private function esapeUrls(\DOMDocument $doc, \DOMXPath $xp)
+    private function escapeUrls(\DOMDocument $doc, \DOMXPath $xp)
     {
         $regex = '{' . preg_quote($this->options['tag_variable'][0]) . '((' . self::REGEX_STRING . '|[^"\']*)+)' . preg_quote($this->options['tag_variable'][1]) . '}siuU';
 
@@ -86,7 +86,7 @@ class ContextAwareEscapingSubscriber implements EventSubscriberInterface
         }
     }
 
-    private function esapeStyle(\DOMDocument $doc, \DOMXPath $xp)
+    private function escapeStyle(\DOMDocument $doc, \DOMXPath $xp)
     {
         /**
          * @var \DOMNode[] $res
@@ -99,7 +99,7 @@ class ContextAwareEscapingSubscriber implements EventSubscriberInterface
         }
     }
 
-    private function esapeScript(\DOMDocument $doc, \DOMXPath $xp)
+    private function escapeScript(\DOMDocument $doc, \DOMXPath $xp)
     {
         /**
          * @var \DOMNode[] $res
