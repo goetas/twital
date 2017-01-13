@@ -39,6 +39,7 @@ class DynamicAttrAttributeTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array('<div t:attr="class=\'foo\'">content</div>', '<div class="foo">content</div>'),
+            array('<div><img src="{{ \'abc\'}}"/></div>', '<div><img src="abc"/></div>'),
             array('<div class="bar" t:attr="class=false">content</div>', '<div>content</div>'),
             array('<div class="bar" t:attr="class=\'foo\'">content</div>', '<div class="foo">content</div>'),
             array('<div t:attr="condition?class=\'foo\'">content</div>', '<div class="foo">content</div>', array('condition'=>1)),
