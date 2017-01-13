@@ -28,8 +28,8 @@ abstract class AbstractTwigExpressionSubscriber implements EventSubscriberInterf
         $this->regexes = array(
             'twig_start' => '{(' . preg_quote($options['tag_block'][0]) . '|' . preg_quote($options['tag_variable'][0]) . '|' . preg_quote($options['tag_comment'][0]) . ')}',
             'placeholder' => '{(' . preg_quote($placeholder[0]) . '(.+)' . preg_quote($placeholder[1]) . ')}siuU',
-            'twig_inner_' . $options['tag_block'][0] => '{(' . self::REGEX_STRING . '|' . preg_quote($options['tag_block'][1]) . '|([^"\']*?' . preg_quote($options['tag_block'][1]) . ')|[^"\']*)}si',
-            'twig_inner_' . $options['tag_variable'][0] => '{(' . self::REGEX_STRING . '|' . preg_quote($options['tag_variable'][1]) . '|([^"\']*?' . preg_quote($options['tag_variable'][1]) . ')|[^"\']*)}si',
+            'twig_inner_' . $options['tag_block'][0] => '{(' . self::REGEX_STRING . '|' . preg_quote($options['tag_block'][1]) . '|([^"\']*?' . preg_quote($options['tag_block'][1]) . ')|[^"\']+?)}si',
+            'twig_inner_' . $options['tag_variable'][0] => '{(' . self::REGEX_STRING . '|' . preg_quote($options['tag_variable'][1]) . '|([^"\']*?' . preg_quote($options['tag_variable'][1]) . ')|[^"\']+?)}si',
             'twig_inner_' . $options['tag_comment'][0] => '{((.*?' . preg_quote($options['tag_comment'][1]) . '))}si',
         );
     }
