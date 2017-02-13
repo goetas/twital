@@ -34,7 +34,7 @@ abstract class AbstractTwigExpressionSubscriber implements EventSubscriberInterf
         );
     }
 
-    protected function processTwig($template, \CLosure $processor)
+    protected function processTwig($template, \Closure $processor)
     {
         $offset = 0;
         while (preg_match($this->regexes['twig_start'], $template, $matches, PREG_OFFSET_CAPTURE, $offset)) {

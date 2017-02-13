@@ -41,6 +41,12 @@ class Twital
      */
     private $extensions = array();
 
+    /**
+     *
+     * @var array
+     */
+    private $options = array();
+
     public function __construct(array $options = array())
     {
         $this->options = $options;

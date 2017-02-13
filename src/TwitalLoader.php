@@ -105,7 +105,7 @@ class TwitalLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface
      * Decide if a template is twital-compilable or not.
      *
      * @param string $name
-     * @return SourceAdapter
+     * @return SourceAdapter|null
      */
     public function getSourceAdapter($name)
     {
