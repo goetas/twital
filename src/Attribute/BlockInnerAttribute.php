@@ -39,8 +39,5 @@ class BlockInnerAttribute implements AttributeBase
         $sandbox->appendChild($end);
 
         DOMHelper::replaceWithSet($sandbox, iterator_to_array($sandbox->childNodes));
-        if ($node->parentNode === $node->ownerDocument->documentElement) {
-            DOMHelper::replaceWithSet($node, iterator_to_array($node->childNodes));
-        }
     }
 }
