@@ -134,6 +134,11 @@ abstract class CoreNodesTest extends \PHPUnit_Framework_TestCase
 
             array('<t:omit>foo</t:omit>', 'foo'),
             array('<t:omit><div>foo</div></t:omit>', '<div>foo</div>'),
+
+            array('<t:omit><div t:block="aaa">foo</div></t:omit>', '<div>{% block aaa %}foo{% endblock %}</div>'),
+            array('<t:omit><div t:block="aaa">foo</div><div t:block="bbb">bar</div></t:omit>', '<div>{% block aaa %}foo{% endblock %}</div><div>{% block bbb %}bar{% endblock %}</div>'),
+            array('<t:omit><div t:block="aaa">foo<div t:block="bbb">bar</div></div></t:omit>', '<div>{% block aaa %}foo<div>{% block bbb %}bar{% endblock %}</div>{% endblock %}</div>'),
+
             array('<div><t:omit t:if="0">foo</t:omit>bar</div>', '<div>{% if 0 %}foo{% endif %}bar</div>'),
             array('<div><![CDATA[aa]]></div>', '<div><![CDATA[aa]]></div>'),
             array('<div><!-- foo --></div>', '<div><!-- foo --></div>'),
@@ -181,7 +186,6 @@ abstract class CoreNodesTest extends \PHPUnit_Framework_TestCase
                 $expected,
             );
         }
-
         return $data;
     }
 
@@ -191,7 +195,6 @@ abstract class CoreNodesTest extends \PHPUnit_Framework_TestCase
     public function testVisitNodeTemplates($source, $expected)
     {
         $compiled = $this->twital->compile($this->sourceAdapter, $source);
-
         $cleanup = function ($str) {
         	return preg_replace("/\s+/", "", $str);
         };

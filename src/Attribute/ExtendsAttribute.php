@@ -31,6 +31,10 @@ class ExtendsAttribute implements AttributeBase
             }
         }
 
+        // having block-inner makes no sense when child of an t:extends (t:extend can have only t:block child)
+        // so lets convert them to t:block nodes
+        $candidates = $this->convertBlockInnerIntoBlock($candidates, $node);
+
         foreach ($candidates as $candidate) {
             if ($candidate->parentNode !== $node) {
                 $candidate->parentNode->removeChild($candidate);
@@ -56,5 +60,38 @@ class ExtendsAttribute implements AttributeBase
         array_unshift($set, $ext);
 
         DOMHelper::replaceWithSet($node, $set);
+    }
+
+    /**
+     * @param array $candidates
+     * @param \DOMNode $node
+     * @return array
+     */
+    private function convertBlockInnerIntoBlock(array $candidates, \DOMNode $node)
+    {
+        /**
+         * @var $candidate \DOMElement
+         */
+        foreach ($candidates as $k => $candidate) {
+            if ($candidate->hasAttributeNS(Twital::NS, "block-inner")) {
+
+                $blockName = $candidate->getAttributeNS(Twital::NS, "block-inner");
+
+                $block = $node->ownerDocument->createElementNS(Twital::NS, "block");
+                $block->setAttribute("name", $blockName);
+
+                $candidate->parentNode->insertBefore($block, $candidate);
+
+                // move all child to the new block node
+                while ($candidate->firstChild) {
+                    $child = $candidate->removeChild($candidate->firstChild);
+                    $block->appendChild($child);
+                }
+                $candidate->parentNode->removeChild($candidate);
+                $candidates[$k] = $block;
+            }
+        }
+
+        return $candidates;
     }
 }

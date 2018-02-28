@@ -3,3 +3,4 @@
 /.project
 /vendor
 .idea
+composer.lock
