@@ -7,12 +7,14 @@
 What is Twital?
 ==============
 
-Twital is a template engine built on top of [Twig](http://twig.sensiolabs.org/) (a template engine for PHP and default template engine on Symfomy) 
+Twital is a template engine built on top of [Twig](http://twig.sensiolabs.org/) 
+(a template engine for PHP and default template engine on Symfomy) 
 that adds some shortcuts and makes Twig's syntax more suitable for HTML based (XML, HTML5, XHTML, SGML) templates.
 Twital takes inspiration from [PHPTal](http://phptal.org/), [TAL](http://en.wikipedia.org/wiki/Template_Attribute_Language) 
-and [AngularJS](http://angularjs.org/) (just for some aspects), 
+and [AngularJS](http://angularjs.org/) or [Vue.js](https://vuejs.org/) (just for some aspects), 
 mixing their language syntaxes with the powerful Twig templating engine system.
 
+Twital is fully compatible with Twig, all Twig templates can be rendered using Twital.
 
 To better understand the Twital's benefits, consider the following **Twital** template, which
 simply shows a list of users from an array:
@@ -131,10 +133,10 @@ echo $twig->render('demo.twital.html', array('name' => 'John'));
 That's it!
 
 
-Symfony2 Users
+Symfony Users
 --------------
 
-If you are a [Symfony2](http://symfony.com/) user, you can add Twital to your project using the 
+If you are a [Symfony](http://symfony.com/) user, you can add Twital to your project using the 
 [TwitalBundle](https://github.com/goetas/twital-bundle).
 
 The bundle integrates all most common functionalities as Assetic, Forms, Translations, Routing, etc.
@@ -142,6 +144,6 @@ The bundle integrates all most common functionalities as Assetic, Forms, Transla
 Twig Users
 ----------
 
-Starting from version Twital 1.0.0,  both twig 1.x and 2.x versions are supported- 
+Starting from version Twital 1.0.0,  both twig 1.x and 2.x versions are supported. 
 
 
