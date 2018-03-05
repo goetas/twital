@@ -1,10 +1,10 @@
-Symfony2 Users
-##############
+Symfony Users
+#############
 
-If you are a Symfony2_ user, the most convenient way to integrate Twital into your project is using the 
+If you are a Symfony_ user, the most convenient way to integrate Twital into your project is using the 
 TwitalBundle_.
 
-The bundle integrates all most common Synfony functionalities as Assetic, Forms, Translations etc.
+The bundle integrates all most common Symfony functionalities as Assetic, Forms, Translations etc.
    
 .. _TwitalBundle: https://github.com/goetas/twital-bundle
-.. _Symfony2: http://symfony.com
+.. _Symfony: https://symfony.com
