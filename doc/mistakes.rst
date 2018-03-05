@@ -31,6 +31,7 @@ All templates must be XML valid (some exceptions are allowed...).
     
 
 - The usage of `&` must follow XML syntax rules.
+
   .. code-block:: html
 
     <div>
