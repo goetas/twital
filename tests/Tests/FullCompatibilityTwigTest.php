@@ -39,12 +39,12 @@ class FullCompatibilityTwigTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider getData
      */
-    public function testHTML5SourceAdapter($source)
+    public function testHTML5SourceAdapter($source, $expected = null)
     {
         $sourceAdapter = new HTML5Adapter();
 
         $compiled = $this->twital->compile($sourceAdapter, $source);
-        $this->assertEquals($source, $compiled, 'PRE: '.$this->templateSubscriber->preLoadTemplate."\n\nPOST: ".$this->templateSubscriber->postDumpTemplate);
+        $this->assertEquals($expected !== null ? $expected : $source, $compiled, 'PRE: '.$this->templateSubscriber->preLoadTemplate."\n\nPOST: ".$this->templateSubscriber->postDumpTemplate);
     }
 
     public function getData()
@@ -76,7 +76,7 @@ class FullCompatibilityTwigTest extends \PHPUnit_Framework_TestCase
 
             array(file_get_contents(__DIR__.'/templates/web_profiler_js.html.twig')),
             array(file_get_contents(__DIR__.'/templates/logger.html.twig')),
-            //array(file_get_contents(__DIR__.'/templates/widget-header.twig')),
+            array('test <div t:if="foo">{{ foo }}</div> test <div t:if="bar">{{ bar }}</div> test', 'test {% if foo %}<div>{{ foo }}</div>{% endif %} test {% if bar %}<div>{{ bar }}</div>{% endif %} test'),
         );
     }
 }

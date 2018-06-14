@@ -1,7 +1,9 @@
 <?php
 namespace Goetas\Twital\Extension;
 
+use Goetas\Twital\EventSubscriber\CustomNamespaceSubscriber;
 use Goetas\Twital\EventSubscriber\FixTwigExpressionSubscriber;
+use Goetas\Twital\Twital;
 
 /**
  *
@@ -14,6 +16,9 @@ class FullCompatibilityTwigExtension extends AbstractExtension
     {
         return array(
             new FixTwigExpressionSubscriber(),
+            new CustomNamespaceSubscriber(array(
+                't' => Twital::NS
+            )),
         );
     }
 }
