@@ -69,7 +69,7 @@ class XMLAdapter implements SourceAdapter
         libxml_clear_errors();
 
         $dom = new \DOMDocument('1.0', 'UTF-8');
-        if (!$dom->loadXML($source, LIBXML_NONET | (defined('LIBXML_COMPACT') ? LIBXML_COMPACT : 0))) {
+        if ('' !== trim($source) && !$dom->loadXML($source, LIBXML_NONET | (defined('LIBXML_COMPACT') ? LIBXML_COMPACT : 0))) {
             libxml_disable_entity_loader($disableEntities);
 
             throw new \InvalidArgumentException(implode("\n", $this->getXmlErrors($internalErrors)));
