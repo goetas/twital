@@ -2,13 +2,13 @@
 namespace Goetas\Twital\Extension;
 
 use Goetas\Twital\Attribute;
+use Goetas\Twital\EventSubscriber\ContextAwareEscapingSubscriber;
+use Goetas\Twital\EventSubscriber\CustomNamespaceRawSubscriber;
+use Goetas\Twital\EventSubscriber\DOMMessSubscriber;
+use Goetas\Twital\EventSubscriber\FixHtmlEntitiesInExpressionSubscriber;
+use Goetas\Twital\EventSubscriber\IDNodeSubscriber;
 use Goetas\Twital\Node;
 use Goetas\Twital\Twital;
-use Goetas\Twital\EventSubscriber\DOMMessSubscriber;
-use Goetas\Twital\EventSubscriber\CustomNamespaceRawSubscriber;
-use Goetas\Twital\EventSubscriber\FixHtmlEntitiesInExpressionSubscriber;
-use Goetas\Twital\EventSubscriber\ContextAwareEscapingSubscriber;
-use Goetas\Twital\EventSubscriber\IDNodeSubscriber;
 
 /**
  *

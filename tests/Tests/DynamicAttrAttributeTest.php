@@ -1,9 +1,9 @@
 <?php
 namespace Goetas\Twital\Tests;
 
-use Goetas\Twital\TwitalLoader;
 use Goetas\Twital\SourceAdapter\XMLAdapter;
 use Goetas\Twital\Tests\Twig\StringLoader;
+use Goetas\Twital\TwitalLoader;
 
 class DynamicAttrAttributeTest extends \PHPUnit_Framework_TestCase
 {

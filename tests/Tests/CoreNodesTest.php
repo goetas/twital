@@ -17,8 +17,6 @@ abstract class CoreNodesTest extends \PHPUnit_Framework_TestCase
         $this->sourceAdapter = $this->getSourceAdapter();
     }
 
-    abstract protected function getSourceAdapter();
-
     /**
      * @dataProvider getData
      */
@@ -199,4 +197,6 @@ abstract class CoreNodesTest extends \PHPUnit_Framework_TestCase
         };
         $this->assertEquals($cleanup($expected), $cleanup($compiled));
     }
+
+    abstract protected function getSourceAdapter();
 }

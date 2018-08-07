@@ -1,10 +1,9 @@
 <?php
 namespace Goetas\Twital\SourceAdapter;
 
-use Masterminds\HTML5;
 use Goetas\Twital\SourceAdapter;
 use Goetas\Twital\Template;
-use Goetas\Twital\Helper\DOMHelper;
+use Masterminds\HTML5;
 
 /**
  *
@@ -14,16 +13,6 @@ use Goetas\Twital\Helper\DOMHelper;
 class HTML5Adapter implements SourceAdapter
 {
     private $html5;
-
-    private function getHtml5()
-    {
-        if (!$this->html5) {
-            $this->html5 = new HTML5(array(
-                "xmlNamespaces" => true
-            ));
-        }
-        return $this->html5;
-    }
 
     /**
      * {@inheritdoc}
@@ -65,5 +54,15 @@ class HTML5Adapter implements SourceAdapter
         $metadata['fragment'] = strpos(rtrim($source), '<!DOCTYPE html>') !== 0;
 
         return $metadata;
+    }
+
+    private function getHtml5()
+    {
+        if (!$this->html5) {
+            $this->html5 = new HTML5(array(
+                "xmlNamespaces" => true
+            ));
+        }
+        return $this->html5;
     }
 }

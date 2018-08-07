@@ -1,8 +1,8 @@
 <?php
 namespace Goetas\Twital\Tests\Event;
 
-use Goetas\Twital\Twital;
 use Goetas\Twital\EventDispatcher\SourceEvent;
+use Goetas\Twital\Twital;
 
 class SourceEventTest extends \PHPUnit_Framework_TestCase
 {

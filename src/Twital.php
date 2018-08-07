@@ -2,10 +2,10 @@
 namespace Goetas\Twital;
 
 use Goetas\Twital\EventDispatcher\CompilerEvents;
-use Goetas\Twital\Extension\CoreExtension;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Goetas\Twital\EventDispatcher\SourceEvent;
 use Goetas\Twital\EventDispatcher\TemplateEvent;
+use Goetas\Twital\Extension\CoreExtension;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
  *
@@ -75,21 +75,6 @@ class Twital
         return $this->attributes;
     }
 
-    protected function initExtensions()
-    {
-        if (!$this->extensionsInitialized) {
-            foreach ($this->getExtensions() as $extension) {
-                $this->attributes = array_merge_recursive($this->attributes, $extension->getAttributes());
-                $this->nodes = array_merge_recursive($this->nodes, $extension->getNodes());
-
-                foreach ($extension->getSubscribers() as $subscriber) {
-                    $this->dispatcher->addSubscriber($subscriber);
-                }
-            }
-            $this->extensionsInitialized = true;
-        }
-    }
-
     /**
      *
      * @param SourceAdapter $adapter
@@ -140,5 +125,20 @@ class Twital
     public function getExtensions()
     {
         return $this->extensions;
+    }
+
+    protected function initExtensions()
+    {
+        if (!$this->extensionsInitialized) {
+            foreach ($this->getExtensions() as $extension) {
+                $this->attributes = array_merge_recursive($this->attributes, $extension->getAttributes());
+                $this->nodes = array_merge_recursive($this->nodes, $extension->getNodes());
+
+                foreach ($extension->getSubscribers() as $subscriber) {
+                    $this->dispatcher->addSubscriber($subscriber);
+                }
+            }
+            $this->extensionsInitialized = true;
+        }
     }
 }

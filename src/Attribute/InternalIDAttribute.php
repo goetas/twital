@@ -3,7 +3,6 @@ namespace Goetas\Twital\Attribute;
 
 use Goetas\Twital\Attribute as AttributeBase;
 use Goetas\Twital\Compiler;
-use Goetas\Twital\Twital;
 
 /**
  *

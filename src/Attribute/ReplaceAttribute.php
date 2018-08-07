@@ -3,7 +3,6 @@ namespace Goetas\Twital\Attribute;
 
 use Goetas\Twital\Attribute;
 use Goetas\Twital\Compiler;
-use Goetas\Twital\Helper\DOMHelper;
 
 /**
  *

@@ -2,8 +2,8 @@
 namespace Goetas\Twital;
 
 use Goetas\Twital\SourceAdapter\HTML5Adapter;
-use Goetas\Twital\SourceAdapter\XMLAdapter;
 use Goetas\Twital\SourceAdapter\XHTMLAdapter;
+use Goetas\Twital\SourceAdapter\XMLAdapter;
 
 /**
  * This is a Twital Loader.
