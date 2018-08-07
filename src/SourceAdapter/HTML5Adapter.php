@@ -33,7 +33,9 @@ class HTML5Adapter implements SourceAdapter
         $html5 = $this->getHtml5();
         $f = $html5->loadHTMLFragment($source);
         $dom = new \DOMDocument('1.0', 'UTF-8');
-        $dom->appendChild($dom->importNode($f, true));
+        if ('' !== trim($source)) {
+            $dom->appendChild($dom->importNode($f, true));
+        }
 
         return new Template($dom, $this->collectMetadata($dom, $source));
     }
