@@ -1,6 +1,7 @@
 <?php
 namespace Goetas\Twital\EventSubscriber;
 
+use Goetas\Twital\EventDispatcher\CompilerEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Goetas\Twital\EventDispatcher\TemplateEvent;
 use Goetas\Twital\Twital;
@@ -15,12 +16,12 @@ class IDNodeSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            'compiler.post_load' => array(
+            CompilerEvents::POST_LOAD => array(
                 array(
                     'addAttribute'
                 )
             ),
-            'compiler.pre_dump' => array(
+            CompilerEvents::PRE_DUMP => array(
                 array(
                     'removeAttribute'
                 )

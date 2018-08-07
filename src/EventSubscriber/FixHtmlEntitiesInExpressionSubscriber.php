@@ -1,6 +1,7 @@
 <?php
 namespace Goetas\Twital\EventSubscriber;
 
+use Goetas\Twital\EventDispatcher\CompilerEvents;
 use Goetas\Twital\EventDispatcher\SourceEvent;
 
 /**
@@ -13,8 +14,8 @@ class FixHtmlEntitiesInExpressionSubscriber extends AbstractTwigExpressionSubscr
     public static function getSubscribedEvents()
     {
         return array(
-            'compiler.pre_load' => 'addPlaceholder',
-            'compiler.post_dump' => 'removePlaceholder',
+            CompilerEvents::PRE_LOAD => 'addPlaceholder',
+            CompilerEvents::POST_DUMP => 'removePlaceholder',
         );
     }
 

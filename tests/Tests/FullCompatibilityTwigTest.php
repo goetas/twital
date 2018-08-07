@@ -1,6 +1,7 @@
 <?php
 namespace Goetas\Twital\Tests;
 
+use Goetas\Twital\EventDispatcher\CompilerEvents;
 use Goetas\Twital\EventDispatcher\SourceEvent;
 use Goetas\Twital\EventSubscriber\FixTwigExpressionSubscriber;
 use Goetas\Twital\Extension\FullCompatibilityTwigExtension;
@@ -29,10 +30,10 @@ class FullCompatibilityTwigTest extends \PHPUnit_Framework_TestCase
     {
         $eventDispatcher = $this->twital->getEventDispatcher();
 
-        $preLoad = $eventDispatcher->getListeners('compiler.pre_load');
+        $preLoad = $eventDispatcher->getListeners(CompilerEvents::PRE_LOAD);
         $this->assertEquals(array(new FixTwigExpressionSubscriber(), 'addPlaceholder'), reset($preLoad));
 
-        $postDump = $eventDispatcher->getListeners('compiler.post_dump');
+        $postDump = $eventDispatcher->getListeners(CompilerEvents::POST_DUMP);
         $this->assertEquals(array(new FixTwigExpressionSubscriber(), 'removePlaceholder'), end($postDump));
     }
 
@@ -89,8 +90,8 @@ class DebugTemplateSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            'compiler.pre_load' => array('onPreLoad'),
-            'compiler.post_dump' => array('onPostDump'),
+            CompilerEvents::PRE_LOAD => array('onPreLoad'),
+            CompilerEvents::POST_DUMP => array('onPostDump'),
         );
     }
 

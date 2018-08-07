@@ -1,6 +1,7 @@
 <?php
 namespace Goetas\Twital\EventSubscriber;
 
+use Goetas\Twital\EventDispatcher\CompilerEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Goetas\Twital\EventDispatcher\TemplateEvent;
 use Goetas\Twital\Helper\DOMHelper;
@@ -16,8 +17,8 @@ class CustomNamespaceSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            'compiler.post_load' => 'addCustomNamespace',
-            'compiler.post_dump' => 'removeCustomNamespaces',
+            CompilerEvents::POST_LOAD => 'addCustomNamespace',
+            CompilerEvents::POST_DUMP => 'removeCustomNamespaces',
         );
     }
 

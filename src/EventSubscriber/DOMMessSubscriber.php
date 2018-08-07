@@ -1,6 +1,7 @@
 <?php
 namespace Goetas\Twital\EventSubscriber;
 
+use Goetas\Twital\EventDispatcher\CompilerEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Goetas\Twital\EventDispatcher\SourceEvent;
 
@@ -14,7 +15,7 @@ class DOMMessSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            'compiler.post_dump' => array(
+            CompilerEvents::POST_DUMP => array(
                 array(
                     'removeCdata'
                 ),
