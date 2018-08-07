@@ -52,5 +52,4 @@ class SourceEvent extends Event
     {
         $this->template = $template;
     }
-
 }

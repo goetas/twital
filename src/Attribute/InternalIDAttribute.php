@@ -16,5 +16,4 @@ class InternalIDAttribute implements AttributeBase
     {
         $att->ownerElement->removeAttributeNode($att);
     }
-
 }

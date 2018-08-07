@@ -24,5 +24,4 @@ abstract class AbstractExtension implements Extension
     {
         return array();
     }
-
 }

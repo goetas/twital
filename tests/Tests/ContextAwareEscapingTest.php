@@ -12,7 +12,6 @@ use Goetas\Twital\EventSubscriber\ContextAwareEscapingSubscriber;
 
 class ContextAwareEscapingTest extends \PHPUnit_Framework_TestCase
 {
-
     private $twital;
 
     /**

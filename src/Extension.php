@@ -47,5 +47,4 @@ interface Extension
      * @return array
      */
     public function getSubscribers();
-
 }

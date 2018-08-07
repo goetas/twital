@@ -41,14 +41,12 @@ class DOMHelper
     public static function checkNamespaces(\DOMElement $element, array $namespaces = array())
     {
         if ($element->namespaceURI === null && preg_match('/^([a-z0-9\-]+):(.+)$/i', $element->nodeName, $mch) && isset($namespaces[$mch[1]])) {
-
             $oldElement = $element;
             $element = self::copyElementInNs($oldElement, $namespaces[$mch[1]]);
         }
         // fix attrs
         foreach (iterator_to_array($element->attributes) as $attr) {
             if ($attr->namespaceURI === null && preg_match('/^([a-z0-9\-]+):/i', $attr->name, $mch) && isset($namespaces[$mch[1]])) {
-
                 $element->removeAttributeNode($attr);
                 $element->setAttributeNS($namespaces[$mch[1]], $attr->name, $attr->value);
             }

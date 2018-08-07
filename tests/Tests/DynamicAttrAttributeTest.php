@@ -44,22 +44,22 @@ class DynamicAttrAttributeTest extends \PHPUnit_Framework_TestCase
             array('<div><img src="{{ \'abc\'}}"/></div>', '<div><img src="abc"/></div>'),
             array('<div class="bar" t:attr="class=false">content</div>', '<div>content</div>'),
             array('<div class="bar" t:attr="class=\'foo\'">content</div>', '<div class="foo">content</div>'),
-            array('<div t:attr="condition?class=\'foo\'">content</div>', '<div class="foo">content</div>', array('condition'=>1)),
-            array('<div class="bar" t:attr="condition?class=\'foo\'">content</div>', '<div class="bar">content</div>', array('condition'=>0)),
-            array('<div class="bar" t:attr="condition?class=\'foo\'">content</div>', '<div class="foo">content</div>', array('condition'=>1)),
+            array('<div t:attr="condition?class=\'foo\'">content</div>', '<div class="foo">content</div>', array('condition' => 1)),
+            array('<div class="bar" t:attr="condition?class=\'foo\'">content</div>', '<div class="bar">content</div>', array('condition' => 0)),
+            array('<div class="bar" t:attr="condition?class=\'foo\'">content</div>', '<div class="foo">content</div>', array('condition' => 1)),
 
             array('<math xmlns="http://www.w3.org/1998/Math/MathML">a</math>', '<math xmlns="http://www.w3.org/1998/Math/MathML">a</math>'),
             array('<m:math xmlns:m="http://www.w3.org/1998/Math/MathML">a</m:math>', '<m:math xmlns:m="http://www.w3.org/1998/Math/MathML">a</m:math>'),
             array('<m:math xmlns:m="http://www.w3.org/1998/Math/MathML" m:expr="e">a</m:math>', '<m:math xmlns:m="http://www.w3.org/1998/Math/MathML" m:expr="e">a</m:math>'),
 
-            array('<div t:attr="condition?class=\'foo\'">content</div>', '<div>content</div>', array('condition'=>0)),
+            array('<div t:attr="condition?class=\'foo\'">content</div>', '<div>content</div>', array('condition' => 0)),
 
-            array('<div t:attr-append="condition?class=\'foo\'">content</div>', '<div class="foo">content</div>', array('condition'=>1)),
-            array('<div class="foo" t:attr-append="condition?class=\'bar\'">content</div>', '<div class="foobar">content</div>', array('condition'=>1)),
-            array('<div t:attr-append="condition?class=\'foo\', condition?class=\'bar\'">content</div>', '<div class="foobar">content</div>', array('condition'=>1)),
+            array('<div t:attr-append="condition?class=\'foo\'">content</div>', '<div class="foo">content</div>', array('condition' => 1)),
+            array('<div class="foo" t:attr-append="condition?class=\'bar\'">content</div>', '<div class="foobar">content</div>', array('condition' => 1)),
+            array('<div t:attr-append="condition?class=\'foo\', condition?class=\'bar\'">content</div>', '<div class="foobar">content</div>', array('condition' => 1)),
 
-            array('<div t:omit="condition">content</div>', 'content', array('condition'=>1)),
-            array('<div t:omit="condition">content</div>', '<div>content</div>', array('condition'=>0)),
+            array('<div t:omit="condition">content</div>', 'content', array('condition' => 1)),
+            array('<div t:omit="condition">content</div>', '<div>content</div>', array('condition' => 0)),
             array('<div t:omit="true">content</div>', 'content'),
 
             array('<img src="{{a}}" />', '<img src="/a/x.jpg"/>', array('a' => '/a/x.jpg')),
@@ -71,7 +71,6 @@ class DynamicAttrAttributeTest extends \PHPUnit_Framework_TestCase
 
     public function testAttributeHash()
     {
-
         $source = <<<EOT
 <div>
                 <ol>

@@ -23,7 +23,6 @@ class ExtendsAttribute implements AttributeBase
 
         $candidates = array();
         foreach ($xp->query(".//*[@t:block-inner or @t:block-outer]|.//t:*", $node) as $blockNode) {
-
             $ancestors = $xp->query("ancestor::*[@t:block-inner or @t:block-outer or @t:extends]", $blockNode);
 
             if ($ancestors->length === 1) {
@@ -74,7 +73,6 @@ class ExtendsAttribute implements AttributeBase
          */
         foreach ($candidates as $k => $candidate) {
             if ($candidate->hasAttributeNS(Twital::NS, "block-inner")) {
-
                 $blockName = $candidate->getAttributeNS(Twital::NS, "block-inner");
 
                 $block = $node->ownerDocument->createElementNS(Twital::NS, "block");
