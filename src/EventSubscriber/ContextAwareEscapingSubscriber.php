@@ -1,6 +1,7 @@
 <?php
 namespace Goetas\Twital\EventSubscriber;
 
+use Goetas\Twital\EventDispatcher\CompilerEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Goetas\Twital\EventDispatcher\TemplateEvent;
 use Goetas\Twital\Helper\DOMHelper;
@@ -17,7 +18,7 @@ class ContextAwareEscapingSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            'compiler.pre_dump' => 'addEscaping'
+            CompilerEvents::PRE_DUMP => 'addEscaping'
         );
     }
 
