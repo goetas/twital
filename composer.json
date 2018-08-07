@@ -15,10 +15,11 @@
     "homepage" : "https://github.com/goetas/twital",
     "license" : "MIT",
     "require" : {
+        "php" : "^5.3.3||^7.0",
+        "ext-dom": "*",
         "masterminds/html5" : "^2.1.2",
         "twig/twig" : "^1.28||^2.0",
-        "symfony/event-dispatcher" : "^2.1||^3.0||^4.0",
-        "php" : ">=5.3.3"
+        "symfony/event-dispatcher" : "^2.1||^3.0||^4.0"
     },
     "require-dev" : {
         "phpunit/phpunit" : "^4.1.4"
