@@ -17,7 +17,7 @@ class ExpressionParserTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider getDataWithLimit
      */
-    public function testExpressionsWithLimit($expression, $splitter,$limit, $expected)
+    public function testExpressionsWithLimit($expression, $splitter, $limit, $expected)
     {
         $splitted = ParserHelper::staticSplitExpression($expression, $splitter, $limit);
         $this->assertEquals($expected, $splitted);

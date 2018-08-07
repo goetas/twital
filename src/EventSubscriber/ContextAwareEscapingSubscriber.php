@@ -12,7 +12,6 @@ use Goetas\Twital\Helper\DOMHelper;
  */
 class ContextAwareEscapingSubscriber implements EventSubscriberInterface
 {
-
     const REGEX_STRING = '"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"|\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'';
 
     public static function getSubscribedEvents()

@@ -125,7 +125,6 @@ class TwitalLoaderTest extends \PHPUnit_Framework_TestCase
 
         $twitalLoader = new TwitalLoader($mockLoader, null, false);
         $this->assertTrue($twitalLoader->exists('foo'));
-
     }
 
     public function testNonExistsWithBaseLoader()
@@ -162,7 +161,6 @@ class TwitalLoaderTest extends \PHPUnit_Framework_TestCase
 
         $twitalLoader = new TwitalLoader($mockLoader, null, false);
         $this->assertTrue($twitalLoader->exists('foo'));
-
     }
 
     public function testNonExistsWithBaseLoaderTwig2()

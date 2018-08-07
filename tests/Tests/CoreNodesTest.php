@@ -43,7 +43,7 @@ abstract class CoreNodesTest extends \PHPUnit_Framework_TestCase
     {
         return array_map(function ($v) {
             return array($v);
-        }, array (
+        }, array(
                 'href',
                 'hreflang',
                 'http-equiv',
@@ -177,7 +177,6 @@ abstract class CoreNodesTest extends \PHPUnit_Framework_TestCase
         $all = glob(__DIR__."/templates/*.xml");
         $data = array();
         foreach ($all as $file) {
-
             $source = file_get_contents($file);
             $expected = file_get_contents(substr($file, 0, -4).".twig");
 
@@ -196,9 +195,8 @@ abstract class CoreNodesTest extends \PHPUnit_Framework_TestCase
     {
         $compiled = $this->twital->compile($this->sourceAdapter, $source);
         $cleanup = function ($str) {
-        	return preg_replace("/\s+/", "", $str);
+            return preg_replace("/\s+/", "", $str);
         };
         $this->assertEquals($cleanup($expected), $cleanup($compiled));
     }
-
 }

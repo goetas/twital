@@ -53,5 +53,4 @@ class TemplateEvent extends Event
     {
         $this->template = $template;
     }
-
 }

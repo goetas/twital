@@ -194,5 +194,4 @@ class TwitalLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface
 
         return $this->twital;
     }
-
 }

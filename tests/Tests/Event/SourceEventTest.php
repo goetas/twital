@@ -19,7 +19,6 @@ class SourceEventTest extends \PHPUnit_Framework_TestCase
 
     public function testBase()
     {
-
         $template = md5(microtime());
         $ist = new SourceEvent($this->twital, $template);
 
