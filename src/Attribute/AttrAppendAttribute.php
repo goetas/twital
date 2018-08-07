@@ -54,7 +54,8 @@ class AttrAppendAttribute extends AttrAttribute
         foreach ($expressions as $attrExpr) {
             $code[] = $context->createControlNode("if {$attrExpr['test']}");
             $code[] = $context->createControlNode(
-                "set {$varName} = {$varName}|merge({ '{$attrExpr['name']}':{$varName}.{$attrExpr['name']}|merge([{$attrExpr['expr']}]) })");
+                "set {$varName} = {$varName}|merge({ '{$attrExpr['name']}':{$varName}.{$attrExpr['name']}|merge([{$attrExpr['expr']}]) })"
+            );
             $code[] = $context->createControlNode("endif");
         }
 

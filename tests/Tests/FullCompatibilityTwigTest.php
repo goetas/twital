@@ -5,8 +5,8 @@ use Goetas\Twital\EventDispatcher\CompilerEvents;
 use Goetas\Twital\EventDispatcher\SourceEvent;
 use Goetas\Twital\EventSubscriber\FixTwigExpressionSubscriber;
 use Goetas\Twital\Extension\FullCompatibilityTwigExtension;
-use Goetas\Twital\Twital;
 use Goetas\Twital\SourceAdapter\HTML5Adapter;
+use Goetas\Twital\Twital;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class FullCompatibilityTwigTest extends \PHPUnit_Framework_TestCase

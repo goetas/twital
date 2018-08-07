@@ -1,9 +1,9 @@
 <?php
 namespace Goetas\Twital\Tests;
 
-use Goetas\Twital\TwitalLoader;
 use Goetas\Twital\SourceAdapter\XMLAdapter;
 use Goetas\Twital\Tests\Twig\StringLoader;
+use Goetas\Twital\TwitalLoader;
 
 class TwitalLoaderTest extends \PHPUnit_Framework_TestCase
 {
@@ -15,15 +15,6 @@ class TwitalLoaderTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-    }
-
-    protected function getRequiredAdapters()
-    {
-        return array(
-            'Goetas\Twital\SourceAdapter\HTML5Adapter',
-            'Goetas\Twital\SourceAdapter\XMLAdapter',
-            'Goetas\Twital\SourceAdapter\XHTMLAdapter'
-        );
     }
 
     public function getMatchedFilenames()
@@ -177,5 +168,14 @@ class TwitalLoaderTest extends \PHPUnit_Framework_TestCase
 
         $twitalLoader = new TwitalLoader($mockLoader, null, false);
         $this->assertFalse($twitalLoader->exists('foo'));
+    }
+
+    protected function getRequiredAdapters()
+    {
+        return array(
+            'Goetas\Twital\SourceAdapter\HTML5Adapter',
+            'Goetas\Twital\SourceAdapter\XMLAdapter',
+            'Goetas\Twital\SourceAdapter\XHTMLAdapter'
+        );
     }
 }

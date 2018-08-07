@@ -1,6 +1,7 @@
 /.settings
 /.buildpath
 /.project
+/.php_cs.cache
 /vendor
 .idea
 composer.lock

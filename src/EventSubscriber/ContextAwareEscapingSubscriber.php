@@ -2,9 +2,8 @@
 namespace Goetas\Twital\EventSubscriber;
 
 use Goetas\Twital\EventDispatcher\CompilerEvents;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Goetas\Twital\EventDispatcher\TemplateEvent;
-use Goetas\Twital\Helper\DOMHelper;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  *
@@ -14,13 +13,6 @@ use Goetas\Twital\Helper\DOMHelper;
 class ContextAwareEscapingSubscriber implements EventSubscriberInterface
 {
     const REGEX_STRING = '"[^"\\\\]*(?:\\\\.[^"\\\\]*)*"|\'[^\'\\\\]*(?:\\\\.[^\'\\\\]*)*\'';
-
-    public static function getSubscribedEvents()
-    {
-        return array(
-            CompilerEvents::PRE_DUMP => 'addEscaping'
-        );
-    }
 
     protected $options = array();
     protected $placeholder = array();
@@ -36,6 +28,13 @@ class ContextAwareEscapingSubscriber implements EventSubscriberInterface
             'tag_block' => array('{%', '%}'),
             'tag_variable' => array('{{', '}}'),
         ), $options);
+    }
+
+    public static function getSubscribedEvents()
+    {
+        return array(
+            CompilerEvents::PRE_DUMP => 'addEscaping'
+        );
     }
 
     public function addEscaping(TemplateEvent $event)

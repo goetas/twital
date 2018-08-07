@@ -75,11 +75,6 @@ class Compiler
         return $this->document->createCDATASection("__[__{$printPart[0]} " . $content . " {$printPart[1]}__]__");
     }
 
-    private function getLexerOption($name)
-    {
-        return $this->lexerOptions[$name];
-    }
-
     /**
      * @param \DOMDocument $doc
      * @return void
@@ -143,5 +138,10 @@ class Compiler
                 $this->compileElement($child);
             }
         }
+    }
+
+    private function getLexerOption($name)
+    {
+        return $this->lexerOptions[$name];
     }
 }

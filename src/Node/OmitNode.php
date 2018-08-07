@@ -1,9 +1,9 @@
 <?php
 namespace Goetas\Twital\Node;
 
-use Goetas\Twital\Node;
 use Goetas\Twital\Compiler;
 use Goetas\Twital\Helper\DOMHelper;
+use Goetas\Twital\Node;
 
 /**
  *

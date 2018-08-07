@@ -3,8 +3,8 @@ namespace Goetas\Twital\Attribute;
 
 use Goetas\Twital\Attribute;
 use Goetas\Twital\Compiler;
-use Goetas\Twital\Helper\ParserHelper;
 use Goetas\Twital\Exception;
+use Goetas\Twital\Helper\ParserHelper;
 use Goetas\Twital\Twital;
 
 /**
@@ -62,17 +62,6 @@ class AttrAttribute implements Attribute
         $node->removeAttributeNode($att);
     }
 
-    protected function addSpecialAttr(\DOMElement $node, $varName, array $code)
-    {
-        $node->setAttribute("__attr__", $varName);
-
-        $ref = $node;
-        foreach (array_reverse($code) as $line) {
-            $node->parentNode->insertBefore($line, $ref);
-            $ref = $line;
-        }
-    }
-
     public static function splitAttrExpression($str)
     {
         $parts = ParserHelper::staticSplitExpression($str, "?");
@@ -88,6 +77,17 @@ class AttrAttribute implements Attribute
             return $attr;
         } else {
             throw new Exception(__CLASS__ . "::splitAttrExpression error in '$str'");
+        }
+    }
+
+    protected function addSpecialAttr(\DOMElement $node, $varName, array $code)
+    {
+        $node->setAttribute("__attr__", $varName);
+
+        $ref = $node;
+        foreach (array_reverse($code) as $line) {
+            $node->parentNode->insertBefore($line, $ref);
+            $ref = $line;
         }
     }
 

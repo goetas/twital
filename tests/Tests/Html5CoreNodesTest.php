@@ -5,11 +5,6 @@ use Goetas\Twital\SourceAdapter\HTML5Adapter;
 
 class Html5CoreNodesTest extends CoreNodesTest
 {
-    protected function getSourceAdapter()
-    {
-        return new HTML5Adapter();
-    }
-
     public function getDataFormTemplates()
     {
         $all = glob(__DIR__."/templates/*.xml");
@@ -31,5 +26,10 @@ class Html5CoreNodesTest extends CoreNodesTest
         }
 
         return $data;
+    }
+
+    protected function getSourceAdapter()
+    {
+        return new HTML5Adapter();
     }
 }

@@ -22,22 +22,6 @@ class XMLAdapter implements SourceAdapter
     }
 
     /**
-     * Collect some metadata about $dom and $source
-     * @param \DOMDocument $dom
-     * @param string $source
-     * @return mixed
-     */
-    protected function collectMetadata(\DOMDocument $dom, $source)
-    {
-        $metadata = array();
-
-        $metadata['xmldeclaration'] = strpos(rtrim($source), '<?xml ') === 0;
-        $metadata['doctype'] = !!$dom->doctype;
-
-        return $metadata;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function dump(Template $template)
@@ -60,6 +44,22 @@ class XMLAdapter implements SourceAdapter
 
             return $xml;
         }
+    }
+
+    /**
+     * Collect some metadata about $dom and $source
+     * @param \DOMDocument $dom
+     * @param string $source
+     * @return mixed
+     */
+    protected function collectMetadata(\DOMDocument $dom, $source)
+    {
+        $metadata = array();
+
+        $metadata['xmldeclaration'] = strpos(rtrim($source), '<?xml ') === 0;
+        $metadata['doctype'] = !!$dom->doctype;
+
+        return $metadata;
     }
 
     protected function createDom($source)
@@ -85,7 +85,8 @@ class XMLAdapter implements SourceAdapter
     {
         $errors = array();
         foreach (libxml_get_errors() as $error) {
-            $errors[] = sprintf('[%s %s] %s (in %s - line %d, column %d)',
+            $errors[] = sprintf(
+                '[%s %s] %s (in %s - line %d, column %d)',
                 LIBXML_ERR_WARNING == $error->level ? 'WARNING' : 'ERROR',
                 $error->code,
                 trim($error->message),

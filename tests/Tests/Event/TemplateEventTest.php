@@ -1,8 +1,8 @@
 <?php
 namespace Goetas\Twital\Tests\Event;
 
-use Goetas\Twital\Twital;
 use Goetas\Twital\EventDispatcher\TemplateEvent;
+use Goetas\Twital\Twital;
 
 class TemplateEventTest extends \PHPUnit_Framework_TestCase
 {
@@ -17,11 +17,6 @@ class TemplateEventTest extends \PHPUnit_Framework_TestCase
         parent::setUp();
         $this->twital = new Twital();
         $this->template = $this->getTemplateMock();
-    }
-
-    protected function getTemplateMock()
-    {
-        return $this->getMock('Goetas\Twital\Template', null, array(new \DOMDocument('1.0', 'UTF-8')));
     }
 
     public function testBase()
@@ -40,5 +35,10 @@ class TemplateEventTest extends \PHPUnit_Framework_TestCase
         $ist->setTemplate($template);
 
         $this->assertSame($template, $ist->getTemplate());
+    }
+
+    protected function getTemplateMock()
+    {
+        return $this->getMock('Goetas\Twital\Template', null, array(new \DOMDocument('1.0', 'UTF-8')));
     }
 }

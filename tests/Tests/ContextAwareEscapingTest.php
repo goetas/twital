@@ -1,14 +1,10 @@
 <?php
 namespace Goetas\Twital\Tests;
 
-use Goetas\Twital\EventSubscriber\FixTwigExpressionSubscriber;
-use Goetas\Twital\Extension\FullCompatibilityTwigExtension;
+use Goetas\Twital\SourceAdapter\HTML5Adapter;
 use Goetas\Twital\SourceAdapter\XHTMLAdapter;
 use Goetas\Twital\SourceAdapter\XMLAdapter;
 use Goetas\Twital\Twital;
-use Goetas\Twital\SourceAdapter\HTML5Adapter;
-use Goetas\Twital\TwitalLoader;
-use Goetas\Twital\EventSubscriber\ContextAwareEscapingSubscriber;
 
 class ContextAwareEscapingTest extends \PHPUnit_Framework_TestCase
 {
@@ -21,7 +17,6 @@ class ContextAwareEscapingTest extends \PHPUnit_Framework_TestCase
     {
         $this->twital = new Twital();
     }
-
 
     /**
      * @dataProvider getData
@@ -71,10 +66,6 @@ class ContextAwareEscapingTest extends \PHPUnit_Framework_TestCase
 
         $compiled = $this->twital->compile($sourceAdapter, $this->wrap($source));
         $this->assertEquals($this->wrap($expected), $compiled);
-    }
-    protected function wrap($html, $addNs = true)
-    {
-        return "<html". ($addNs?" xmlns=\"http://www.w3.org/1999/xhtml\"":"")."><body>$html</body></html>";
     }
 
     public function getData()
@@ -147,5 +138,10 @@ class ContextAwareEscapingTest extends \PHPUnit_Framework_TestCase
                 '<img src="a.gif?a=b&amp;{{ ( foo )  | escape(\'url\') }}"/>'
             ),
         );
+    }
+
+    protected function wrap($html, $addNs = true)
+    {
+        return "<html". ($addNs?" xmlns=\"http://www.w3.org/1999/xhtml\"":"")."><body>$html</body></html>";
     }
 }

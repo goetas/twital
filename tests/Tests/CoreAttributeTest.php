@@ -1,8 +1,8 @@
 <?php
 namespace Goetas\Twital\Tests;
 
-use Goetas\Twital\Twital;
 use Goetas\Twital\SourceAdapter\XMLAdapter;
+use Goetas\Twital\Twital;
 
 class CoreAttributeTest extends \PHPUnit_Framework_TestCase
 {

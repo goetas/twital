@@ -11,14 +11,6 @@ use Goetas\Twital\EventDispatcher\SourceEvent;
  */
 class FixTwigExpressionSubscriber extends AbstractTwigExpressionSubscriber
 {
-    public static function getSubscribedEvents()
-    {
-        return array(
-            CompilerEvents::PRE_LOAD => array('addPlaceholder', 128),
-            CompilerEvents::POST_DUMP => array('removePlaceholder', -128),
-        );
-    }
-
     protected $placeholders = array();
 
     public function __construct($placeholder = array('twital', 'twital'), array $options = array())
@@ -28,6 +20,14 @@ class FixTwigExpressionSubscriber extends AbstractTwigExpressionSubscriber
         $this->regexes = array_merge($this->regexes, array(
             'placeholder' => '{( ?)(' . preg_quote($placeholder[0]) . '[a-z0-9]+?' . preg_quote($placeholder[1]) . ')}iu',
         ));
+    }
+
+    public static function getSubscribedEvents()
+    {
+        return array(
+            CompilerEvents::PRE_LOAD => array('addPlaceholder', 128),
+            CompilerEvents::POST_DUMP => array('removePlaceholder', -128),
+        );
     }
 
     /**

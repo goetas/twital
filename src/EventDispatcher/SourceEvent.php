@@ -1,8 +1,8 @@
 <?php
 namespace Goetas\Twital\EventDispatcher;
 
-use Symfony\Component\EventDispatcher\Event;
 use Goetas\Twital\Twital;
+use Symfony\Component\EventDispatcher\Event;
 
 /**
  *
