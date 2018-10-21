@@ -20,12 +20,16 @@ class HTML5Adapter implements SourceAdapter
     public function load($source)
     {
         $html5 = $this->getHtml5();
-        $f = $html5->loadHTMLFragment($source);
-        $dom = new \DOMDocument('1.0', 'UTF-8');
-        if ('' !== trim($source)) {
-            $dom->appendChild($dom->importNode($f, true));
-        }
 
+        if (stripos(rtrim($source), '<!DOCTYPE html>') === 0) {
+            $dom = $html5->loadHTML($source);
+        } else {
+            $f = $html5->loadHTMLFragment($source);
+            $dom = new \DOMDocument('1.0', 'UTF-8');
+            if ('' !== trim($source)) {
+                $dom->appendChild($dom->importNode($f, true));
+            }
+        }
         return new Template($dom, $this->collectMetadata($dom, $source));
     }
 
@@ -51,7 +55,7 @@ class HTML5Adapter implements SourceAdapter
         $metadata = array();
 
         $metadata['doctype'] = !!$dom->doctype;
-        $metadata['fragment'] = strpos(rtrim($source), '<!DOCTYPE html>') !== 0;
+        $metadata['fragment'] = stripos(rtrim($source), '<!DOCTYPE html>') !== 0;
 
         return $metadata;
     }

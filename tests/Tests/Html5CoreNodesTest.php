@@ -7,7 +7,7 @@ class Html5CoreNodesTest extends CoreNodesTest
 {
     public function getDataFormTemplates()
     {
-        $all = glob(__DIR__."/templates/*.xml");
+        $all = glob(__DIR__."/templates/*.{htm,xml}", GLOB_BRACE);
         $data = array();
         foreach ($all as $file) {
             $source = file_get_contents($file);
@@ -31,5 +31,11 @@ class Html5CoreNodesTest extends CoreNodesTest
     protected function getSourceAdapter()
     {
         return new HTML5Adapter();
+    }
+
+    protected function cleanup($str)
+    {
+        $str = str_ireplace('<!DOCTYPE html>', '<!DOCTYPE html>', $str);
+        return parent::cleanup($str);
     }
 }
