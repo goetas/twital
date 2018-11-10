@@ -147,3 +147,10 @@ Twig Users
 Starting from version Twital 1.0.0,  both twig 1.x and 2.x versions are supported. 
 
 
+## Note 
+
+The code in this project is provided under the 
+[MIT](https://opensource.org/licenses/MIT) license. 
+For professional support 
+contact [goetas@gmail.com](mailto:goetas@gmail.com) 
+or visit [https://www.goetas.com](https://www.goetas.com)
