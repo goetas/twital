@@ -4,6 +4,7 @@ namespace Goetas\Twital\Tests;
 use Goetas\Twital\EventDispatcher\CompilerEvents;
 use Goetas\Twital\EventDispatcher\SourceEvent;
 use Goetas\Twital\EventSubscriber\FixTwigExpressionSubscriber;
+use Goetas\Twital\EventSubscriber\ReplaceDoctypeAsTwigExpressionSubscriber;
 use Goetas\Twital\Extension\FullCompatibilityTwigExtension;
 use Goetas\Twital\SourceAdapter\HTML5Adapter;
 use Goetas\Twital\Twital;
@@ -31,7 +32,9 @@ class FullCompatibilityTwigTest extends \PHPUnit_Framework_TestCase
         $eventDispatcher = $this->twital->getEventDispatcher();
 
         $preLoad = $eventDispatcher->getListeners(CompilerEvents::PRE_LOAD);
-        $this->assertEquals(array(new FixTwigExpressionSubscriber(), 'addPlaceholder'), reset($preLoad));
+
+        $this->assertEquals(array(new ReplaceDoctypeAsTwigExpressionSubscriber(), 'replaceDoctype'), $preLoad[0]);
+        $this->assertEquals(array(new FixTwigExpressionSubscriber(), 'addPlaceholder'), $preLoad[1]);
 
         $postDump = $eventDispatcher->getListeners(CompilerEvents::POST_DUMP);
         $this->assertEquals(array(new FixTwigExpressionSubscriber(), 'removePlaceholder'), end($postDump));
@@ -77,6 +80,8 @@ class FullCompatibilityTwigTest extends \PHPUnit_Framework_TestCase
 
             array(file_get_contents(__DIR__.'/templates/web_profiler_js.html.twig')),
             array(file_get_contents(__DIR__.'/templates/logger.html.twig')),
+            array("{% set a = 1 %}\n<!doctype html>\n<html><body>foo</body></html>", "{% set a = 1 %}\n{{ '<!doctype html>' }}\n<html><body>foo</body></html>"),
+            array("{% set a = 1 %}\n<!DOCTYPE html PUBLIC 'ssss'>\n<html><body>foo</body></html>", "{% set a = 1 %}\n{{ '<!DOCTYPE html PUBLIC \'ssss\'>' }}\n<html><body>foo</body></html>"),
             array('test <div t:if="foo">{{ foo }}</div> test <div t:if="bar">{{ bar }}</div> test', 'test {% if foo %}<div>{{ foo }}</div>{% endif %} test {% if bar %}<div>{{ bar }}</div>{% endif %} test'),
         );
     }
