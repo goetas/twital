@@ -3,7 +3,7 @@ namespace Goetas\Twital\Tests;
 
 use Goetas\Twital\Helper\ParserHelper;
 
-class ExpressionParserTest extends \PHPUnit_Framework_TestCase
+class ExpressionParserTest extends TestCase
 {
     /**
      * @dataProvider getData

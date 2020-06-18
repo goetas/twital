@@ -2,9 +2,10 @@
 namespace Goetas\Twital\Tests\Event;
 
 use Goetas\Twital\EventDispatcher\SourceEvent;
+use Goetas\Twital\Tests\TestCase;
 use Goetas\Twital\Twital;
 
-class SourceEventTest extends \PHPUnit_Framework_TestCase
+class SourceEventTest extends TestCase
 {
     private $twital;
 

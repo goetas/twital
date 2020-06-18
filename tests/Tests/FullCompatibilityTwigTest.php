@@ -10,7 +10,7 @@ use Goetas\Twital\SourceAdapter\HTML5Adapter;
 use Goetas\Twital\Twital;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class FullCompatibilityTwigTest extends \PHPUnit_Framework_TestCase
+class FullCompatibilityTwigTest extends TestCase
 {
     private $templateSubscriber;
     private $twital;

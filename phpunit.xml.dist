@@ -14,19 +14,14 @@
          stopOnIncomplete="false"
          stopOnSkipped="false"
 
-         testSuiteLoaderClass="PHPUnit_Runner_StandardTestSuiteLoader"
          verbose="false">
     <testsuites>
         <testsuite name="Twital">
             <directory>./tests/</directory>
         </testsuite>
     </testsuites>
-
-    <filter>
-  <blacklist>
-    <directory>vendor</directory>
-  </blacklist>
-  </filter>
-
+    <whitelist>
+        <directory>src</directory>
+    </whitelist>
 </phpunit>
 

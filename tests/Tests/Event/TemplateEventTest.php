@@ -2,9 +2,11 @@
 namespace Goetas\Twital\Tests\Event;
 
 use Goetas\Twital\EventDispatcher\TemplateEvent;
+use Goetas\Twital\Template;
+use Goetas\Twital\Tests\TestCase;
 use Goetas\Twital\Twital;
 
-class TemplateEventTest extends \PHPUnit_Framework_TestCase
+class TemplateEventTest extends TestCase
 {
     private $twital;
     private $template;
@@ -39,6 +41,6 @@ class TemplateEventTest extends \PHPUnit_Framework_TestCase
 
     protected function getTemplateMock()
     {
-        return $this->getMock('Goetas\Twital\Template', null, array(new \DOMDocument('1.0', 'UTF-8')));
+        return $this->getMockBuilder(Template::class)->setConstructorArgs(array(new \DOMDocument('1.0', 'UTF-8')))->getMock();
     }
 }

@@ -4,6 +4,10 @@ $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__)
 ;
 
+if (PHP_MAJOR_VERSION < 7) {
+    $finder->notName('TwitalLoaderTwigGte3.php');
+}
+
 return PhpCsFixer\Config::create()
     ->setRules(array(
         '@PSR2' => true,

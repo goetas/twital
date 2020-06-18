@@ -3,7 +3,7 @@ namespace Goetas\Twital\Tests;
 
 use Goetas\Twital\Twital;
 
-abstract class CoreNodesTest extends \PHPUnit_Framework_TestCase
+abstract class CoreNodesTest extends TestCase
 {
     protected $twital;
     protected $sourceAdapter;

@@ -6,7 +6,7 @@ use Goetas\Twital\SourceAdapter\XHTMLAdapter;
 use Goetas\Twital\SourceAdapter\XMLAdapter;
 use Goetas\Twital\Twital;
 
-class ContextAwareEscapingTest extends \PHPUnit_Framework_TestCase
+class ContextAwareEscapingTest extends TestCase
 {
     private $twital;
 
