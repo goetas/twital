@@ -93,8 +93,8 @@ class ContextAwareEscapingSubscriber implements EventSubscriberInterface
         $res = $this->xpathQuery($xp, "//xh:style[not(@type) or @type = 'text/css'][contains(., '{$this->options['tag_variable'][0]}') and contains(., '{$this->options['tag_variable'][1]}')]", $doc, false);
 
         foreach ($res as $node) {
-            $node->insertBefore($doc->createTextnode("{$this->options['tag_block'][0]} autoescape 'css' {$this->options['tag_block'][1]}"), $node->firstChild);
-            $node->appendChild($doc->createTextnode("{$this->options['tag_block'][0]} endautoescape {$this->options['tag_block'][1]}"));
+            $node->insertBefore($doc->createTextNode("{$this->options['tag_block'][0]} autoescape 'css' {$this->options['tag_block'][1]}"), $node->firstChild);
+            $node->appendChild($doc->createTextNode("{$this->options['tag_block'][0]} endautoescape {$this->options['tag_block'][1]}"));
         }
     }
 
@@ -105,8 +105,8 @@ class ContextAwareEscapingSubscriber implements EventSubscriberInterface
          */
         $res = $this->xpathQuery($xp, "//xh:script[not(@type) or @type = 'text/javascript'][contains(., '{$this->options['tag_variable'][0]}') and contains(., '{$this->options['tag_variable'][1]}')]", $doc, false);
         foreach ($res as $node) {
-            $node->insertBefore($doc->createTextnode("{$this->options['tag_block'][0]} autoescape 'js' {$this->options['tag_block'][1]}"), $node->firstChild);
-            $node->appendChild($doc->createTextnode("{$this->options['tag_block'][0]} endautoescape {$this->options['tag_block'][1]}"));
+            $node->insertBefore($doc->createTextNode("{$this->options['tag_block'][0]} autoescape 'js' {$this->options['tag_block'][1]}"), $node->firstChild);
+            $node->appendChild($doc->createTextNode("{$this->options['tag_block'][0]} endautoescape {$this->options['tag_block'][1]}"));
         }
     }
 }

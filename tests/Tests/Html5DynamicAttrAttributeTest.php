@@ -2,16 +2,21 @@
 namespace Goetas\Twital\Tests;
 
 use Goetas\Twital\SourceAdapter\HTML5Adapter;
-use Goetas\Twital\Tests\Twig\StringLoader;
 use Goetas\Twital\TwitalLoader;
+use Twig\Environment;
+use Twig\Loader\ArrayLoader;
 
-class Html5DynamicAttrAttributeTest extends \PHPUnit_Framework_TestCase
+class Html5DynamicAttrAttributeTest extends TestCase
 {
     /**
-     *
-     * @var \Twig_Environment
+     * @var Environment|\Twig_Environment
      */
     protected $twig;
+
+    /**
+     * @var ArrayLoader|\Twig_Loader_ArrayLoader
+     */
+    protected $loader;
 
     /**
      * Prepares the environment before running a test.
@@ -20,10 +25,12 @@ class Html5DynamicAttrAttributeTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $twitalLoader = new TwitalLoader(new StringLoader(), null, false);
+        $this->loader = class_exists(ArrayLoader::class) ? new ArrayLoader() : new \Twig_Loader_Array();
+        $twitalLoader = new TwitalLoader($this->loader, null, false);
         $twitalLoader->addSourceAdapter("/.*/", new HTML5Adapter());
 
-        $this->twig = new \Twig_Environment($twitalLoader, array(
+        $class = class_exists(Environment::class) ? Environment::class : \Twig_Environment::class;
+        $this->twig = new $class($twitalLoader, array(
             'strict_variables' => true
         ));
     }
@@ -31,9 +38,10 @@ class Html5DynamicAttrAttributeTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider getData
      */
-    public function testVisitAttribute($source, $expected, $vars=null)
+    public function testVisitAttribute($source, $expected, $vars = null)
     {
-        $rendered = $this->twig->render($source, $vars?:array());
+        $this->loader->setTemplate('template', $source);
+        $rendered = $this->twig->render('template', $vars ?: array());
         $this->assertEquals($expected, $rendered);
     }
 

@@ -37,7 +37,7 @@ class DOMMessSubscriber implements EventSubscriberInterface
     public function fixAttributes(SourceEvent $event)
     {
         $event->setTemplate(preg_replace_callback('/ __attr__="(__a[0-9a-f]+)"/', function ($mch) {
-            return '{% for ____ak,____av in ' . $mch[1] . ' if (____av|length>0) and not (____av|length == 1 and ____av[0] is same as(false)) %} {{____ak | raw}}{% if ____av|length > 1 or ____av[0] is not same as(true) %}="{{ ____av|join(\'\') }}"{% endif %}{% endfor %}';
+            return '{% for ____ak,____av in ' . $mch[1] . ' %}{% if (____av|length > 0) and not (____av|length == 1 and ____av[0] is same as(false)) %} {{____ak|raw}}{% if ____av|length > 1 or ____av[0] is not same as(true) %}="{{ ____av|join(\'\') }}"{% endif %}{% endif %}{% endfor %}';
         }, $event->getTemplate()));
     }
 }

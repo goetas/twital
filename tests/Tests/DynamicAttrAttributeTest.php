@@ -2,16 +2,21 @@
 namespace Goetas\Twital\Tests;
 
 use Goetas\Twital\SourceAdapter\XMLAdapter;
-use Goetas\Twital\Tests\Twig\StringLoader;
 use Goetas\Twital\TwitalLoader;
+use Twig\Environment;
+use Twig\Loader\ArrayLoader;
 
-class DynamicAttrAttributeTest extends \PHPUnit_Framework_TestCase
+class DynamicAttrAttributeTest extends TestCase
 {
     /**
-     *
-     * @var \Twig_Environment
+     * @var Environment|\Twig_Environment
      */
     protected $twig;
+
+    /**
+     * @var ArrayLoader|\Twig_Loader_ArrayLoader
+     */
+    protected $loader;
 
     /**
      * Prepares the environment before running a test.
@@ -20,10 +25,12 @@ class DynamicAttrAttributeTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $twitalLoader = new TwitalLoader(new StringLoader(), null, false);
+        $this->loader = class_exists(ArrayLoader::class) ? new ArrayLoader() : new \Twig_Loader_Array();
+        $twitalLoader = new TwitalLoader($this->loader, null, false);
         $twitalLoader->addSourceAdapter("/.*/", new XMLAdapter());
 
-        $this->twig = new \Twig_Environment($twitalLoader);
+        $class = class_exists(Environment::class) ? Environment::class : \Twig_Environment::class;
+        $this->twig = new $class($twitalLoader);
     }
 
     /**
@@ -31,7 +38,8 @@ class DynamicAttrAttributeTest extends \PHPUnit_Framework_TestCase
      */
     public function testVisitAttribute($source, $expected, $vars=null)
     {
-        $rendered = $this->twig->render($source, $vars?:array());
+        $this->loader->setTemplate('template', $source);
+        $rendered = $this->twig->render('template', $vars ?: array());
         $this->assertEquals($expected, $rendered);
     }
 
@@ -85,7 +93,8 @@ class DynamicAttrAttributeTest extends \PHPUnit_Framework_TestCase
             </div>
 EOT;
 
-        $rendered = $this->twig->render($source);
+        $this->loader->setTemplate('template', $source);
+        $rendered = $this->twig->render('template');
         $expected = <<<EOT
 <div>
                 <ol>
@@ -112,10 +121,11 @@ EOT;
 
     /**
      * @dataProvider getInvalidData
-     * @expectedException Exception
+     * @expectedException \Exception
      */
     public function testInvalidVisitAttribute($source)
     {
-        $this->twig->render($source);
+        $this->loader->setTemplate('template', $source);
+        $this->twig->render('template');
     }
 }

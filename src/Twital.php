@@ -6,6 +6,7 @@ use Goetas\Twital\EventDispatcher\SourceEvent;
 use Goetas\Twital\EventDispatcher\TemplateEvent;
 use Goetas\Twital\Extension\CoreExtension;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  *
@@ -86,21 +87,21 @@ class Twital
         $this->initExtensions();
 
         $sourceEvent = new SourceEvent($this, $source);
-        $this->dispatcher->dispatch(CompilerEvents::PRE_LOAD, $sourceEvent);
+        $this->dispatch($sourceEvent, CompilerEvents::PRE_LOAD);
         $template = $adapter->load($sourceEvent->getTemplate());
 
         $templateEvent = new TemplateEvent($this, $template);
-        $this->dispatcher->dispatch(CompilerEvents::POST_LOAD, $templateEvent);
+        $this->dispatch($templateEvent, CompilerEvents::POST_LOAD);
 
         $compiler = new Compiler($this, isset($this->options['lexer']) ? $this->options['lexer'] : array());
         $compiler->compile($templateEvent->getTemplate()->getDocument());
 
         $templateEvent = new TemplateEvent($this, $templateEvent->getTemplate());
-        $this->dispatcher->dispatch(CompilerEvents::PRE_DUMP, $templateEvent);
+        $this->dispatch($templateEvent, CompilerEvents::PRE_DUMP);
         $source = $adapter->dump($templateEvent->getTemplate());
 
         $sourceEvent = new SourceEvent($this, $source);
-        $this->dispatcher->dispatch(CompilerEvents::POST_DUMP, $sourceEvent);
+        $this->dispatch($sourceEvent, CompilerEvents::POST_DUMP);
 
         return $sourceEvent->getTemplate();
     }
@@ -139,6 +140,15 @@ class Twital
                 }
             }
             $this->extensionsInitialized = true;
+        }
+    }
+
+    protected function dispatch($event, $name)
+    {
+        if ($this->dispatcher instanceof EventDispatcherInterface) {
+            $this->dispatcher->dispatch($event, $name);
+        } else {
+            $this->dispatcher->dispatch($name, $event);
         }
     }
 }

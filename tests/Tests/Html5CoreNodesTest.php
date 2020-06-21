@@ -7,7 +7,7 @@ class Html5CoreNodesTest extends CoreNodesTest
 {
     public function getDataFormTemplates()
     {
-        $all = glob(__DIR__."/templates/*.{htm,xml}", GLOB_BRACE);
+        $all = array_merge(glob(__DIR__."/templates/*.htm"), glob(__DIR__."/templates/*.xml"));
         $data = array();
         foreach ($all as $file) {
             $source = file_get_contents($file);

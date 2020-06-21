@@ -6,19 +6,23 @@ cache:
   directories:
     - $HOME/.composer/cache
 
-env:
-  - TWIG_VERSION=^1.28
-
 matrix:
     include:
-        - php: 5.3
-          dist: precise
-        - php: 5.4
         - php: 5.5
+          dist: trusty
+          env: TWIG_VERSION='^1.28'
         - php: 5.6
+          env: TWIG_VERSION='^1.28'
         - php: 7.0
+          env: TWIG_VERSION='^1.28'
         - php: 7.1
+          env: TWIG_VERSION='^1.28'
         - php: 7.2
+          env: TWIG_VERSION='^1.28'
+        - php: 7.3
+          env: TWIG_VERSION='^1.28'
+        - php: 7.4
+          env: TWIG_VERSION='^1.28'
 
         # Twig 2
         - php: 7.0
@@ -27,17 +31,32 @@ matrix:
           env: TWIG_VERSION='^2.0'
         - php: 7.2
           env: TWIG_VERSION='^2.0'
+        - php: 7.3
+          env: TWIG_VERSION='^2.0'
+        - php: 7.4
+          env: TWIG_VERSION='^2.0'
 
-        # oldest possible deps for twig 1.x
-        - php: 5.3 # for twig 1.x
-          dist: precise
+        # Twig 3
+        - php: 7.2
+          env: TWIG_VERSION='^3.0'
+        - php: 7.3
+          env: TWIG_VERSION='^3.0'
+        - php: 7.4
+          env: TWIG_VERSION='^3.0'
+
+        # oldest possible deps for twig
+        - php: 5.5 # for twig 1.x
+          dist: trusty
           env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable' TWIG_VERSION=^1.28
         - php: 7.0 # for twig 2.x
           env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable' TWIG_VERSION=^2.0
+        - php: 7.2 # for twig 3.x
+          env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable' TWIG_VERSION=^3.0 PHPUNIT_VERSION=^7.0
     fast_finish: true
 
 before_script:
   - composer require twig/twig:${TWIG_VERSION} --no-update
+  - if [ -n "$PHPUNIT_VERSION" ]; then composer require --dev phpunit/phpunit:${PHPUNIT_VERSION} --no-update; fi
   - composer update --prefer-dist ${COMPOSER_FLAGS}
 
 script:
@@ -45,5 +64,5 @@ script:
   - vendor/bin/php-cs-fixer fix --dry-run --diff
 
 after_script:
-  - bash -c 'if [ "$TRAVIS_PHP_VERSION" == "5.6" ] ; then wget https://scrutinizer-ci.com/ocular.phar; fi;'
-  - bash -c 'if [ "$TRAVIS_PHP_VERSION" == "5.6" ] ; then php ocular.phar code-coverage:upload --format=php-clover coverage.xml; fi;'
+  - if [ "$TRAVIS_PHP_VERSION" == "7.3" ] ; then wget https://scrutinizer-ci.com/ocular.phar; fi
+  - if [ "$TRAVIS_PHP_VERSION" == "7.3" ] ; then php ocular.phar code-coverage:upload --format=php-clover coverage.xml; fi
