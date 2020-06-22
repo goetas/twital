@@ -9,12 +9,12 @@ use Twig\Loader\ArrayLoader;
 class Html5DynamicAttrAttributeTest extends TestCase
 {
     /**
-     * @var Environment|\Twig_Environment
+     * @var Environment
      */
     protected $twig;
 
     /**
-     * @var ArrayLoader|\Twig_Loader_ArrayLoader
+     * @var ArrayLoader
      */
     protected $loader;
 
@@ -25,12 +25,11 @@ class Html5DynamicAttrAttributeTest extends TestCase
     {
         parent::setUp();
 
-        $this->loader = class_exists(ArrayLoader::class) ? new ArrayLoader() : new \Twig_Loader_Array();
+        $this->loader = new ArrayLoader();
         $twitalLoader = new TwitalLoader($this->loader, null, false);
         $twitalLoader->addSourceAdapter("/.*/", new HTML5Adapter());
 
-        $class = class_exists(Environment::class) ? Environment::class : \Twig_Environment::class;
-        $this->twig = new $class($twitalLoader, array(
+        $this->twig = new Environment($twitalLoader, array(
             'strict_variables' => true
         ));
     }

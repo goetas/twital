@@ -9,11 +9,6 @@ abstract class TwitalLoaderTwigLt3
 {
     use TwitalLoaderTrait;
 
-    public function __construct($loader = null, Twital $twital = null, $addDefaults = true)
-    {
-        $this->doConstruct($loader, $twital, $addDefaults);
-    }
-
     public function getCacheKey($name)
     {
         return $this->loader->getCacheKey($name);
@@ -24,7 +19,10 @@ abstract class TwitalLoaderTwigLt3
         return $this->loader->isFresh($name, $time);
     }
 
-    abstract public function getSourceContext($name);
+    public function getSourceContext($name)
+    {
+        return $this->doGetSourceContext($name);
+    }
 
     public function exists($name)
     {

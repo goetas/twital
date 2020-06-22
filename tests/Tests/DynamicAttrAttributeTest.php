@@ -9,12 +9,12 @@ use Twig\Loader\ArrayLoader;
 class DynamicAttrAttributeTest extends TestCase
 {
     /**
-     * @var Environment|\Twig_Environment
+     * @var Environment
      */
     protected $twig;
 
     /**
-     * @var ArrayLoader|\Twig_Loader_ArrayLoader
+     * @var ArrayLoader
      */
     protected $loader;
 
@@ -25,18 +25,17 @@ class DynamicAttrAttributeTest extends TestCase
     {
         parent::setUp();
 
-        $this->loader = class_exists(ArrayLoader::class) ? new ArrayLoader() : new \Twig_Loader_Array();
+        $this->loader = new ArrayLoader();
         $twitalLoader = new TwitalLoader($this->loader, null, false);
         $twitalLoader->addSourceAdapter("/.*/", new XMLAdapter());
 
-        $class = class_exists(Environment::class) ? Environment::class : \Twig_Environment::class;
-        $this->twig = new $class($twitalLoader);
+        $this->twig = new Environment($twitalLoader);
     }
 
     /**
      * @dataProvider getData
      */
-    public function testVisitAttribute($source, $expected, $vars=null)
+    public function testVisitAttribute($source, $expected, $vars = null)
     {
         $this->loader->setTemplate('template', $source);
         $rendered = $this->twig->render('template', $vars ?: array());

@@ -10,6 +10,7 @@ use Twig\Error\LoaderError;
 use Twig\Loader\ExistsLoaderInterface;
 use Twig\Loader\LoaderInterface;
 use Twig\Loader\SourceContextLoaderInterface;
+use Twig\Source;
 
 /**
  * @author Martin Hasoň <martin.hason@gmail.com>
@@ -38,7 +39,28 @@ trait TwitalLoaderTrait
      */
     protected $loader;
 
-    private $twigMajorVersion;
+    /**
+     * Creates a new Twital loader.
+     *
+     * @param LoaderInterface $loader
+     * @param Twital $twital
+     * @param bool $addDefaults If NULL, some standard rules will be used (`*.twital.*` and `*.twital`).
+     */
+    public function __construct(LoaderInterface $loader = null, Twital $twital = null, $addDefaults = true)
+    {
+        $this->loader = $loader;
+        $this->twital = $twital;
+
+        if ($addDefaults === true || (is_array($addDefaults) && in_array('html', $addDefaults))) {
+            $this->addSourceAdapter('/\.twital\.html$/i', new HTML5Adapter());
+        }
+        if ($addDefaults === true || (is_array($addDefaults) && in_array('xml', $addDefaults))) {
+            $this->addSourceAdapter('/\.twital\.xml$/i', new XMLAdapter());
+        }
+        if ($addDefaults === true || (is_array($addDefaults) && in_array('xhtml', $addDefaults))) {
+            $this->addSourceAdapter('/\.twital\.xhtml$/i', new XHTMLAdapter());
+        }
+    }
 
     /**
      * Add a new pattern that can decide if a template is twital-compilable or not.
@@ -118,9 +140,9 @@ trait TwitalLoaderTrait
         return $this->twital;
     }
 
-    protected function doGetSourceContext($name)
+    private function doGetSourceContext($name)
     {
-        if ($this->getTwigMajorVersion() >= 2 || $this->loader instanceof SourceContextLoaderInterface) {
+        if (Environment::MAJOR_VERSION >= 2 || $this->loader instanceof SourceContextLoaderInterface) {
             $originalContext = $this->loader->getSourceContext($name);
             $code = $originalContext->getCode();
             $path = $originalContext->getPath();
@@ -133,35 +155,12 @@ trait TwitalLoaderTrait
             $code = $this->getTwital()->compile($adapter, $code);
         }
 
-        return array($code, $name, $path);
-    }
-
-    /**
-     * Creates a new Twital loader.
-     *
-     * @param LoaderInterface|\Twig_LoaderInterface $loader
-     * @param Twital $twital
-     * @param bool $addDefaults If NULL, some standard rules will be used (`*.twital.*` and `*.twital`).
-     */
-    private function doConstruct($loader = null, Twital $twital = null, $addDefaults = true)
-    {
-        $this->loader = $loader;
-        $this->twital = $twital;
-
-        if ($addDefaults === true || (is_array($addDefaults) && in_array('html', $addDefaults))) {
-            $this->addSourceAdapter('/\.twital\.html$/i', new HTML5Adapter());
-        }
-        if ($addDefaults === true || (is_array($addDefaults) && in_array('xml', $addDefaults))) {
-            $this->addSourceAdapter('/\.twital\.xml$/i', new XMLAdapter());
-        }
-        if ($addDefaults === true || (is_array($addDefaults) && in_array('xhtml', $addDefaults))) {
-            $this->addSourceAdapter('/\.twital\.xhtml$/i', new XHTMLAdapter());
-        }
+        return new Source($code, $name, $path);
     }
 
     private function doExists($name)
     {
-        if ($this->getTwigMajorVersion() >= 2 || $this->loader instanceof ExistsLoaderInterface) {
+        if (Environment::MAJOR_VERSION >= 2 || $this->loader instanceof ExistsLoaderInterface) {
             return $this->loader->exists($name);
         } else {
             try {
@@ -170,18 +169,7 @@ trait TwitalLoaderTrait
                 return true;
             } catch (LoaderError $e) {
                 return false;
-            } catch (\Twig_Error_Loader $e) {
-                return false;
             }
         }
-    }
-
-    private function getTwigMajorVersion()
-    {
-        if (null === $this->twigMajorVersion) {
-            $this->twigMajorVersion = class_exists(Environment::class) ? Environment::MAJOR_VERSION : \Twig_Environment::MAJOR_VERSION;
-        }
-
-        return $this->twigMajorVersion;
     }
 }
