@@ -10,31 +10,31 @@ matrix:
     include:
         - php: 5.5
           dist: trusty
-          env: TWIG_VERSION='^1.28'
+          env: TWIG_VERSION='^1.38'
         - php: 5.6
-          env: TWIG_VERSION='^1.28'
+          env: TWIG_VERSION='^1.38'
         - php: 7.0
-          env: TWIG_VERSION='^1.28'
+          env: TWIG_VERSION='^1.38'
         - php: 7.1
-          env: TWIG_VERSION='^1.28'
+          env: TWIG_VERSION='^1.38'
         - php: 7.2
-          env: TWIG_VERSION='^1.28'
+          env: TWIG_VERSION='^1.38'
         - php: 7.3
-          env: TWIG_VERSION='^1.28'
+          env: TWIG_VERSION='^1.38'
         - php: 7.4
-          env: TWIG_VERSION='^1.28'
+          env: TWIG_VERSION='^1.38'
 
         # Twig 2
         - php: 7.0
-          env: TWIG_VERSION='^2.0'
+          env: TWIG_VERSION='^2.4'
         - php: 7.1
-          env: TWIG_VERSION='^2.0'
+          env: TWIG_VERSION='^2.4'
         - php: 7.2
-          env: TWIG_VERSION='^2.0'
+          env: TWIG_VERSION='^2.4'
         - php: 7.3
-          env: TWIG_VERSION='^2.0'
+          env: TWIG_VERSION='^2.4'
         - php: 7.4
-          env: TWIG_VERSION='^2.0'
+          env: TWIG_VERSION='^2.4'
 
         # Twig 3
         - php: 7.2
@@ -47,9 +47,9 @@ matrix:
         # oldest possible deps for twig
         - php: 5.5 # for twig 1.x
           dist: trusty
-          env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable' TWIG_VERSION=^1.28
+          env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable' TWIG_VERSION=^1.38
         - php: 7.0 # for twig 2.x
-          env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable' TWIG_VERSION=^2.0
+          env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable' TWIG_VERSION=^2.4
         - php: 7.2 # for twig 3.x
           env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable' TWIG_VERSION=^3.0 PHPUNIT_VERSION=^7.0
     fast_finish: true

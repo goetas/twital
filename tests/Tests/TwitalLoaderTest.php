@@ -12,16 +12,6 @@ use Twig\Loader\LoaderInterface;
 class TwitalLoaderTest extends TestCase
 {
     protected $twital;
-    protected $twigMajorVersion;
-
-    /**
-     * Prepares the environment before running a test.
-     */
-    protected function setUp()
-    {
-        parent::setUp();
-        $this->twigMajorVersion = class_exists(Environment::class) ? Environment::MAJOR_VERSION : \Twig_Environment::MAJOR_VERSION;
-    }
 
     public function getMatchedFilenames()
     {
@@ -47,13 +37,12 @@ class TwitalLoaderTest extends TestCase
 
     public function testInternalLoader()
     {
-        $loader = $this->createArrayLoader();
-
+        $loader = new ArrayLoader();
         $twitalLoader = new TwitalLoader($loader);
 
         $this->assertSame($loader, $twitalLoader->getLoader());
 
-        $newLoader = $this->createArrayLoader();
+        $newLoader = new ArrayLoader();
         $twitalLoader->setLoader($newLoader);
         $this->assertSame($newLoader, $twitalLoader->getLoader());
         $this->assertNotSame($loader, $twitalLoader->getLoader());
@@ -87,7 +76,7 @@ class TwitalLoaderTest extends TestCase
 
     public function testTwitalFile()
     {
-        $loader = $this->createArrayLoader();
+        $loader = new ArrayLoader();
         $loader->setTemplate('aaa.xml', '');
 
         $twital = $this->createMock(Twital::class);
@@ -100,7 +89,7 @@ class TwitalLoaderTest extends TestCase
 
     public function testNonTwitalFile()
     {
-        $loader = $this->createArrayLoader();
+        $loader = new ArrayLoader();
         $loader->setTemplate('aaa.txt', '');
 
         $twital = $this->createMock(Twital::class);
@@ -113,11 +102,11 @@ class TwitalLoaderTest extends TestCase
 
     public function testExistsWithBaseLoaderTwig1()
     {
-        if ($this->twigMajorVersion >= 2) {
-            $this->markTestSkipped("Twig > 1 has the Twig_LoaderInterface::exists method");
+        if (Environment::MAJOR_VERSION >= 2) {
+            $this->markTestSkipped("Twig > 1 has the LoaderInterface::exists method");
         }
 
-        $mockLoader = $this->createLoaderMock();
+        $mockLoader = $this->createMock(LoaderInterface::class);
         $mockLoader->expects($this->once())->method('getSource')->with($this->equalTo('foo'));
 
         $twitalLoader = new TwitalLoader($mockLoader, null, false);
@@ -126,17 +115,16 @@ class TwitalLoaderTest extends TestCase
 
     public function testNonExistsWithBaseLoaderTwig1()
     {
-        if ($this->twigMajorVersion >= 2) {
-            $this->markTestSkipped("Twig > 1 has the Twig_LoaderInterface::exists method");
+        if (Environment::MAJOR_VERSION >= 2) {
+            $this->markTestSkipped("Twig > 1 has the LoaderInterface::exists method");
         }
 
-        $mockLoader = $this->createMock('Twig_LoaderInterface');
+        $mockLoader = $this->createMock(LoaderInterface::class);
 
-        $errorClass = class_exists(LoaderError::class) ? LoaderError::class : \Twig_Error_Loader::class;
         $mockLoader->expects($this->once())
             ->method('getSource')
             ->with($this->equalTo('foo'))
-            ->will($this->throwException(new $errorClass("File not found")));
+            ->will($this->throwException(new LoaderError("File not found")));
 
         $twitalLoader = new TwitalLoader($mockLoader, null, false);
         $this->assertFalse($twitalLoader->exists('foo'));
@@ -144,11 +132,11 @@ class TwitalLoaderTest extends TestCase
 
     public function testExistsWithBaseLoaderTwigGte2()
     {
-        if ($this->twigMajorVersion < 2) {
+        if (Environment::MAJOR_VERSION < 2) {
             $this->markTestSkipped("Twig >= 2 only");
         }
 
-        $mockLoader = $this->createLoaderMock();
+        $mockLoader = $this->createMock(LoaderInterface::class);
 
         $mockLoader->expects($this->once())->method('exists')->will($this->returnValue(true));
 
@@ -158,11 +146,11 @@ class TwitalLoaderTest extends TestCase
 
     public function testNonExistsWithBaseLoaderTwigGte2()
     {
-        if ($this->twigMajorVersion < 2) {
+        if (Environment::MAJOR_VERSION < 2) {
             $this->markTestSkipped("Twig >= 2 only");
         }
 
-        $mockLoader = $this->createLoaderMock();
+        $mockLoader = $this->createMock(LoaderInterface::class);
 
         $mockLoader->expects($this->once())->method('exists')->will($this->returnValue(false));
 
@@ -177,17 +165,5 @@ class TwitalLoaderTest extends TestCase
             'Goetas\Twital\SourceAdapter\XMLAdapter',
             'Goetas\Twital\SourceAdapter\XHTMLAdapter'
         );
-    }
-
-    private function createLoaderMock()
-    {
-        $class = interface_exists(\Twig_LoaderInterface::class) ? \Twig_LoaderInterface::class : LoaderInterface::class;
-
-        return $this->createMock($class);
-    }
-
-    private function createArrayLoader()
-    {
-        return class_exists(\Twig_Loader_Array::class) ? new \Twig_Loader_Array() : new ArrayLoader();
     }
 }

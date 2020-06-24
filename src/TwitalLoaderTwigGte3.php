@@ -12,16 +12,9 @@ abstract class TwitalLoaderTwigGte3 implements LoaderInterface
 {
     use TwitalLoaderTrait;
 
-    public function __construct(LoaderInterface $loader = null, Twital $twital = null, $addDefaults = true)
-    {
-        $this->doConstruct($loader, $twital, $addDefaults);
-    }
-
     public function getSourceContext(string $name): Source
     {
-        $context = $this->doGetSourceContext($name);
-
-        return new Source($context[0], $context[1], $context[2]);
+        return $this->doGetSourceContext($name);
     }
 
     public function getCacheKey(string $name): string
