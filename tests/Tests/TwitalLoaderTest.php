@@ -4,6 +4,7 @@ namespace Goetas\Twital\Tests;
 use Goetas\Twital\SourceAdapter\XMLAdapter;
 use Goetas\Twital\Twital;
 use Goetas\Twital\TwitalLoader;
+use PHPUnit\Framework\TestCase;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Loader\ArrayLoader;

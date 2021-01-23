@@ -3,6 +3,7 @@ namespace Goetas\Twital\Tests;
 
 use Goetas\Twital\SourceAdapter\HTML5Adapter;
 use Goetas\Twital\TwitalLoader;
+use PHPUnit\Framework\TestCase;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
 
@@ -21,7 +22,7 @@ class Html5DynamicAttrAttributeTest extends TestCase
     /**
      * Prepares the environment before running a test.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 

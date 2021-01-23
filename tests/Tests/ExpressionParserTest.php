@@ -2,6 +2,7 @@
 namespace Goetas\Twital\Tests;
 
 use Goetas\Twital\Helper\ParserHelper;
+use PHPUnit\Framework\TestCase;
 
 class ExpressionParserTest extends TestCase
 {
@@ -25,11 +26,11 @@ class ExpressionParserTest extends TestCase
 
     /**
      * @dataProvider getWrongData
-     * @expectedException Exception
      */
     public function testWrongExpressions($expression)
     {
-        $splitted = ParserHelper::staticSplitExpression($expression, "x");
+        $this->expectException(\Exception::class);
+        ParserHelper::staticSplitExpression($expression, "x");
     }
 
     public function getWrongData()

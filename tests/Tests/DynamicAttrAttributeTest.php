@@ -3,6 +3,7 @@ namespace Goetas\Twital\Tests;
 
 use Goetas\Twital\SourceAdapter\XMLAdapter;
 use Goetas\Twital\TwitalLoader;
+use PHPUnit\Framework\TestCase;
 use Twig\Environment;
 use Twig\Loader\ArrayLoader;
 
@@ -21,7 +22,7 @@ class DynamicAttrAttributeTest extends TestCase
     /**
      * Prepares the environment before running a test.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -120,10 +121,10 @@ EOT;
 
     /**
      * @dataProvider getInvalidData
-     * @expectedException \Exception
      */
     public function testInvalidVisitAttribute($source)
     {
+        $this->expectException(\Exception::class);
         $this->loader->setTemplate('template', $source);
         $this->twig->render('template');
     }
