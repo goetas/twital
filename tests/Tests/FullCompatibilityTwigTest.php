@@ -8,6 +8,7 @@ use Goetas\Twital\EventSubscriber\ReplaceDoctypeAsTwigExpressionSubscriber;
 use Goetas\Twital\Extension\FullCompatibilityTwigExtension;
 use Goetas\Twital\SourceAdapter\HTML5Adapter;
 use Goetas\Twital\Twital;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class FullCompatibilityTwigTest extends TestCase
@@ -18,7 +19,7 @@ class FullCompatibilityTwigTest extends TestCase
     /**
      * Prepares the environment before running a test.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->templateSubscriber = new DebugTemplateSubscriber();
 

@@ -65,18 +65,15 @@ class XMLAdapter implements SourceAdapter
     protected function createDom($source)
     {
         $internalErrors = libxml_use_internal_errors(true);
-        $disableEntities = libxml_disable_entity_loader(true);
         libxml_clear_errors();
 
         $dom = new \DOMDocument('1.0', 'UTF-8');
         if ('' !== trim($source) && !$dom->loadXML($source, LIBXML_NONET | (defined('LIBXML_COMPACT') ? LIBXML_COMPACT : 0))) {
-            libxml_disable_entity_loader($disableEntities);
 
             throw new \InvalidArgumentException(implode("\n", $this->getXmlErrors($internalErrors)));
         }
 
         libxml_use_internal_errors($internalErrors);
-        libxml_disable_entity_loader($disableEntities);
 
         return $dom;
     }

@@ -5,6 +5,7 @@ use Goetas\Twital\SourceAdapter\HTML5Adapter;
 use Goetas\Twital\SourceAdapter\XHTMLAdapter;
 use Goetas\Twital\SourceAdapter\XMLAdapter;
 use Goetas\Twital\Twital;
+use PHPUnit\Framework\TestCase;
 
 class ContextAwareEscapingTest extends TestCase
 {
@@ -13,7 +14,7 @@ class ContextAwareEscapingTest extends TestCase
     /**
      * Prepares the environment before running a test.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->twital = new Twital();
     }

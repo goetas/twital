@@ -2,8 +2,8 @@
 namespace Goetas\Twital\Tests\Event;
 
 use Goetas\Twital\EventDispatcher\SourceEvent;
-use Goetas\Twital\Tests\TestCase;
 use Goetas\Twital\Twital;
+use PHPUnit\Framework\TestCase;
 
 class SourceEventTest extends TestCase
 {
@@ -12,7 +12,7 @@ class SourceEventTest extends TestCase
     /**
      * Prepares the environment before running a test.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->twital = new Twital();

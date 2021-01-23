@@ -2,6 +2,7 @@
 namespace Goetas\Twital\Tests;
 
 use Goetas\Twital\Twital;
+use PHPUnit\Framework\TestCase;
 
 abstract class CoreNodesTest extends TestCase
 {
@@ -10,7 +11,7 @@ abstract class CoreNodesTest extends TestCase
     /**
      * Prepares the environment before running a test.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->twital = new Twital();

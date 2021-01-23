@@ -1,0 +1,48 @@
+name: Tests
+
+on:
+  push: ~
+  pull_request: ~
+
+jobs:
+  phpunit:
+    name: PHPUnit on ${{ matrix.php }} and Twig ${{ matrix.twig }} ${{ matrix.dependencies }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dependencies: ['', 'lowest']
+        php: [ '7.1', '7.2', '7.3', '7.4', '8.0' ]
+        twig: [ ^1.0, ^2.0, ^3.0 ]
+        exclude:
+          - php: '7.1'
+            twig: ^3.0
+    steps:
+      - name: Update code
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom
+          coverage: pcov
+          tools: composer:v2
+
+      - name: Install dependencies
+        run: composer update --no-progress --with "twig/twig:${{ matrix.twig }}"
+
+      - name: Install lowest dependencies
+        run: composer update --no-progress --prefer-lowest --root-reqs --with "twig/twig:${{ matrix.twig }}"
+        if: matrix.dependencies
+
+      - name: Run tests
+        run: vendor/bin/phpunit --no-coverage
+        if: matrix.php != '8.0'
+
+      - name: Run tests with code coverage
+        run: vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+        if: matrix.php == '8.0'
+
+      - name: Upload code coverage tu Scrutinizer
+        run: php vendor/bin/ocular code-coverage:upload --format=php-clover coverage.clover
+        if: matrix.php == '8.0'

@@ -3,8 +3,8 @@ namespace Goetas\Twital\Tests\Event;
 
 use Goetas\Twital\EventDispatcher\TemplateEvent;
 use Goetas\Twital\Template;
-use Goetas\Twital\Tests\TestCase;
 use Goetas\Twital\Twital;
+use PHPUnit\Framework\TestCase;
 
 class TemplateEventTest extends TestCase
 {
@@ -14,7 +14,7 @@ class TemplateEventTest extends TestCase
     /**
      * Prepares the environment before running a test.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->twital = new Twital();
