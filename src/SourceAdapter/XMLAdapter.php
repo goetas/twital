@@ -69,7 +69,6 @@ class XMLAdapter implements SourceAdapter
 
         $dom = new \DOMDocument('1.0', 'UTF-8');
         if ('' !== trim($source) && !$dom->loadXML($source, LIBXML_NONET | (defined('LIBXML_COMPACT') ? LIBXML_COMPACT : 0))) {
-
             throw new \InvalidArgumentException(implode("\n", $this->getXmlErrors($internalErrors)));
         }
 
