@@ -8,7 +8,7 @@ What is Twital?
 ==============
 
 Twital is a template engine built on top of [Twig](http://twig.sensiolabs.org/) 
-(a template engine for PHP and default template engine on Symfomy) 
+(a template engine for PHP and default template engine on Symfony) 
 that adds some shortcuts and makes Twig's syntax more suitable for HTML based (XML, HTML5, XHTML, SGML) templates.
 Twital takes inspiration from [PHPTal](http://phptal.org/), [TAL](http://en.wikipedia.org/wiki/Template_Attribute_Language) 
 and [AngularJS](http://angularjs.org/) or [Vue.js](https://vuejs.org/) (just for some aspects), 
