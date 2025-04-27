@@ -55,6 +55,7 @@ class FullCompatibilityTwigTest extends TestCase
     public function getData()
     {
         return array(
+            array('{% if 1 %}<span>{% else %}<div>{% endif %}foo{% if 1 %}</span>{% else %}</div>{% endif %}'),
             array('<div>{% if foo > 5 and bar < 8 and bar & 4 %}foo{% endif %}</div>'),
             array('<div>{{ foo > 5 and bar < 8 and bar & 4 ? "foo" }}</div>'),
             array('<div>{# foo > 5 and bar < 8 and bar & 4 ? "foo" #}</div>'),
